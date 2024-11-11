@@ -1,0 +1,11 @@
+root = true
+# 2 space indentation
+[*.html]
+indent_style = tab
+indent_size = 2
+[*.css]
+indent_style = tab
+indent_size = 2
+# charset
+[*.html]
+charset = utf-8
