@@ -17,6 +17,7 @@ for (let value of Object.keys(myCar)) {
 let carBrand = myCar.brand;
 let releaseYear = myCar.year;
 let carSpeed = myCar.run();
+
 console.log('The brand of the car is:', carBrand);
 console.log('The year this car was released:', releaseYear);
 console.log('This car can run at:', carSpeed);
