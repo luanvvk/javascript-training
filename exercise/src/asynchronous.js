@@ -1,13 +1,5 @@
-//callbacks
-const functionCallback = (name) => {
-  console.log(`Hello ${name}`);
-};
-function operationCallback(name, callback) {
-  callback(name);
-}
-operationCallback('Luan Vu', functionCallback);
-
 //Promises
+//assume case resolve only
 const promise = function operationCallback(name) {
   return new Promise((resolve, reject) => {
     resolve(name);
@@ -16,7 +8,6 @@ const promise = function operationCallback(name) {
 promise('Luan Vu').then((name) => console.log(`Hello ${name}`));
 
 //------------
-
 const myPromise = new Promise((resolve, reject) => {
   let condition = true;
   if (condition) {
@@ -27,6 +18,7 @@ const myPromise = new Promise((resolve, reject) => {
     reject('Error');
   }
 });
+
 myPromise
   .then((data) => {
     console.log(data);

@@ -5,21 +5,14 @@ var isSuccess = true;
 let age;
 const isNull = null;
 var id = Symbol(`id`);
-var myFunction = function() {
-}
+var myFunction = function () {};
 var myCat = {
-    name: 'leon',
-    age: 1,
-    type: 'siberia',
-    myFunction: function(){       
-    }
+  name: 'leon',
+  age: 1,
+  type: 'siberia',
+  myFunction: function () {},
 };
-let myArray = [
-    'Java',
-    'C#',
-    'C++',
-    'Javascript'
-]
+let myArray = ['Java', 'C#', 'C++', 'Javascript'];
 console.log(a++);
 console.log(++a);
 console.log(a--);
