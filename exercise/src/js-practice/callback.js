@@ -41,7 +41,4 @@ function doHomework2(subject2, callback4) {
   }, 1000);
 }
 
-function alertFinished() {
-  console.log('Done!');
-}
-doHomework2('Math', alertFinished);
+const promise = new Promise((resolve, reject) => {});
