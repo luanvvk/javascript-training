@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event practice</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <p>Events example</p>
+    <div>
+      <button class="button1">Click here!</button>
+      <br />
+      <br />
+
+      <button class="button2" onclick="changeText()">Click to change the text below</button>
+      <h1 class="text1">demo text</h1>
+      <button class="button3">button3</button>
+    </div>
+    <hr />
+    <p>This box below changes style when hovering or clicking</p>
+    <div class="elementToChange"></div>
+    <hr />
+    <p>This button has different styles when clicking or double-clicking</p>
+    <button class="button5">Click/Double-Click</button>
+    <hr />
+    <p>This is animal slider</p>
+    <div class="animal-image">
+      <button class="previousBtn">Previous</button>
+      <img class="images" src="./images/animal-images/cat.jfif" />
+      <button class="nextBtn">Next</button>
+    </div>
+    <hr />
+    <p>Show drop down menu</p>
+    <div class="dropdown">
+      <button class="menu-button">Click to expand options</button>
+      <ul class="dropdown-menu__items">
+        <li><a class="nav-menu__item" href="javascript:void(0)">home</a></li>
+        <li><a class="nav-menu__item" href="javascript:void(0)">discover</a></li>
+        <li><a class="nav-menu__item" href="javascript:void(0)">special deals</a></li>
+        <li><a class="nav-menu__item" href="javascript:void(0)">contact</a></li>
+      </ul>
+    </div>
+    <hr />
+    <script src="./event-pratice.js"></script>
+  </body>
+</html>

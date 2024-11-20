@@ -1,0 +1,47 @@
+.elementToChange {
+  width: 100px;
+  height: 100px;
+  background-color: aqua;
+}
+.animal-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 100px;
+}
+.images {
+  width: 200px;
+  height: 200px;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.menu-button {
+  padding: 10px;
+  border: none;
+  border-radius: 32px;
+  background-color: #7fffd4;
+  color: #333;
+  cursor: pointer;
+}
+.dropdown-menu__items {
+  display: none;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  padding: 0;
+  margin-top: -55px;
+  margin-left: 170px;
+  background-color: white;
+  min-width: 120px;
+  list-style: none;
+}
+.nav-menu__item {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.nav-menu__item:last-child {
+  border-bottom: none;
+}

@@ -97,7 +97,7 @@ console.log(imgClass);
 imgClass.classList.toggle('warning');
 imgClass.classList.remove('warning');
 imgClass.removeAttribute('src');
-imgClass.setAttribute('src', './microsoft.png');
+imgClass.setAttribute('src', './images/microsoft.png');
 
 console.log(aTag);
 aTag.setAttribute('href', 'https://www.microsoft.com/en-us/software-download/windows11');
