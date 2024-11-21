@@ -27,18 +27,19 @@ console.log(JSON.parse(localStorage.getItem(key)));
 console.log(localStorage);
 
 //get value of key in the object like
-
+//1st way
 for (let i = 0; i < localStorage.length; i++) {
   let key = localStorage.key(i);
   alert(`${key}: ${localStorage.getItem(key)}`);
 }
-
+//2nd way
 for (let key in localStorage) {
   if (!localStorage.hasOwnProperty(key)) {
     continue;
   }
   alert(`${key}: ${localStorage.getItem(key)}`);
 }
+//3rd way
 let keys = Object.keys(localStorage);
 for (let key of keys) {
   alert(`${key}: ${localStorage.getItem(key)}`);

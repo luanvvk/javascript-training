@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book list</title>
+  </head>
+  <body>
+    <h1>My Book List</h1>
+    <script>
+      let bookList = [
+        {
+          title: 'A',
+          author: 'A1',
+          img: 'https://images.unsplash.com/photo-1561731216-c3a4d99437d5?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb',
+          alreadyRead: 'true',
+        },
+        {
+          title: 'B',
+          author: 'B1',
+          img: 'https://images.pexels.com/photos/47547/squirrel-animal-cute-rodents-47547.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+          alreadyRead: 'false',
+        },
+        {
+          title: 'C',
+          author: 'C1',
+          img: 'https://images.pexels.com/photos/792381/pexels-photo-792381.jpeg?cs=srgb&dl=pexels-george-desipris-792381.jpg&fm=jpg',
+          alreadyRead: 'true',
+        },
+        {
+          title: 'D',
+          author: 'D1',
+          img: 'https://images.ctfassets.net/hrltx12pl8hq/1D85eAdM0IhXrEYsoOt7Ut/107424ea3e7e10ab3203446dae175cf7/3_jungle_animals.webp',
+          alreadyRead: 'false',
+        },
+      ];
+      //create p to store title and author values
+      for (let i = 0; i < bookList.length; i++) {
+        const p = document.createElement('p');
+        const bookDesc = document.createTextNode(
+          `title ${bookList[i].title} wrote by ${bookList[i].author}`,
+        );
+        p.appendChild(bookDesc);
+        document.body.appendChild(p);
+      }
+      //create ul and li to show the img and book details
+      let list = document.createElement('ul');
+      for (let i = 0; i < bookList.length; i++) {
+        const listItem = document.createElement('li');
+        const bookImg = document.createElement('img');
+        bookImg.src = bookList[i].img;
+        bookImg.style.width = '100px';
+        bookImg.style.height = '100px';
+        list.style.listStyle = 'none';
+        listItem.appendChild(bookImg);
+        const bookDesc = document.createTextNode(
+          `title ${bookList[i].title} wrote by ${bookList[i].author}`,
+        );
+        listItem.appendChild(bookDesc);
+        list.appendChild(listItem);
+        if (bookList[i].alreadyRead === 'false') {
+          listItem.style.color = 'pink';
+        }
+      }
+      document.body.appendChild(list);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>About Me</title>
+    <style>
+      .listitem {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>About Me</h1>
+
+    <ul>
+      <li>Nickname: <span id="nickname"></span></li>
+      <li>Favorites: <span id="favorites"></span></li>
+      <li>Hometown: <span id="hometown"></span></li>
+    </ul>
+    <script>
+      document.body.style.fontFamily = 'Arial, sans-serif';
+      const nickName = document.getElementById('nickname');
+      nickName.innerHTML = 'Tiger';
+      const favorites = document.getElementById('favorites');
+      favorites.innerHTML = 'Eat human';
+      const homeTown = document.getElementById('hometown');
+      homeTown.innerHTML = 'Viet Nam';
+
+      const listItem = document.getElementsByTagName('li');
+      for (let i = 0; i < listItem.length; i++) {
+        listItem[i].className = 'listitem';
+      }
+      var img = document.createElement('img');
+      img.src =
+        'https://images.pexels.com/photos/792381/pexels-photo-792381.jpeg?cs=srgb&dl=pexels-george-desipris-792381.jpg&fm=jpg';
+      document.body.appendChild(img);
+      img.style.width = '200px';
+      img.style.height = '200px';
+    </script>
+  </body>
+</html>
