@@ -40,5 +40,3 @@ function doHomework2(subject2, callback4) {
     callback4();
   }, 1000);
 }
-
-const promise = new Promise((resolve, reject) => {});

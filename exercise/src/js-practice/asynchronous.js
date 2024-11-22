@@ -30,6 +30,32 @@ myPromise
     console.log('Done');
   });
 
+// Promise executes even before then() method
+
+const promise1 = new Promise((resolve, reject) => {
+  console.log('Executing promise1');
+  resolve('Success');
+});
+
+promise1.then((result) => {
+  console.log('Promise resolved1', result);
+});
+
+console.log('Promise created1');
+
+//Delay Promise until then() method starts
+const promiseFunc = () =>
+  new Promise((resolve, reject) => {
+    console.log('Executing promise2');
+    resolve('Success');
+  });
+
+// promiseFunc().then((result) => {
+//   console.log('Promise resolved2:', result);
+// });
+
+console.log('Promise created2');
+
 //Priority
 
 Promise.resolve().then(() => {
@@ -66,3 +92,46 @@ async function calcPrice(basePrice, tax) {
   return actualPrice;
 }
 calcPrice(1000, 100);
+
+//use async/await to handle error
+
+const getData = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      reject(new Error('Error spotted'));
+    }, 2000);
+  });
+};
+const getUser = async () => {
+  try {
+    const value = await getData();
+    console.log(value);
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+getUser().then((value) => {
+  console.log(value);
+});
+// example 2:
+function avoidTax(a1, a2) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      reject(new Error('Tax evasion spotted. Need to pay now'));
+    }, 2000);
+  });
+}
+async function payTax(amountPaid, amountNeedstoPay) {
+  let taxAmount;
+  try {
+    taxAmount = await avoidTax(amountPaid, amountNeedstoPay);
+  } catch (error) {
+    console.log(`${error.message}`);
+    taxAmount = amountPaid + amountNeedstoPay;
+  }
+  console.log(`Total amount needs to pay: ${taxAmount}`);
+  return taxAmount;
+}
+
+payTax(1000, 2000);
