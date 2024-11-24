@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event Delegation practice</title>
+    <link rel="stylesheet" href="./event-delegation.css" />
+  </head>
+  <body>
+    <h1>Event Delegation</h1>
+    <h2>Ex1: Click to remove li tag</h2>
+    <form id="form">
+      <input type="text" class="username" placeholder="username" />
+      <input type="text" class="message" placeholder="message" />
+      <input type="submit" value="Send Message" />
+    </form>
+    <ul class="list_items">
+      <li>This is li tag 1</li>
+      <li>This is li tag 2</li>
+      <li>This is li tag 3</li>
+      <p>This is p tag</p>
+    </ul>
+    <hr />
+    <div id="container">
+      <h2>Ex2: Click [x] to remove section's content</h2>
+      <div class="pane">
+        <h3>Horse</h3>
+        <p>
+          The horse is one of two extant subspecies of Equus ferus. It is an odd-toed ungulate
+          mammal belonging to the taxonomic family Equidae. The horse has evolved over the past 45
+          to 55 million years from a small multi-toed creature, Eohippus, into the large,
+          single-toed animal of today.
+        </p>
+        <button class="remove-button">[x]</button>
+      </div>
+      <div class="pane">
+        <h3>Donkey</h3>
+        <p>
+          The donkey or ass (Equus africanus asinus) is a domesticated member of the horse family,
+          Equidae. The wild ancestor of the donkey is the African wild ass, E. africanus. The donkey
+          has been used as a working animal for at least 5000 years.
+        </p>
+        <button class="remove-button">[x]</button>
+      </div>
+      <div class="pane">
+        <h3>Cat</h3>
+        <p>
+          The domestic cat (Latin: Felis catus) is a small, typically furry, carnivorous mammal.
+          They are often called house cats when kept as indoor pets or simply cats when there is no
+          need to distinguish them from other felids and felines. Cats are often valued by humans
+          for companionship and for their ability to hunt vermin.
+        </p>
+        <button class="remove-button">[x]</button>
+      </div>
+    </div>
+    <hr />
+    <h2>Click button to show message and toggle button status</h2>
+    <div id="button-container">
+      <button class="button">Button 1</button>
+      <button class="button">Button 2</button>
+    </div>
+    <hr />
+    <button id="add-button">Add Button</button>
+    <hr />
+    <h2>Update user info in console log</h2>
+    <form id="user-form">
+      <input type="text" name="username" placeholder="Username" />
+      <input type="email" name="email" placeholder="Email" />
+      <input type="password" name="password" placeholder="Password" />
+    </form>
+    <script src="./event-delegation.js"></script>
+  </body>
+</html>
