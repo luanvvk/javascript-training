@@ -184,3 +184,52 @@ numbers.forEach((num) => console.log(num));
 
 const words = ['Hi', 'Hello', 'goodday'];
 words.forEach((word, i) => console.log(words[i] + ' ' + word.length));
+
+//closure example1
+function getName() {
+  let name = 'A';
+  return function () {
+    console.log(name);
+  };
+}
+let name = 'B';
+let userName = getName();
+userName();
+//example2:
+function outputMessage(firstName, lastName) {
+  function getFullName() {
+    return `${firstName} ${lastName}`;
+  }
+  console.log('Good morning, ' + getFullName());
+  console.log('Have a good day, ' + getFullName());
+}
+outputMessage('Luan', 'Vu');
+//How closure access variable in its lexical environment
+let globalVar = 'World';
+function greetHello(name) {
+  let outerFuncVar = 'Hello';
+  function speak() {
+    let localVar = `${outerFuncVar}, ${globalVar}. I am ${name}`;
+    console.log(localVar);
+  }
+  speak();
+}
+greetHello('Luan');
+
+//closure store variable of outer function by reference:
+function userId() {
+  let id = 1;
+  return {
+    getId: function () {
+      return id;
+    },
+    setId: function (_id) {
+      id = _id;
+    },
+  };
+}
+let myUser = userId();
+console.log(myUser.getId());
+
+myUser.setId(5);
+console.log(myUser.getId());
