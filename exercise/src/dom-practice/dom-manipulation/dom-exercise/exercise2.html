@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM Practice: Exercise 2</title>
+    <link rel="stylesheet" href="./exercise2.css" />
+  </head>
+  <body>
+    <article class="ex1">
+      <h1>Exercise 1</h1>
+      <p id="text">JavaScript Exercises - w3resource</p>
+      <div>
+        <button id="jsstyle" onclick="js_style()">Style</button>
+      </div>
+    </article>
+    <hr />
+    <article class="ex2">
+      <form id="form1" onsubmit="getFormValue()">
+        First name: <input type="text" name="fname" value="David" /><br />
+        Last name: <input type="text" name="lname" value="Beckham" /><br />
+        <input type="submit" value="Submit" />
+      </form>
+    </article>
+    <hr />
+    <article class="ex3">
+      <p class="paragraph">Lorem ipsum dolor sit amet.</p>
+      <p class="paragraph">Lorem ipsum dolor sit amet.</p>
+      <p class="paragraph">Lorem ipsum dolor sit amet.</p>
+      <button class="style-button" onclick="setColor()">
+        Click to change the text's background color
+      </button>
+    </article>
+    <hr />
+    <article class="ex4">
+      <p>
+        <a
+          id="w3r"
+          type="text/html"
+          hreflang="en-us"
+          rel="nofollow"
+          target="_self"
+          href="https://www.w3resource.com/"
+          >w3resource</a
+        >
+      </p>
+      <button onclick="getAttributes()">Click here to get attributes value</button>
+    </article>
+    <hr />
+    <article class="ex5">
+      <table id="sampleTable" border="1">
+        <tr>
+          <td>Row1 cell1</td>
+          <td>Row1 cell2</td>
+        </tr>
+        <tr>
+          <td>Row2 cell1</td>
+          <td>Row2 cell2</td>
+        </tr>
+      </table>
+      <br />
+      <input type="button" onclick="insert_row()" value="Insert row" />
+    </article>
+    <hr />
+    <article class="ex6">
+      <table id="myTable" border="1">
+        <tr>
+          <td>Row1 cell1</td>
+          <td>Row1 cell2</td>
+        </tr>
+        <tr>
+          <td>Row2 cell1</td>
+          <td>Row2 cell2</td>
+        </tr>
+        <tr>
+          <td>Row3 cell1</td>
+          <td>Row3 cell2</td>
+        </tr>
+      </table>
+      <form>
+        <input type="button" onclick="insert_row2()" value="Insert row" />
+        <input type="button" onclick="changeContent()" value="Change content" />
+      </form>
+    </article>
+    <hr />
+    <article class="ex7">
+      <table id="myTable2" border="1"></table>
+      <form>
+        <input type="button" onclick="createTable()" value="Create the table" />
+      </form>
+    </article>
+    <hr />
+    <article class="ex8">
+      <form>
+        <select id="colorSelect">
+          <option>Red</option>
+          <option>Green</option>
+          <option>White</option>
+          <option>Black</option>
+        </select>
+        <input type="button" onclick="removeOption()" value="Select and Remove" />
+        <input type="button" onclick="addOption()" value="Add Option" />
+      </form>
+    </article>
+    <hr />
+    <article class="ex9">
+      <form>
+        Select tour favorite color:
+        <select id="mySelect">
+          <option>Red</option>
+          <option>Green</option>
+          <option>Blue</option>
+          <option>White</option>
+        </select>
+        <input type="button" onclick="getOptions" value="Count and output all items" />
+      </form>
+    </article>
+    <script src="./exercise2.js"></script>
+  </body>
+</html>

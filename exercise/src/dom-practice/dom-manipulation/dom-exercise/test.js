@@ -119,4 +119,3 @@ function getAge(prop) {
 }
 const ageNumber = getAge('age');
 console.log(ageNumber);
-//
