@@ -97,3 +97,14 @@ function addOption() {
   newOption.appendChild(optionContent);
   document.getElementById('colorSelect').appendChild(newOption);
 }
+//Ex9
+function getOptions() {
+  const selectData = document.getElementById('mySelect');
+  let showText = 'Number of options : ';
+  let length = selectData.length;
+  showText += length;
+  for (let i = 0; i < length; i++) {
+    showText = showText + '\n' + selectData.options[i].text;
+  }
+  alert(showText);
+}
