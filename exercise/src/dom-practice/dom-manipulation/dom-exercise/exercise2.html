@@ -8,14 +8,16 @@
   </head>
   <body>
     <article class="ex1">
-      <h1>Exercise 1</h1>
+      <h1>Exercise 1: modify style of paragraph</h1>
       <p id="text">JavaScript Exercises - w3resource</p>
       <div>
         <button id="jsstyle" onclick="js_style()">Style</button>
       </div>
     </article>
     <hr />
+
     <article class="ex2">
+      <h2>Exercise 2: get values of First name and Last Name</h2>
       <form id="form1" onsubmit="getFormValue()">
         First name: <input type="text" name="fname" value="David" /><br />
         Last name: <input type="text" name="lname" value="Beckham" /><br />
@@ -23,7 +25,9 @@
       </form>
     </article>
     <hr />
+
     <article class="ex3">
+      <h2>Exercise 3: set background color</h2>
       <p class="paragraph">Lorem ipsum dolor sit amet.</p>
       <p class="paragraph">Lorem ipsum dolor sit amet.</p>
       <p class="paragraph">Lorem ipsum dolor sit amet.</p>
@@ -32,7 +36,9 @@
       </button>
     </article>
     <hr />
+
     <article class="ex4">
+      <h3>Exercise 4: get the attribute values</h3>
       <p>
         <a
           id="w3r"
@@ -47,7 +53,9 @@
       <button onclick="getAttributes()">Click here to get attributes value</button>
     </article>
     <hr />
+
     <article class="ex5">
+      <h3>Exercise 5: add rows to table</h3>
       <table id="sampleTable" border="1">
         <tr>
           <td>Row1 cell1</td>
@@ -62,7 +70,9 @@
       <input type="button" onclick="insert_row()" value="Insert row" />
     </article>
     <hr />
+
     <article class="ex6">
+      <h3>Exercise 6: Update a specific cell content</h3>
       <table id="myTable" border="1">
         <tr>
           <td>Row1 cell1</td>
@@ -79,18 +89,22 @@
       </table>
       <form>
         <input type="button" onclick="insert_row2()" value="Insert row" />
-        <input type="button" onclick="changeContent()" value="Change content" />
+        <input id="ex6-button" type="button" onclick="changeContent()" value="Change content" />
       </form>
     </article>
     <hr />
+
     <article class="ex7">
+      <h3>Exercise 7: create a table with updated cell content</h3>
       <table id="myTable2" border="1"></table>
       <form>
         <input type="button" onclick="createTable()" value="Create the table" />
       </form>
     </article>
     <hr />
+
     <article class="ex8">
+      <h3>Exercise 8: Remove items from dropdown list</h3>
       <form>
         <select id="colorSelect">
           <option>Red</option>
@@ -103,7 +117,9 @@
       </form>
     </article>
     <hr />
+
     <article class="ex9">
+      <h3>Exercise 9: count and display dropdown content</h3>
       <form>
         Select tour favorite color:
         <select id="mySelect">
@@ -114,6 +130,54 @@
         </select>
         <input type="button" onclick="getOptions()" value="Count and output all items" />
       </form>
+    </article>
+    <hr />
+
+    <article class="ex10">
+      <h3>Exercise 10: Input radius value and get the volume of the sphere</h3>
+      <form id="myForm" onsubmit="return false">
+        <label for="radius">Radius</label>
+        <input type="text" id="radius" name="radius" required />
+        <label for="volume">Volume</label>
+        <input type="text" id="volume" name="volume" />
+        <button id="submit" onclick="calculateVolume()">Submit</button>
+      </form>
+    </article>
+    <hr />
+
+    <article class="ex11">
+      <h3>Exercise 11: Show random images</h3>
+      <p>
+        Write a JavaScript program to display a random image (clicking on a button) from the
+        following list.
+      </p>
+      <button id="showImage" onclick="showImages()">Show Images</button>
+    </article>
+    <hr />
+
+    <article class="Ex12">
+      <h3>Exercise 12: Highlight bold words</h3>
+      <p>
+        [<a href="#" onMouseOver="highlight()" onMouseOut="normalState()"
+          >On mouse over here bold words of the following paragraph will be highlighted</a
+        >]
+      </p>
+      <p>
+        <strong>We</strong> have just started <strong>this</strong> section for the users (<strong
+          >beginner</strong
+        >
+        to intermediate) who <strong>want</strong> to work with <strong>various</strong> JavaScript
+        <strong>problems</strong> and write scripts online to <strong>test</strong> their JavaScript
+        <strong>skill</strong>.
+      </p>
+    </article>
+    <hr />
+
+    <article class="ex13">
+      <h3>Exercise 13: Print window's width and height as it resizes</h3>
+      <p>Get the window width and height when it is resize</p>
+      <p>Window height: <span id="height"></span></p>
+      <p>Window width: <span id="width"></span></p>
     </article>
     <script src="./exercise2.js"></script>
   </body>

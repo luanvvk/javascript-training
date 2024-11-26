@@ -64,13 +64,22 @@ function insert_row2() {
 }
 
 function changeContent() {
-  const rowInput = window.prompt('Choose the row number you want to change:', '0');
-  const columnInput = window.prompt('Choose the column number you want to change:', '0');
+  const rowInput = window.prompt('Choose the row number you want to change:', '0') - 1;
+  const columnInput = window.prompt('Choose the column number you want to change:', '0') - 1;
   const newContent = window.prompt('New content is:');
   const targetRow = document.getElementById('myTable').rows[parseInt(rowInput, 10)].cells;
   const targetCell = targetRow[parseInt(columnInput, 10)];
   targetCell.innerHTML = newContent;
 }
+/** let button = document.getElementById('ex6-button');
+button.addEventListener('click', changeCellContent);
+function changeCellContent() {
+  const rowInput = window.prompt('Choose the row number you want to change:', '0') - 1;
+  const columnInput = window.prompt('Choose the column number you want to change:', '0') - 1;
+  const newContent = window.prompt('New content is:');
+  document.querySelector('tr'[rowInput].children[columnInput]).textContent = newContent;
+}*/
+
 //Exercise 7:
 function createTable() {
   let rowInput = window.prompt('Input number of rows', 10);
@@ -85,8 +94,8 @@ function createTable() {
   }
 }
 //Exercise 8
+const targetOption = document.getElementById('colorSelect');
 function removeOption() {
-  const targetOption = document.getElementById('colorSelect');
   targetOption.remove(targetOption.selectedIndex);
 }
 function addOption() {
@@ -95,7 +104,7 @@ function addOption() {
   newOption.setAttribute('value', 'color');
   var optionContent = document.createTextNode(`${input}`);
   newOption.appendChild(optionContent);
-  document.getElementById('colorSelect').appendChild(newOption);
+  targetOption.appendChild(newOption);
 }
 //Ex9
 function getOptions() {
@@ -108,3 +117,69 @@ function getOptions() {
   }
   alert(showText);
 }
+
+//Ex10:
+function calculateVolume() {
+  const radius = document.getElementById('radius').value;
+  if (radius >= 0) {
+    let volume = (4 / 3) * Math.pow(radius, 3);
+    volume = volume.toFixed(4);
+    document.getElementById('volume').value = volume;
+  } else {
+    alert('Please key in a positive number');
+  }
+}
+//Ex11:
+function showImages() {
+  let images = [
+    {
+      link: 'http://farm4.staticflickr.com/3691/11268502654_f28f05966c_m.jpg',
+      width: '240',
+      height: '160',
+    },
+    {
+      link: 'http://farm1.staticflickr.com/33/45336904_1aef569b30_n.jpg',
+      width: '320',
+      height: '195',
+    },
+    {
+      link: 'http://farm6.staticflickr.com/5211/5384592886_80a512e2c9.jpg',
+      width: '500',
+      height: '343',
+    },
+  ];
+
+  let random = Math.floor(Math.random() * images.length);
+
+  let image = document.createElement('img');
+  image.src = images[random].link;
+  image.width = images[random].width;
+  image.height = images[random].height;
+
+  let displayImages = document.getElementsByTagName('img');
+  if (displayImages.length > 0) {
+    document.body.replaceChild(image, displayImages[0]);
+  } else {
+    document.body.appendChild(image);
+  }
+}
+//EX12:
+const boldItems = document.getElementsByTagName('strong');
+function highlight() {
+  for (let i = 0; i < boldItems.length; i++) {
+    boldItems[i].style.color = 'red';
+  }
+}
+function normalState() {
+  for (let i = 0; i < boldItems.length; i++) {
+    boldItems[i].style.color = 'black';
+  }
+}
+//Ex13:
+const currentHeight = document.querySelector('#height');
+const currentWidth = document.querySelector('#width');
+function showCurrentSize() {
+  currentHeight.textContent = window.innerHeight;
+  currentWidth.textContent = window.innerWidth;
+}
+window.onresize = showCurrentSize;

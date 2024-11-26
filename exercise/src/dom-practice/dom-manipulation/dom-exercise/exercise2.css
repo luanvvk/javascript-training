@@ -9,3 +9,10 @@
   color: blue;
   text-transform: uppercase;
 }
+label,
+input {
+  display: block;
+}
+img {
+  display: block;
+}
