@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign up Page</title>
+    <meta name="keywords" content="JavaScript Form Validation, Sample registration form" />
+    <meta name="description" content="This document is an example of JavaScript sign up " />
+    <link rel="stylesheet" href="./exercise3.css" />
+  </head>
+  <body>
+    <div class="container">
+      <form id="signup" class="form">
+        <h1 class="heading">Sign Up Page</h1>
+        <div class="form-field">
+          <span id="email-error" class="error-message"></span>
+          <label for="email">Email:</label>
+          <input type="email" name="email" id="email" autocomplete="off" />
+        </div>
+        <div class="form-field">
+          <span id="name-error" class="error-message"></span>
+          <label for="username">Username:</label>
+          <input type="text" name="username" id="username" autocomplete="off" />
+        </div>
+        <div class="form-field">
+          <span id="password" class="error-message"></span>
+          <label for="password">Password:</label>
+          <input type="password" name="password" id="password" autocomplete="off" />
+        </div>
+        <div class="form-field">
+          <span id="name-error" class="error-message"></span>
+          <label for="confirm-password">Confirm Password:</label>
+          <input type="password" name="confirm-password" id="confirm-password" autocomplete="off" />
+        </div>
+        <div class="form-field">
+          <input type="submit" class="signup" value="SignUp" />
+          <button class="reset">Reset</button>
+        </div>
+        <a href="javascript:void(0)" class="permalink">Back to index Page</a>
+      </form>
+    </div>
+    <script src="./exercise3.js"></script>
+  </body>
+</html>
