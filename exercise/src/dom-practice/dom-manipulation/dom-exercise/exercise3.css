@@ -42,7 +42,7 @@ body {
 }
 
 .form-field label {
-  display: block;
+  display: inline-block;
   margin-bottom: 10px;
 }
 

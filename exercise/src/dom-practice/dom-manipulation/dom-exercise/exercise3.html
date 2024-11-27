@@ -11,32 +11,34 @@
   <body>
     <div class="container">
       <form id="signup" class="form">
-        <h1 class="heading">Sign Up Page</h1>
+        <h1>Sign Up</h1>
         <div class="form-field">
-          <span id="email-error" class="error-message"></span>
-          <label for="email">Email:</label>
-          <input type="email" name="email" id="email" autocomplete="off" />
-        </div>
-        <div class="form-field">
-          <span id="name-error" class="error-message"></span>
           <label for="username">Username:</label>
+          <span id="error-username" class="error-message"></span>
           <input type="text" name="username" id="username" autocomplete="off" />
         </div>
+
         <div class="form-field">
-          <span id="password" class="error-message"></span>
+          <label for="email">Email:</label>
+          <span id="error-email" class="error-message"></span>
+          <input type="text" name="email" id="email" autocomplete="off" />
+        </div>
+
+        <div class="form-field">
           <label for="password">Password:</label>
+          <span id="error-password" class="error-message"></span>
           <input type="password" name="password" id="password" autocomplete="off" />
         </div>
+
         <div class="form-field">
-          <span id="name-error" class="error-message"></span>
           <label for="confirm-password">Confirm Password:</label>
+          <span id="error-confirm-password" class="error-message"></span>
           <input type="password" name="confirm-password" id="confirm-password" autocomplete="off" />
         </div>
-        <div class="form-field">
-          <input type="submit" class="signup" value="SignUp" />
-          <button class="reset">Reset</button>
+        <div authenticated-button>
+          <button type="submit" onclick="showDetail()">Submit</button>
+          <button onclick="resetForm()">Reset</button>
         </div>
-        <a href="javascript:void(0)" class="permalink">Back to index Page</a>
       </form>
     </div>
     <script src="./exercise3.js"></script>

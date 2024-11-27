@@ -7,15 +7,18 @@ const form = document.querySelector('#signup');
 
 const checkUsername = () => {
   let valid = false;
+
+  const username = usernameEl.value.trim();
+
   if (!isRequired(username)) {
-    showError(userName, 'Username cannot be blank');
-  } else if (/^\s+.*/.test(username) && /.*\s+$/.test(username) && /.*\s{2,}.*/.test(username)) {
+    showError(usernameEl, 'Username cannot be blank.');
+  } else if (isNameCorrect(username)) {
     showError(
-      userName,
-      'Please enter the correct format for Username (No leading or trailing spaces)',
+      usernameEl,
+      `Please enter the correct format for Username, no leading or trailing spaces`,
     );
   } else {
-    showSuccess(userName);
+    showSuccess(usernameEl);
     valid = true;
   }
   return valid;
@@ -23,8 +26,11 @@ const checkUsername = () => {
 
 const checkEmail = () => {
   let valid = false;
+  const email = emailEl.value.trim();
   if (!isRequired(email)) {
-    showError(emailEl, 'Email cannot be blank');
+    showError(emailEl, 'Email cannot be blank.');
+  } else if (!isEmailValid(email)) {
+    showError(emailEl, 'Email is not valid.');
   } else {
     showSuccess(emailEl);
     valid = true;
@@ -34,21 +40,29 @@ const checkEmail = () => {
 
 const checkPassword = () => {
   let valid = false;
+
+  const password = passwordEl.value.trim();
+
   if (!isRequired(password)) {
-    showError(passwordEl, 'Password cannot be blank');
-  } else if (!isPasswordSecured(password)) {
+    showError(passwordEl, 'Password cannot be blank.');
+  } else if (!isPasswordSecure(password)) {
     showError(
       passwordEl,
-      'Please enter the correct format for password, (8 characters at least one non-letter)',
+      'Please enter the correct format for password (8 characters at least one non-letter',
     );
   } else {
     showSuccess(passwordEl);
     valid = true;
   }
+
   return valid;
 };
+
 const checkConfirmPassword = () => {
   let valid = false;
+  const confirmPassword = confirmPasswordEl.value.trim();
+  const password = passwordEl.value.trim();
+
   if (!isRequired(confirmPassword)) {
     showError(
       confirmPasswordEl,
@@ -60,20 +74,27 @@ const checkConfirmPassword = () => {
     showSuccess(confirmPasswordEl);
     valid = true;
   }
+
   return valid;
 };
 
-const isRequired = (value) => (value === '' ? false : true);
-
-const isPasswordSecured = (password) => {
-  const re = new RegExp('^(?=.*?[#?!@$%^&*-])(?=.*?[0-9])(?=.{8,})');
-  return re.test(password);
+const isEmailValid = (email) => {
+  const re = /^[a-zA-Z0-9_.±]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/;
+  return re.test(email);
 };
 
-const input = document.getElementsByTagName('input');
+const isPasswordSecure = (password) => {
+  const re = new RegExp('^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})');
+  return re.test(password);
+};
+const isNameCorrect = (username) => {
+  const re = new RegExp('^(S+(?: S+)*$)');
+  return re.test(username);
+};
+const isRequired = (value) => (value === '' ? false : true);
+
 const showError = (input, message) => {
   const formField = input.parentElement;
-
   formField.classList.remove('success');
   formField.classList.add('error');
   const error = formField.querySelector('span');
@@ -84,21 +105,40 @@ const showSuccess = (input) => {
   const formField = input.parentElement;
   formField.classList.remove('error');
   formField.classList.add('success');
-
   const error = formField.querySelector('span');
   error.textContent = '';
 };
 
 form.addEventListener('submit', function (e) {
   e.preventDefault();
-  let isUserNameValid = checkUsername(),
+  let isUsernameValid = checkUsername(),
     isEmailValid = checkEmail(),
     isPasswordValid = checkPassword(),
     isConfirmPasswordValid = checkConfirmPassword();
-  let isFormValid = isUserNameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid;
+
+  let isFormValid = isUsernameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid;
   if (isFormValid) {
   }
 });
+
+function showDetail() {
+  const text = document.createElement('p');
+  const pText = document.createTextNode(
+    'Email:' +
+      emailEl.value +
+      '\n' +
+      'Username:' +
+      usernameEl.value +
+      '\n' +
+      'Password: ' +
+      passwordEl.value +
+      '\n' +
+      'Confirm Password: ' +
+      confirmPasswordEl.value,
+  );
+  text.appendChild(pText);
+  form.appendChild(text);
+}
 
 form.addEventListener('input', function (e) {
   switch (e.target.id) {
@@ -116,3 +156,6 @@ form.addEventListener('input', function (e) {
       break;
   }
 });
+function resetForm() {
+  form.reset();
+}
