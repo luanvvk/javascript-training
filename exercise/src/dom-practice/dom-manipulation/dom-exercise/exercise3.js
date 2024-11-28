@@ -1,24 +1,24 @@
-const usernameEl = document.querySelector('#username');
-const emailEl = document.querySelector('#email');
-const passwordEl = document.querySelector('#password');
-const confirmPasswordEl = document.querySelector('#confirm-password');
+const usernameInput = document.querySelector('#username');
+const emailInput = document.querySelector('#email');
+const passwordInput = document.querySelector('#password');
+const confirmPasswordInput = document.querySelector('#confirm-password');
 
 const form = document.querySelector('#signup');
 
 const checkUsername = () => {
   let valid = false;
 
-  const username = usernameEl.value.trim();
+  const usernameTestString = usernameInput.value;
 
-  if (!isRequired(username)) {
-    showError(usernameEl, 'Username cannot be blank.');
-  } else if (isNameCorrect(username)) {
+  if (!isEmpty(usernameTestString)) {
+    showError(usernameInput, 'Username cannot be blank.');
+  } else if (usernameTestString.includes(' ')) {
     showError(
-      usernameEl,
+      usernameInput,
       `Please enter the correct format for Username, no leading or trailing spaces`,
     );
   } else {
-    showSuccess(usernameEl);
+    showSuccess(usernameInput);
     valid = true;
   }
   return valid;
@@ -26,13 +26,13 @@ const checkUsername = () => {
 
 const checkEmail = () => {
   let valid = false;
-  const email = emailEl.value.trim();
-  if (!isRequired(email)) {
-    showError(emailEl, 'Email cannot be blank.');
-  } else if (!isEmailValid(email)) {
-    showError(emailEl, 'Email is not valid.');
+  const emailTestString = emailInput.value.trim();
+  if (!isEmpty(emailTestString)) {
+    showError(emailInput, 'Email cannot be blank.');
+  } else if (!isEmailValid(emailTestString)) {
+    showError(emailInput, 'Email is not valid.');
   } else {
-    showSuccess(emailEl);
+    showSuccess(emailInput);
     valid = true;
   }
   return valid;
@@ -41,17 +41,17 @@ const checkEmail = () => {
 const checkPassword = () => {
   let valid = false;
 
-  const password = passwordEl.value.trim();
+  const passwordTestString = passwordInput.value.trim();
 
-  if (!isRequired(password)) {
-    showError(passwordEl, 'Password cannot be blank.');
-  } else if (!isPasswordSecure(password)) {
+  if (!isEmpty(passwordTestString)) {
+    showError(passwordInput, 'Password cannot be blank.');
+  } else if (!isPasswordSecure(passwordTestString)) {
     showError(
-      passwordEl,
+      passwordInput,
       'Please enter the correct format for password (8 characters at least one non-letter',
     );
   } else {
-    showSuccess(passwordEl);
+    showSuccess(passwordInput);
     valid = true;
   }
 
@@ -60,39 +60,36 @@ const checkPassword = () => {
 
 const checkConfirmPassword = () => {
   let valid = false;
-  const confirmPassword = confirmPasswordEl.value.trim();
-  const password = passwordEl.value.trim();
+  const confirmPasswordTestString = confirmPasswordInput.value.trim();
+  const passwordTestString = passwordInput.value.trim();
 
-  if (!isRequired(confirmPassword)) {
+  if (!isEmpty(confirmPasswordTestString)) {
     showError(
-      confirmPasswordEl,
+      confirmPasswordInput,
       'Please enter the correct format for confirm password (8 characters at least one non-letter',
     );
-  } else if (password !== confirmPassword) {
-    showError(confirmPasswordEl, 'The password does not match');
+  } else if (passwordTestString !== confirmPasswordTestString) {
+    showError(confirmPasswordInput, 'The password does not match');
   } else {
-    showSuccess(confirmPasswordEl);
+    showSuccess(confirmPasswordInput);
     valid = true;
   }
 
   return valid;
 };
+//conditions
+const isEmpty = (value) => (value === '' ? false : true);
 
-const isEmailValid = (email) => {
+const isEmailValid = (emailTestString) => {
   const re = /^[a-zA-Z0-9_.±]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/;
-  return re.test(email);
+  return re.test(emailTestString);
 };
 
-const isPasswordSecure = (password) => {
+const isPasswordSecure = (passwordTestString) => {
   const re = new RegExp('^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})');
-  return re.test(password);
+  return re.test(passwordTestString);
 };
-const isNameCorrect = (username) => {
-  const re = new RegExp('^(S+(?: S+)*$)');
-  return re.test(username);
-};
-const isRequired = (value) => (value === '' ? false : true);
-
+//Status
 const showError = (input, message) => {
   const formField = input.parentElement;
   formField.classList.remove('success');
@@ -125,16 +122,16 @@ function showDetail() {
   const text = document.createElement('p');
   const pText = document.createTextNode(
     'Email:' +
-      emailEl.value +
+      emailInput.value +
       '\n' +
       'Username:' +
-      usernameEl.value +
+      usernameInput.value +
       '\n' +
       'Password: ' +
-      passwordEl.value +
+      passwordInput.value +
       '\n' +
       'Confirm Password: ' +
-      confirmPasswordEl.value,
+      confirmPasswordInput.value,
   );
   text.appendChild(pText);
   form.appendChild(text);
@@ -158,4 +155,8 @@ form.addEventListener('input', function (e) {
 });
 function resetForm() {
   form.reset();
+  const formField = document.getElementsByClassName('form-field');
+  for (let i = 0; i < formField.length; i++) {
+    formField[i].classList.remove('error');
+  }
 }
