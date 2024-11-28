@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Table manipulation</title>
+    <link rel="stylesheet" href="./table-manipulation.css" />
+  </head>
+  <body>
+    <table>
+      <thead>
+        <tr>
+          <th>Task name</th>
+          <th>Status(done/planned)</th>
+          <th>Controls</th>
+        </tr>
+      </thead>
+      <tbody class="task-body"></tbody>
+    </table>
+    <form class="add-task" action="javascript:void(0)">
+      <input type="text" name="task-name" id="task-name" placeholder="Task Name" />
+      <select name="pomodoro-count" id="pomodoro-count">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+      <button class="submit">Submit</button>
+    </form>
+    <script src="./table-manipulation.js"></script>
+  </body>
+</html>

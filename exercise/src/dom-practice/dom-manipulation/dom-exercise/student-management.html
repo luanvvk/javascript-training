@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Management</title>
+    <link rel="stylesheet" href="./student-management.css" />
+  </head>
+  <body>
+    <div class="student-form">
+      <h1 class="form-header">Student info</h1>
+      <div class="field-form">
+        <label for="fullname">Full Name</label>
+        <input type="text" id="fullname" />
+        <span id="fullname-error" class="error-message"></span>
+      </div>
+      <div class="field-form">
+        <label for="email">Email</label>
+        <input type="text" id="email" />
+        <span id="fullname-error" class="error-message"></span>
+      </div>
+      <div class="field-form">
+        <label for="phone-number">Phone number</label>
+        <input type="text" id="phone-number" />
+        <span id="fullname-error" class="error-message"></span>
+      </div>
+      <div class="field-form">
+        <label for="address">Address</label>
+        <input type="text" id="address" />
+        <span id="fullname-error" class="error-message"></span>
+      </div>
+      <div class="field-form">
+        <label for="gender">Gender</label>
+        <input type="radio" name="gender" id="male" value="1" /> Male
+        <input type="radio" name="gender" id="female" value="2" /> Female
+      </div>
+      <button class="submit" onclick="submitData()">Submit</button>
+    </div>
+    <div class="student-list">
+      <h2 class="list-heading">Student Management List</h2>
+      <table>
+        <tr>
+          <th>Number</th>
+          <th>Student's name</th>
+          <th>Student's email</th>
+          <th>Gender</th>
+          <th>Phone number</th>
+          <th>Address</th>
+          <th></th>
+        </tr>
+      </table>
+    </div>
+    <script src="./student-management.js"></script>
+  </body>
+</html>

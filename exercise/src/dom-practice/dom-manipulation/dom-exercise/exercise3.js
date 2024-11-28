@@ -105,7 +105,7 @@ const showSuccess = (input) => {
   const error = formField.querySelector('span');
   error.textContent = '';
 };
-
+//validation
 form.addEventListener('submit', function (e) {
   e.preventDefault();
   let isUsernameValid = checkUsername(),
@@ -117,7 +117,7 @@ form.addEventListener('submit', function (e) {
   if (isFormValid) {
   }
 });
-
+//print the user data
 function showDetail() {
   const text = document.createElement('p');
   const pText = document.createTextNode(
@@ -136,7 +136,7 @@ function showDetail() {
   text.appendChild(pText);
   form.appendChild(text);
 }
-
+//validate in each input
 form.addEventListener('input', function (e) {
   switch (e.target.id) {
     case 'username':
@@ -153,6 +153,7 @@ form.addEventListener('input', function (e) {
       break;
   }
 });
+//reset
 function resetForm() {
   form.reset();
   const formField = document.getElementsByClassName('form-field');
