@@ -55,3 +55,6 @@
 .error-message {
   color: red;
 }
+button {
+  display: block;
+}

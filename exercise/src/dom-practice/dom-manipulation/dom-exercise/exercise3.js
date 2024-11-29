@@ -1,5 +1,5 @@
 const usernameInput = document.querySelector('#username');
-const emailInput = document.querySelector('#email');
+const email = document.querySelector('#email');
 const passwordInput = document.querySelector('#password');
 const confirmPasswordInput = document.querySelector('#confirm-password');
 
@@ -26,13 +26,13 @@ const checkUsername = () => {
 
 const checkEmail = () => {
   let valid = false;
-  const emailTestString = emailInput.value.trim();
+  const emailTestString = email.value.trim();
   if (!isEmpty(emailTestString)) {
-    showError(emailInput, 'Email cannot be blank.');
+    showError(email, 'Email cannot be blank.');
   } else if (!isEmailValid(emailTestString)) {
-    showError(emailInput, 'Email is not valid.');
+    showError(email, 'Email is not valid.');
   } else {
-    showSuccess(emailInput);
+    showSuccess(email);
     valid = true;
   }
   return valid;
@@ -122,7 +122,7 @@ function showDetail() {
   const text = document.createElement('p');
   const pText = document.createTextNode(
     'Email:' +
-      emailInput.value +
+      email.value +
       '\n' +
       'Username:' +
       usernameInput.value +
