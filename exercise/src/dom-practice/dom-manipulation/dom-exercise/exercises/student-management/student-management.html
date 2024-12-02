@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Student Management</title>
-    <link rel="stylesheet" href="./student-management.css" />
+    <link rel="stylesheet" href="student-management.css" />
   </head>
   <body onload="renderStudentList()">
-    <form class="student-form">
+    <form id="student-form">
       <h1 class="form-header">Student info</h1>
       <div class="form-field">
         <label for="fullname">Full Name</label>
@@ -41,6 +41,7 @@
       <table id="student-grids">
         <thead>
           <tr>
+            <th>Student number</th>
             <th>Student's name</th>
             <th>Student's email</th>
             <th>Gender</th>
@@ -52,7 +53,7 @@
         <tbody id="data-list"></tbody>
       </table>
     </div>
-    <script src="./student-management.js"></script>
     <script src="./student-validation.js"></script>
+    <script src="./student-management.js"></script>
   </body>
 </html>

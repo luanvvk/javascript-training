@@ -26,6 +26,7 @@ function renderStudentList() {
     let genderLabel = parseInt(student.gender) === 1 ? 'Male' : 'Female';
 
     const row = `<tr >
+                <td>${index + 1}</td> 
                 <td>${student.fullname}</td>
                 <td>${student.email}</td>
                 <td>${genderLabel}</td>
@@ -41,8 +42,8 @@ function renderStudentList() {
 
   form.reset();
 }
-//Handle add/edit event
-let form = document.querySelector('.student-form');
+//Handle main event which contains add/edit function
+
 form.addEventListener('submit', function (event) {
   event.preventDefault();
   let isFullNameValid = checkFullName();
@@ -55,13 +56,18 @@ form.addEventListener('submit', function (event) {
     isFullNameValid && isEmailValid && isPhoneNumCorrect && isAddressCorrect && isGenderValid;
   if (isFormValid) {
   }
-
-  if (currentIndex !== -1) {
-    students[currentIndex] = { fullname, email, phone, address, gender };
+  if (currentIndex == -1) {
+    addStudent(fullname, email, phone, address, gender);
+  } else {
+    students[currentIndex] = {
+      fullname: fullname.value,
+      email: email.value,
+      phone: phone.value,
+      address: address.value,
+      gender,
+    };
     currentIndex = -1;
     document.querySelector('button[type="submit"]').innerHTML = 'Submit';
-  } else {
-    addStudent(fullname, email, phone, address, gender);
   }
   localStorage.setItem('students', JSON.stringify(students));
   renderStudentList();
@@ -74,16 +80,12 @@ function deleteStudent(id) {
     : [];
 
   students.splice(id, 1);
-
   localStorage.setItem('students', JSON.stringify(students));
   renderStudentList();
 }
 //Edit student
 let currentIndex = -1;
 function editStudent(index) {
-  let students = localStorage.getItem('students')
-    ? JSON.parse(localStorage.getItem('students'))
-    : [];
   const student = students[index];
   document.getElementById('fullname').value = student.fullname;
   document.getElementById('email').value = student.email;

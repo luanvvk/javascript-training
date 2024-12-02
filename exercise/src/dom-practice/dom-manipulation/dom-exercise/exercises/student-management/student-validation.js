@@ -4,7 +4,7 @@ let phone = document.getElementById('phone-number');
 let address = document.getElementById('address');
 const male = document.querySelector('#male');
 const female = document.querySelector('#female');
-
+//check name
 const checkFullName = () => {
   let valid = false;
   const fullnameTestString = fullname.value;
@@ -18,7 +18,7 @@ const checkFullName = () => {
   }
   return valid;
 };
-
+//check email
 const checkEmail = () => {
   let valid = false;
   const emailTestString = email.value.trim();
@@ -31,7 +31,7 @@ const checkEmail = () => {
     valid = true;
   }
 };
-
+//check address
 const checkAddress = () => {
   let valid = false;
   const addressTestString = address.value.trim();
@@ -42,7 +42,7 @@ const checkAddress = () => {
     valid = true;
   }
 };
-
+//Assign gender
 let gender = '';
 function setValue1() {
   male.value = 1;
@@ -62,7 +62,7 @@ const checkGender = () => {
     valid = true;
   }
 };
-
+//check gender
 const checkPhoneNumber = () => {
   let valid = false;
   const phoneNumTestString = phone.value;
@@ -77,7 +77,7 @@ const checkPhoneNumber = () => {
     valid = true;
   }
 };
-
+//Validation conditions
 const isEmpty = (value) => (value === '' ? false : true);
 const isEmailValid = (emailTestString) => {
   const testString = /^[a-zA-Z0-9_.±]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/;
@@ -87,6 +87,7 @@ const isPhoneNumberCorrect = (phoneNumTestString) => {
   const testString = /^[0-9]+$/;
   return testString.test(phoneNumTestString);
 };
+//Error/success message controls
 const showError = (input, message) => {
   const formField = input.parentElement;
   formField.classList.remove('success');
@@ -102,8 +103,8 @@ const showSuccess = (input) => {
   const success = formField.querySelector('span');
   success.textContent = '';
 };
-
-let form = document.getElementById('form');
+//validation control for each input
+let form = document.getElementById('student-form');
 form.addEventListener('input', function (e) {
   switch (e.target.id) {
     case 'fullname':
