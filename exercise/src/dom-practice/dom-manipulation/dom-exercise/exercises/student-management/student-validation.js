@@ -102,6 +102,8 @@ const showSuccess = (input) => {
   const success = formField.querySelector('span');
   success.textContent = '';
 };
+
+let form = document.getElementById('form');
 form.addEventListener('input', function (e) {
   switch (e.target.id) {
     case 'fullname':

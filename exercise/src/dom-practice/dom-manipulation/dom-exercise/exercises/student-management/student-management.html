@@ -38,7 +38,19 @@
     </form>
     <div class="student-list" id="student-list">
       <h2 class="list-heading">Student Management List</h2>
-      <table id="student-grids"></table>
+      <table id="student-grids">
+        <thead>
+          <tr>
+            <th>Student's name</th>
+            <th>Student's email</th>
+            <th>Gender</th>
+            <th>Phone number</th>
+            <th>Address</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="data-list"></tbody>
+      </table>
     </div>
     <script src="./student-management.js"></script>
     <script src="./student-validation.js"></script>
