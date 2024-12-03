@@ -4,7 +4,7 @@
 
 Welcome to my first Javascript personal project. In this topic, I will make a Task manager app which helps 
 user to create a workspace and manage the work progress. You can find the all the links needed at the end of this file.
-The objectives of this project is to apply the Javascript knowlegde to handle the CRUD operation by managing the add/edit/delete feature. Sorting and searching features are also included to inprove the user experience.
+The objectives of this project is to apply the Javascript knowlegde to handle the CRUD operations by managing the add/edit/delete features. Sorting and searching features are also included to improve the user experience.
 
 ## Timeline
 - 03/12/2024 - 17/12/2024 ( 10 days ).
@@ -27,7 +27,7 @@ The objectives of this project is to apply the Javascript knowlegde to handle th
 - Get familiar with Google Chrome DevTools for debugging issues (breakpoints, variables, etc).
 - Apply ESLint
 - Solve all errors/warnings from ESLint.
-- Understand ESLint rules and don’t turn them off to resolve current issues.
+- Understand ESLint rules and donot turn them off to resolve current issues.
 - Deploy to the hosting 
 
 ## Prerequisite
@@ -84,4 +84,4 @@ I welcome any and all contribution! If you have found or encountered any bugs or
 * [Vercel] To be Updated later
 
 - - -
-Special thanks to my mentor Mr. Minh Tran and my supporter Mr. Thinh Nguyen who provides me all the useful help and support throughout my training session. It is my pleasure to work with you guys!
+Special thanks to my mentor Mr. Minh Tran and my supporter Mr. Thinh Nguyen who provide me all the useful help and support throughout my training session. It is my pleasure to work with you guys!
