@@ -78,10 +78,10 @@ npm install
 I welcome any and all contribution! If you have found or encountered any bugs or issues, please let me know. Any recommendation is also welcomed.
 
 ## Helpful links
-*[Figma](https://www.figma.com/design/bZ132elejbBkNDGjjJv1LV/To-do-app-(Community)?node-id=0-1&node-type=canvas&t=N5Fr5LedX5y4dyMg-0)
-*[My training plan](https://docs.google.com/document/d/1TmYnP4evVCyk5F13-RHz-_v7h_Y3GzVAkbjfygDzA7E/edit?tab=t.0)
-*[Practice plan](https://docs.google.com/document/d/1U-JRbIMtS5zqsofBnOHf1ejXjaaYGXPoqlN6NsMH02s/edit?tab=t.0)
-*[Vercel] To be Updated later
+* [Figma](https://www.figma.com/design/bZ132elejbBkNDGjjJv1LV/To-do-app-(Community)?node-id=0-1&node-type=canvas&t=N5Fr5LedX5y4dyMg-0)
+* [My training plan](https://docs.google.com/document/d/1TmYnP4evVCyk5F13-RHz-_v7h_Y3GzVAkbjfygDzA7E/edit?tab=t.0)
+* [Practice plan](https://docs.google.com/document/d/1U-JRbIMtS5zqsofBnOHf1ejXjaaYGXPoqlN6NsMH02s/edit?tab=t.0)
+* [Vercel] To be Updated later
 
 - - -
 Special thanks to my mentor Mr. Minh Tran and my supporter Mr. Thinh Nguyen who provides me all the useful help and support throughout my training session. It is my pleasure to work with you guys!
