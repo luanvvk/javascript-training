@@ -1,0 +1,7 @@
+.parcel-cache/
+dist/
+node_modules/
+.cache/
+node_modules
+public/
+exercise/
