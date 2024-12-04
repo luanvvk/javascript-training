@@ -105,21 +105,106 @@
         <div class="create-task-popup">
           <p class="popup-heading">Create your task</p>
           <form class="form" autocomplete="off">
-            <label class="label" for="task-name">Task title</label>
             <div class="task-name">
-              <input
-                type="text"
-                name="task-name"
-                id="task-name-input"
-                class="task-name-input"
-                required
-              />
-              <img
-                class="task-name-icon"
-                src="./assests/images/icons/create-task-modal-icon/task-title-icon.svg"
-                alt="task-name-icon"
-              />
+              <h2 class="label">Task title</h2>
+              <div class="task-name-container">
+                <input
+                  type="text"
+                  name="task-name"
+                  id="task-name-input"
+                  class="task-name-input"
+                  required
+                />
+                <img
+                  class="task-name-icon"
+                  src="./assests/images/icons/create-task-modal-icon/task-title-icon.svg"
+                  alt="task-name-icon"
+                />
+              </div>
             </div>
+
+            <div class="task-status">
+              <h2 class="label">Status</h2>
+              <div id="status-select" class="status-select">
+                <span class="circle background-pink"></span>
+                <span class="default-option">To do</span>
+                <img
+                  class="task-category-icon"
+                  src="./assests/images/icons/create-task-modal-icon/priority-icon.svg"
+                  alt="task-category-icon"
+                />
+              </div>
+              <ul id="status-dropdown" class="status-dropdown">
+                <li>
+                  <input
+                    type="radio"
+                    id="to-do-radio"
+                    name="status-option"
+                    value="To do"
+                    class="radio-input"
+                  />
+                  <label for="to-do-radio" class="radio-label">
+                    <span class="circle background-pink"></span
+                    ><span class="status-options">To do</span>
+                  </label>
+                </li>
+                <li>
+                  <input
+                    type="radio"
+                    id="doing-radio"
+                    name="status-option"
+                    value="Doing"
+                    class="radio-input"
+                  />
+                  <label for="doing-radio" class="radio-label">
+                    <span class="circle background-blue"></span
+                    ><span class="status-options">Doing</span>
+                  </label>
+                </li>
+                <li>
+                  <input
+                    type="radio"
+                    id="done-radio"
+                    name="status-option"
+                    value="Done"
+                    class="radio-input"
+                  />
+                  <label for="done-radio" class="radio-label">
+                    <span class="circle background-green"></span
+                    ><span class="status-options">Done</span>
+                  </label>
+                </li>
+              </ul>
+            </div>
+
+            <div class="task-start">
+              <h2 class="label">Start date</h2>
+              <div class="task-start-container">
+                <input
+                  type="text"
+                  name="task-start"
+                  id="task-start-input"
+                  class="task-start-input"
+                />
+                <img
+                  class="task-start-icon"
+                  src="./assests/images/icons/create-task-modal-icon/end-date-icon.svg"
+                  alt="task-start-icon"
+                />
+              </div>
+            </div>
+            <div class="task-end">
+              <h2 class="label">End date</h2>
+              <div class="task-end-container">
+                <input type="text" name="task-end" id="task-end-input" class="task-end-input" />
+                <img
+                  class="task-end-icon"
+                  src="./assests/images/icons/create-task-modal-icon/end-date-icon.svg"
+                  alt="task-end-icon"
+                />
+              </div>
+            </div>
+
             <div class="task-priority">
               <h2 class="label">Priority</h2>
               <div id="priority-select" class="priority-select">
@@ -168,24 +253,6 @@
                   </label>
                 </li>
               </ul>
-            </div>
-            <label class="label" for="task-start">Start date</label>
-            <div class="task-start">
-              <input type="text" name="task-start" id="task-start-input" class="task-start-input" />
-              <img
-                class="task-start-icon"
-                src="./assests/images/icons/create-task-modal-icon/end-date-icon.svg"
-                alt="task-start-icon"
-              />
-            </div>
-            <label class="label" for="task-end">End date</label>
-            <div class="task-end">
-              <input type="text" name="task-end" id="task-end-input" class="task-end-input" />
-              <img
-                class="task-end-icon"
-                src="./assests/images/icons/create-task-modal-icon/end-date-icon.svg"
-                alt="task-end-icon"
-              />
             </div>
             <div class="task-category-input">
               <h2 class="label">Category</h2>
@@ -236,74 +303,21 @@
                 </li>
               </ul>
             </div>
-
-            <div class="task-status">
-              <h2 class="label">Status</h2>
-              <div id="status-select" class="status-select">
-                <span class="default-option">To do</span>
-                <img
-                  class="task-category-icon"
-                  src="./assests/images/icons/create-task-modal-icon/priority-icon.svg"
-                  alt="task-category-icon"
-                />
-              </div>
-              <ul id="status-dropdown" class="status-dropdown">
-                <li>
-                  <input
-                    type="radio"
-                    id="to-do-radio"
-                    name="status-option"
-                    value="To do"
-                    class="radio-input"
-                  />
-                  <label for="to-do-radio" class="radio-label">
-                    <span class="circle background-pink"></span
-                    ><span class="status-options">To do</span>
-                  </label>
-                </li>
-                <li>
-                  <input
-                    type="radio"
-                    id="doing-radio"
-                    name="status-option"
-                    value="Doing"
-                    class="radio-input"
-                  />
-                  <label for="doing-radio" class="radio-label">
-                    <span class="circle background-blue"></span
-                    ><span class="status-options">Doing</span>
-                  </label>
-                </li>
-                <li>
-                  <input
-                    type="radio"
-                    id="done-radio"
-                    name="status-option"
-                    value="Done"
-                    class="radio-input"
-                  />
-                  <label for="done-radio" class="radio-label">
-                    <span class="circle background-green"></span
-                    ><span class="status-options">Done</span>
-                  </label>
-                </li>
-              </ul>
-            </div>
-            <div class="task-desc">
-              <label for="description" class="label">Task description</label>
-              <textarea
-                name="description"
-                id="description"
-                rows="8"
-                class="textarea-input"
-                required
-              ></textarea>
-            </div>
-            <div>
-              <button class="add-task-button" type="submit">Add to list</button>
-              <button class="cancel-button">Cancel</button>
-            </div>
           </form>
+          <div class="task-desc">
+            <label for="description" class="label">Task description</label>
+            <textarea
+              name="description"
+              id="description"
+              rows="8"
+              class="textarea-input"
+              placeholder="Write important notes"
+            ></textarea>
+          </div>
+          <div class="button-controls">
+            <button class="add-task-button" type="submit">Add to list</button>
+            <button class="cancel-button">Cancel</button>
+          </div>
         </div>
       </section>
     </div>
