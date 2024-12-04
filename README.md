@@ -1,4 +1,4 @@
-# [Luan Vu] Javascript Practice 
+## Javascript Practice 
 
 ## Overview
 
@@ -67,7 +67,7 @@ npm install
 - Run the app:
   
 ```
-
+npm run start index.html
 ```
 
 - Server running at http://localhost:1234
