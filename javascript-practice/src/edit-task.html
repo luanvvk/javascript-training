@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit tasks</title>
+    <link rel="stylesheet" href="./styles/normalize.css" />
+    <link rel="stylesheet" href="./styles/component.css" />
+    <link rel="stylesheet" href="./styles/typography.css" />
+    <link rel="stylesheet" href="./styles/base.css" />
+    <link rel="stylesheet" href="./styles/style.css" />
+  </head>
+  <body>
+    <div class="edit-popup">
+      <form class="form" autocomplete="off">
+        <div class="task-name">
+          <h2 class="label">Task title</h2>
+          <div class="task-name-container">
+            <input
+              type="text"
+              name="task-name"
+              id="task-name-input"
+              class="task-name-input"
+              required
+            />
+            <img
+              class="task-name-icon"
+              src="./assests/images/icons/create-task-modal-icon/task-title-icon.svg"
+              alt="task-name-icon"
+            />
+          </div>
+        </div>
+
+        <div class="task-status">
+          <h2 class="label">Status</h2>
+          <div id="status-select" class="status-select">
+            <span class="circle background-pink"></span>
+            <span class="default-option">To do</span>
+            <img
+              class="task-category-icon"
+              src="./assests/images/icons/create-task-modal-icon/priority-icon.svg"
+              alt="task-category-icon"
+            />
+          </div>
+          <ul id="status-dropdown" class="status-dropdown">
+            <li>
+              <input
+                type="radio"
+                id="to-do-radio"
+                name="status-option"
+                value="To do"
+                class="radio-input"
+              />
+              <label for="to-do-radio" class="radio-label">
+                <span class="circle background-pink"></span
+                ><span class="status-options">To do</span>
+              </label>
+            </li>
+            <li>
+              <input
+                type="radio"
+                id="doing-radio"
+                name="status-option"
+                value="Doing"
+                class="radio-input"
+              />
+              <label for="doing-radio" class="radio-label">
+                <span class="circle background-blue"></span
+                ><span class="status-options">Doing</span>
+              </label>
+            </li>
+            <li>
+              <input
+                type="radio"
+                id="done-radio"
+                name="status-option"
+                value="Done"
+                class="radio-input"
+              />
+              <label for="done-radio" class="radio-label">
+                <span class="circle background-green"></span
+                ><span class="status-options">Done</span>
+              </label>
+            </li>
+          </ul>
+        </div>
+
+        <div class="task-start">
+          <h2 class="label">Start date</h2>
+          <div class="task-start-container">
+            <input type="text" name="task-start" id="task-start-input" class="task-start-input" />
+            <img
+              class="task-start-icon"
+              src="./assests/images/icons/create-task-modal-icon/end-date-icon.svg"
+              alt="task-start-icon"
+            />
+          </div>
+        </div>
+        <div class="task-end">
+          <h2 class="label">End date</h2>
+          <div class="task-end-container">
+            <input type="text" name="task-end" id="task-end-input" class="task-end-input" />
+            <img
+              class="task-end-icon"
+              src="./assests/images/icons/create-task-modal-icon/end-date-icon.svg"
+              alt="task-end-icon"
+            />
+          </div>
+        </div>
+
+        <div class="task-priority">
+          <h2 class="label">Priority</h2>
+          <div id="priority-select" class="priority-select">
+            <span class="default-option">Important</span>
+            <img
+              class="task-priority-icon"
+              src="./assests/images/icons/create-task-modal-icon/priority-icon.svg"
+              alt="task-priority-icon"
+            />
+          </div>
+          <ul id="status-dropdown" class="status-dropdown">
+            <li>
+              <input
+                type="radio"
+                id="not-urgent-radio"
+                name="status-option"
+                value="not-urgent"
+                class="radio-input"
+              />
+              <label for="not-urgent-radio" class="radio-label">
+                <span class="priority-options">Not urgent</span>
+              </label>
+            </li>
+            <li>
+              <input
+                type="radio"
+                id="urgent-radio"
+                name="status-option"
+                value="urgent"
+                class="radio-input"
+              />
+              <label for="urgent-radio" class="radio-label">
+                <span class="priority-options">Urgent task</span>
+              </label>
+            </li>
+            <li>
+              <input
+                type="radio"
+                id="important-radio"
+                name="status-option"
+                value="important-task"
+                class="radio-input"
+              />
+              <label for="important-radio" class="radio-label">
+                <span class="priority-options">Important</span>
+              </label>
+            </li>
+          </ul>
+        </div>
+        <div class="task-category-input">
+          <h2 class="label">Category</h2>
+          <div id="category-select" class="category-select">
+            <span class="default-option">Daily task</span>
+            <img
+              class="task-category-icon"
+              src="./assests/images/icons/create-task-modal-icon/priority-icon.svg"
+              alt="task-category-icon"
+            />
+          </div>
+          <ul id="status-dropdown" class="status-dropdown">
+            <li>
+              <input
+                type="radio"
+                id="daily-task-radio"
+                name="status-option"
+                value="daily-task"
+                class="radio-input"
+              />
+              <label for="daily-task-radio" class="radio-label">
+                <span class="category-options">Daily Task</span>
+              </label>
+            </li>
+            <li>
+              <input
+                type="radio"
+                id="weekly-task-radio"
+                name="status-option"
+                value="weekly-task"
+                class="radio-input"
+              />
+              <label for="weekly-task-radio" class="radio-label">
+                <span class="category-options">Weekly task</span>
+              </label>
+            </li>
+            <li>
+              <input
+                type="radio"
+                id="monthly-task-radio"
+                name="status-option"
+                value="Monthly-task"
+                class="radio-input"
+              />
+              <label for="monthly-task-radio" class="radio-label">
+                <span class="category-options">Monthly task</span>
+              </label>
+            </li>
+          </ul>
+        </div>
+      </form>
+      <div class="task-desc">
+        <label for="description" class="label">Task description</label>
+        <textarea
+          name="description"
+          id="description"
+          rows="8"
+          class="textarea-input"
+          placeholder="Write important notes"
+        ></textarea>
+      </div>
+      <div class="edit-controls">
+        <button class="edit-task-button" type="submit">Confirm edit</button>
+        <button class="cancel-button">Cancel</button>
+        <button class="move-task-button" type="submit">
+          <img
+            class="move-task-icon"
+            src="./assests/images/icons/task-edit-modal-icons/mark-as-completed-icon.svg"
+            alt=""
+          />
+          Mark as completed
+        </button>
+        <button class="delete-button">
+          <img
+            class="delete-task-icon"
+            src="./assests/images/icons/task-edit-modal-icons/task-delete-icon.svg"
+            alt=""
+          />
+          Delete the task
+        </button>
+      </div>
+    </div>
+  </body>
+</html>

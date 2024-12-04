@@ -263,7 +263,7 @@ input[type='radio'] {
   justify-content: center;
   flex-wrap: wrap;
   gap: 10%;
-  padding: var(--space-64);
+  padding: var(--space-64) var(--space-64) var(--space-8);
 }
 .task-desc {
   display: flex;
@@ -295,9 +295,13 @@ input[type='radio'] {
 .button-controls {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   gap: var(--space-64);
 }
-.add-task-button {
+.add-task-button,
+.edit-task-button,
+.move-task-button,
+.delete-button {
   width: 20%;
   padding: var(--space-8) 0;
   background-color: var(--cyan-blue);
@@ -307,8 +311,11 @@ input[type='radio'] {
   font-weight: var(--regular-weight);
   color: var(--light-pink);
 }
+.add-task-button {
+  width: 30%;
+}
 .cancel-button {
-  width: 20%;
+  width: 30%;
   padding: var(--space-8) 0;
   background-color: var(--pink);
   border: var(--border-radius-3) solid var(--pink);
@@ -316,4 +323,20 @@ input[type='radio'] {
   font-size: var(--font-size-17);
   font-weight: var(--regular-weight);
   color: var(--black);
+}
+
+/*Edit popup*/
+.edit-popup {
+  max-width: 90rem;
+}
+.edit-task-button,
+.move-task-button,
+.delete-button {
+  width: 30%;
+}
+.edit-controls {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: var(--space-48);
 }
