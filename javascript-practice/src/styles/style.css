@@ -21,9 +21,8 @@
   flex: 1;
   width: 90%;
   background-color: var(--light-pink);
-  border-radius: var(--border-radius-6);
   padding: 0.4rem;
-
+  color: var(--cyan-blue);
   font-size: var(--font-size-11);
   font-weight: var(--regular-weight);
   opacity: 0.4;
@@ -165,13 +164,13 @@
   box-shadow: var(--green-shadow);
 }
 /*Create task*/
-.popup-heading {
+.all-tasks-popup .popup-heading {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 12rem;
-  margin: var(--space-64) var(--space-64) 0;
-  padding: var(--space-32);
+  margin: var(--space-32) 13%;
+
   border-radius: var(--border-radius-4);
   font-size: var(--font-size-38);
   font-weight: var(--bold-weight);
@@ -325,8 +324,7 @@ input[type='radio'] {
   color: var(--black);
 }
 
-/*Edit popup*/
-.edit-popup {
+Edit popup .edit-popup {
   max-width: 90rem;
 }
 .edit-task-button,
@@ -338,5 +336,80 @@ input[type='radio'] {
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
+  gap: var(--space-48);
+}
+/* Sort components */
+.category-sort {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-8);
+  padding: var(--space-8);
+  border: var(--border-radius-2) solid var(--cyan-blue);
+  border-radius: var(--border-radius-2);
+  color: var(--cyan-blue);
+  font-size: var(--font-size-13);
+  font-weight: var(--bold-weight);
+}
+.priority-sort {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-8);
+  padding: var(--space-8);
+  background-color: var(--cyan-blue);
+  border: var(--border-radius-2) solid var(--cyan-blue);
+  border-radius: var(--border-radius-2);
+  color: var(--light-pink);
+  font-size: var(--font-size-13);
+  font-weight: var(--bold-weight);
+}
+
+.search-bar-mini__input-bar {
+  display: flex;
+  flex-wrap: none;
+  width: 13rem;
+  min-height: 3rem;
+  padding: 4px;
+  background-color: var(--light-pink);
+  border-radius: var(--border-radius-6);
+  border: var(--border-radius-2) solid var(--cyan-blue);
+}
+
+.input-bar-mini__main-input {
+  border: none;
+  flex: 1;
+  width: 90%;
+  background-color: var(--light-pink);
+  padding: 0.4rem;
+  color: var(--cyan-blue);
+  font-size: var(--font-size-11);
+  font-weight: var(--regular-weight);
+  opacity: 0.4;
+  outline: none;
+}
+
+.actions-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 var(--space-64);
+  margin-top: var(--space-48);
+}
+.sort-buttons {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: var(--space-32);
+}
+.all-tasks-popup .task-area {
+  display: flex;
+}
+.all-tasks-popup .task-list {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   gap: var(--space-48);
 }

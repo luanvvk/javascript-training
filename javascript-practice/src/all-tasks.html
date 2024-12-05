@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All tasks</title>
+    <title>create task</title>
+    <link rel="stylesheet" href="./styles/normalize.css" />
+    <link rel="stylesheet" href="./styles/component.css" />
+    <link rel="stylesheet" href="./styles/typography.css" />
+    <link rel="stylesheet" href="./styles/base.css" />
+    <link rel="stylesheet" href="./styles/style.css" />
+  </head>
+  <body>
+    <div class="max-width-container">
+      <header class="header-section">
+        <a class="menu-bar" href="javascript:void(0)">
+          <img
+            class="menu-bar-icon"
+            src="./assests/images/icons/header-icons/menu-icon.svg"
+            alt="menu-bar-icon"
+            loading="lazy"
+          />
+        </a>
+        <div class="search-bar__input-bar">
+          <input
+            class="input-bar__main-input"
+            aria-label="search"
+            type="text"
+            name="search-task"
+            placeholder="Write your project name"
+          />
+          <img
+            class="input-bar__icon"
+            src="./assests/images/icons/header-icons/search-bar-icon.svg"
+            alt="search-icon"
+            loading="lazy"
+          />
+        </div>
+        <div class="utility-icons">
+          <a class="notification" href="javascript:void(0)">
+            <img
+              class="notification-icon"
+              src="./assests/images/icons/header-icons/notification-icon.svg"
+              alt="notification-icon"
+              loading="lazy"
+            />
+          </a>
+          <a class="theme" href="javascript:void(0)">
+            <img
+              class="theme-icon"
+              src="./assests/images/icons/header-icons/night-mode-icon.svg"
+              alt="theme-icon"
+              loading="lazy"
+            />
+          </a>
+          <a class="user-info" href="javascript:void(0)">
+            <img
+              class="user-icon"
+              src="./assests/images/icons/header-icons/user-icon.svg"
+              alt="user-icon"
+              loading="lazy"
+            />
+          </a>
+        </div>
+      </header>
+
+      <section class="side-menu">
+        <nav class="side-menu__navbar">
+          <ul>
+            <li>
+              <a class="dashboard" href="javascript:void(0)">
+                <img
+                  class="dash-board-icon"
+                  src="./assests/images/icons/menu-bar-icons/dashboard-icon.svg"
+                  alt="dashboard-icon"
+                  loading="lazy"
+                />
+                <h2 class="dashboard-heading">Dashboard</h2>
+              </a>
+            </li>
+            <li>
+              <a class="all-tasks" href="javascript:void(0)">
+                <img
+                  class="all-tasks-icon"
+                  src="./assests/images/icons/menu-bar-icons/all-task-icon.svg"
+                  alt="all-tasks-icon"
+                  loading="lazy"
+                />
+                <h2 class="all-tasks-heading">All Tasks</h2>
+              </a>
+            </li>
+            <li>
+              <a class="completed-tasks" href="javascript:void(0)">
+                <img
+                  class="completed-tasks-icon"
+                  src="./assests/images/icons/menu-bar-icons/completed-task-icon.svg"
+                  alt="completed-tasks-icon"
+                  loading="lazy"
+                />
+                <h2 class="completed-tasks-heading">Completed Tasks</h2>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="all-tasks-popup">
+          <h2 class="popup-heading">All tasks</h2>
+          <div class="actions-buttons">
+            <div class="sort-buttons">
+              <button class="category-sort">
+                By category
+                <img
+                  class="sort-icon"
+                  src="./assests/images/icons/sort-icons/sort-icon-cyan-blue.svg"
+                  alt="sort-icon"
+                />
+              </button>
+              <button class="priority-sort">
+                By priority
+                <img
+                  class="sort-icon"
+                  src="./assests/images/icons/sort-icons/sort-icon-pink.svg"
+                  alt="sort-icon"
+                />
+              </button>
+            </div>
+            <div class="search-bar-mini__input-bar">
+              <input
+                class="input-bar-mini__main-input"
+                aria-label="search"
+                type="text"
+                name="search-task"
+                placeholder="Search by name"
+              />
+              <img
+                class="input-bar__icon"
+                src="./assests/images/icons/header-icons/search-bar-icon.svg"
+                alt="search-icon"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          <div class="task-area">
+            <div class="completed-task-section">
+              <ul class="task-list">
+                <li class="task-item">
+                  <div class="task-item__details">
+                    <h3 class="task-item__heading">Task</h3>
+                    <h4 class="start-date">Start date:</h4>
+                    <h4 class="end-date">End date:</h4>
+                    <button class="confirm-button">
+                      <img
+                        class="button-icon"
+                        src="./assests/images/icons/task-icons/mark-as-completed-icon.svg"
+                        alt="button-icon"
+                        loading="lazy"
+                      />
+                      <h5 class="confirm-button-desc">Mark as completed</h5>
+                    </button>
+                  </div>
+                  <div class="task-item-actions">
+                    <a class="task-edit" href="javascript:void(0)">
+                      <img
+                        class="task-edit-icon"
+                        src="./assests/images/icons/task-icons/task-edit-icon.svg"
+                        alt="task-edit-icon"
+                      />
+                    </a>
+                    <a class="task-delete" href="javascript:void(0)">
+                      <img
+                        class="task-delete-icon"
+                        src="./assests/images/icons/task-icons/task-delete-icon.svg"
+                        alt="task-delete-icon"
+                      />
+                    </a>
+                  </div>
+                </li>
+                <li class="task-item">
+                  <div class="task-item__details">
+                    <h3 class="task-item__heading">Task</h3>
+                    <h4 class="start-date">Start date:</h4>
+                    <h4 class="end-date">End date:</h4>
+                    <button class="confirm-button">
+                      <img
+                        class="button-icon"
+                        src="./assests/images/icons/task-icons/mark-as-completed-icon.svg"
+                        alt="button-icon"
+                        loading="lazy"
+                      />
+                      <h5 class="confirm-button-desc">Mark as completed</h5>
+                    </button>
+                  </div>
+                  <div class="task-item-actions">
+                    <a class="task-edit" href="javascript:void(0)">
+                      <img
+                        class="task-edit-icon"
+                        src="./assests/images/icons/task-icons/task-edit-icon.svg"
+                        alt="task-edit-icon"
+                      />
+                    </a>
+                    <a class="task-delete" href="javascript:void(0)">
+                      <img
+                        class="task-delete-icon"
+                        src="./assests/images/icons/task-icons/task-delete-icon.svg"
+                        alt="task-delete-icon"
+                      />
+                    </a>
+                  </div>
+                </li>
+                <li class="task-item">
+                  <div class="task-item__details">
+                    <h3 class="task-item__heading">Task</h3>
+                    <h4 class="start-date">Start date:</h4>
+                    <h4 class="end-date">End date:</h4>
+                    <button class="confirm-button">
+                      <img
+                        class="button-icon"
+                        src="./assests/images/icons/task-icons/mark-as-completed-icon.svg"
+                        alt="button-icon"
+                        loading="lazy"
+                      />
+                      <h5 class="confirm-button-desc">Mark as completed</h5>
+                    </button>
+                  </div>
+                  <div class="task-item-actions">
+                    <a class="task-edit" href="javascript:void(0)">
+                      <img
+                        class="task-edit-icon"
+                        src="./assests/images/icons/task-icons/task-edit-icon.svg"
+                        alt="task-edit-icon"
+                      />
+                    </a>
+                    <a class="task-delete" href="javascript:void(0)">
+                      <img
+                        class="task-delete-icon"
+                        src="./assests/images/icons/task-icons/task-delete-icon.svg"
+                        alt="task-delete-icon"
+                      />
+                    </a>
+                  </div>
+                </li>
+                <li class="task-item">
+                  <div class="task-item__details">
+                    <h3 class="task-item__heading">Task</h3>
+                    <h4 class="start-date">Start date:</h4>
+                    <h4 class="end-date">End date:</h4>
+                    <button class="confirm-button">
+                      <img
+                        class="button-icon"
+                        src="./assests/images/icons/task-icons/mark-as-completed-icon.svg"
+                        alt="button-icon"
+                        loading="lazy"
+                      />
+                      <h5 class="confirm-button-desc">Mark as completed</h5>
+                    </button>
+                  </div>
+                  <div class="task-item-actions">
+                    <a class="task-edit" href="javascript:void(0)">
+                      <img
+                        class="task-edit-icon"
+                        src="./assests/images/icons/task-icons/task-edit-icon.svg"
+                        alt="task-edit-icon"
+                      />
+                    </a>
+                    <a class="task-delete" href="javascript:void(0)">
+                      <img
+                        class="task-delete-icon"
+                        src="./assests/images/icons/task-icons/task-delete-icon.svg"
+                        alt="task-delete-icon"
+                      />
+                    </a>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
