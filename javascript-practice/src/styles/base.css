@@ -94,5 +94,20 @@ img {
 .max-width-container {
   width: 100%;
   margin: 0 auto;
-  background-color: var(--light-pink);
+}
+
+.flex {
+  display: flex;
+}
+
+.background-pink {
+  background-color: var(--pink);
+}
+
+.background-blue {
+  background-color: var(--blue);
+}
+
+.background-green {
+  background-color: var(--green);
 }

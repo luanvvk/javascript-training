@@ -151,7 +151,7 @@
 }
 
 .main-body.active {
-  width: calc(100%-6.5rem);
+  width: calc(100% - 5.5rem);
   left: 5.5rem;
 }
 
@@ -160,7 +160,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  max-width: 123rem;
+  width: 100%;
   background-color: var(--light-cyan-blue);
   padding: var(--space-8) var(--space-16);
 }
@@ -209,54 +209,29 @@
   border-radius: 50%;
   display: inline-block;
 }
-
-.background-pink {
-  background-color: var(--pink);
+.radio-buttons-container .max-width-container {
+  gap: var(--space-16);
 }
 
-.background-blue {
-  background-color: var(--blue);
+/* radio buttons for view options */
+.radio-buttons-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.background-green {
-  background-color: var(--green);
+.radio-buttons-container .radio-label {
+  cursor: pointer;
+}
+.radio-input {
+  appearance: none;
+  position: absolute;
 }
 
 /*Task body*/
-.todo-task-section {
-  grid-area: toDo;
-}
-.running-task-section {
-  grid-area: running;
-}
-.completed-task-section {
-  grid-area: completed;
-}
-.task-area {
-  display: grid;
-  grid-template-areas: 'toDo running completed';
-  margin-top: var(--space-128);
-}
-
-.list-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-
-  gap: var(--space-8);
-  padding: 0 var(--space-32);
-}
-
 .list-view {
   display: flex;
   flex-direction: column;
-}
-
-.list-header {
-  font-size: var(--font-size-20);
-  font-weight: var(--bold-weight);
-  color: var(--cyan-blue);
 }
 
 .confirm-button {
@@ -272,20 +247,123 @@
   color: var(--light-pink);
 }
 
-.task-list {
-  padding: 0 var(--space-32);
+/* lists view */
+.list-view.hide {
+  display: none;
+}
+.list-view .list-container {
   margin-top: var(--space-32);
+  background-color: var(--white);
+  border: 2px solid var(--black);
+  border-radius: var(--radius-8);
+}
+.list-view .list-container {
+  margin: var(--space-32) auto 0;
+  background-color: var(--white);
+  border: 2px solid var(--black);
+  border-radius: var(--border-radius-7);
+  width: calc(100% - var(--space-32));
 }
 
-.task-area .todo-task-section .task-item {
+.list-view .list-container.pink {
   box-shadow: var(--pink-shadow);
 }
 
-.task-area .running-task-section .task-item {
+.list-view .list-container.blue {
   box-shadow: var(--blue-shadow);
 }
 
-.task-area .completed-task-section .task-item {
+.list-view .list-container.green {
+  box-shadow: var(--green-shadow);
+}
+
+.list-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: var(--space-8);
+  font-size: var(--font-size-20);
+  font-weight: var(--bold-weight);
+  color: var(--cyan-blue);
+}
+
+.list-view .list-header {
+  padding: var(--space-16);
+  border-bottom: 2px solid var(--black);
+}
+
+.list-header .text {
+  font-weight: 600;
+  font-size: var(--font-size-16);
+}
+
+.task-item .task-item__details {
+  width: 100%;
+  text-align: left;
+}
+
+.list-view .task-item .task-item__details {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.list-view .task-item {
+  margin-top: var(--space-24);
+}
+
+.list-view .task-item:first-child {
+  margin-top: 0;
+}
+
+.list-view .task-item .task-item__heading {
+  grid-column: 1 / 3;
+}
+
+.list-view .task-item .start-date,
+.list-view .task-item .end-date {
+  grid-column: 1 / 3;
+  grid-row: 2 / 3;
+}
+
+.list-view .task-item .task-item-actions {
+  grid-column: 3 / 4;
+  grid-row: 1 / 3;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+/* broad view */
+.board-view {
+  margin-top: var(--space-32);
+  overflow-x: auto;
+  padding: 0 var(--space-8) var(--space-8);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(266px, 1fr));
+  column-gap: var(--space-24);
+  scrollbar-width: none;
+}
+.board-view.hide {
+  display: none;
+}
+
+.board-view::-webkit-scrollbar {
+  display: none;
+}
+
+.board-view .task-item {
+  margin: var(--space-16) auto 0;
+}
+
+.board-view .task-list.pink .task-item {
+  box-shadow: var(--pink-shadow);
+}
+
+.board-view .task-list.blue .task-item {
+  box-shadow: var(--blue-shadow);
+}
+
+.board-view .task-list.green .task-item {
   box-shadow: var(--green-shadow);
 }
 
@@ -436,6 +514,13 @@ input[type='radio'] {
   gap: var(--space-48);
 }
 
+@media (min-width: 1201px) {
+  .task-list {
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
 @media (min-width: 900px) and (max-width: 1200px) {
   .task-area {
     grid-template-areas:

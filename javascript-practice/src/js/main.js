@@ -18,3 +18,25 @@ toggle.onclick = function () {
   mainBody.classList.toggle('active');
   appLogo.classList.toggle('active');
 };
+
+// radio buttons for view option
+const radioViewOptions = document.querySelectorAll("input[name='view-option']");
+const listView = document.getElementById('list-view');
+const boardView = document.getElementById('board-view');
+radioViewOptions.forEach((radioButton) => {
+  radioButton.addEventListener('change', (event) => {
+    const eventTarget = event.target;
+    const viewOption = eventTarget.value;
+
+    switch (viewOption) {
+      case 'board':
+        listView.classList.add('hide');
+        boardView.classList.remove('hide');
+        break;
+      case 'list':
+        boardView.classList.add('hide');
+        listView.classList.remove('hide');
+        break;
+    }
+  });
+});
