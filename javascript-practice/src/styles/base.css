@@ -66,6 +66,7 @@ img {
   --pink: #ff9c9c;
   --blue: #82cfff;
   --green: #abe5bc;
+  --black: #000;
 
   /* space */
   --space-4: 4px;
@@ -75,6 +76,7 @@ img {
   --space-32: 32px;
   --space-48: 48px;
   --space-64: 64px;
+  --space-128: 128px;
 
   /* border radius */
   --border-radius-2: 2px;
@@ -91,6 +93,6 @@ img {
 }
 
 .max-width-container {
-  max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
 }

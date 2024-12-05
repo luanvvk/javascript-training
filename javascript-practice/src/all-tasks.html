@@ -13,96 +13,115 @@
   </head>
   <body>
     <div class="max-width-container">
-      <header class="header-section">
-        <a class="menu-bar" href="javascript:void(0)">
-          <img
-            class="menu-bar-icon"
-            src="./assests/images/icons/header-icons/menu-icon.svg"
-            alt="menu-bar-icon"
-            loading="lazy"
-          />
-        </a>
-        <div class="search-bar__input-bar">
-          <input
-            class="input-bar__main-input"
-            aria-label="search"
-            type="text"
-            name="search-task"
-            placeholder="Write your project name"
-          />
-          <img
-            class="input-bar__icon"
-            src="./assests/images/icons/header-icons/search-bar-icon.svg"
-            alt="search-icon"
-            loading="lazy"
-          />
-        </div>
-        <div class="utility-icons">
-          <a class="notification" href="javascript:void(0)">
-            <img
-              class="notification-icon"
-              src="./assests/images/icons/header-icons/notification-icon.svg"
-              alt="notification-icon"
-              loading="lazy"
-            />
-          </a>
-          <a class="theme" href="javascript:void(0)">
-            <img
-              class="theme-icon"
-              src="./assests/images/icons/header-icons/night-mode-icon.svg"
-              alt="theme-icon"
-              loading="lazy"
-            />
-          </a>
-          <a class="user-info" href="javascript:void(0)">
-            <img
-              class="user-icon"
-              src="./assests/images/icons/header-icons/user-icon.svg"
-              alt="user-icon"
-              loading="lazy"
-            />
-          </a>
-        </div>
-      </header>
-
-      <section class="side-menu">
-        <nav class="side-menu__navbar">
-          <ul>
-            <li>
-              <a class="dashboard" href="javascript:void(0)">
+      <nav class="side-navbar">
+        <ul class="side-navbar--list">
+          <li class="navbar--list__item">
+            <a class="app-logo" href="javascript:void(0)">
+              <span class="icon">
+                <img
+                  class="logo-icon"
+                  src="./assests/images/icons/menu-bar-icons/logo-icon.svg"
+                  alt="logo-icon"
+                  loading="lazy"
+                />
+              </span>
+              <h1 class="app-heading">Task manager</h1>
+            </a>
+          </li>
+          <li class="navbar--list__item">
+            <a class="dashboard" href="javascript:void(0)">
+              <span class="icon">
                 <img
                   class="dash-board-icon"
                   src="./assests/images/icons/menu-bar-icons/dashboard-icon.svg"
                   alt="dashboard-icon"
                   loading="lazy"
                 />
-                <h2 class="dashboard-heading">Dashboard</h2>
-              </a>
-            </li>
-            <li>
-              <a class="all-tasks" href="javascript:void(0)">
+              </span>
+              <span class="dashboard-heading">Dashboard</span>
+            </a>
+          </li>
+          <li class="navbar--list__item">
+            <a class="all-tasks" href="javascript:void(0)">
+              <span class="icon">
                 <img
                   class="all-tasks-icon"
                   src="./assests/images/icons/menu-bar-icons/all-task-icon.svg"
                   alt="all-tasks-icon"
                   loading="lazy"
                 />
-                <h2 class="all-tasks-heading">All Tasks</h2>
-              </a>
-            </li>
-            <li>
-              <a class="completed-tasks" href="javascript:void(0)">
+              </span>
+              <span class="all-tasks-heading">All Tasks</span>
+            </a>
+          </li>
+          <li class="navbar--list__item">
+            <a class="completed-tasks" href="javascript:void(0)">
+              <span class="icon">
                 <img
                   class="completed-tasks-icon"
                   src="./assests/images/icons/menu-bar-icons/completed-task-icon.svg"
                   alt="completed-tasks-icon"
                   loading="lazy"
                 />
-                <h2 class="completed-tasks-heading">Completed Tasks</h2>
-              </a>
-            </li>
-          </ul>
-        </nav>
+              </span>
+              <span class="completed-tasks-heading">Completed Tasks</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <main class="main-body">
+        <section class="top-bar">
+          <a class="menu-bar-toggle" href="javascript:void(0)">
+            <img
+              class="menu-bar-icon"
+              src="./assests/images/icons/header-icons/menu-icon.svg"
+              alt="menu-bar-icon"
+              loading="lazy"
+            />
+          </a>
+          <div class="search-bar__input-bar">
+            <input
+              class="input-bar__main-input"
+              aria-label="search"
+              type="text"
+              name="search-task"
+              placeholder="Write your project name"
+            />
+            <img
+              class="input-bar__icon"
+              src="./assests/images/icons/header-icons/search-bar-icon.svg"
+              alt="search-icon"
+              loading="lazy"
+            />
+          </div>
+          <div class="utility-icons">
+            <a class="notification" href="javascript:void(0)">
+              <img
+                class="notification-icon"
+                src="./assests/images/icons/header-icons/notification-icon.svg"
+                alt="notification-icon"
+                loading="lazy"
+              />
+            </a>
+            <a class="theme" href="javascript:void(0)">
+              <img
+                class="theme-icon"
+                src="./assests/images/icons/header-icons/night-mode-icon.svg"
+                alt="theme-icon"
+                loading="lazy"
+              />
+            </a>
+            <a class="user-info" href="javascript:void(0)">
+              <img
+                class="user-icon"
+                src="./assests/images/icons/header-icons/user-icon.svg"
+                alt="user-icon"
+                loading="lazy"
+              />
+            </a>
+          </div>
+        </section>
 
         <div class="all-tasks-popup">
           <h2 class="popup-heading">All tasks</h2>
@@ -277,7 +296,8 @@
             </div>
           </div>
         </div>
-      </section>
+      </main>
     </div>
+    <script src="./js/main.js"></script>
   </body>
 </html>
