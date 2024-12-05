@@ -5,7 +5,8 @@ function activeLink() {
   });
   this.classList.add('hovered');
 }
-list.forEach((item) => item.addEventListener('mouseover', activeLink));
+
+list.forEach((item) => item.addEventListener('onmouseenter', activeLink));
 // Menu Toggle
 let toggle = document.querySelector('.menu-bar-toggle');
 let sideNavbar = document.querySelector('.side-navbar');

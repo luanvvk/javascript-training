@@ -1,7 +1,7 @@
 /* Side navbar */
 .side-navbar {
   position: fixed;
-  width: 30rem;
+  width: 25rem;
   height: 100%;
 
   background-color: var(--cyan-blue);
@@ -69,8 +69,6 @@
 .all-tasks .icon,
 .completed-tasks .icon,
 .app-logo .icon {
-  position: relative;
-  bottom: 0.6rem;
   display: block;
   min-width: 6rem;
 
@@ -80,9 +78,11 @@
 }
 
 .app-logo .icon {
+  position: relative;
   width: 2rem;
   height: 2rem;
   bottom: 1.5rem;
+  background: var(--cyan-blue);
 }
 
 .logo-icon {
@@ -92,13 +92,14 @@
 
 .dashboard .icon img,
 .all-tasks .icon img,
-.completed-tasks .icon img,
-.app-logo .icon img {
+.completed-tasks .icon img {
+  padding: 0.7rem;
+  border-radius: 25%;
   background: var(--cyan-blue);
 }
 
 .app-heading {
-  padding: 0 1rem;
+  padding-right: 1rem;
   height: 2.5rem;
 
   text-align: start;
@@ -140,8 +141,8 @@
 /* Top bar */
 .main-body {
   position: absolute;
-  width: calc(100% -30rem);
-  left: 30rem;
+  width: calc(100% - 25rem);
+  left: 25rem;
   min-height: 100vh;
 
   border-right: 0.1rem solid var(--black);
@@ -159,7 +160,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-
+  max-width: 123rem;
   background-color: var(--light-cyan-blue);
   padding: var(--space-8) var(--space-16);
 }
@@ -222,9 +223,18 @@
 }
 
 /*Task body*/
+.todo-task-section {
+  grid-area: toDo;
+}
+.running-task-section {
+  grid-area: running;
+}
+.completed-task-section {
+  grid-area: completed;
+}
 .task-area {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas: 'toDo running completed';
   margin-top: var(--space-128);
 }
 
@@ -424,4 +434,20 @@ input[type='radio'] {
   align-items: center;
   justify-content: center;
   gap: var(--space-48);
+}
+
+@media (min-width: 900px) and (max-width: 1200px) {
+  .task-area {
+    grid-template-areas:
+      'toDo running'
+      'completed completed';
+  }
+}
+@media (max-width: 899px) {
+  .task-area {
+    grid-template-areas:
+      'toDo '
+      'running'
+      'completed';
+  }
 }
