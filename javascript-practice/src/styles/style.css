@@ -14,6 +14,7 @@
   top: 0;
   left: 0;
   width: 100%;
+  z-index: 100;
 }
 
 .navbar--list__item {
@@ -161,6 +162,9 @@
 }
 
 .top-bar {
+  position: sticky;
+  top: 0;
+  position: -webkit-sticky;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -216,6 +220,11 @@
 }
 .radio-buttons-container .max-width-container {
   gap: var(--space-16);
+}
+
+.main-body .max-width-container.main {
+  display: flex;
+  flex-direction: column;
 }
 
 /* radio buttons for view options */
@@ -365,7 +374,6 @@
 
 /* broad view */
 .board-view {
-  margin-top: var(--space-128);
   overflow-x: auto;
   padding: 0 var(--space-8) var(--space-8);
   column-gap: var(--space-24);
@@ -407,7 +415,7 @@
   grid-area: completed;
 }
 /*Create task*/
-.all-tasks-popup .popup-heading {
+.popup-heading {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -552,14 +560,35 @@ input[type='radio'] {
   justify-content: center;
   gap: var(--space-48);
 }
-@media (min-width: 1301px) {
+/* create task overlay */
+.overlay {
+  background-color: var(--light-pink);
+  position: fixed;
+  width: calc(100% - 5.5rem);
+  top: 5rem;
+  z-index: 10;
+  /* if content is longer than screen height, enable scrollbar */
+  overflow-y: auto;
+}
+.overlay.toggle {
+  width: calc(100% - 24rem);
+}
+.overlay.hide {
+  display: none;
+}
+
+.create-task-popup {
+  border-radius: var(--radius-8);
+}
+
+@media (min-width: 1001px) {
   .board-view {
     display: grid;
     grid-template-areas: 'toDo running completed';
   }
 }
 
-@media (min-width: 650px) and (max-width: 1300px) {
+@media (min-width: 650px) and (max-width: 1000px) {
   .board-view {
     display: grid;
     grid-template-areas:
@@ -574,6 +603,7 @@ input[type='radio'] {
   .board-view {
     display: grid;
     grid-template-areas: 'toDo ' 'running ' 'completed ';
+    margin-top: var(--space-32);
   }
   .list-container.blue,
   .list-container.green {

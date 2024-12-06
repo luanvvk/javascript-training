@@ -99,9 +99,7 @@
   margin: var(--space-32) var(--space-32) 0 0;
   float: right;
 }
-.add-task-btn.hide {
-  display: none;
-}
+
 .add-task-icon {
   width: 5rem;
   height: 5rem;
@@ -179,4 +177,36 @@
 
 .all-tasks-popup .task-area {
   display: flex;
+}
+/* Notification prompted after user deleted a task */
+.notification {
+  position: fixed;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+
+  padding: var(--space-32);
+  height: 8rem;
+  width: 100%;
+  max-width: 30rem;
+
+  transition-property: top;
+  transition-duration: 0.5s;
+  background-color: var(--cyan-blue);
+  border-radius: 0 0 var(--border-radius-7) var(--border-radius-7);
+}
+
+.notification.show {
+  top: 0;
+}
+
+.notification-message {
+  color: var(--light-pink);
+  font-size: var(--font-size-20);
+  font-weight: var(--regular-weight);
 }

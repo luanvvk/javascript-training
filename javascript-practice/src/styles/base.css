@@ -113,3 +113,6 @@ img {
 .background-green {
   background-color: var(--green);
 }
+.status-dropdown.hide {
+  display: none;
+}
