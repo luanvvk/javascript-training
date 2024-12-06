@@ -99,7 +99,9 @@ img {
 .flex {
   display: flex;
 }
-
+.hide {
+  display: none;
+}
 .background-pink {
   background-color: var(--pink);
 }
