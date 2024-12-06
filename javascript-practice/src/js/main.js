@@ -20,6 +20,7 @@ toggle.onclick = function () {
 };
 
 // radio buttons for view option
+const addTaskBtn = document.querySelector('.add-task-btn');
 const radioViewOptions = document.querySelectorAll("input[name='view-option']");
 const listView = document.getElementById('list-view');
 const boardView = document.getElementById('board-view');
@@ -32,10 +33,12 @@ radioViewOptions.forEach((radioButton) => {
       case 'board':
         listView.classList.add('hide');
         boardView.classList.remove('hide');
+        addTaskBtn.classList.remove('hide');
         break;
       case 'list':
         boardView.classList.add('hide');
         listView.classList.remove('hide');
+        addTaskBtn.classList.add('hide');
         break;
     }
   });

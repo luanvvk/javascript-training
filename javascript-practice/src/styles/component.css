@@ -95,6 +95,19 @@
   outline: none;
 }
 /* button controls */
+.add-task-btn {
+  margin: var(--space-32) var(--space-32) 0 0;
+  float: right;
+}
+.add-task-btn.hide {
+  display: none;
+}
+.add-task-icon {
+  width: 5rem;
+  height: 5rem;
+  float: right;
+}
+
 .button-controls {
   display: flex;
   justify-content: center;

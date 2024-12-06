@@ -250,13 +250,9 @@
 /* lists view */
 .list-view.hide {
   display: none;
+  margin-top: var(--space-128);
 }
-.list-view .list-container {
-  margin-top: var(--space-32);
-  background-color: var(--white);
-  border: 2px solid var(--black);
-  border-radius: var(--radius-8);
-}
+
 .list-view .list-container {
   margin: var(--space-32) auto 0;
   background-color: var(--white);
@@ -267,6 +263,7 @@
 
 .list-view .list-container.pink {
   box-shadow: var(--pink-shadow);
+  margin: var(--space-32) auto 0;
 }
 
 .list-view .list-container.blue {
@@ -335,7 +332,7 @@
 }
 /* broad view */
 .board-view {
-  margin-top: var(--space-32);
+  margin-top: var(--space-128);
   overflow-x: auto;
   padding: 0 var(--space-8) var(--space-8);
   display: grid;
