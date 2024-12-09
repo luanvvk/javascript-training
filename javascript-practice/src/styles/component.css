@@ -95,15 +95,17 @@
   outline: none;
 }
 /* button controls */
-.add-task-btn {
-  margin: var(--space-32) var(--space-32) 0 0;
-  float: right;
+.add-a-task.desktop {
+  margin: var(--space-32) 0 var(--space-32) 0;
+  display: flex;
+  justify-content: end;
 }
 
 .add-task-icon {
   width: 5rem;
   height: 5rem;
   float: right;
+  margin-right: var(--space-32);
 }
 
 .button-controls {
@@ -113,7 +115,7 @@
   gap: var(--space-64);
 }
 
-.add-task-button,
+.add-to-list,
 .edit-task-button,
 .move-task-button,
 .delete-button {
@@ -127,11 +129,11 @@
   color: var(--light-pink);
 }
 
-.add-task-button {
+.add-to-list {
   width: 30%;
 }
 
-.cancel-button {
+.cancel {
   width: 30%;
   padding: var(--space-8) 0;
   background-color: var(--pink);
@@ -179,7 +181,8 @@
   display: flex;
 }
 /* Notification prompted after user deleted a task */
-.notification {
+.notification,
+.error-notification {
   position: fixed;
   top: -100%;
   left: 50%;
