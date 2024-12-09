@@ -267,7 +267,7 @@
   margin-top: var(--space-128);
 }
 
-.list-view .list-container {
+.list-view .task-column {
   margin: var(--space-32) auto 0;
   background-color: var(--light-pink);
   border: 2px solid var(--black);
@@ -275,16 +275,16 @@
   width: calc(100% - var(--space-32));
 }
 
-.list-view .list-container.pink {
+.list-view .task-column.pink {
   box-shadow: var(--pink-shadow);
   margin: var(--space-32) auto 0;
 }
 
-.list-view .list-container.blue {
+.list-view .task-column.blue {
   box-shadow: var(--blue-shadow);
 }
 
-.list-view .list-container.green {
+.list-view .task-column.green {
   box-shadow: var(--green-shadow);
 }
 
@@ -403,15 +403,15 @@
   box-shadow: var(--green-shadow);
 }
 
-.board-view .list-container.pink {
+.board-view .task-column.pink {
   grid-area: toDo;
 }
 
-.board-view .list-container.blue {
+.board-view .task-column.blue {
   grid-area: running;
 }
 
-.board-view .list-container.green {
+.board-view .task-column.green {
   grid-area: completed;
 }
 /*Create task*/
@@ -536,7 +536,7 @@ input[type='radio'] {
 
 /* Edit popup  */
 .edit-popup {
-  max-width: 90rem;
+  height: 100vh;
 }
 
 .edit-task-button,
@@ -595,7 +595,7 @@ input[type='radio'] {
       'toDo running'
       'completed completed';
   }
-  .list-container.green {
+  .task-column.green {
     margin-top: var(--space-32);
   }
 }
@@ -605,8 +605,8 @@ input[type='radio'] {
     grid-template-areas: 'toDo ' 'running ' 'completed ';
     margin-top: var(--space-32);
   }
-  .list-container.blue,
-  .list-container.green {
+  .task-column.blue,
+  .task-column.green {
     margin-top: var(--space-32);
   }
   .navbar--list__item:nth-child(5) {

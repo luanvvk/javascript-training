@@ -178,7 +178,7 @@
             />
           </button>
           <div id="list-view" class="list-view hide">
-            <div class="list-container pink">
+            <div class="task-column pink">
               <h2 class="list-header">
                 <span class="circle background-pink"></span><span class="text">To do tasks</span>
               </h2>
@@ -218,7 +218,7 @@
                 </li>
               </ul>
             </div>
-            <div class="list-container blue">
+            <div class="task-column blue">
               <h2 class="list-header">
                 <span class="circle background-blue"></span>
                 <span class="text">Running tasks</span>
@@ -258,76 +258,12 @@
                 </li>
               </ul>
             </div>
-            <div class="list-container green">
+            <div class="task-column green">
               <h2 class="list-header">
                 <span class="circle background-green"></span
                 ><span class="text">Completed tasks</span>
               </h2>
               <ul class="task-list green">
-                <li class="task-item">
-                  <div class="task-item__details">
-                    <h3 class="task-item__heading">Task</h3>
-                    <h4 class="start-date">Start date:</h4>
-                    <h4 class="end-date">End date:</h4>
-                    <button class="confirm-button">
-                      <img
-                        class="button-icon"
-                        src="./assests/images/icons/task-icons/mark-as-completed-icon.svg"
-                        alt="button-icon"
-                        loading="lazy"
-                      />
-                      <h5 class="confirm-button-desc">Mark as completed</h5>
-                    </button>
-                  </div>
-                  <div class="task-item-actions">
-                    <a class="task-edit" href="javascript:void(0)">
-                      <img
-                        class="task-edit-icon"
-                        src="./assests/images/icons/task-icons/task-edit-icon.svg"
-                        alt="task-edit-icon"
-                      />
-                    </a>
-                    <a class="task-delete" href="javascript:void(0)">
-                      <img
-                        class="task-delete-icon"
-                        src="./assests/images/icons/task-icons/task-delete-icon.svg"
-                        alt="task-delete-icon"
-                      />
-                    </a>
-                  </div>
-                </li>
-                <li class="task-item">
-                  <div class="task-item__details">
-                    <h3 class="task-item__heading">Task</h3>
-                    <h4 class="start-date">Start date:</h4>
-                    <h4 class="end-date">End date:</h4>
-                    <button class="confirm-button">
-                      <img
-                        class="button-icon"
-                        src="./assests/images/icons/task-icons/mark-as-completed-icon.svg"
-                        alt="button-icon"
-                        loading="lazy"
-                      />
-                      <h5 class="confirm-button-desc">Mark as completed</h5>
-                    </button>
-                  </div>
-                  <div class="task-item-actions">
-                    <a class="task-edit" href="javascript:void(0)">
-                      <img
-                        class="task-edit-icon"
-                        src="./assests/images/icons/task-icons/task-edit-icon.svg"
-                        alt="task-edit-icon"
-                      />
-                    </a>
-                    <a class="task-delete" href="javascript:void(0)">
-                      <img
-                        class="task-delete-icon"
-                        src="./assests/images/icons/task-icons/task-delete-icon.svg"
-                        alt="task-delete-icon"
-                      />
-                    </a>
-                  </div>
-                </li>
                 <li class="task-item">
                   <div class="task-item__details">
                     <h3 class="task-item__heading">Task</h3>
@@ -364,7 +300,7 @@
             </div>
           </div>
           <div id="board-view" class="board-view">
-            <div class="list-container pink">
+            <div id="todo" class="task-column pink">
               <h2 class="list-header">
                 <span class="circle background-pink"></span><span class="text">To do tasks</span>
               </h2>
@@ -404,7 +340,7 @@
                 </li>
               </ul>
             </div>
-            <div class="list-container blue">
+            <div id="doing" class="task-column blue">
               <h2 class="list-header">
                 <span class="circle background-blue"></span>
                 <span class="text">Running tasks</span>
@@ -444,76 +380,12 @@
                 </li>
               </ul>
             </div>
-            <div class="list-container green">
+            <div id="done" class="task-column green">
               <h2 class="list-header">
                 <span class="circle background-green"></span
                 ><span class="text">Completed tasks</span>
               </h2>
               <ul class="task-list green">
-                <li class="task-item">
-                  <div class="task-item__details">
-                    <h3 class="task-item__heading">Task</h3>
-                    <h4 class="start-date">Start date:</h4>
-                    <h4 class="end-date">End date:</h4>
-                    <button class="confirm-button">
-                      <img
-                        class="button-icon"
-                        src="./assests/images/icons/task-icons/mark-as-completed-icon.svg"
-                        alt="button-icon"
-                        loading="lazy"
-                      />
-                      <h5 class="confirm-button-desc">Mark as completed</h5>
-                    </button>
-                  </div>
-                  <div class="task-item-actions">
-                    <a class="task-edit" href="javascript:void(0)">
-                      <img
-                        class="task-edit-icon"
-                        src="./assests/images/icons/task-icons/task-edit-icon.svg"
-                        alt="task-edit-icon"
-                      />
-                    </a>
-                    <a class="task-delete" href="javascript:void(0)">
-                      <img
-                        class="task-delete-icon"
-                        src="./assests/images/icons/task-icons/task-delete-icon.svg"
-                        alt="task-delete-icon"
-                      />
-                    </a>
-                  </div>
-                </li>
-                <li class="task-item">
-                  <div class="task-item__details">
-                    <h3 class="task-item__heading">Task</h3>
-                    <h4 class="start-date">Start date:</h4>
-                    <h4 class="end-date">End date:</h4>
-                    <button class="confirm-button">
-                      <img
-                        class="button-icon"
-                        src="./assests/images/icons/task-icons/mark-as-completed-icon.svg"
-                        alt="button-icon"
-                        loading="lazy"
-                      />
-                      <h5 class="confirm-button-desc">Mark as completed</h5>
-                    </button>
-                  </div>
-                  <div class="task-item-actions">
-                    <a class="task-edit" href="javascript:void(0)">
-                      <img
-                        class="task-edit-icon"
-                        src="./assests/images/icons/task-icons/task-edit-icon.svg"
-                        alt="task-edit-icon"
-                      />
-                    </a>
-                    <a class="task-delete" href="javascript:void(0)">
-                      <img
-                        class="task-delete-icon"
-                        src="./assests/images/icons/task-icons/task-delete-icon.svg"
-                        alt="task-delete-icon"
-                      />
-                    </a>
-                  </div>
-                </li>
                 <li class="task-item">
                   <div class="task-item__details">
                     <h3 class="task-item__heading">Task</h3>
@@ -573,65 +445,11 @@
                 </div>
               </div>
 
-              <div class="task-status">
-                <h2 class="label">Status</h2>
-                <div id="status-select" class="status-select">
-                  <span class="circle background-pink"></span>
-                  <span class="default-option">To do</span>
-                  <img
-                    class="task-category-icon"
-                    src="./assests/images/icons/create-task-modal-icon/priority-icon.svg"
-                    alt="task-category-icon"
-                  />
-                </div>
-                <ul id="status-dropdown" class="status-dropdown hide">
-                  <li>
-                    <input
-                      type="radio"
-                      id="to-do-radio"
-                      name="status-option"
-                      value="To do"
-                      class="radio-input"
-                    />
-                    <label for="to-do-radio" class="radio-label">
-                      <span class="circle background-pink"></span
-                      ><span class="status-options">To do</span>
-                    </label>
-                  </li>
-                  <li>
-                    <input
-                      type="radio"
-                      id="doing-radio"
-                      name="status-option"
-                      value="Doing"
-                      class="radio-input"
-                    />
-                    <label for="doing-radio" class="radio-label">
-                      <span class="circle background-blue"></span
-                      ><span class="status-options">Doing</span>
-                    </label>
-                  </li>
-                  <li>
-                    <input
-                      type="radio"
-                      id="done-radio"
-                      name="status-option"
-                      value="Done"
-                      class="radio-input"
-                    />
-                    <label for="done-radio" class="radio-label">
-                      <span class="circle background-green"></span
-                      ><span class="status-options">Done</span>
-                    </label>
-                  </li>
-                </ul>
-              </div>
-
               <div class="task-start">
                 <h2 class="label">Start date</h2>
                 <div class="task-start-container">
                   <input
-                    type="text"
+                    type="date"
                     name="task-start"
                     id="task-start-input"
                     class="task-start-input"
@@ -646,7 +464,7 @@
               <div class="task-end">
                 <h2 class="label">End date</h2>
                 <div class="task-end-container">
-                  <input type="text" name="task-end" id="task-end-input" class="task-end-input" />
+                  <input type="date" name="task-end" id="task-end-input" class="task-end-input" />
                   <img
                     class="task-end-icon"
                     src="./assests/images/icons/create-task-modal-icon/end-date-icon.svg"
@@ -665,7 +483,7 @@
                     alt="task-priority-icon"
                   />
                 </div>
-                <ul id="status-dropdown" class="status-dropdown hide">
+                <ul class="status-dropdown hide">
                   <li>
                     <input
                       type="radio"
@@ -714,7 +532,7 @@
                     alt="task-category-icon"
                   />
                 </div>
-                <ul id="status-dropdown" class="status-dropdown hide">
+                <ul class="status-dropdown hide">
                   <li>
                     <input
                       type="radio"
@@ -771,7 +589,7 @@
           </div>
         </div>
         <!-- edit task overlay -->
-        <div id="edit-task-overlay" class="overlay view-task-overlay hide">
+        <div id="edit-task-overlay" class="overlay hide">
           <div class="edit-popup">
             <form class="form" autocomplete="off">
               <div class="task-name">
@@ -790,60 +608,6 @@
                     alt="task-name-icon"
                   />
                 </div>
-              </div>
-
-              <div class="task-status">
-                <h2 class="label">Status</h2>
-                <div id="status-select" class="status-select">
-                  <span class="circle background-pink"></span>
-                  <span class="default-option">To do</span>
-                  <img
-                    class="task-category-icon"
-                    src="./assests/images/icons/create-task-modal-icon/priority-icon.svg"
-                    alt="task-category-icon"
-                  />
-                </div>
-                <ul id="status-dropdown" class="status-dropdown hide">
-                  <li>
-                    <input
-                      type="radio"
-                      id="to-do-radio"
-                      name="status-option"
-                      value="To do"
-                      class="radio-input"
-                    />
-                    <label for="to-do-radio" class="radio-label">
-                      <span class="circle background-pink"></span
-                      ><span class="status-options">To do</span>
-                    </label>
-                  </li>
-                  <li>
-                    <input
-                      type="radio"
-                      id="doing-radio"
-                      name="status-option"
-                      value="Doing"
-                      class="radio-input"
-                    />
-                    <label for="doing-radio" class="radio-label">
-                      <span class="circle background-blue"></span
-                      ><span class="status-options">Doing</span>
-                    </label>
-                  </li>
-                  <li>
-                    <input
-                      type="radio"
-                      id="done-radio"
-                      name="status-option"
-                      value="Done"
-                      class="radio-input"
-                    />
-                    <label for="done-radio" class="radio-label">
-                      <span class="circle background-green"></span
-                      ><span class="status-options">Done</span>
-                    </label>
-                  </li>
-                </ul>
               </div>
 
               <div class="task-start">
@@ -884,7 +648,7 @@
                     alt="task-priority-icon"
                   />
                 </div>
-                <ul id="status-dropdown" class="status-dropdown hide">
+                <ul class="status-dropdown hide">
                   <li>
                     <input
                       type="radio"
@@ -933,7 +697,7 @@
                     alt="task-category-icon"
                   />
                 </div>
-                <ul id="status-dropdown" class="status-dropdown hide">
+                <ul class="status-dropdown hide">
                   <li>
                     <input
                       type="radio"

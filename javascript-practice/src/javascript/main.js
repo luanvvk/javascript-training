@@ -43,7 +43,7 @@ radioViewOptions.forEach((radioButton) => {
   });
 });
 
-// create task
+// create task overlay
 let activeOverlay = null;
 let taskCtn = mainBody.childNodes[3];
 
@@ -98,9 +98,84 @@ deleteBtns.forEach((button) => {
 });
 
 // dropdown select input
-const statusDropdownInputs = document.querySelectorAll('.status-dropdown');
-statusDropdownInputs.forEach((input) => {
-  input.addEventListener('click', () => {
-    statusDropdownInputs.classList.toggle('hide');
+// const statusDropdownInputs = document.querySelectorAll('.status-dropdown');
+// statusDropdownInputs.forEach((input) => {
+//   input.addEventListener('click', () => {
+//     statusDropdownInputs.classList.toggle('hide');
+//   });
+// });
+
+//add task
+
+let tasks = [];
+const titleInput = document.querySelector('#task-name-input');
+const taskStartInput = document.querySelector('#task-start-input');
+const taskEndInput = document.querySelector('#task-end-input');
+const submitButton = document.querySelector('.add-task-button');
+
+function createTask(titleInput, taskStartInput, taskEndInput) {
+  const task = {
+    title: titleInput.value,
+    taskstart: taskStartInput.value,
+    taskend: taskEndInput.value,
+  };
+  tasks.push(task);
+}
+
+function showTask() {
+  const taskCard = document.querySelector('.task-item');
+  taskCard.innerHTML = '';
+  tasks.forEach((task) => {
+    const data = `<li class="task-item">
+                  <div class="task-item__details">
+                    <h3 class="task-item__heading">Task: ${task.title}</h3>
+                    <h4 class="start-date">Start date: ${task.taskStartInput}</h4>
+                    <h4 class="end-date">End date:${task.taskEndInput}</h4>
+                    <button class="confirm-button">
+                      <img
+                        class="button-icon"
+                        src="./assests/images/icons/task-icons/mark-as-completed-icon.svg"
+                        alt="button-icon"
+                        loading="lazy"
+                      />
+                      <h5 class="confirm-button-desc">Mark as completed</h5>
+                    </button>
+                  </div>
+                  <div class="task-item-actions">
+                    <a class="task-edit" href="javascript:void(0)">
+                      <img
+                        class="task-edit-icon"
+                        src="./assests/images/icons/task-icons/task-edit-icon.svg"
+                        alt="task-edit-icon"
+                      />
+                    </a>
+                    <a class="task-delete" href="javascript:void(0)">
+                      <img
+                        class="task-delete-icon"
+                        src="./assests/images/icons/task-icons/task-delete-icon.svg"
+                        alt="task-delete-icon"
+                      />
+                    </a>
+                  </div>
+                </li>`;
+    taskCard += data;
   });
-});
+}
+
+function addTask(e) {
+  e.preventDefault();
+  const filteredTitles = tasks.filter((task) => {
+    return task.title === titleInput.value;
+  });
+
+  if (!filteredTitles.length) {
+    createTask(titleInput.value, taskStartInput.value, taskEndInput.value);
+    titleInput.value = '';
+    taskStartInput.value = '';
+    taskEndInput.value = '';
+  } else {
+    showError('Title must be unique!');
+  }
+  showTask();
+}
+submitButton.addEventListener('click ', addTask);
