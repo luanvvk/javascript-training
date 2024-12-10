@@ -250,7 +250,7 @@
                 <h2 class="label">Start date</h2>
                 <div class="task-start-container">
                   <input id="task-start-input" type="date" class="task-start-input" />
-                  <img
+                  ><img
                     class="task-start-icon"
                     src="./assests/images/icons/create-task-modal-icon/end-date-icon.svg"
                     alt="task-start-icon"
@@ -372,7 +372,6 @@
               <label for="description" class="label">Task description</label>
               <textarea
                 name="description"
-                id="description"
                 rows="8"
                 class="textarea-input"
                 placeholder="Write important notes"
@@ -532,8 +531,8 @@
               <label for="description" class="label">Task description</label>
               <textarea
                 name="description"
-                id="description"
-                rows="8"
+                id="rows"
+                ="8"
                 class="textarea-input"
                 placeholder="Write important notes"
               ></textarea>
@@ -541,7 +540,7 @@
             <div class="edit-controls">
               <button class="edit-task-button">Confirm edit</button>
               <button class="cancel">Cancel</button>
-              <button class="move-task-button" type="submit">
+              <button class="mark-completed" type="submit">
                 <img
                   class="move-task-icon"
                   src="./assests/images/icons/task-edit-modal-icons/mark-as-completed-icon.svg"
@@ -549,7 +548,7 @@
                 />
                 Mark as completed
               </button>
-              <button class="delete-button">
+              <button class="overlay-delete-button">
                 <img
                   class="delete-task-icon"
                   src="./assests/images/icons/task-edit-modal-icons/task-delete-icon.svg"
@@ -563,6 +562,6 @@
       </main>
     </div>
 
-    <script src="./javascript/code-needs-to-refactor-mvc.js"></script>
+    <script src="./javascript/test-code.js"></script>
   </body>
 </html>

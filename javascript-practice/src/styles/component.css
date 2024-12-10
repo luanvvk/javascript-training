@@ -32,17 +32,14 @@
   color: var(--light-pink);
 }
 
-.start-date {
+.start-date,
+.end-date,
+.duration-badge {
   font-size: var(--font-size-12);
   font-weight: var(--bold-weight);
   color: var(--light-pink);
 }
 
-.end-date {
-  font-size: var(--font-size-12);
-  font-weight: var(--bold-weight);
-  color: var(--light-pink);
-}
 /* Sort components */
 .category-sort {
   display: flex;
@@ -117,9 +114,9 @@
 
 .add-to-list,
 .edit-task-button,
-.move-task-button,
-.delete-button {
-  width: 20%;
+#edit-task-overlay .mark-completed,
+.overlay-delete-button {
+  width: 30%;
   padding: var(--space-8) 0;
   background-color: var(--cyan-blue);
   border: var(--border-radius-3) solid var(--cyan-blue);
@@ -202,6 +199,9 @@
   transition-duration: 0.5s;
   background-color: var(--cyan-blue);
   border-radius: 0 0 var(--border-radius-7) var(--border-radius-7);
+  color: var(--light-pink);
+  font-size: var(--font-size-20);
+  font-weight: var(--regular-weight);
 }
 
 .notification.show {

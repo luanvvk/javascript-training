@@ -248,7 +248,7 @@
   flex-direction: column;
 }
 
-.confirm-button {
+.mark-completed {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -307,6 +307,7 @@
 .list-view .task-item__heading,
 .list-view .start-date,
 .list-view .end-date,
+.list-view .duration-badge,
 .list-view .confirm-button-desc {
   color: var(--cyan-blue);
 }
@@ -356,7 +357,7 @@
   grid-area: end;
   margin: auto;
 }
-.list-view .task-item .confirm-button {
+.list-view .task-item .mark-completed {
   grid-area: button;
   flex-direction: row-reverse;
   align-items: flex-end;
@@ -449,7 +450,7 @@
   min-height: 4rem;
   width: 24rem;
   padding: 0 var(--space-8);
-
+  cursor: pointer;
   border: var(--border-radius-3) solid var(--cyan-blue);
   border-radius: var(--border-radius-6);
 }
@@ -466,6 +467,7 @@
   font-size: var(--font-size-15);
   font-weight: var(--regular-weight);
   color: var(--cyan-blue);
+  cursor: pointer;
 }
 
 .task-name,
@@ -540,7 +542,7 @@ input[type='radio'] {
 }
 
 .edit-task-button,
-.move-task-button,
+.edit-controls .mark-completed,
 .delete-button {
   width: 30%;
 }
@@ -578,6 +580,11 @@ input[type='radio'] {
 }
 
 .create-task-popup {
+  width: calc(100% - 5.5rem);
+  margin: auto;
+  height: 100vh;
+  overflow-y: auto;
+  background-color: var(--light-pink);
   border-radius: var(--radius-8);
 }
 
