@@ -251,6 +251,7 @@
 .mark-completed {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   align-items: center;
   gap: var(--space-8);
 }
@@ -444,7 +445,7 @@
 .task-end-container,
 .priority-select,
 .category-select,
-.status-select {
+.default-option-container {
   display: flex;
   align-items: center;
   min-height: 4rem;
@@ -453,6 +454,11 @@
   cursor: pointer;
   border: var(--border-radius-3) solid var(--cyan-blue);
   border-radius: var(--border-radius-6);
+}
+.priority-select,
+.category-select {
+  flex-direction: column;
+  border: none;
 }
 
 .task-name-input,
@@ -501,12 +507,11 @@
 }
 
 .priority-dropdown,
-.category-dropdown,
-.status-dropdown {
+.category-dropdown {
   display: flex;
   flex-direction: column;
   width: 24rem;
-
+  padding: 0 var(--space-16);
   border: var(--border-radius-3) solid var(--cyan-blue);
   border-radius: var(--border-radius-6);
   border-top: none;

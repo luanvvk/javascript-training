@@ -54,8 +54,144 @@ class TaskManager {
   // Initialize event listeners
   initialize() {
     this.loadTasksFromLocalStorage();
+    this.setupDynamicForm();
     this.setupEventListeners();
     this.renderTasks();
+  }
+
+  setupDynamicForm() {
+    this.createTaskOverlay = document.getElementById('create-task-overlay');
+    this.createTaskPopup = this.createTaskOverlay.querySelector('.create-task-popup');
+    this.createFormElements();
+    this.setupDropdowns();
+  }
+
+  createFormElements() {
+    // Task Name Input
+    const taskNameContainer = this.createTaskOverlay.querySelector('.task-name');
+    taskNameContainer.innerHTML = `
+      <h2 class="label" id="task-title">Task title</h2>
+      <div class="task-name-container">
+        <input type="text" id="task-name-input" class="task-name-input" placeholder="Enter task title" required>
+        <img src="./assests/images/icons/create-task-modal-icon/task-title-icon.svg" class="task-name-icon" alt="Task Title Icon">
+      </div>
+    `;
+
+    // Start Date Input
+    const taskStartContainer = this.createTaskOverlay.querySelector('.task-start');
+    taskStartContainer.innerHTML = `
+      <h2 class="label" id="start-date">Start date</h2>
+      <div class="task-start-container">
+        <input type="date" id="task-start-input" class="task-start-input" required>
+        <img src="./assests/images/icons/create-task-modal-icon/end-date-icon.svg" class="task-start-icon" alt="Start Date Icon">
+      </div>
+    `;
+
+    // End Date Input
+    const taskEndContainer = this.createTaskOverlay.querySelector('.task-end');
+    taskEndContainer.innerHTML = `
+      <h2 class="label" id="end-date">End date</h2>
+      <div class="task-end-container">
+        <input type="date" id="task-end-input" class="task-end-input" required>
+        <img src="./assests/images/icons/create-task-modal-icon/end-date-icon.svg" class="task-end-icon" alt="End Date Icon">
+      </div>
+    `;
+
+    // Task Description
+    const taskDescContainer = this.createTaskOverlay.querySelector('.task-desc');
+    taskDescContainer.innerHTML = `
+      <h2 class="label">Task description</h2>
+      <textarea id="task-description-input" class="textarea-input" rows="8" placeholder="Enter task description"></textarea>
+    `;
+
+    // Button Controls
+    const buttonControls = this.createTaskOverlay.querySelector('.button-controls');
+    buttonControls.innerHTML = `
+      <button class="add-to-list">Add to list</button>
+      <button class="cancel">Cancel</button>
+    `;
+  }
+
+  setupDropdowns() {
+    // Priority Dropdown
+    const prioritySelect = this.createTaskOverlay.querySelector('.task-priority');
+    const priorityContainer = prioritySelect.querySelector('.priority-select');
+    const priorityDropdown = document.createElement('div');
+    priorityDropdown.classList.add('priority-dropdown');
+
+    const priorityOptions = [
+      { value: 'Not urgent', default: true },
+      { value: 'Urgent task', default: false },
+      { value: 'Important', default: false },
+    ];
+
+    const defaultOption = priorityOptions.find((option) => option.default);
+    priorityContainer.innerHTML = `
+     <div class="default-option-container">
+     <span class="default-option">${defaultOption.value}</span>
+     <img src="./assests/images/icons/create-task-modal-icon/priority-icon.svg" class="task-priority-icon" alt="Priority Icon">
+    </div>
+      `;
+
+    priorityOptions.forEach((option) => {
+      const optionElement = document.createElement('div');
+      optionElement.classList.add('priority-options');
+      optionElement.textContent = option.value;
+      optionElement.addEventListener('click', () => {
+        priorityContainer.querySelector('.default-option').textContent = option.value;
+        priorityDropdown.style.display = 'none';
+      });
+      priorityDropdown.appendChild(optionElement);
+    });
+
+    priorityContainer.appendChild(priorityDropdown);
+    priorityContainer.addEventListener('click', (e) => {
+      priorityDropdown.style.display = priorityDropdown.style.display === 'none' ? 'flex' : 'none';
+      e.stopPropagation();
+    });
+
+    // Category Dropdown
+    const categorySelect = this.createTaskOverlay.querySelector('.task-category-input');
+    const categoryContainer = categorySelect.querySelector('.category-select');
+    const categoryDropdown = document.createElement('div');
+    categoryDropdown.classList.add('category-dropdown');
+
+    const categoryOptions = [
+      { value: 'Daily Task', default: true },
+      { value: 'Weekly task', default: false },
+      { value: 'Monthly task', default: false },
+    ];
+
+    const defaultCategoryOption = categoryOptions.find((option) => option.default);
+    categoryContainer.innerHTML = `
+    <div class="default-option-container">
+    <span class="default-option">${defaultCategoryOption.value}</span>
+      <img src="./assests/images/icons/create-task-modal-icon/priority-icon.svg" class="task-category-icon" alt="Category Icon">
+    </div>
+      `;
+
+    categoryOptions.forEach((option) => {
+      const optionElement = document.createElement('div');
+      optionElement.classList.add('category-options');
+      optionElement.textContent = option.value;
+      optionElement.addEventListener('click', () => {
+        categoryContainer.querySelector('.default-option').textContent = option.value;
+        categoryDropdown.style.display = 'none';
+      });
+      categoryDropdown.appendChild(optionElement);
+    });
+
+    categoryContainer.appendChild(categoryDropdown);
+    categoryContainer.addEventListener('click', (e) => {
+      categoryDropdown.style.display = categoryDropdown.style.display === 'none' ? 'flex' : 'none';
+      e.stopPropagation();
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', () => {
+      priorityDropdown.style.display = 'none';
+      categoryDropdown.style.display = 'none';
+    });
   }
 
   saveTasksToLocalStorage() {
