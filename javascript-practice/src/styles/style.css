@@ -587,7 +587,7 @@ input[type='radio'] {
 .create-task-popup {
   width: calc(100% - 5.5rem);
   margin: auto;
-  height: 100vh;
+  min-height: 100vh;
   overflow-y: auto;
   background-color: var(--light-pink);
   border-radius: var(--radius-8);
