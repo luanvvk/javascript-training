@@ -116,7 +116,7 @@
 .edit-task-button,
 #edit-task-overlay .mark-completed,
 .overlay-delete-button {
-  width: 30%;
+  width: 20rem;
   padding: var(--space-8) 0;
   background-color: var(--cyan-blue);
   border: var(--border-radius-3) solid var(--cyan-blue);
@@ -124,14 +124,17 @@
   font-size: var(--font-size-17);
   font-weight: var(--regular-weight);
   color: var(--light-pink);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .add-to-list {
-  width: 30%;
+  width: 20rem;
 }
 
 .cancel {
-  width: 30%;
+  width: 20rem;
   padding: var(--space-8) 0;
   background-color: var(--pink);
   border: var(--border-radius-3) solid var(--pink);
