@@ -365,21 +365,11 @@ class TaskController {
     });
 
     //search
-    const search = document.querySelector('.input-bar__main-input');
-    search.addEventListener('keyup', searchTodo);
-
-    function searchTodo(e) {
-      const text = e.target.value.toLowerCase();
-      const tasks = JSON.parse(localStorage.getItem('tasks'));
-      for (let task of tasks) {
-        const item = task.textContent;
-        if (item.toLowerCase().indexOf(text) != -1) {
-          task.style.display = 'flex';
-        } else {
-          task.style.display = 'none';
-        }
-      }
+    const searchInput = document.querySelector('.input-bar__main-input');
+    if (searchInput) {
+      searchInput.addEventListener('input', this.searchTasks.bind(this));
     }
+
     // Toggle between views
     const viewOptions = document.querySelectorAll("input[name='view-option']");
     const listView = document.getElementById('list-view');
@@ -508,5 +498,40 @@ class TaskController {
       this.saveTasksToLocalStorage();
       this.view.showDeletionNotification();
     });
+  }
+  searchTasks(e) {
+    const searchText = e.target.value.toLowerCase().trim();
+
+    // If search is empty, render all tasks
+    if (searchText === '') {
+      this.renderTasks();
+      return;
+    }
+
+    // Filter tasks based on search criteria
+    const filteredTasks = this.tasks.filter(
+      (task) =>
+        task.title.toLowerCase().includes(searchText) ||
+        task.description.toLowerCase().includes(searchText) ||
+        task.category.toLowerCase().includes(searchText) ||
+        task.priority.toLowerCase().includes(searchText) ||
+        this.formatSearchDate(task.startDate).includes(searchText) ||
+        this.formatSearchDate(task.endDate).includes(searchText),
+    );
+
+    // Render filtered tasks
+    this.view.renderTasks(filteredTasks);
+    this.setupTaskActions();
+  }
+  formatSearchDate(dateString) {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date
+      .toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })
+      .toLowerCase();
   }
 }
