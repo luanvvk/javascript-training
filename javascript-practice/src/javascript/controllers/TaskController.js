@@ -244,7 +244,8 @@ class TaskController {
       { value: 'Important', default: false },
     ];
 
-    const editDefaultOption = editPriorityOptions.find((option) => option.default);
+    const editDefaultOption =
+      editPriorityOptions.find((option) => option.default) || editPriorityOptions[0];
     editPriorityContainer.innerHTML = `
      <div class="default-option-container">
      <span class="default-option">${editDefaultOption.value}</span>
@@ -286,7 +287,8 @@ class TaskController {
       { value: 'Monthly task', default: false },
     ];
 
-    const editDefaultCategoryOption = editCategoryOptions.find((option) => option.default);
+    const editDefaultCategoryOption =
+      editCategoryOptions.find((option) => option.default) || editCategoryOptions[0];
     editCategoryContainer.innerHTML = `
     <div class="default-option-container">
     <span class="default-option">${editDefaultCategoryOption.value}</span>
@@ -453,8 +455,12 @@ class TaskController {
 
       // Edit Task
       taskElement.querySelector('.task-edit').addEventListener('click', () => {
+        this.setupDropdowns(task);
         this.view.populateEditForm(task);
         this.view.openEditTaskOverlay();
+
+        const editDeleteButton = document.querySelector('.overlay-delete-button');
+        editDeleteButton.dataset.taskId = taskId;
 
         // Save edit
         document.querySelector('.edit-task-button').onclick = () => {
@@ -480,6 +486,14 @@ class TaskController {
           this.saveTasksToLocalStorage();
           this.view.closeEditTaskOverlay();
         };
+        // Mark as Completed in edit overlay
+        const markCompletedButton = document.querySelector('.edit-controls .mark-completed');
+        markCompletedButton.onclick = () => {
+          task.status = task.status === 'Completed' ? 'In Progress' : 'Completed';
+          this.renderTasks();
+          this.saveTasksToLocalStorage();
+          this.view.closeEditTaskOverlay();
+        };
       });
 
       // Delete Task
@@ -497,6 +511,7 @@ class TaskController {
       this.renderTasks();
       this.saveTasksToLocalStorage();
       this.view.showDeletionNotification();
+      this.view.closeEditTaskOverlay();
     });
   }
   searchTasks(e) {

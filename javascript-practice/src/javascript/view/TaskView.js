@@ -23,6 +23,12 @@ class TaskView {
     taskElement.classList.add('task-item');
     taskElement.dataset.taskId = task.id;
 
+    const isCompleted = task.status === 'Completed';
+    const buttonIconSrc = isCompleted
+      ? './assests/images/icons/task-icons/completed-icon.svg'
+      : './assests/images/icons/task-icons/mark-as-completed-icon.svg';
+    const buttonText = isCompleted ? 'Mark as In Progress' : 'Mark as Completed';
+
     taskElement.innerHTML = `
       <div class="task-item__details">
         <h3 class="task-item__heading">${task.title}</h3>
@@ -32,8 +38,8 @@ class TaskView {
           <span class="duration-badge">Duration: ${this.calculateTaskDuration(task.startDate, task.endDate)}</span>
         </div>
         <button class="mark-completed">
-          <img class="button-icon" src="./assests/images/icons/task-icons/mark-as-completed-icon.svg" alt="button-icon" loading="lazy" />
-          <span class="confirm-button-desc">${task.status === 'Completed' ? 'Mark as In Progress' : 'Mark as Completed'}</span>
+          <img class="button-icon" src="${buttonIconSrc}" alt="button-icon" loading="lazy" />
+          <span class="confirm-button-desc">${buttonText}</span>
         </button>
       </div>
       <div class="task-item-actions">
@@ -156,8 +162,18 @@ class TaskView {
     document.querySelector('#start-date').value = task.startDate;
     document.querySelector('#end-date').value = task.endDate;
     document.querySelector('#textarea').value = task.description;
-    document.querySelector('.default-option').value = task.priority;
-    document.querySelector('.default-option').value = task.category;
+
+    // target priority dropdown value
+    const priorityContainer = document.querySelector(
+      '#edit-task-overlay .priority-select .default-option-container .default-option',
+    );
+    priorityContainer.textContent = task.priority;
+
+    // Target category dropdown value
+    const categoryContainer = document.querySelector(
+      '#edit-task-overlay .category-select .default-option-container .default-option',
+    );
+    categoryContainer.textContent = task.category;
   }
 
   // Reset create task form
