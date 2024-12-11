@@ -41,6 +41,7 @@ class TaskController {
     taskStartContainer.innerHTML = `
       <h2 class="label">Start date</h2>
       <div class="task-start-container">
+      <span class="text-input"></span>
         <input type="date" id="task-start-input" class="task-start-input" required>
         <img src="./assests/images/icons/create-task-modal-icon/end-date-icon.svg" class="task-start-icon" alt="Start Date Icon">
       </div>
@@ -51,6 +52,7 @@ class TaskController {
     taskEndContainer.innerHTML = `
       <h2 class="label">End date</h2>
       <div class="task-end-container">
+        <span class="text-input"></span>
         <input type="date" id="task-end-input" class="task-end-input" required>
         <img src="./assests/images/icons/create-task-modal-icon/end-date-icon.svg" class="task-end-icon" alt="End Date Icon">
       </div>
@@ -60,7 +62,7 @@ class TaskController {
     const taskDescContainer = this.createTaskOverlay.querySelector('.task-desc');
     taskDescContainer.innerHTML = `
       <h2 class="label">Task description</h2>
-      <textarea class="textarea-input" rows="8" placeholder="Enter task description"></textarea>
+      <textarea id="textarea-input" class="textarea-input" rows="8" placeholder="Enter task description"></textarea>
     `;
 
     // Button Controls
@@ -89,6 +91,7 @@ class TaskController {
     taskStartContainer.innerHTML = `
       <h2 class="label">Start date</h2>
       <div class="task-start-container">
+        <span class="text-input"></span>
         <input type="date" name="task-start" id="start-date" class="task-start-input" />
          <img class="task-start-icon" src="./assests/images/icons/create-task-modal-icon/end-date-icon.svg"
               alt="task-start-icon"
@@ -101,6 +104,7 @@ class TaskController {
     taskEndContainer.innerHTML = `
       <h2 class="label">End date</h2>
       <div class="task-end-container">
+        <span class="text-input"></span>
         <input type="date" name="task-end" id="end-date" class="task-end-input" />
         <img class="task-end-icon"
              src="./assests/images/icons/create-task-modal-icon/end-date-icon.svg"
@@ -113,7 +117,7 @@ class TaskController {
     const taskDescContainer = this.editTaskOverlay.querySelector('.task-desc');
     taskDescContainer.innerHTML = `
       <h2 class="label">Task description</h2>
-      <textarea class="textarea-input" rows="8" placeholder="Enter task description"></textarea>
+      <textarea id="textarea" class="textarea-input" rows="8" placeholder="Enter task description"></textarea>
      `;
 
     // Button Controls
@@ -360,6 +364,22 @@ class TaskController {
       btn.addEventListener('click', () => this.view.closeEditTaskOverlay());
     });
 
+    //search
+    const search = document.querySelector('.input-bar__main-input');
+    search.addEventListener('keyup', searchTodo);
+
+    function searchTodo(e) {
+      const text = e.target.value.toLowerCase();
+      const tasks = JSON.parse(localStorage.getItem('tasks'));
+      for (let task of tasks) {
+        const item = task.textContent;
+        if (item.toLowerCase().indexOf(text) != -1) {
+          task.style.display = 'flex';
+        } else {
+          task.style.display = 'none';
+        }
+      }
+    }
     // Toggle between views
     const viewOptions = document.querySelectorAll("input[name='view-option']");
     const listView = document.getElementById('list-view');
@@ -452,9 +472,15 @@ class TaskController {
           task.startDate = document.querySelector('#start-date').value;
           task.endDate = document.querySelector('#end-date').value;
           task.description = document.querySelector('.textarea-input').value.trim();
-
+          task.priority = document
+            .querySelector('#edit-task-overlay .priority-select .default-option')
+            .textContent.trim();
+          task.category = document
+            .querySelector('#edit-task-overlay .category-select .default-option')
+            .textContent.trim();
           // Validate task
           const validationErrors = task.validate();
+
           if (validationErrors.length > 0) {
             validationErrors.forEach((error) => this.view.showError(error));
             return;

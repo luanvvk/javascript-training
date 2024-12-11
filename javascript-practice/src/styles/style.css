@@ -251,9 +251,11 @@
 .mark-completed {
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
   gap: var(--space-8);
+}
+#edit-task-overlay.mark-completed {
+  justify-items: center;
 }
 
 .confirm-button-desc {
@@ -570,8 +572,10 @@ input[type='radio'] {
 /* create task overlay */
 .overlay {
   background-color: var(--light-pink);
-  position: fixed;
-  width: calc(100% - 5.5rem);
+  position: absolute;
+  width: 100%;
+  /* position: fixed;
+  width: calc(100% - 5.5rem); */
   top: 5rem;
   z-index: 10;
   /* if content is longer than screen height, enable scrollbar */
@@ -585,7 +589,8 @@ input[type='radio'] {
 }
 
 .create-task-popup {
-  width: calc(100% - 5.5rem);
+  width: 100%;
+  /* width: calc(100% - 5.5rem); */
   margin: auto;
   min-height: 100vh;
   overflow-y: auto;

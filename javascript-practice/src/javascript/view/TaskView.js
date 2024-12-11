@@ -90,7 +90,7 @@ class TaskView {
     const diffTime = Math.abs(end - start);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-    return diffDays === 0 ? 'Same day' : `${diffDays} day${diffDays !== 1 ? 's' : ''} long`;
+    return diffDays === 0 ? 'Same day' : `${diffDays} day${diffDays !== 1 ? 's' : ''}`;
   }
 
   // Show error notification
@@ -132,14 +132,16 @@ class TaskView {
     document.querySelector('#task-title').value = task.title;
     document.querySelector('#start-date').value = task.startDate;
     document.querySelector('#end-date').value = task.endDate;
-    document.querySelector('.textarea-input').value = task.description;
+    document.querySelector('#textarea').value = task.description;
+    document.querySelector('.default-option').value = task.priority;
+    document.querySelector('.default-option').value = task.category;
   }
 
   // Reset create task form
   resetCreateTaskForm() {
-    document.querySelector('#task-name-input').value = '';
-    document.querySelector('#task-start-input').value = '';
-    document.querySelector('#task-end-input').value = '';
+    document.querySelector('.task-name-input').value = '';
+    document.querySelector('.task-start-input').value = '';
+    document.querySelector('.task-end-input').value = '';
     document.querySelector('.textarea-input').value = '';
   }
 

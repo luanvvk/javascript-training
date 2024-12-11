@@ -1,12 +1,5 @@
 class TaskModel {
-  constructor(
-    title,
-    startDate,
-    endDate,
-    description,
-    priority = 'Not urgent',
-    category = 'Daily Task',
-  ) {
+  constructor(title, startDate, endDate, description, priority, category) {
     this.id = Date.now();
     this.title = title;
     this.startDate = startDate;
