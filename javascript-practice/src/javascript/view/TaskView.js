@@ -95,15 +95,38 @@ class TaskView {
 
   // Show error notification
   showError(message) {
+    this.removeExistingErrors();
     const errorNotification = document.createElement('div');
     errorNotification.classList.add('error-notification');
-    errorNotification.textContent = message;
-    document.querySelector('.main-body').prepend(errorNotification);
+    // Create error notification element
+    errorNotification.innerHTML = `
+       <div class="error-content">
+         <img src="./assests/images/icons/error-icon/error-icon.svg" alt="Error Icon" class="error-icon">
+         <span class="error-message">${message}</span>
+       </div>
+     `;
+    const mainBody = document.querySelector('.main-body');
+    const topBar = document.querySelector('.top-bar');
+    const insertLocation = topBar || mainBody;
+    if (insertLocation) {
+      insertLocation.insertAdjacentElement('afterend', errorNotification);
+    }
 
-    // Remove after 3 seconds
     setTimeout(() => {
-      errorNotification.remove();
+      errorNotification.classList.add('show');
+    }, 10);
+
+    // Remove error after 3 seconds
+    setTimeout(() => {
+      this.removeExistingErrors();
     }, 3000);
+  }
+  removeExistingErrors() {
+    const existingErrors = document.querySelectorAll('.error-notification');
+    existingErrors.forEach((error) => {
+      error.classList.remove('show');
+      error.remove();
+    });
   }
 
   // Open/close overlays
