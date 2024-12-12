@@ -23,11 +23,18 @@ class TaskView {
     taskElement.classList.add('task-item');
     taskElement.dataset.taskId = task.id;
 
-    const isCompleted = task.status === 'Completed';
-    const buttonIconSrc = isCompleted
-      ? './assets/images/icons/task-icons/completed-icon.svg'
-      : './assets/images/icons/task-icons/mark-as-completed-icon.svg';
-    const buttonText = isCompleted ? 'Mark as In Progress' : 'Mark as Completed';
+    let buttonIconSrc;
+    let buttonText;
+    if (task.status === 'To Do') {
+      buttonIconSrc = './assets/images/icons/task-icons/todo-task-icon.svg';
+      buttonText = 'Make Running Task';
+    } else if (task.status === 'In Progress') {
+      buttonIconSrc = './assets/images/icons/task-icons/running-task-icon.png';
+      buttonText = 'Mark as Completed';
+    } else if (task.status === 'Completed') {
+      buttonIconSrc = './assets/images/icons/task-icons/completed-task-icon.svg';
+      buttonText = 'Mark as In Progress';
+    }
 
     taskElement.innerHTML = `
       <div class="task-item__details">
@@ -37,7 +44,7 @@ class TaskView {
         <div class="task-duration">
           <span class="duration-badge">Duration: ${this.calculateTaskDuration(task.startDate, task.endDate)}</span>
         </div>
-        <button class="mark-completed">
+        <button class="status-button">
           <img class="button-icon" src="${buttonIconSrc}" alt="button-icon" loading="lazy" />
           <span class="confirm-button-desc">${buttonText}</span>
         </button>

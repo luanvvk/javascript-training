@@ -478,6 +478,16 @@
   cursor: pointer;
 }
 
+.task-start-container:invalid,
+.task-end-container:invalid {
+  border-color: red;
+}
+
+.task-start-input:valid,
+.task-end-input:valid {
+  border-color: green;
+}
+
 .task-name,
 .task-desc,
 .task-priority,

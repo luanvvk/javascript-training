@@ -45,7 +45,7 @@ class TaskController {
       <h2 class="label">Start date</h2>
       <div class="task-start-container">
       <span class="text-input"></span>
-        <input type="date" id="task-start-input" class="task-start-input" required>
+        <input type="date" id="task-start-input" class="task-start-input" required >
         <img src="./assets/images/icons/create-task-modal-icon/end-date-icon.svg" class="task-start-icon" alt="Start Date Icon">
       </div>
     `;
@@ -56,7 +56,7 @@ class TaskController {
       <h2 class="label">End date</h2>
       <div class="task-end-container">
         <span class="text-input"></span>
-        <input type="date" id="task-end-input" class="task-end-input" required>
+        <input type="date" id="task-end-input" class="task-end-input" required >
         <img src="./assets/images/icons/create-task-modal-icon/end-date-icon.svg" class="task-end-icon" alt="End Date Icon">
       </div>
     `;
@@ -449,9 +449,15 @@ class TaskController {
       const taskId = parseInt(taskElement.dataset.taskId);
       const task = this.tasks.find((t) => t.id === taskId);
 
-      // Mark as Completed/In Progress
-      taskElement.querySelector('.mark-completed').addEventListener('click', () => {
-        task.status = task.status === 'Completed' ? 'In Progress' : 'Completed';
+      // Handle status button
+      taskElement.querySelector('.status-button').addEventListener('click', () => {
+        if (task.status === 'To Do') {
+          task.status = 'In Progress'; //change status to running
+        } else if (task.status === 'In Progress') {
+          task.status = 'Completed'; //change status to completed
+        } else if (task.status === 'Completed') {
+          task.status = 'In Progress'; //change status back to running
+        }
         this.renderTasks();
         this.saveTasksToLocalStorage();
       });
