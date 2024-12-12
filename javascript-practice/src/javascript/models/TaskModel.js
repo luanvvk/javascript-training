@@ -56,3 +56,4 @@ class TaskModel {
     return errors;
   }
 }
+export default TaskModel;

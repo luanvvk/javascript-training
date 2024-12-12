@@ -4,11 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Task management app</title>
-    <link rel="stylesheet" href="./styles/normalize.css" />
-    <link rel="stylesheet" href="./styles/component.css" />
-    <link rel="stylesheet" href="./styles/typography.css" />
-    <link rel="stylesheet" href="./styles/base.css" />
-    <link rel="stylesheet" href="./styles/style.css" />
+    <link rel="stylesheet" href="./styles/main.css" />
   </head>
   <body>
     <div class="max-width-container">
@@ -19,7 +15,7 @@
               <span class="icon">
                 <img
                   class="logo-icon"
-                  src="./assests/images/icons/menu-bar-icons/logo-icon.svg"
+                  src="./assets/images/icons/menu-bar-icons/logo-icon.svg"
                   alt="logo-icon"
                   loading="lazy"
                 />
@@ -32,7 +28,7 @@
               <span class="icon">
                 <img
                   class="dash-board-icon"
-                  src="./assests/images/icons/menu-bar-icons/dashboard-icon.svg"
+                  src="./assets/images/icons/menu-bar-icons/dashboard-icon.svg"
                   alt="dashboard-icon"
                   loading="lazy"
                 />
@@ -45,7 +41,7 @@
               <span class="icon">
                 <img
                   class="all-tasks-icon"
-                  src="./assests/images/icons/menu-bar-icons/all-task-icon.svg"
+                  src="./assets/images/icons/menu-bar-icons/all-task-icon.svg"
                   alt="all-tasks-icon"
                   loading="lazy"
                 />
@@ -58,7 +54,7 @@
               <span class="icon">
                 <img
                   class="completed-tasks-icon"
-                  src="./assests/images/icons/menu-bar-icons/completed-task-icon.svg"
+                  src="./assets/images/icons/menu-bar-icons/completed-task-icon.svg"
                   alt="completed-tasks-icon"
                   loading="lazy"
                 />
@@ -71,7 +67,7 @@
               <span class="icon">
                 <img
                   class="add-a-task-icon"
-                  src="./assests/images/icons/menu-bar-icons/add-task-icon.svg"
+                  src="./assets/images/icons/menu-bar-icons/add-task-icon.svg"
                   alt="add-a-tasks-icon"
                   loading="lazy"
                 />
@@ -86,7 +82,7 @@
         <div id="notification" class="notification">
           <img
             class="completed-task-icon"
-            src="./assests/images/icons/menu-bar-icons/completed-task-icon.svg"
+            src="./assets/images/icons/menu-bar-icons/completed-task-icon.svg"
             alt="completed-task-icon"
           />
           <p class="notification-message">The task was deleted</p>
@@ -95,7 +91,7 @@
           <a class="menu-bar-toggle" href="javascript:void(0)">
             <img
               class="menu-bar-icon"
-              src="./assests/images/icons/header-icons/menu-icon.svg"
+              src="./assets/images/icons/header-icons/menu-icon.svg"
               alt="menu-bar-icon"
               loading="lazy"
             />
@@ -110,7 +106,7 @@
             />
             <img
               class="input-bar__icon"
-              src="./assests/images/icons/header-icons/search-bar-icon.svg"
+              src="./assets/images/icons/header-icons/search-bar-icon.svg"
               alt="Search-icon"
               loading="lazy"
             />
@@ -131,7 +127,7 @@
                     <!-- list-->
                     <img
                       class="list-icon"
-                      src="./assests/images/icons/header-icons/notification-icon.svg"
+                      src="./assets/images/icons/header-icons/notification-icon.svg"
                       alt="notification-icon"
                       loading="lazy"
                     />
@@ -149,7 +145,7 @@
                     <!-- board -->
                     <img
                       class="theme-icon"
-                      src="./assests/images/icons/header-icons/night-mode-icon.svg"
+                      src="./assets/images/icons/header-icons/night-mode-icon.svg"
                       alt="theme-icon"
                       loading="lazy"
                     />
@@ -161,7 +157,7 @@
             <a class="user-info" href="javascript:void(0)">
               <img
                 class="user-icon"
-                src="./assests/images/icons/header-icons/user-icon.svg"
+                src="./assets/images/icons/header-icons/user-icon.svg"
                 alt="user-icon"
                 loading="lazy"
               />
@@ -173,7 +169,7 @@
           <button class="add-a-task desktop">
             <img
               class="add-task-icon"
-              src="./assests/images/icons/add-task-icon/add-task-icon.svg"
+              src="./assets/images/icons/add-task-icon/add-task-icon.svg"
               alt="add-task-icon"
             />
           </button>
@@ -278,14 +274,60 @@
             <div class="edit-controls"></div>
           </div>
         </div>
+
+        <div class="all-tasks-popup">
+          <h2 class="popup-heading">All tasks</h2>
+          <div class="actions-buttons">
+            <div class="filter-buttons">
+              <div class="filter-dropdown">
+                <label for="category-filter">Category:</label>
+                <select name="category-filter" id="category-filter">
+                  <option value="All">All Categories</option>
+                  <option value="Daily Task">Daily Task</option>
+                  <option value="Weekly Task">Weekly Task</option>
+                  <option value="Monthly Task">Monthly Task</option>
+                </select>
+              </div>
+
+              <div class="filter-dropdown">
+                <label for="priority-filter">Priority:</label>
+                <select name="priority-filter" id="priority-filter">
+                  <option value="All">All Priorities</option>
+                  <option value="Not urgent">Not Urgent</option>
+                  <option value="Urgent task">Urgent Tasks</option>
+                  <option value="Important">Important</option>
+                </select>
+              </div>
+
+              <div class="filter-dropdown">
+                <label for="status-filter">Status:</label>
+                <select name="status-filter" id="status-filter">
+                  <option value="All">All Statuses</option>
+                  <option value="To Do">To Do</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Completed">Completed</option>
+                </select>
+              </div>
+            </div>
+            <div class="search-bar-mini__input-bar">
+              <input
+                class="input-bar-mini__main-input"
+                aria-label="search"
+                type="text"
+                name="search-task"
+                placeholder="Search by name"
+              />
+              <img
+                class="input-bar__icon"
+                src="./assets/images/icons/header-icons/search-bar-icon.svg"
+                alt="search-icon"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
       </main>
     </div>
-
-    <script src="./javascript/models/TaskModel.js"></script>
-    <script src="./javascript/view/TaskView.js"></script>
-    <!-- <script src="./javascript/event-listeners/event-listeners.js"></script> -->
-    <script src="./javascript/controllers/TaskController.js"></script>
-    <script src="./javascript/main.js"></script>
-    <!-- <script src="./javascript/test-code.js"></script> -->
+    <script type="module" src="./javascript/app.js"></script>
   </body>
 </html>

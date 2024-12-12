@@ -1,18 +1,18 @@
 @font-face {
   font-family: 'Inter';
-  src: url('../assests/fonts/Inter_18pt-Regular.ttf');
+  src: url('../assets/fonts/Inter_18pt-Regular.ttf');
   font-weight: 400;
   font-display: swap;
 }
 @font-face {
   font-family: 'Inter';
-  src: url('../assests/fonts/Inter_18pt-Medium.ttf');
+  src: url('../assets/fonts/Inter_18pt-Medium.ttf');
   font-weight: 500;
   font-display: swap;
 }
 @font-face {
   font-family: 'Inter';
-  src: url('../assests/fonts/Inter_18pt-Bold.ttf');
+  src: url('../assets/fonts/Inter_18pt-Bold.ttf');
   font-weight: 700;
   font-display: swap;
 }

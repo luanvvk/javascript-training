@@ -25,8 +25,8 @@ class TaskView {
 
     const isCompleted = task.status === 'Completed';
     const buttonIconSrc = isCompleted
-      ? './assests/images/icons/task-icons/completed-icon.svg'
-      : './assests/images/icons/task-icons/mark-as-completed-icon.svg';
+      ? './assets/images/icons/task-icons/completed-icon.svg'
+      : './assets/images/icons/task-icons/mark-as-completed-icon.svg';
     const buttonText = isCompleted ? 'Mark as In Progress' : 'Mark as Completed';
 
     taskElement.innerHTML = `
@@ -44,10 +44,10 @@ class TaskView {
       </div>
       <div class="task-item-actions">
         <a class="task-edit" href="javascript:void(0)">
-          <img class="task-edit-icon" src="./assests/images/icons/task-icons/task-edit-icon.svg" alt="task-edit-icon" />
+          <img class="task-edit-icon" src="./assets/images/icons/task-icons/task-edit-icon.svg" alt="task-edit-icon" />
         </a>
         <a class="task-delete" href="javascript:void(0)">
-          <img class="task-delete-icon" src="./assests/images/icons/task-icons/task-delete-icon.svg" alt="task-delete-icon" />
+          <img class="task-delete-icon" src="./assets/images/icons/task-icons/task-delete-icon.svg" alt="task-delete-icon" />
         </a>
       </div>`;
     return taskElement;
@@ -107,7 +107,7 @@ class TaskView {
     // Create error notification element
     errorNotification.innerHTML = `
        <div class="error-content">
-         <img src="./assests/images/icons/error-icon/error-icon.svg" alt="Error Icon" class="error-icon">
+         <img src="./assets/images/icons/error-icon/error-icon.svg" alt="Error Icon" class="error-icon">
          <span class="error-message">${message}</span>
        </div>
      `;
@@ -192,3 +192,4 @@ class TaskView {
     }, 3000);
   }
 }
+export default TaskView;

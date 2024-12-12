@@ -1,3 +1,5 @@
+import TaskModel from '../models/TaskModel.js';
+import TaskView from '../view/TaskView.js';
 class TaskController {
   constructor() {
     this.model = new TaskModel();
@@ -11,6 +13,7 @@ class TaskController {
     this.loadTasksFromLocalStorage();
     this.setupDynamicForm();
     this.setupEventListeners();
+    this.setupFilterEventListeners();
     this.renderTasks();
   }
 
@@ -32,7 +35,7 @@ class TaskController {
       <h2 class="label" >Task title</h2>
       <div class="task-name-container">
         <input type="text" id="task-name-input" class="task-name-input" placeholder="Enter task title" required>
-        <img src="./assests/images/icons/create-task-modal-icon/task-title-icon.svg" class="task-name-icon" alt="Task Title Icon">
+        <img src="./assets/images/icons/create-task-modal-icon/task-title-icon.svg" class="task-name-icon" alt="Task Title Icon">
       </div>
     `;
 
@@ -43,7 +46,7 @@ class TaskController {
       <div class="task-start-container">
       <span class="text-input"></span>
         <input type="date" id="task-start-input" class="task-start-input" required>
-        <img src="./assests/images/icons/create-task-modal-icon/end-date-icon.svg" class="task-start-icon" alt="Start Date Icon">
+        <img src="./assets/images/icons/create-task-modal-icon/end-date-icon.svg" class="task-start-icon" alt="Start Date Icon">
       </div>
     `;
 
@@ -54,7 +57,7 @@ class TaskController {
       <div class="task-end-container">
         <span class="text-input"></span>
         <input type="date" id="task-end-input" class="task-end-input" required>
-        <img src="./assests/images/icons/create-task-modal-icon/end-date-icon.svg" class="task-end-icon" alt="End Date Icon">
+        <img src="./assets/images/icons/create-task-modal-icon/end-date-icon.svg" class="task-end-icon" alt="End Date Icon">
       </div>
     `;
 
@@ -81,7 +84,7 @@ class TaskController {
       <div class="task-name-container">
         <input type="text" name="task-name" id="task-title" class="task-name-input" required />
          <img class="task-name-icon"
-              src="./assests/images/icons/create-task-modal-icon/task-title-icon.svg"
+              src="./assets/images/icons/create-task-modal-icon/task-title-icon.svg"
               alt="task-name-icon" 
               />
       </div>
@@ -93,7 +96,7 @@ class TaskController {
       <div class="task-start-container">
         <span class="text-input"></span>
         <input type="date" name="task-start" id="start-date" class="task-start-input" />
-         <img class="task-start-icon" src="./assests/images/icons/create-task-modal-icon/end-date-icon.svg"
+         <img class="task-start-icon" src="./assets/images/icons/create-task-modal-icon/end-date-icon.svg"
               alt="task-start-icon"
           />
       </div>
@@ -107,7 +110,7 @@ class TaskController {
         <span class="text-input"></span>
         <input type="date" name="task-end" id="end-date" class="task-end-input" />
         <img class="task-end-icon"
-             src="./assests/images/icons/create-task-modal-icon/end-date-icon.svg"
+             src="./assets/images/icons/create-task-modal-icon/end-date-icon.svg"
             alt="task-end-icon"
         />
       </div>
@@ -128,7 +131,7 @@ class TaskController {
               <button class="mark-completed" type="submit">
                 <img
                   class="move-task-icon"
-                  src="./assests/images/icons/task-edit-modal-icons/mark-as-completed-icon.svg"
+                  src="./assets/images/icons/task-edit-modal-icons/mark-as-completed-icon.svg"
                   alt=""
                 />
                 Mark as completed
@@ -136,7 +139,7 @@ class TaskController {
               <button class="overlay-delete-button">
                 <img
                   class="delete-task-icon"
-                  src="./assests/images/icons/task-edit-modal-icons/task-delete-icon.svg"
+                  src="./assets/images/icons/task-edit-modal-icons/task-delete-icon.svg"
                   alt=""
                 />
                 Delete the task
@@ -162,7 +165,7 @@ class TaskController {
     createPriorityContainer.innerHTML = `
      <div class="default-option-container">
      <span class="default-option">${createDefaultOption.value}</span>
-     <img src="./assests/images/icons/create-task-modal-icon/priority-icon.svg" class="task-priority-icon" alt="Priority Icon">
+     <img src="./assets/images/icons/create-task-modal-icon/priority-icon.svg" class="task-priority-icon" alt="Priority Icon">
     </div>
       `;
 
@@ -204,7 +207,7 @@ class TaskController {
     createCategoryContainer.innerHTML = `
     <div class="default-option-container">
     <span class="default-option">${createDefaultCategoryOption.value}</span>
-      <img src="./assests/images/icons/create-task-modal-icon/priority-icon.svg" class="task-category-icon" alt="Category Icon">
+      <img src="./assets/images/icons/create-task-modal-icon/priority-icon.svg" class="task-category-icon" alt="Category Icon">
     </div>
       `;
 
@@ -249,7 +252,7 @@ class TaskController {
     editPriorityContainer.innerHTML = `
      <div class="default-option-container">
      <span class="default-option">${editDefaultOption.value}</span>
-     <img src="./assests/images/icons/create-task-modal-icon/priority-icon.svg" class="task-priority-icon" alt="Priority Icon">
+     <img src="./assets/images/icons/create-task-modal-icon/priority-icon.svg" class="task-priority-icon" alt="Priority Icon">
     </div>
       `;
 
@@ -292,7 +295,7 @@ class TaskController {
     editCategoryContainer.innerHTML = `
     <div class="default-option-container">
     <span class="default-option">${editDefaultCategoryOption.value}</span>
-      <img src="./assests/images/icons/create-task-modal-icon/priority-icon.svg" class="task-category-icon" alt="Category Icon">
+      <img src="./assets/images/icons/create-task-modal-icon/priority-icon.svg" class="task-category-icon" alt="Category Icon">
     </div>
       `;
 
@@ -529,9 +532,7 @@ class TaskController {
         task.title.toLowerCase().includes(searchText) ||
         task.description.toLowerCase().includes(searchText) ||
         task.category.toLowerCase().includes(searchText) ||
-        task.priority.toLowerCase().includes(searchText) ||
-        this.formatSearchDate(task.startDate).includes(searchText) ||
-        this.formatSearchDate(task.endDate).includes(searchText),
+        task.priority.toLowerCase().includes(searchText),
     );
 
     // Render filtered tasks
@@ -549,4 +550,70 @@ class TaskController {
       })
       .toLowerCase();
   }
+
+  filterTask(options = {}) {
+    const { category = 'All', priority = 'All', status = 'All', searchText = '' } = options;
+    let filteredTasks = this.tasks;
+    if (searchText) {
+      const lowerSearchText = searchText.toLowerCase().trim();
+      filteredTasks = filteredTasks.filter((task) => {
+        return (
+          task.title.toLowerCase().includes(lowerSearchText) ||
+          task.description.toLowerCase().includes(lowerSearchText) ||
+          task.category.toLowerCase().includes(lowerSearchText) ||
+          task.priority.toLowerCase().includes(lowerSearchText) ||
+          this.formatSearchDate(task.startDate).includes(lowerSearchText) ||
+          this.formatSearchDate(task.endDate).includes(lowerSearchText)
+        );
+      });
+    }
+    // FIlter by category
+    if (category !== 'All') {
+      filteredTasks = filteredTasks.filter((task) => task.category === category);
+    }
+    //Filer by priority
+    if (priority !== 'All') {
+      filteredTasks = filteredTasks.filter((task) => task.priority === priority);
+    }
+    //Filter by status
+    if (status !== 'All') {
+      filteredTasks = filteredTasks.filter((task) => task.status === status);
+    }
+
+    return filteredTasks;
+  }
+  //Setup filter event listeners
+  setupFilterEventListeners() {
+    //category filter
+    const categoryFilter = document.getElementById('category-filter');
+    if (categoryFilter) {
+      categoryFilter.addEventListener('change', this.applyFilters.bind(this));
+    }
+    //priority filter
+    const priorityFilter = document.getElementById('priority-filter');
+    if (priorityFilter) {
+      priorityFilter.addEventListener('change', this.applyFilters.bind(this));
+    }
+    //status filter
+    const statusFilter = document.getElementById('status-filter');
+    if (statusFilter) {
+      statusFilter.addEventListener('change', this.applyFilters.bind(this));
+    }
+  }
+  //Apply filters
+  applyFilters() {
+    const categoryFilter = document.getElementById('category-filter').value;
+    const priorityFilter = document.getElementById('priority-filter').value;
+    const statusFilter = document.getElementById('status-filter').value;
+    const searchInput = document.querySelector('.input-bar__main-input').value;
+    const filteredTasks = this.filterTask({
+      category: categoryFilter ? categoryFilter.value : 'All',
+      priority: priorityFilter ? priorityFilter.value : 'All',
+      status: statusFilter ? statusFilter.value : 'All',
+      searchText: searchInput ? searchInput.value : '',
+    });
+    this.view.renderTasks(filteredTasks);
+    this.setupTaskActions();
+  }
 }
+export default TaskController;
