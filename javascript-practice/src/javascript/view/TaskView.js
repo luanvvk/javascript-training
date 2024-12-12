@@ -88,21 +88,46 @@ class TaskView {
   }
   //render all task popup
   renderAllTasksPopup(tasks) {
-    const popupTaskList = document.querySelector('.all-task-popup .task-list');
-    if (!popupTaskList) return;
+    const popupToDoColumn = document.querySelector('#all-task-popup .task-column.todo .task-list');
+    const popupInProgressColumn = document.querySelector(
+      '#all-task-popup .task-column.in-progress .task-list',
+    );
+    const popupCompletedColumn = document.querySelector(
+      '#all-task-popup .task-column.completed .task-list',
+    );
+
+    if (!popupToDoColumn || !popupInProgressColumn || !popupCompletedColumn) return;
     //clear previous tasks
-    popupTaskList.innerHTML = '';
+    popupToDoColumn.innerHTML = '';
+    popupInProgressColumn.innerHTML = '';
+    popupCompletedColumn.innerHTML = '';
     //add filter task
     tasks.forEach((task) => {
       const taskElement = this.createTaskElement(task);
-      popupTaskList.appendChild(taskElement);
+
+      switch (task.status) {
+        case 'To Do':
+          popupToDoColumn.appendChild(taskElement);
+          break;
+        case 'In Progress':
+          popupInProgressColumn.appendChild(taskElement);
+          break;
+        case 'Completed':
+          popupCompletedColumn.appendChild(taskElement);
+          break;
+      }
     });
     //show message in case no matched results
-    if (tasks.length === 0) {
-      popupTaskList.innerHTML = `<p class="no-tasks">No tasks match the criteria</p>`;
+    if (!popupToDoColumn.children.length) {
+      popupToDoColumn.innerHTML = '<p class="no-tasks">No tasks in To Do</p>';
+    }
+    if (!popupInProgressColumn.children.length) {
+      popupInProgressColumn.innerHTML = '<p class="no-tasks">No tasks In Progress</p>';
+    }
+    if (!popupCompletedColumn.children.length) {
+      popupCompletedColumn.innerHTML = '<p class="no-tasks">No Completed tasks</p>';
     }
   }
-
   // Utility methods
   formatDate(dateString) {
     const options = {

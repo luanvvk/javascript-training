@@ -14,7 +14,7 @@ class TaskController {
     this.setupDynamicForm();
     this.setupEventListeners();
     this.setupFilterEventListeners();
-    this.renderTasks();
+    this.renderAllTasks();
   }
 
   setupDynamicForm() {
@@ -374,6 +374,16 @@ class TaskController {
     if (searchInput) {
       searchInput.addEventListener('input', this.searchTasks.bind(this));
     }
+    //open/close all task popup
+    const dashboardBtn = document.querySelector('.dashboard');
+    const allTaskPopup = document.getElementById('all-task-popup');
+    const allTaskBtn = document.querySelector('.completed-tasks');
+    allTaskBtn.addEventListener('click', () => {
+      allTaskPopup.classList.remove('hide');
+    });
+    dashboardBtn.addEventListener('click', () => {
+      allTaskPopup.classList.add('hide');
+    });
 
     // Toggle between views
     const viewOptions = document.querySelectorAll("input[name='view-option']");
@@ -523,6 +533,15 @@ class TaskController {
       this.view.closeEditTaskOverlay();
     });
   }
+
+  renderAllTasks() {
+    // Render all tasks in the main view
+    this.view.renderTasks(this.tasks);
+    // Render all tasks in the All Tasks Popup,
+    this.view.renderAllTasksPopup(this.tasks);
+    this.setupTaskActions();
+  }
+
   searchTasks(e) {
     const searchText = e.target.value.toLowerCase().trim();
 
@@ -595,7 +614,7 @@ class TaskController {
     const statusFilter = document.getElementById('status-filter');
     const searchInput = document.querySelector('.input-bar-mini__main-input');
     // Apply event listeners to filters
-    [(categoryFilter, priorityFilter, statusFilter)].forEach((filter) => {
+    [categoryFilter, priorityFilter, statusFilter].forEach((filter) => {
       if (filter) {
         filter.addEventListener('change', this.applyFilters.bind(this));
       }
@@ -612,15 +631,19 @@ class TaskController {
 
     const searchInput = document.querySelector('.input-bar-mini__main-input');
     const searchText = searchInput ? searchInput.value.trim() : '';
+    //Filter tasks
     const filteredTasks = this.filterTask({
       category: categoryFilter,
       priority: priorityFilter,
       status: statusFilter,
       searchText,
     });
+
     this.view.renderTasks(filteredTasks);
     this.view.renderAllTasksPopup(filteredTasks);
     this.setupTaskActions();
+    console.log('Filtered Tasks for All Tasks Popup:', filteredTasks);
+    this.view.renderAllTasksPopup(filteredTasks);
   }
 }
 export default TaskController;

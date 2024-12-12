@@ -588,6 +588,7 @@ input[type='radio'] {
   width: calc(100% - 5.5rem); */
   top: 5rem;
   z-index: 10;
+  min-height: 100%;
   /* if content is longer than screen height, enable scrollbar */
   overflow-y: auto;
 }
@@ -618,16 +619,29 @@ input[type='radio'] {
   border-radius: var(--radius-8);
   height: 100%;
 }
+.task-columns {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-32);
+  padding: var(--space-16);
+  border-radius: var(--border-radius-6);
+  background-color: var(--light-pink);
 
+  width: 100%;
+}
 @media (min-width: 1001px) {
-  .board-view {
+  .board-view,
+  .task-columns {
     display: grid;
     grid-template-areas: 'toDo running completed';
   }
 }
 
 @media (min-width: 650px) and (max-width: 1000px) {
-  .board-view {
+  .board-view,
+  .task-columns {
     display: grid;
     grid-template-areas:
       'toDo running'
@@ -638,7 +652,7 @@ input[type='radio'] {
   }
 }
 @media (max-width: 649px) {
-  .board-view {
+  .board-view .task-columns {
     display: grid;
     grid-template-areas: 'toDo ' 'running ' 'completed ';
     margin-top: var(--space-32);
