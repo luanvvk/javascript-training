@@ -598,6 +598,16 @@ input[type='radio'] {
   background-color: var(--light-pink);
   border-radius: var(--radius-8);
 }
+.all-tasks-popup {
+  position: fixed;
+  width: 100%;
+  margin: auto;
+  min-height: 100vh;
+  overflow-y: auto;
+  background-color: var(--light-pink);
+  border-radius: var(--radius-8);
+  height: 100%;
+}
 
 @media (min-width: 1001px) {
   .board-view {

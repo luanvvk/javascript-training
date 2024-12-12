@@ -552,10 +552,10 @@ class TaskController {
   }
 
   filterTask(options = {}) {
-    // const { category = 'All', priority = 'All', status = 'All', searchText = '' } = options;
+    const { category = 'All', priority = 'All', status = 'All', searchText = '' } = options;
     console.log('filter options:', options);
     let filteredTasks = this.tasks;
-    if (options.searchText) {
+    if (searchText) {
       const lowerSearchText = searchText.toLowerCase().trim();
       filteredTasks = filteredTasks.filter((task) => {
         return (
@@ -566,17 +566,17 @@ class TaskController {
         );
       });
     }
-    // FIlter by category
-    if (options.category && options.category !== 'All') {
-      filteredTasks = filteredTasks.filter((task) => task.category === options.category);
+    // Filter by category
+    if (category !== 'All') {
+      filteredTasks = filteredTasks.filter((task) => task.category === category);
     }
     //Filer by priority
-    if (options.priority && options.priority !== 'All') {
-      filteredTasks = filteredTasks.filter((task) => task.priority === options.priority);
+    if (priority !== 'All') {
+      filteredTasks = filteredTasks.filter((task) => task.priority === priority);
     }
     //Filter by status
-    if (options.status && options.status !== 'All') {
-      filteredTasks = filteredTasks.filter((task) => task.status === options.status);
+    if (status !== 'All') {
+      filteredTasks = filteredTasks.filter((task) => task.status === status);
     }
     console.log('filter tasks:', filteredTasks);
     return filteredTasks;
@@ -587,13 +587,13 @@ class TaskController {
     const categoryFilter = document.getElementById('category-filter');
     const priorityFilter = document.getElementById('priority-filter');
     const statusFilter = document.getElementById('status-filter');
-    // Apply filter on dropdown change
-    [categoryFilter, priorityFilter, statusFilter].forEach((filter) => {
+    const searchInput = document.querySelector('.input-bar-mini__main-input');
+    // Apply event listeners to filters
+    [(categoryFilter, priorityFilter, statusFilter)].forEach((filter) => {
       if (filter) {
         filter.addEventListener('change', this.applyFilters.bind(this));
       }
     });
-    const searchInput = document.querySelector('.input-bar__main-input');
     if (searchInput) {
       searchInput.addEventListener('input', this.applyFilters.bind(this));
     }
@@ -603,14 +603,17 @@ class TaskController {
     const categoryFilter = document.getElementById('category-filter').value;
     const priorityFilter = document.getElementById('priority-filter').value;
     const statusFilter = document.getElementById('status-filter').value;
-    const searchInput = document.querySelector('.input-bar__main-input').value;
+
+    const searchInput = document.querySelector('.input-bar-mini__main-input');
+    const searchText = searchInput ? searchInput.value.trim() : '';
     const filteredTasks = this.filterTask({
       category: categoryFilter,
       priority: priorityFilter,
       status: statusFilter,
-      searchText: searchInput,
+      searchText,
     });
     this.view.renderTasks(filteredTasks);
+    this.view.renderAllTasksPopup(filteredTasks);
     this.setupTaskActions();
   }
 }

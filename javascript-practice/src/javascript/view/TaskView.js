@@ -79,6 +79,22 @@ class TaskView {
       }
     });
   }
+  //render all task popup
+  renderAllTasksPopup(tasks) {
+    const popupTaskList = document.querySelector('.all-task-popup .task-list');
+    if (!popupTaskList) return;
+    //clear previous tasks
+    popupTaskList.innerHTML = '';
+    //add filter task
+    tasks.forEach((task) => {
+      const taskElement = this.createTaskElement(task);
+      popupTaskList.appendChild(taskElement);
+    });
+    //show message in case no matched results
+    if (tasks.length === 0) {
+      popupTaskList.innerHTML = `<p class="no-tasks">No tasks match the criteria</p>`;
+    }
+  }
 
   // Utility methods
   formatDate(dateString) {
