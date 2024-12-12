@@ -537,6 +537,7 @@ class TaskController {
   renderAllTasks() {
     // Render all tasks in the main view
     this.view.renderTasks(this.tasks);
+
     // Render all tasks in the All Tasks Popup,
     this.view.renderAllTasksPopup(this.tasks);
     this.setupTaskActions();

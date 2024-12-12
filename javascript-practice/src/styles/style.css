@@ -631,6 +631,14 @@ input[type='radio'] {
 
   width: 100%;
 }
+
+.no-tasks-message {
+  text-align: center;
+  font-size: 14px;
+  color: #888;
+  margin-top: 10px;
+}
+
 @media (min-width: 1001px) {
   .board-view,
   .task-columns {

@@ -1,5 +1,4 @@
-setupEventListeners();
-{
+export function setupEventListeners() {
   // Add Task Buttons
   const addTaskBtns = document.querySelectorAll('.add-a-task');
   addTaskBtns.forEach((btn) => {
@@ -19,6 +18,27 @@ setupEventListeners();
   const cancelButtons = document.querySelectorAll('.button-controls .cancel');
   cancelButtons.forEach((btn) => {
     btn.addEventListener('click', () => this.view.closeCreateTaskOverlay());
+  });
+
+  const cancelEditButtons = document.querySelectorAll('.edit-controls .cancel');
+  cancelEditButtons.forEach((btn) => {
+    btn.addEventListener('click', () => this.view.closeEditTaskOverlay());
+  });
+
+  //search
+  const searchInput = document.querySelector('.input-bar__main-input');
+  if (searchInput) {
+    searchInput.addEventListener('input', this.searchTasks.bind(this));
+  }
+  //open/close all task popup
+  const dashboardBtn = document.querySelector('.dashboard');
+  const allTaskPopup = document.getElementById('all-task-popup');
+  const allTaskBtn = document.querySelector('.completed-tasks');
+  allTaskBtn.addEventListener('click', () => {
+    allTaskPopup.classList.remove('hide');
+  });
+  dashboardBtn.addEventListener('click', () => {
+    allTaskPopup.classList.add('hide');
   });
 
   // Toggle between views
