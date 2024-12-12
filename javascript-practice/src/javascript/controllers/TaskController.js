@@ -552,52 +552,50 @@ class TaskController {
   }
 
   filterTask(options = {}) {
-    const { category = 'All', priority = 'All', status = 'All', searchText = '' } = options;
+    // const { category = 'All', priority = 'All', status = 'All', searchText = '' } = options;
+    console.log('filter options:', options);
     let filteredTasks = this.tasks;
-    if (searchText) {
+    if (options.searchText) {
       const lowerSearchText = searchText.toLowerCase().trim();
       filteredTasks = filteredTasks.filter((task) => {
         return (
           task.title.toLowerCase().includes(lowerSearchText) ||
           task.description.toLowerCase().includes(lowerSearchText) ||
           task.category.toLowerCase().includes(lowerSearchText) ||
-          task.priority.toLowerCase().includes(lowerSearchText) ||
-          this.formatSearchDate(task.startDate).includes(lowerSearchText) ||
-          this.formatSearchDate(task.endDate).includes(lowerSearchText)
+          task.priority.toLowerCase().includes(lowerSearchText)
         );
       });
     }
     // FIlter by category
-    if (category !== 'All') {
-      filteredTasks = filteredTasks.filter((task) => task.category === category);
+    if (options.category && options.category !== 'All') {
+      filteredTasks = filteredTasks.filter((task) => task.category === options.category);
     }
     //Filer by priority
-    if (priority !== 'All') {
-      filteredTasks = filteredTasks.filter((task) => task.priority === priority);
+    if (options.priority && options.priority !== 'All') {
+      filteredTasks = filteredTasks.filter((task) => task.priority === options.priority);
     }
     //Filter by status
-    if (status !== 'All') {
-      filteredTasks = filteredTasks.filter((task) => task.status === status);
+    if (options.status && options.status !== 'All') {
+      filteredTasks = filteredTasks.filter((task) => task.status === options.status);
     }
-
+    console.log('filter tasks:', filteredTasks);
     return filteredTasks;
   }
   //Setup filter event listeners
   setupFilterEventListeners() {
     //category filter
     const categoryFilter = document.getElementById('category-filter');
-    if (categoryFilter) {
-      categoryFilter.addEventListener('change', this.applyFilters.bind(this));
-    }
-    //priority filter
     const priorityFilter = document.getElementById('priority-filter');
-    if (priorityFilter) {
-      priorityFilter.addEventListener('change', this.applyFilters.bind(this));
-    }
-    //status filter
     const statusFilter = document.getElementById('status-filter');
-    if (statusFilter) {
-      statusFilter.addEventListener('change', this.applyFilters.bind(this));
+    // Apply filter on dropdown change
+    [categoryFilter, priorityFilter, statusFilter].forEach((filter) => {
+      if (filter) {
+        filter.addEventListener('change', this.applyFilters.bind(this));
+      }
+    });
+    const searchInput = document.querySelector('.input-bar__main-input');
+    if (searchInput) {
+      searchInput.addEventListener('input', this.applyFilters.bind(this));
     }
   }
   //Apply filters
@@ -607,10 +605,10 @@ class TaskController {
     const statusFilter = document.getElementById('status-filter').value;
     const searchInput = document.querySelector('.input-bar__main-input').value;
     const filteredTasks = this.filterTask({
-      category: categoryFilter ? categoryFilter.value : 'All',
-      priority: priorityFilter ? priorityFilter.value : 'All',
-      status: statusFilter ? statusFilter.value : 'All',
-      searchText: searchInput ? searchInput.value : '',
+      category: categoryFilter,
+      priority: priorityFilter,
+      status: statusFilter,
+      searchText: searchInput,
     });
     this.view.renderTasks(filteredTasks);
     this.setupTaskActions();
