@@ -6,7 +6,7 @@ export function createTaskElement(task) {
   let buttonText;
   if (task.status === 'To Do') {
     buttonIconSrc = './assets/images/icons/task-icons/todo-task-icon.svg';
-    buttonText = 'Make Running Task';
+    buttonText = 'Mark as In Progress';
   } else if (task.status === 'In Progress') {
     buttonIconSrc = './assets/images/icons/task-icons/running-task-icon.png';
     buttonText = 'Mark as Completed';

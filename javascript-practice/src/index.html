@@ -184,7 +184,7 @@
             <div class="task-column blue">
               <h2 class="list-header">
                 <span class="circle background-blue"></span>
-                <span class="text">Running tasks</span>
+                <span class="text">In Progress</span>
               </h2>
               <ul class="task-list blue"></ul>
             </div>
@@ -309,6 +309,7 @@
                 </select>
               </div>
             </div>
+
             <div class="search-bar-mini__input-bar">
               <input
                 class="input-bar-mini__main-input"
@@ -329,18 +330,26 @@
           <div class="task-columns">
             <!-- To Do Column -->
             <div class="task-column todo">
-              <h3>To Do</h3>
-              <div class="task-list"></div>
+              <h3 class="list-header">
+                <span class="circle background-pink"></span><span class="text">To do tasks</span>
+              </h3>
+              <div class="task-list pink"></div>
             </div>
             <!-- In Progress Column -->
             <div class="task-column in-progress">
-              <h3>In Progress</h3>
-              <div class="task-list"></div>
+              <h3 class="list-header">
+                <span class="circle background-blue"></span>
+                <span class="text">In Progress</span>
+              </h3>
+              <div class="task-list blue"></div>
             </div>
             <!-- Completed Column -->
             <div class="task-column completed">
-              <h3>Completed</h3>
-              <div class="task-list"></div>
+              <h3 class="list-header">
+                <span class="circle background-green"></span
+                ><span class="text">Completed tasks</span>
+              </h3>
+              <div class="task-list green"></div>
             </div>
           </div>
         </div>

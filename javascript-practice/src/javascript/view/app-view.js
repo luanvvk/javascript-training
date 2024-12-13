@@ -29,8 +29,6 @@ class TaskView {
     tasks.forEach((task) => {
       const taskHTML = createTaskElement(task);
 
-      taskHTML.style.boxShadow = this.getTaskShadowColor(task.status);
-
       switch (task.status) {
         case 'To Do':
           this.listViewColumns.toDo.appendChild(taskHTML.cloneNode(true));
@@ -51,19 +49,6 @@ class TaskView {
     showNoTasksMessage(this.boardViewColumns, 'board-view');
   }
 
-  //render shadow for all task
-  getTaskShadowColor(status) {
-    switch (status) {
-      case 'To Do':
-        return 'var(--pink-shadow)';
-      case 'In Progress':
-        return 'var(--blue-shadow)';
-      case 'Completed':
-        return 'var(--green-shadow)';
-      default:
-        return 'none';
-    }
-  }
   //render all task popup
   renderAllTasksPopup(tasks) {
     const popupToDoColumn = document.querySelector('#all-task-popup .task-column.todo .task-list');
@@ -97,13 +82,13 @@ class TaskView {
     });
     //show message in case no matched results
     if (!popupToDoColumn.children.length) {
-      popupToDoColumn.innerHTML = '<p class="no-tasks">No tasks in To Do</p>';
+      popupToDoColumn.innerHTML = '<p class="no-tasks-message">No tasks in To Do</p>';
     }
     if (!popupInProgressColumn.children.length) {
-      popupInProgressColumn.innerHTML = '<p class="no-tasks">No tasks In Progress</p>';
+      popupInProgressColumn.innerHTML = '<p class="no-tasks-message">No tasks In Progress</p>';
     }
     if (!popupCompletedColumn.children.length) {
-      popupCompletedColumn.innerHTML = '<p class="no-tasks">No Completed tasks</p>';
+      popupCompletedColumn.innerHTML = '<p class="no-tasks-message">No Completed tasks</p>';
     }
   }
 

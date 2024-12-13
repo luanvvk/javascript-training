@@ -1,8 +1,10 @@
 import TaskModel from '../models/task-model.js';
 import TaskView from '../view/app-view.js';
+import LocalStorageUtil from '../helpers/local-storage-utils.js';
 import { showError } from '../helpers/error-handling.js';
 import { showDeletionNotification } from '../helpers/notifications.js';
-import LocalStorageUtil from '../helpers/local-storage-utils.js';
+import { createFormElements } from '../template/create-task-popup.js';
+import { editFormElements } from '../template/edit-task-popup.js';
 class TaskController {
   constructor() {
     this.model = new TaskModel();
@@ -35,128 +37,9 @@ class TaskController {
 
     this.editTaskOverlay = document.getElementById('edit-task-overlay');
     this.editTaskPopup = this.editTaskOverlay.querySelector('.edit-popup');
-    this.createFormElements();
+    createFormElements();
     this.setupDropdowns();
-    this.editFormElements();
-  }
-
-  createFormElements() {
-    // Task Name Input
-    const taskNameContainer = this.createTaskOverlay.querySelector('.task-name');
-    taskNameContainer.innerHTML = `
-      <h2 class="label">Task title</h2>
-      <div class="task-name-container">
-        <input type="text" id="task-name-input" class="task-name-input" placeholder="Enter task title" required>
-        <img src="./assets/images/icons/create-task-modal-icon/task-title-icon.svg" class="task-name-icon" alt="Task Title Icon">
-      </div>
-    `;
-
-    // Start Date Input
-    const taskStartContainer = this.createTaskOverlay.querySelector('.task-start');
-    taskStartContainer.innerHTML = `
-      <h2 class="label">Start date</h2>
-      <div class="task-start-container">
-      <span class="text-input"></span>
-        <input type="date" id="task-start-input" class="task-start-input" required >
-        <img src="./assets/images/icons/create-task-modal-icon/end-date-icon.svg" class="task-start-icon" alt="Start Date Icon">
-      </div>
-    `;
-
-    // End Date Input
-    const taskEndContainer = this.createTaskOverlay.querySelector('.task-end');
-    taskEndContainer.innerHTML = `
-      <h2 class="label">End date</h2>
-      <div class="task-end-container">
-        <span class="text-input"></span>
-        <input type="date" id="task-end-input" class="task-end-input" required >
-        <img src="./assets/images/icons/create-task-modal-icon/end-date-icon.svg" class="task-end-icon" alt="End Date Icon">
-      </div>
-    `;
-
-    // Task Description
-    const taskDescContainer = this.createTaskOverlay.querySelector('.task-desc');
-    taskDescContainer.innerHTML = `
-      <h2 class="label">Task description</h2>
-      <textarea id="textarea-input" class="textarea-input" rows="8" placeholder="Enter task description"></textarea>
-    `;
-
-    // Button Controls
-    const buttonControls = this.createTaskOverlay.querySelector('.button-controls');
-    buttonControls.innerHTML = `
-      <button class="add-to-list">Add to list</button>
-      <button class="cancel">Cancel</button>
-    `;
-  }
-
-  editFormElements() {
-    // Task Name Input
-    const taskNameContainer = this.editTaskOverlay.querySelector('.task-name');
-    taskNameContainer.innerHTML = `
-      <h2 class="label">Task title</h2>
-      <div class="task-name-container">
-        <input type="text" name="task-name" id="task-title" class="task-name-input" required />
-         <img class="task-name-icon"
-              src="./assets/images/icons/create-task-modal-icon/task-title-icon.svg"
-              alt="task-name-icon" 
-              />
-      </div>
-    `;
-    // Start Date Input
-    const taskStartContainer = this.editTaskOverlay.querySelector('.task-start');
-    taskStartContainer.innerHTML = `
-      <h2 class="label">Start date</h2>
-      <div class="task-start-container">
-        <span class="text-input"></span>
-        <input type="date" name="task-start" id="start-date" class="task-start-input" />
-         <img class="task-start-icon" src="./assets/images/icons/create-task-modal-icon/end-date-icon.svg"
-              alt="task-start-icon"
-          />
-      </div>
-    `;
-
-    // End Date Input
-    const taskEndContainer = this.editTaskOverlay.querySelector('.task-end');
-    taskEndContainer.innerHTML = `
-      <h2 class="label">End date</h2>
-      <div class="task-end-container">
-        <span class="text-input"></span>
-        <input type="date" name="task-end" id="end-date" class="task-end-input" />
-        <img class="task-end-icon"
-             src="./assets/images/icons/create-task-modal-icon/end-date-icon.svg"
-            alt="task-end-icon"
-        />
-      </div>
-    `;
-
-    // Task Description
-    const taskDescContainer = this.editTaskOverlay.querySelector('.task-desc');
-    taskDescContainer.innerHTML = `
-      <h2 class="label">Task description</h2>
-      <textarea id="textarea" class="textarea-input" rows="8" placeholder="Enter task description"></textarea>
-     `;
-
-    // Button Controls
-    const buttonControls = this.editTaskOverlay.querySelector('.edit-controls');
-    buttonControls.innerHTML = `
-      <button class="edit-task-button">Confirm edit</button>
-              <button class="cancel">Cancel</button>
-              <button class="mark-completed" type="submit">
-                <img
-                  class="move-task-icon"
-                  src="./assets/images/icons/task-edit-modal-icons/mark-as-completed-icon.svg"
-                  alt=""
-                />
-                Mark as completed
-              </button>
-              <button class="overlay-delete-button">
-                <img
-                  class="delete-task-icon"
-                  src="./assets/images/icons/task-edit-modal-icons/task-delete-icon.svg"
-                  alt=""
-                />
-                Delete the task
-              </button>
-    `;
+    editFormElements();
   }
 
   setupDropdowns() {
@@ -369,14 +252,17 @@ class TaskController {
       searchInput.addEventListener('input', this.searchTasks.bind(this));
     }
     //open/close all task popup
+    const searchBarTop = document.querySelector('.search-bar__input-bar');
     const dashboardBtn = document.querySelector('.dashboard');
     const allTaskPopup = document.getElementById('all-task-popup');
     const allTaskBtn = document.querySelector('.completed-tasks');
     allTaskBtn.addEventListener('click', () => {
       allTaskPopup.classList.remove('hide');
+      searchBarTop.classList.add('hide');
     });
     dashboardBtn.addEventListener('click', () => {
       allTaskPopup.classList.add('hide');
+      searchBarTop.classList.remove('hide');
     });
 
     // Toggle between views
