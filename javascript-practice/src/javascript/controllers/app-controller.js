@@ -1,11 +1,14 @@
-import TaskModel from '../models/TaskModel.js';
-import TaskView from '../view/TaskView.js';
+import TaskModel from '../models/task-model.js';
+import TaskView from '../view/app-view.js';
 import { showError } from '../helpers/error-handling.js';
+import { showDeletionNotification } from '../helpers/notifications.js';
+import LocalStorageUtil from '../helpers/local-storage-utils.js';
 class TaskController {
   constructor() {
     this.model = new TaskModel();
     this.view = new TaskView();
     this.tasks = [];
+    this.localStorageUtil = new LocalStorageUtil();
 
     this.initialize();
   }
@@ -16,6 +19,14 @@ class TaskController {
     this.setupEventListeners();
     this.setupFilterEventListeners();
     this.renderAllTasks();
+  }
+
+  loadTasksFromLocalStorage() {
+    this.tasks = this.localStorageUtil.load(TaskModel);
+  }
+
+  saveTasksToLocalStorage() {
+    this.localStorageUtil.save(this.tasks);
   }
 
   setupDynamicForm() {
@@ -33,7 +44,7 @@ class TaskController {
     // Task Name Input
     const taskNameContainer = this.createTaskOverlay.querySelector('.task-name');
     taskNameContainer.innerHTML = `
-      <h2 class="label" >Task title</h2>
+      <h2 class="label">Task title</h2>
       <div class="task-name-container">
         <input type="text" id="task-name-input" class="task-name-input" placeholder="Enter task title" required>
         <img src="./assets/images/icons/create-task-modal-icon/task-title-icon.svg" class="task-name-icon" alt="Task Title Icon">
@@ -325,24 +336,6 @@ class TaskController {
     });
   }
 
-  // Local Storage Methods
-  saveTasksToLocalStorage() {
-    localStorage.setItem('tasks', JSON.stringify(this.tasks.map((task) => task.toJSON())));
-  }
-
-  loadTasksFromLocalStorage() {
-    const storedTasks = localStorage.getItem('tasks');
-    if (storedTasks) {
-      try {
-        const parsedTasks = JSON.parse(storedTasks);
-        this.tasks = parsedTasks.map((taskJson) => TaskModel.fromJSON(taskJson));
-      } catch (error) {
-        console.error('Error loading tasks from localStorage:', error);
-        this.tasks = [];
-      }
-    }
-  }
-
   setupEventListeners() {
     // Add Task Buttons
     const addTaskBtns = document.querySelectorAll('.add-a-task');
@@ -521,7 +514,7 @@ class TaskController {
         this.tasks = this.tasks.filter((t) => t.id !== taskId);
         this.renderTasks();
         this.saveTasksToLocalStorage();
-        this.view.showDeletionNotification();
+        showDeletionNotification();
       });
     });
     const editDeleteButton = document.querySelector('.overlay-delete-button');
@@ -530,17 +523,16 @@ class TaskController {
       this.tasks = this.tasks.filter((t) => t.id !== taskId);
       this.renderTasks();
       this.saveTasksToLocalStorage();
-      this.view.showDeletionNotification();
+      showDeletionNotification();
       this.view.closeEditTaskOverlay();
     });
   }
 
   renderAllTasks() {
-    // Render all tasks in the main view
-    this.view.renderTasks(this.tasks);
-
     // Render all tasks in the All Tasks Popup,
     this.view.renderAllTasksPopup(this.tasks);
+    // Render all tasks in the main view
+    this.view.renderTasks(this.tasks);
     this.setupTaskActions();
   }
 
@@ -641,8 +633,8 @@ class TaskController {
       searchText,
     });
 
-    this.view.renderTasks(filteredTasks);
     this.view.renderAllTasksPopup(filteredTasks);
+    this.view.renderTasks(filteredTasks);
     this.setupTaskActions();
     console.log('Filtered Tasks for All Tasks Popup:', filteredTasks);
     this.view.renderAllTasksPopup(filteredTasks);

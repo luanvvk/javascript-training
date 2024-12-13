@@ -1,5 +1,5 @@
-import { formatDate } from './utility-functions.js';
-import { calculateTaskDuration } from './utility-functions.js';
+import { formatDate } from '../helpers/format-date-utils.js';
+import { calculateTaskDuration } from '../helpers/format-date-utils.js';
 // Create task HTML element
 export function createTaskElement(task) {
   let buttonIconSrc;

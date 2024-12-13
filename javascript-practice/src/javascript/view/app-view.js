@@ -1,5 +1,5 @@
-import { createTaskElement } from '../helpers/template.js';
-
+import { createTaskElement } from '../template/task-template.js';
+import { showNoTasksMessage } from '../helpers/notifications.js';
 class TaskView {
   constructor() {
     this.listViewColumns = {
@@ -47,19 +47,10 @@ class TaskView {
       }
     });
     // Show a "no tasks" message if columns are empty
-    this.showNoTasksMessage(this.listViewColumns, 'list-view');
-    this.showNoTasksMessage(this.boardViewColumns, 'board-view');
+    showNoTasksMessage(this.listViewColumns, 'list-view');
+    showNoTasksMessage(this.boardViewColumns, 'board-view');
   }
-  showNoTasksMessage(columns, viewType) {
-    Object.keys(columns).forEach((key) => {
-      if (!columns[key].children.length) {
-        const message = document.createElement('p');
-        message.classList.add('no-tasks-message');
-        message.textContent = `No tasks in ${key.replace(/([A-Z])/g, ' $1').toLowerCase()} (${viewType})`;
-        columns[key].appendChild(message);
-      }
-    });
-  }
+
   //render shadow for all task
   getTaskShadowColor(status) {
     switch (status) {
@@ -163,14 +154,6 @@ class TaskView {
     document.querySelector('.task-start-input').value = '';
     document.querySelector('.task-end-input').value = '';
     document.querySelector('.textarea-input').value = '';
-  }
-
-  // Show task deletion notification
-  showDeletionNotification() {
-    this.notification.classList.add('show');
-    setTimeout(() => {
-      this.notification.classList.remove('show');
-    }, 3000);
   }
 }
 export default TaskView;
