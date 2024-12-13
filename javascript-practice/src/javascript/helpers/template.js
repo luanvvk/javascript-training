@@ -1,5 +1,7 @@
+import { formatDate } from './utility-functions.js';
+import { calculateTaskDuration } from './utility-functions.js';
 // Create task HTML element
-export function createTaskTemplate(task) {
+export function createTaskElement(task) {
   let buttonIconSrc;
   let buttonText;
   if (task.status === 'To Do') {
@@ -12,7 +14,8 @@ export function createTaskTemplate(task) {
     buttonIconSrc = './assets/images/icons/task-icons/completed-task-icon.svg';
     buttonText = 'Mark as In Progress';
   }
-  return `
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = `
     <div class="task-item" data-task-id="${task.id}">
     <div class="task-item__details">
       <h3 class="task-item__heading">${task.title}</h3>
@@ -34,19 +37,5 @@ export function createTaskTemplate(task) {
         <img class="task-delete-icon" src="./assets/images/icons/task-icons/task-delete-icon.svg" alt="task-delete-icon" />
       </a>
     </div>`;
-}
-
-// Utility functions for rendering
-export function formatDate(dateString) {
-  const options = { year: 'numeric', month: 'long', day: 'numeric' };
-  return new Date(dateString).toLocaleDateString(undefined, options);
-}
-
-export function calculateTaskDuration(startDate, endDate) {
-  const start = new Date(startDate);
-  const end = new Date(endDate);
-  const diffTime = Math.abs(end - start);
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-  return diffDays === 0 ? 'Same day' : `${diffDays} day${diffDays !== 1 ? 's' : ''}`;
+  return tempDiv.firstElementChild;
 }

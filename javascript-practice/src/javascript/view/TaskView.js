@@ -1,3 +1,5 @@
+import { createTaskElement } from '../helpers/template.js';
+
 class TaskView {
   constructor() {
     this.listViewColumns = {
@@ -17,49 +19,6 @@ class TaskView {
     this.notification = document.getElementById('notification');
   }
 
-  // Create task HTML element
-  createTaskElement(task) {
-    const taskElement = document.createElement('div');
-    taskElement.classList.add('task-item');
-    taskElement.dataset.taskId = task.id;
-
-    let buttonIconSrc;
-    let buttonText;
-    if (task.status === 'To Do') {
-      buttonIconSrc = './assets/images/icons/task-icons/todo-task-icon.svg';
-      buttonText = 'Make Running Task';
-    } else if (task.status === 'In Progress') {
-      buttonIconSrc = './assets/images/icons/task-icons/running-task-icon.png';
-      buttonText = 'Mark as Completed';
-    } else if (task.status === 'Completed') {
-      buttonIconSrc = './assets/images/icons/task-icons/completed-task-icon.svg';
-      buttonText = 'Mark as In Progress';
-    }
-
-    taskElement.innerHTML = `
-      <div class="task-item__details">
-        <h3 class="task-item__heading">${task.title}</h3>
-        <h4 class="start-date">Start date: ${this.formatDate(task.startDate)}</h4>
-        <h4 class="end-date">End date: ${this.formatDate(task.endDate)}</h4>
-        <div class="task-duration">
-          <span class="duration-badge">Duration: ${this.calculateTaskDuration(task.startDate, task.endDate)}</span>
-        </div>
-        <button class="status-button">
-          <img class="button-icon" src="${buttonIconSrc}" alt="button-icon" loading="lazy" />
-          <span class="confirm-button-desc">${buttonText}</span>
-        </button>
-      </div>
-      <div class="task-item-actions">
-        <a class="task-edit" href="javascript:void(0)">
-          <img class="task-edit-icon" src="./assets/images/icons/task-icons/task-edit-icon.svg" alt="task-edit-icon" />
-        </a>
-        <a class="task-delete" href="javascript:void(0)">
-          <img class="task-delete-icon" src="./assets/images/icons/task-icons/task-delete-icon.svg" alt="task-delete-icon" />
-        </a>
-      </div>`;
-    return taskElement;
-  }
-
   // Render tasks in both views
   renderTasks(tasks) {
     // Clear previous tasks
@@ -68,7 +27,7 @@ class TaskView {
 
     // Render tasks in appropriate columns
     tasks.forEach((task) => {
-      const taskHTML = this.createTaskElement(task);
+      const taskHTML = createTaskElement(task);
 
       taskHTML.style.boxShadow = this.getTaskShadowColor(task.status);
 
@@ -131,7 +90,7 @@ class TaskView {
     popupCompletedColumn.innerHTML = '';
     //add filter task
     tasks.forEach((task) => {
-      const taskElement = this.createTaskElement(task);
+      const taskElement = createTaskElement(task);
 
       switch (task.status) {
         case 'To Do':
@@ -155,60 +114,6 @@ class TaskView {
     if (!popupCompletedColumn.children.length) {
       popupCompletedColumn.innerHTML = '<p class="no-tasks">No Completed tasks</p>';
     }
-  }
-  // Utility methods
-  formatDate(dateString) {
-    const options = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-  }
-
-  calculateTaskDuration(startDate, endDate) {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    const diffTime = Math.abs(end - start);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-    return diffDays === 0 ? 'Same day' : `${diffDays} day${diffDays !== 1 ? 's' : ''}`;
-  }
-
-  // Show error notification
-  showError(message) {
-    this.removeExistingErrors();
-    const errorNotification = document.createElement('div');
-    errorNotification.classList.add('error-notification');
-    // Create error notification element
-    errorNotification.innerHTML = `
-       <div class="error-content">
-         <img src="./assets/images/icons/error-icon/error-icon.svg" alt="Error Icon" class="error-icon">
-         <span class="error-message">${message}</span>
-       </div>
-     `;
-    const mainBody = document.querySelector('.main-body');
-    const topBar = document.querySelector('.top-bar');
-    const insertLocation = topBar || mainBody;
-    if (insertLocation) {
-      insertLocation.insertAdjacentElement('afterend', errorNotification);
-    }
-
-    setTimeout(() => {
-      errorNotification.classList.add('show');
-    }, 10);
-
-    // Remove error after 3 seconds
-    setTimeout(() => {
-      this.removeExistingErrors();
-    }, 3000);
-  }
-  removeExistingErrors() {
-    const existingErrors = document.querySelectorAll('.error-notification');
-    existingErrors.forEach((error) => {
-      error.classList.remove('show');
-      error.remove();
-    });
   }
 
   // Open/close overlays

@@ -1,5 +1,6 @@
 import TaskModel from '../models/TaskModel.js';
 import TaskView from '../view/TaskView.js';
+import { showError } from '../helpers/error-handling.js';
 class TaskController {
   constructor() {
     this.model = new TaskModel();
@@ -436,7 +437,7 @@ class TaskController {
     // Validate task
     const validationErrors = task.validate();
     if (validationErrors.length > 0) {
-      validationErrors.forEach((error) => this.view.showError(error));
+      validationErrors.forEach((error) => showError(error));
       return;
     }
 
@@ -497,7 +498,7 @@ class TaskController {
           const validationErrors = task.validate();
 
           if (validationErrors.length > 0) {
-            validationErrors.forEach((error) => this.view.showError(error));
+            validationErrors.forEach((error) => showError(error));
             return;
           }
 
