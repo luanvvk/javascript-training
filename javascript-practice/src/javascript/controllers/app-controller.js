@@ -5,6 +5,24 @@ import { showError } from '../helpers/error-handling.js';
 import { showDeletionNotification } from '../helpers/notifications.js';
 import { createFormElements } from '../template/create-task-popup.js';
 import { editFormElements } from '../template/edit-task-popup.js';
+
+//Declaration
+// filter criteria
+const categoryFilter = document.getElementById('category-filter');
+const priorityFilter = document.getElementById('priority-filter');
+const statusFilter = document.getElementById('status-filter');
+const searchInput = document.querySelector('.input-bar-mini__main-input');
+//toggle elements
+const listView = document.getElementById('list-view');
+const boardView = document.getElementById('board-view');
+const editTask = document.getElementById('edit-task-overlay');
+const createTask = document.getElementById('create-task-overlay');
+//sidebar toggle elements
+const toggle = document.querySelector('.menu-bar-toggle');
+const sideNavbar = document.querySelector('.side-navbar');
+const mainBody = document.querySelector('.main-body');
+const appLogo = document.querySelector('.app-logo');
+
 class TaskController {
   constructor() {
     this.model = new TaskModel();
@@ -267,8 +285,6 @@ class TaskController {
 
     // Toggle between views
     const viewOptions = document.querySelectorAll("input[name='view-option']");
-    const listView = document.getElementById('list-view');
-    const boardView = document.getElementById('board-view');
 
     viewOptions.forEach((option) => {
       option.addEventListener('change', (e) => {
@@ -283,20 +299,13 @@ class TaskController {
     });
 
     // Sidebar toggle
-    const toggle = document.querySelector('.menu-bar-toggle');
-    const sideNavbar = document.querySelector('.side-navbar');
-    const mainBody = document.querySelector('.main-body');
-    const appLogo = document.querySelector('.app-logo');
-
     if (toggle) {
       toggle.addEventListener('click', () => {
         if (sideNavbar) sideNavbar.classList.toggle('active');
         if (mainBody) mainBody.classList.toggle('active');
         if (appLogo) appLogo.classList.toggle('active');
 
-        const editTask = document.getElementById('edit-task-overlay');
         if (editTask) editTask.classList.toggle('toggle');
-        const createTask = document.getElementById('create-task-overlay');
         if (createTask) createTask.classList.toggle('toggle');
       });
     }
@@ -310,7 +319,6 @@ class TaskController {
     const priority = document.querySelector('#priority-select .default-option').textContent.trim();
     const category = document.querySelector('#category-select .default-option').textContent.trim();
     const description = document.querySelector('.textarea-input').value.trim();
-
     const task = new TaskModel(title, startDate, endDate, description, priority, category);
 
     // Validate task
@@ -488,11 +496,6 @@ class TaskController {
   }
   //Setup filter event listeners
   setupFilterEventListeners() {
-    //category filter
-    const categoryFilter = document.getElementById('category-filter');
-    const priorityFilter = document.getElementById('priority-filter');
-    const statusFilter = document.getElementById('status-filter');
-    const searchInput = document.querySelector('.input-bar-mini__main-input');
     // Apply event listeners to filters
     [categoryFilter, priorityFilter, statusFilter].forEach((filter) => {
       if (filter) {
@@ -505,17 +508,12 @@ class TaskController {
   }
   //Apply filters
   applyFilters() {
-    const categoryFilter = document.getElementById('category-filter').value;
-    const priorityFilter = document.getElementById('priority-filter').value;
-    const statusFilter = document.getElementById('status-filter').value;
-
-    const searchInput = document.querySelector('.input-bar-mini__main-input');
     const searchText = searchInput ? searchInput.value.trim() : '';
     //Filter tasks
     const filteredTasks = this.filterTask({
-      category: categoryFilter,
-      priority: priorityFilter,
-      status: statusFilter,
+      category: categoryFilter.value,
+      priority: priorityFilter.value,
+      status: statusFilter.value,
       searchText,
     });
 
