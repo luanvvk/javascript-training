@@ -122,7 +122,6 @@
 
 .list-view .status-button {
   position: relative;
-  margin-top: 5rem;
   flex-direction: row-reverse;
   margin-right: -2.5rem;
 }
