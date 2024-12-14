@@ -143,7 +143,7 @@ class TaskView {
     document.querySelector('.textarea-input').value = '';
   }
   renderSortingUI() {
-    if (this.sortDropdown) return;
+    if (!this.sortDropdown) return;
     this.sortDropdown.innerHTML = `
       <option value="name">Name</option>
       <option value="startDate">Start Date</option>

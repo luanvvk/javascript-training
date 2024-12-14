@@ -4,6 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Task management app</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+    />
+
     <link rel="stylesheet" href="./styles/main.css" />
   </head>
   <body>
@@ -280,7 +285,7 @@
           <div class="actions-buttons">
             <div class="filter-buttons">
               <div class="filter-dropdown">
-                <label for="category-filter">Category:</label>
+                <label class="filter-label" for="category-filter">Category:</label>
                 <select name="category-filter" id="category-filter">
                   <option value="All">All Categories</option>
                   <option value="Daily Task">Daily Task</option>
@@ -290,7 +295,7 @@
               </div>
 
               <div class="filter-dropdown">
-                <label for="priority-filter">Priority:</label>
+                <label class="filter-label" for="priority-filter">Priority:</label>
                 <select name="priority-filter" id="priority-filter">
                   <option value="All">All Priorities</option>
                   <option value="Not urgent">Not Urgent</option>
@@ -300,7 +305,7 @@
               </div>
 
               <div class="filter-dropdown">
-                <label for="status-filter">Status:</label>
+                <label class="filter-label" for="status-filter">Status:</label>
                 <select name="status-filter" id="status-filter">
                   <option value="All">All Statuses</option>
                   <option value="To Do">To Do</option>
@@ -308,33 +313,31 @@
                   <option value="Completed">Completed</option>
                 </select>
               </div>
-            </div>
-
-            <div class="filter-container">
-              <select id="sort-dropdown">
-                <option value="name">Name</option>
-                <option value="startDate">Start Date</option>
-                <option value="endDate">End Date</option>
-                <option value="category">Category</option>
-                <option value="priority">Priority</option>
-              </select>
-              <button id="sort-order-toggle">▲</button>
-            </div>
-
-            <div class="search-bar-mini__input-bar">
-              <input
-                class="input-bar-mini__main-input"
-                aria-label="search"
-                type="text"
-                name="search-task"
-                placeholder="Search by name"
-              />
-              <img
-                class="input-bar__icon"
-                src="./assets/images/icons/header-icons/search-bar-icon.svg"
-                alt="search-icon"
-                loading="lazy"
-              />
+              <div class="filter-container">
+                <select id="sort-dropdown">
+                  <option value="name">By Name</option>
+                  <option value="startDate">By Start Date</option>
+                  <option value="endDate">By End Date</option>
+                  <option value="category">By Category</option>
+                  <option value="priority">By Priority</option>
+                </select>
+                <button id="sort-order-toggle"><i class="fa-solid fa-sort"></i></button>
+              </div>
+              <div class="search-bar-mini__input-bar">
+                <input
+                  class="input-bar-mini__main-input"
+                  aria-label="search"
+                  type="text"
+                  name="search-task"
+                  placeholder="Search by name"
+                />
+                <img
+                  class="input-bar__icon"
+                  src="./assets/images/icons/header-icons/search-bar-icon.svg"
+                  alt="search-icon"
+                  loading="lazy"
+                />
+              </div>
             </div>
           </div>
 

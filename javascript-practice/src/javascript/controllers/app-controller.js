@@ -514,7 +514,7 @@ class TaskController {
     }
     //for sorting event listeners
     if (sortDropdown) {
-      sortDropdown.addEventListener('change', this.applySorting.bind(this));
+      sortDropdown.addEventListener('change', this.applyFilters.bind(this));
     }
     if (sortOrderToggle) {
       sortOrderToggle.addEventListener('click', this.toggleSortOrder.bind(this));
@@ -522,6 +522,8 @@ class TaskController {
   }
   //Apply filters
   applyFilters() {
+    const sortField = sortDropdown.value;
+    const currentOrder = this.currentSortSetting.order;
     const searchText = searchInput ? searchInput.value.trim() : '';
     //Filter tasks
     const filteredTasks = this.filterTask({
@@ -531,11 +533,11 @@ class TaskController {
       searchText,
     });
 
+    const sortedTasks = this.sortTasks(sortField, currentOrder);
+
     this.view.renderAllTasksPopup(filteredTasks);
     this.view.renderTasks(filteredTasks);
     this.setupTaskActions();
-    console.log('Filtered Tasks for All Tasks Popup:', filteredTasks);
-    this.view.renderAllTasksPopup(filteredTasks);
   }
   //Sort task method
   sortTasks(field, order = 'asc') {
@@ -546,8 +548,7 @@ class TaskController {
       return this.tasks;
     }
     //avoid mutating the original array
-    const sortedTasks = [...this.tasks];
-    sortedTasks.sort((a, b) => {
+    const sortedTasks = [...this.tasks].sort((a, b) => {
       let valueA, valueB;
       switch (field) {
         case 'name':
@@ -555,12 +556,12 @@ class TaskController {
           valueB = b.title.toLowerCase();
           break;
         case 'startDate':
-          valueA = new Date(a.startDate);
-          valueB = new Date(b.startDate);
+          valueA = a.startDate ? new Date(a.startDate) : new Date(9999, 12, 31);
+          valueB = b.startDate ? new Date(b.startDate) : new Date(9999, 12, 31);
           break;
         case 'endDate':
-          valueA = new Date(a.endDate);
-          valueB = new Date(b.endDate);
+          valueA = a.endDate ? new Date(a.endDate) : new Date(9999, 12, 31);
+          valueB = b.endDate ? new Date(b.endDate) : new Date(9999, 12, 31);
           break;
         case 'category':
           valueA = a.category.toLowerCase();
@@ -578,28 +579,29 @@ class TaskController {
       }
       //sort conditions
       if (valueA < valueB) return order === 'asc' ? -1 : 1;
-      if (valueA > valueB) return order === 'asc' ? -1 : 1;
+      if (valueA > valueB) return order === 'asc' ? 1 : -1;
+      return 0;
     });
     this.currentSortSetting = { field, order };
     return sortedTasks;
   }
   //Apply sorting
-  applySorting() {
-    const sortField = sortDropdown.value;
-    const currentOrder = this.currentSortSetting.order;
-    const sortedTasks = this.sortTasks(sortField, currentOrder);
-    this.view.renderTasks(sortedTasks);
-    this.view.renderAllTasksPopup(sortedTasks);
-    this.setupTaskActions();
-  }
+
   toggleSortOrder() {
     const currentOrder = this.currentSortSetting.order;
     const newOrder = currentOrder === 'asc' ? 'desc' : 'asc';
     //update sort order
-    this.currentSortSetting = newOrder;
-    this.applySorting();
+    this.currentSortSetting.order = newOrder;
+    const sortField = sortDropdown.value;
+    const sortedTasks = this.sortTasks(sortField, newOrder);
+    this.view.renderTasks(sortedTasks);
+    this.view.renderAllTasksPopup(sortedTasks);
+    this.setupTaskActions();
     //update button visual state
-    sortOrderToggle.textContent = newOrder === 'asc' ? '▲' : '▼';
+    sortOrderToggle.innerHTML =
+      newOrder === 'asc'
+        ? '<i class="fa-solid fa-sort-up"></i>'
+        : '<i class="fa-solid fa-sort-down"></i>';
   }
 }
 export default TaskController;
