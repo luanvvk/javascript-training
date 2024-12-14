@@ -498,6 +498,34 @@
   color: var(--cyan-blue);
   cursor: pointer;
 }
+.task-start-input,
+.task-end-input {
+  position: relative;
+}
+.task-start-input::-webkit-calendar-picker-indicator,
+.task-end-input::-webkit-calendar-picker-indicator {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+
+  height: auto;
+  width: auto;
+  background: transparent;
+  color: transparent;
+  cursor: pointer;
+}
+
+.task-start-input::-webkit-inner-spin-button,
+.task-end-input::-webkit-inner-spin-button {
+  z-index: 1;
+}
+
+.task-start-input::-webkit-clear-button,
+.task-end-input::-webkit-clear-button {
+  z-index: 1;
+}
 
 .task-start-container:invalid,
 .task-end-container:invalid {
