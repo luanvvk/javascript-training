@@ -12,6 +12,9 @@ const categoryFilter = document.getElementById('category-filter');
 const priorityFilter = document.getElementById('priority-filter');
 const statusFilter = document.getElementById('status-filter');
 const searchInput = document.querySelector('.input-bar-mini__main-input');
+//sort
+const sortDropdown = document.getElementById('sort-dropdown');
+const sortOrderToggle = document.getElementById('sort-order-toggle');
 //toggle elements
 const listView = document.getElementById('list-view');
 const boardView = document.getElementById('board-view');
@@ -30,7 +33,7 @@ class TaskController {
     this.tasks = [];
     this.localStorageUtil = new LocalStorageUtil();
     this.currentSortSetting = {
-      field: null,
+      field: 'name',
       order: 'asc',
     };
 
@@ -498,7 +501,7 @@ class TaskController {
     console.log('filter tasks:', filteredTasks);
     return filteredTasks;
   }
-  //Setup filter event listeners
+  //Setup filter event listeners for filtering and sorting
   setupFilterEventListeners() {
     // Apply event listeners to filters
     [categoryFilter, priorityFilter, statusFilter].forEach((filter) => {
@@ -508,6 +511,13 @@ class TaskController {
     });
     if (searchInput) {
       searchInput.addEventListener('input', this.applyFilters.bind(this));
+    }
+    //for sorting event listeners
+    if (sortDropdown) {
+      sortDropdown.addEventListener('change', this.applySorting.bind(this));
+    }
+    if (sortOrderToggle) {
+      sortOrderToggle.addEventListener('click', this.toggleSortOrder.bind(this));
     }
   }
   //Apply filters
@@ -530,9 +540,9 @@ class TaskController {
   //Sort task method
   sortTasks(field, order = 'asc') {
     //validate input
-    const validField = ['name', 'startDate', 'endDate', 'category', 'priority'];
-    if (!validField.includes(field)) {
-      showError(`Invalid sort criteria. Please choose one of: ${validField.join(', ')}`);
+    const validFields = ['name', 'startDate', 'endDate', 'category', 'priority'];
+    if (!validFields.includes(field)) {
+      showError(`Invalid sort criteria. Please choose one of: ${validFields.join(', ')}`);
       return this.tasks;
     }
     //avoid mutating the original array
@@ -567,11 +577,29 @@ class TaskController {
           break;
       }
       //sort conditions
-      if (valueA <= valueB) return order === 'asc' ? -1 : 1;
+      if (valueA < valueB) return order === 'asc' ? -1 : 1;
       if (valueA > valueB) return order === 'asc' ? -1 : 1;
     });
     this.currentSortSetting = { field, order };
     return sortedTasks;
+  }
+  //Apply sorting
+  applySorting() {
+    const sortField = sortDropdown.value;
+    const currentOrder = this.currentSortSetting.order;
+    const sortedTasks = this.sortTasks(sortField, currentOrder);
+    this.view.renderTasks(sortedTasks);
+    this.view.renderAllTasksPopup(sortedTasks);
+    this.setupTaskActions();
+  }
+  toggleSortOrder() {
+    const currentOrder = this.currentSortSetting.order;
+    const newOrder = currentOrder === 'asc' ? 'desc' : 'asc';
+    //update sort order
+    this.currentSortSetting = newOrder;
+    this.applySorting();
+    //update button visual state
+    sortOrderToggle.textContent = newOrder === 'asc' ? '▲' : '▼';
   }
 }
 export default TaskController;
