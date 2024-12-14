@@ -353,7 +353,7 @@ class TaskController {
     taskElements.forEach((taskElement) => {
       const taskId = parseInt(taskElement.dataset.taskId);
       const task = this.tasks.find((t) => t.id === taskId);
-
+      if (!task) return;
       // Handle status button
       taskElement.querySelector('.status-button').addEventListener('click', () => {
         if (task.status === 'To Do') {
@@ -363,7 +363,7 @@ class TaskController {
         } else if (task.status === 'Completed') {
           task.status = 'In Progress'; //change status back to running
         }
-        this.renderTasks();
+        this.renderAllTasks();
         this.saveTasksToLocalStorage();
       });
 
@@ -396,7 +396,7 @@ class TaskController {
             return;
           }
 
-          this.renderTasks();
+          this.renderAllTasks();
           this.saveTasksToLocalStorage();
           this.view.closeEditTaskOverlay();
         };
@@ -404,7 +404,7 @@ class TaskController {
         const markCompletedButton = document.querySelector('.edit-controls .mark-completed');
         markCompletedButton.onclick = () => {
           task.status = task.status === 'Completed' ? 'In Progress' : 'Completed';
-          this.renderTasks();
+          this.renderAllTasks();
           this.saveTasksToLocalStorage();
           this.view.closeEditTaskOverlay();
         };
@@ -413,7 +413,7 @@ class TaskController {
       // Delete Task
       taskElement.querySelector('.task-delete').addEventListener('click', () => {
         this.tasks = this.tasks.filter((t) => t.id !== taskId);
-        this.renderTasks();
+        this.renderAllTasks();
         this.saveTasksToLocalStorage();
         showDeletionNotification();
       });
@@ -422,7 +422,7 @@ class TaskController {
     editDeleteButton.addEventListener('click', () => {
       const taskId = parseInt(editDeleteButton.dataset.taskId);
       this.tasks = this.tasks.filter((t) => t.id !== taskId);
-      this.renderTasks();
+      this.renderAllTasks();
       this.saveTasksToLocalStorage();
       showDeletionNotification();
       this.view.closeEditTaskOverlay();
