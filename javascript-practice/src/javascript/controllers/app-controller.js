@@ -488,11 +488,15 @@ class TaskController {
     }
     // Filter by category
     if (category !== 'All') {
-      filteredTasks = filteredTasks.filter((task) => task.category === category);
+      filteredTasks = filteredTasks.filter(
+        (task) => task.category.toLowerCase() === category.toLowerCase(),
+      );
     }
     //Filer by priority
     if (priority !== 'All') {
-      filteredTasks = filteredTasks.filter((task) => task.priority === priority);
+      filteredTasks = filteredTasks.filter(
+        (task) => task.priority.toLowerCase() === priority.toLowerCase(),
+      );
     }
     //Filter by status
     if (status !== 'All') {
@@ -522,14 +526,19 @@ class TaskController {
   }
   //Apply filters
   applyFilters() {
-    const sortField = sortDropdown.value;
+    const sortField = sortDropdown ? sortDropdown.value : 'name';
     const currentOrder = this.currentSortSetting.order;
     const searchText = searchInput ? searchInput.value.trim() : '';
+
+    const categoryValue = categoryFilter ? categoryFilter.value : 'All';
+    const priorityValue = priorityFilter ? priorityFilter.value : 'All';
+    const statusValue = statusFilter ? statusFilter.value : 'All';
+
     //Filter tasks
     const filteredTasks = this.filterTask({
-      category: categoryFilter.value,
-      priority: priorityFilter.value,
-      status: statusFilter.value,
+      category: categoryValue,
+      priority: priorityValue,
+      status: statusValue,
       searchText,
     });
 

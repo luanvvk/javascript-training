@@ -23,7 +23,7 @@ export function showError(message) {
 
   // Remove error after 3 seconds
   setTimeout(() => {
-    this.removeExistingErrors();
+    removeExistingErrors();
   }, 3000);
 }
 export function removeExistingErrors() {
