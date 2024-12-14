@@ -29,6 +29,10 @@ class TaskController {
     this.view = new TaskView();
     this.tasks = [];
     this.localStorageUtil = new LocalStorageUtil();
+    this.currentSortSetting = {
+      field: null,
+      order: 'asc',
+    };
 
     this.initialize();
   }
@@ -429,7 +433,7 @@ class TaskController {
     this.view.renderTasks(this.tasks);
     this.setupTaskActions();
   }
-
+  //Search tasks method
   searchTasks(e) {
     const searchText = e.target.value.toLowerCase().trim();
 
@@ -463,7 +467,7 @@ class TaskController {
       })
       .toLowerCase();
   }
-
+  //filter task methood
   filterTask(options = {}) {
     const { category = 'All', priority = 'All', status = 'All', searchText = '' } = options;
     console.log('filter options:', options);
@@ -522,6 +526,52 @@ class TaskController {
     this.setupTaskActions();
     console.log('Filtered Tasks for All Tasks Popup:', filteredTasks);
     this.view.renderAllTasksPopup(filteredTasks);
+  }
+  //Sort task method
+  sortTasks(field, order = 'asc') {
+    //validate input
+    const validField = ['name', 'startDate', 'endDate', 'category', 'priority'];
+    if (!validField.includes(field)) {
+      showError(`Invalid sort criteria. Please choose one of: ${validField.join(', ')}`);
+      return this.tasks;
+    }
+    //avoid mutating the original array
+    const sortedTasks = [...this.tasks];
+    sortedTasks.sort((a, b) => {
+      let valueA, valueB;
+      switch (field) {
+        case 'name':
+          valueA = a.title.toLowerCase();
+          valueB = b.title.toLowerCase();
+          break;
+        case 'startDate':
+          valueA = new Date(a.startDate);
+          valueB = new Date(b.startDate);
+          break;
+        case 'endDate':
+          valueA = new Date(a.endDate);
+          valueB = new Date(b.endDate);
+          break;
+        case 'category':
+          valueA = a.category.toLowerCase();
+          valueB = b.category.toLowerCase();
+          break;
+        case 'priority':
+          const priorityOrder = {
+            'Not urgent': 1,
+            'Urgent Task': 2,
+            Important: 3,
+          };
+          valueA = priorityOrder[a.priority] || 0;
+          valueB = priorityOrder[b.priority] || 0;
+          break;
+      }
+      //sort conditions
+      if (valueA <= valueB) return order === 'asc' ? -1 : 1;
+      if (valueA > valueB) return order === 'asc' ? -1 : 1;
+    });
+    this.currentSortSetting = { field, order };
+    return sortedTasks;
   }
 }
 export default TaskController;
