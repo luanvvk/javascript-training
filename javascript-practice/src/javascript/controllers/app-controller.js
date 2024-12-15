@@ -16,6 +16,8 @@ const filterOptionsDropdown = document.getElementById('filter-options-dropdown')
 const sortDropdown = document.getElementById('sort-dropdown');
 const sortOrderToggle = document.getElementById('sort-order-toggle');
 //toggle elements
+const boardViewOption = document.querySelector('.board-screen');
+const listViewOption = document.querySelector('.list-screen');
 const listView = document.getElementById('list-view');
 const boardView = document.getElementById('board-view');
 const editTask = document.getElementById('edit-task-overlay');
@@ -71,7 +73,11 @@ class TaskController {
     // Add Task Buttons
     const addTaskBtns = document.querySelectorAll('.add-a-task');
     addTaskBtns.forEach((btn) => {
-      btn.addEventListener('click', () => this.view.openCreateTaskOverlay());
+      btn.addEventListener('click', () => {
+        this.view.openCreateTaskOverlay();
+        mainBody.classList.add('active');
+        allTaskPopup.classList.add('hide');
+      });
     });
 
     // Add to List Button
@@ -108,29 +114,35 @@ class TaskController {
     const searchBarTop = document.querySelector('.search-bar__input-bar');
     const dashboardBtn = document.querySelector('.dashboard');
     const allTaskPopup = document.getElementById('all-task-popup');
-    const allTaskBtn = document.querySelector('.completed-tasks');
+    const allTaskBtn = document.querySelector('.all-tasks');
     allTaskBtn.addEventListener('click', () => {
       allTaskPopup.classList.toggle('hide');
       searchBarTop.classList.add('hide');
+      mainBody.classList.add('active');
     });
     dashboardBtn.addEventListener('click', () => {
       allTaskPopup.classList.add('hide');
       searchBarTop.classList.remove('hide');
+      mainBody.classList.add('active');
+      this.view.closeCreateTaskOverlay();
     });
 
     // Toggle between views
-    const viewOptions = document.querySelectorAll("input[name='view-option']");
 
-    viewOptions.forEach((option) => {
-      option.addEventListener('change', (e) => {
-        if (e.target.value === 'board') {
-          if (listView) listView.classList.add('hide');
-          if (boardView) boardView.classList.remove('hide');
-        } else {
-          if (boardView) boardView.classList.add('hide');
-          if (listView) listView.classList.remove('hide');
-        }
-      });
+    boardViewOption.addEventListener('click', (e) => {
+      listView.classList.add('hide');
+      boardView.classList.remove('hide');
+      mainBody.classList.add('active');
+      this.view.closeCreateTaskOverlay();
+      allTaskPopup.classList.add('hide');
+    });
+
+    listViewOption.addEventListener('click', (e) => {
+      listView.classList.remove('hide');
+      boardView.classList.add('hide');
+      mainBody.classList.add('active');
+      this.view.closeCreateTaskOverlay();
+      allTaskPopup.classList.add('hide');
     });
 
     // Sidebar toggle
@@ -197,7 +209,7 @@ class TaskController {
 
       // Edit Task
       taskElement.querySelector('.task-edit').addEventListener('click', () => {
-        this.setupDropdowns(task);
+        setupPopupDropdowns(task);
         this.view.populateEditForm(task);
         this.view.openEditTaskOverlay();
 

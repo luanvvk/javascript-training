@@ -141,6 +141,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+}
+
+.add-to-list:hover,
+.edit-task-button:hover,
+#edit-task-overlay .mark-completed:hover,
+.overlay-delete-button:hover,
+.cancel:hover {
+  box-shadow:
+    0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
 
 .add-to-list {
@@ -156,6 +168,8 @@
   font-size: var(--font-size-17);
   font-weight: var(--regular-weight);
   color: var(--black);
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
 }
 
 .filter-wrapper {

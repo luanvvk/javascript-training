@@ -2,8 +2,18 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="Author: LV, javascript practice: task manager app,
+    Illustrator: design from Figma"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Task management app</title>
+    <link
+      rel="icon"
+      href="./assets/images/icons/menu-bar-icons/logo-icon.svg"
+      type="image/icon type"
+    />
     <link rel="stylesheet" href="./styles/main.css" />
   </head>
   <body>
@@ -11,17 +21,15 @@
       <nav class="side-navbar active">
         <ul class="side-navbar--list">
           <li class="navbar--list__item">
-            <a class="app-logo active" href="javascript:void(0)">
-              <span class="icon">
+            <h1 class="app-heading">
+              <a class="app-logo active" href="javascript:void(0)">
                 <img
                   class="logo-icon"
                   src="./assets/images/icons/menu-bar-icons/logo-icon.svg"
                   alt="logo-icon"
-                  loading="lazy"
-                />
-              </span>
-              <h1 class="app-heading">Task manager</h1>
-            </a>
+                  loading="lazy" /></a
+              >Task manager
+            </h1>
           </li>
           <li class="navbar--list__item">
             <a class="dashboard" href="javascript:void(0)">
@@ -37,29 +45,37 @@
             </a>
           </li>
           <li class="navbar--list__item">
-            <a class="all-tasks" href="javascript:void(0)">
+            <a class="board-screen" href="javascript:void(0)">
               <span class="icon">
                 <img
-                  class="all-tasks-icon"
+                  class="board-screen-icon"
                   src="./assets/images/icons/menu-bar-icons/all-task-icon.svg"
                   alt="all-tasks-icon"
                   loading="lazy"
                 />
               </span>
-              <span class="all-tasks-heading">Category</span>
+              <span class="board-screen-heading">Board view</span>
             </a>
           </li>
           <li class="navbar--list__item">
-            <a class="completed-tasks" href="javascript:void(0)">
+            <a class="list-screen" href="javascript:void(0)">
+              <span class="icon">
+                <i class="fa-solid fa-list" style="color: #ffddd2"></i>
+              </span>
+              <span class="list-screen-heading">List view</span>
+            </a>
+          </li>
+          <li class="navbar--list__item">
+            <a class="all-tasks" href="javascript:void(0)">
               <span class="icon">
                 <img
-                  class="completed-tasks-icon"
+                  class="all-tasks-icon"
                   src="./assets/images/icons/menu-bar-icons/completed-task-icon.svg"
                   alt="completed-tasks-icon"
                   loading="lazy"
                 />
               </span>
-              <span class="completed-tasks-heading">All Tasks</span>
+              <span class="all-tasks-heading">All Tasks</span>
             </a>
           </li>
           <li class="navbar--list__item">
@@ -112,51 +128,25 @@
             />
           </div>
           <div class="utility-icons">
-            <div class="radio-buttons-container">
-              <div class="max-width-container flex">
-                <div class="radio-container">
-                  <input
-                    type="radio"
-                    id="list"
-                    name="view-option"
-                    value="list"
-                    class="radio-input"
-                    checked
-                  />
-                  <label for="list" class="radio-label">
-                    <!-- list-->
-                    <img
-                      class="list-icon"
-                      src="./assets/images/icons/header-icons/notification-icon.svg"
-                      alt="notification-icon"
-                      loading="lazy"
-                    />
-                  </label>
-                </div>
-                <div class="radio-container">
-                  <input
-                    type="radio"
-                    id="board"
-                    name="view-option"
-                    value="board"
-                    class="radio-input"
-                  />
-                  <label for="board" class="radio-label">
-                    <!-- board -->
-                    <img
-                      class="theme-icon"
-                      src="./assets/images/icons/header-icons/night-mode-icon.svg"
-                      alt="theme-icon"
-                      loading="lazy"
-                    />
-                  </label>
-                </div>
-              </div>
-            </div>
+            <a class="notification-icon" href="javascript:void(0)"
+              ><img
+                class="list-icon"
+                src="./assets/images/icons/header-icons/notification-icon.svg"
+                alt="notification-icon"
+                loading="lazy"
+            /></a>
+
+            <a class="theme-icon" href="javascript:void(0)"
+              ><img
+                class="theme-icon"
+                src="./assets/images/icons/header-icons/night-mode-icon.svg"
+                alt="theme-icon"
+                loading="lazy"
+            /></a>
 
             <a class="user-info" href="javascript:void(0)">
               <img
-                class="user-icon"
+                class="user-icon-icon"
                 src="./assets/images/icons/header-icons/user-icon.svg"
                 alt="user-icon"
                 loading="lazy"
