@@ -639,9 +639,8 @@ input[type='radio'] {
   /* position: fixed;
   width: calc(100% - 5.5rem); */
   top: 5rem;
-
+  bottom: 0;
   min-height: 100%;
-  /* if content is longer than screen height, enable scrollbar */
   overflow-y: auto;
 }
 .overlay.toggle {
@@ -691,7 +690,7 @@ input[type='radio'] {
   margin-top: 10px;
 }
 
-.filter-container {
+.sort-dropdown-content {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -700,23 +699,23 @@ input[type='radio'] {
   background-color: var(--cyan-blue);
 
   height: 3.3rem;
-  margin-top: 2.7rem;
-  width: 11.5rem;
-}
-#category-filter,
-#priority-filter,
-#status-filter {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 3rem;
+
   width: 11.5rem;
 }
 
+.filter-dynamic-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-16);
+  min-height: 3rem;
+}
+
 #sort-dropdown,
-#category-filter,
-#priority-filter,
-#status-filter {
+#filter-field-dropdown,
+#filter-options-dropdown {
   display: flex;
   flex-direction: column;
   padding: var(--space-8) var(--space-4);
@@ -734,9 +733,8 @@ input[type='radio'] {
   padding-right: 0;
 }
 #sort-dropdown option,
-#category-filter option,
-#priority-filter option,
-#status-filter option {
+#filter-field-dropdown,
+#filter-options-dropdown {
   width: 11.5rem;
 
   font-size: var(--font-size-13);
@@ -747,13 +745,27 @@ input[type='radio'] {
   padding-right: var(--space-4);
 }
 
-.filter-label {
+.filter-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--space-16);
+  align-items: center;
+}
+.find-task-action {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--space-16);
+}
+
+.filter-label,
+.sort-label {
   font-size: var(--font-size-17);
   font-weight: var(--bold-weight);
   text-align: left;
   color: var(--cyan-blue);
   display: inline-flex;
-  padding-bottom: var(--space-8);
 }
 @media (min-width: 1001px) {
   .board-view,

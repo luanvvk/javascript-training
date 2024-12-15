@@ -83,7 +83,6 @@
   background-color: var(--light-pink);
   border-radius: var(--border-radius-6);
   border: var(--border-radius-2) solid var(--cyan-blue);
-  margin-top: 2.7rem;
 }
 
 .input-bar-mini__main-input {

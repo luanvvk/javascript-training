@@ -284,59 +284,45 @@
           <h2 class="popup-heading">All tasks</h2>
           <div class="actions-buttons">
             <div class="filter-buttons">
-              <div class="filter-dropdown">
-                <label class="filter-label" for="category-filter">Category:</label>
-                <select name="category-filter" id="category-filter">
-                  <option value="All">All Categories</option>
-                  <option value="Daily Task">Daily Task</option>
-                  <option value="Weekly Task">Weekly Task</option>
-                  <option value="Monthly Task">Monthly Task</option>
+              <div class="filter-dynamic-container">
+                <label class="filter-label">Filter by:</label>
+                <select id="filter-field-dropdown">
+                  <option value="category">Category</option>
+                  <option value="priority">Priority</option>
+                  <option value="status">Status</option>
                 </select>
-              </div>
 
-              <div class="filter-dropdown">
-                <label class="filter-label" for="priority-filter">Priority:</label>
-                <select name="priority-filter" id="priority-filter">
-                  <option value="All">All Priorities</option>
-                  <option value="Not urgent">Not Urgent</option>
-                  <option value="Urgent task">Urgent Tasks</option>
-                  <option value="Important">Important</option>
-                </select>
+                <select id="filter-options-dropdown"></select>
               </div>
-
-              <div class="filter-dropdown">
-                <label class="filter-label" for="status-filter">Status:</label>
-                <select name="status-filter" id="status-filter">
-                  <option value="All">All Statuses</option>
-                  <option value="To Do">To Do</option>
-                  <option value="In Progress">In Progress</option>
-                  <option value="Completed">Completed</option>
-                </select>
-              </div>
-              <div class="filter-container">
-                <select id="sort-dropdown">
-                  <option value="name">By Name</option>
-                  <option value="startDate">By Start Date</option>
-                  <option value="endDate">By End Date</option>
-                  <option value="category">By Category</option>
-                  <option value="priority">By Priority</option>
-                </select>
-                <button id="sort-order-toggle"><i class="fa-solid fa-sort"></i></button>
-              </div>
-              <div class="search-bar-mini__input-bar">
-                <input
-                  class="input-bar-mini__main-input"
-                  aria-label="search"
-                  type="text"
-                  name="search-task"
-                  placeholder="Search by name"
-                />
-                <img
-                  class="input-bar__icon"
-                  src="./assets/images/icons/header-icons/search-bar-icon.svg"
-                  alt="search-icon"
-                  loading="lazy"
-                />
+              <div class="find-task-action">
+                <div class="filter-container">
+                  <label for="sort-dropdown" class="sort-label">Sort by:</label>
+                  <div class="sort-dropdown-content">
+                    <select id="sort-dropdown">
+                      <option value="name">By Name</option>
+                      <option value="startDate">By Start Date</option>
+                      <option value="endDate">By End Date</option>
+                      <option value="category">By Category</option>
+                      <option value="priority">By Priority</option>
+                    </select>
+                    <button id="sort-order-toggle"><i class="fa-solid fa-sort"></i></button>
+                  </div>
+                </div>
+                <div class="search-bar-mini__input-bar">
+                  <input
+                    class="input-bar-mini__main-input"
+                    aria-label="search"
+                    type="text"
+                    name="search-task"
+                    placeholder="Search by name"
+                  />
+                  <img
+                    class="input-bar__icon"
+                    src="./assets/images/icons/header-icons/search-bar-icon.svg"
+                    alt="search-icon"
+                    loading="lazy"
+                  />
+                </div>
               </div>
             </div>
           </div>
