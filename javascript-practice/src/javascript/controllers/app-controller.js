@@ -309,19 +309,8 @@ class TaskController {
   //filter task methood
   filterTask(options = {}) {
     const { category = 'All', priority = 'All', status = 'All', searchText = '' } = options;
-    console.log('filter options:', options);
-
-    console.log('Filter Task Debug:');
-    console.log('Options:', options);
-    console.log('Category:', category);
-    console.log('Priority:', priority);
-    console.log('Status:', status);
-    console.log('Search Text:', searchText);
 
     let filteredTasks = this.tasks;
-
-    console.log('Performing search filter');
-
     if (searchText) {
       filteredTasks = filteredTasks.filter((task) => {
         const matches =
@@ -329,31 +318,25 @@ class TaskController {
           task.description.toLowerCase().includes(searchText) ||
           task.category.toLowerCase().includes(searchText) ||
           task.priority.toLowerCase().includes(searchText);
-        console.log(`Task: ${task.title}, Matches: ${matches}`);
         return matches;
       });
     }
     // Filter by category
     if (category !== 'All') {
-      console.log('Performing category filter');
-
       filteredTasks = filteredTasks.filter(
         (task) => task.category.toLowerCase() === category.toLowerCase(),
       );
     }
     //Filer by priority
     if (priority !== 'All') {
-      console.log('Performing priority filter');
       filteredTasks = filteredTasks.filter(
         (task) => task.priority.toLowerCase() === priority.toLowerCase(),
       );
     }
     //Filter by status
     if (status !== 'All') {
-      console.log('Performing status filter');
       filteredTasks = filteredTasks.filter((task) => task.status === status);
     }
-    console.log('Final Filtered Tasks:', filteredTasks);
     return filteredTasks;
   }
   //Setup filter event listeners for filtering and sorting

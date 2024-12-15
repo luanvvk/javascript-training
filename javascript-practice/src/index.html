@@ -165,7 +165,7 @@
           </div>
         </section>
 
-        <div class="max-width-container main">
+        <section class="max-width-container main">
           <button class="add-a-task desktop">
             <img
               class="add-task-icon"
@@ -173,7 +173,7 @@
               alt="add-task-icon"
             />
           </button>
-          <div id="list-view" class="list-view hide">
+          <article id="list-view" class="list-view hide">
             <div class="task-column pink">
               <h2 class="list-header">
                 <span class="circle background-pink"></span><span class="text">To do tasks</span>
@@ -195,8 +195,8 @@
               </h2>
               <ul class="task-list green"></ul>
             </div>
-          </div>
-          <div id="board-view" class="board-view">
+          </article>
+          <article id="board-view" class="board-view">
             <div id="todo" class="task-column pink">
               <h2 class="list-header">
                 <span class="circle background-pink"></span><span class="text">To do tasks</span>
@@ -218,11 +218,11 @@
               </h2>
               <ul class="task-list green"></ul>
             </div>
-          </div>
-        </div>
+          </article>
+        </section>
 
-        <div id="create-task-overlay" class="overlay set-task-overlay hide">
-          <div class="create-task-popup">
+        <section id="create-task-overlay" class="overlay set-task-overlay hide" draggable="false">
+          <article class="create-task-popup">
             <p class="popup-heading">Create your task</p>
             <form class="form" autocomplete="off">
               <div class="task-name"></div>
@@ -242,11 +242,11 @@
               <button class="add-to-list">Add to list</button>
               <button class="cancel">Cancel</button>
             </div>
-          </div>
-        </div>
+          </article>
+        </section>
         <!-- edit task overlay -->
-        <div id="edit-task-overlay" class="overlay hide">
-          <div class="edit-popup">
+        <section id="edit-task-overlay" class="overlay hide" draggable="false">
+          <article class="edit-popup">
             <p class="popup-heading">Edit your task</p>
             <form class="form" autocomplete="off">
               <div class="task-name"></div>
@@ -272,54 +272,51 @@
               ></textarea>
             </div>
             <div class="edit-controls"></div>
-          </div>
-        </div>
+          </article>
+        </section>
 
-        <div id="all-task-popup" class="overlay hide">
+        <section id="all-task-popup" class="overlay hide" draggable="false">
           <h2 class="popup-heading">All tasks</h2>
-          <div class="actions-buttons">
-            <div class="filter-buttons">
-              <div class="filter-dynamic-container">
-                <label class="filter-label">Filter by:</label>
-                <select id="filter-field-dropdown">
-                  <option value="category">Category</option>
-                  <option value="priority">Priority</option>
-                  <option value="status">Status</option>
-                </select>
-
-                <select id="filter-options-dropdown"></select>
-              </div>
-              <div class="find-task-action">
-                <div class="filter-container">
-                  <label for="sort-dropdown" class="sort-label">Sort by:</label>
-                  <div class="sort-dropdown-content">
-                    <select id="sort-dropdown">
-                      <option value="name">By Name</option>
-                      <option value="startDate">By Start Date</option>
-                      <option value="endDate">By End Date</option>
-                      <option value="category">By Category</option>
-                      <option value="priority">By Priority</option>
-                    </select>
-                    <button id="sort-order-toggle"><i class="fa-solid fa-sort"></i></button>
-                  </div>
-                </div>
-                <div class="search-bar-mini__input-bar">
-                  <input
-                    class="input-bar-mini__main-input"
-                    aria-label="search"
-                    type="text"
-                    name="search-task"
-                    placeholder="Search by name"
-                  />
-                  <img
-                    class="input-bar__icon"
-                    src="./assets/images/icons/header-icons/search-bar-icon.svg"
-                    alt="search-icon"
-                    loading="lazy"
-                  />
+          <div class="filter-wrapper">
+            <article class="filter__dynamic-container">
+              <label class="filter-label">Filter by:</label>
+              <select id="filter-field-dropdown">
+                <option value="category">Category</option>
+                <option value="priority">Priority</option>
+                <option value="status">Status</option>
+              </select>
+              <select id="filter-options-dropdown"></select>
+            </article>
+            <article class="filter__actions">
+              <div class="filter-container">
+                <label for="sort-dropdown" class="sort-label">Sort by:</label>
+                <div class="sort-dropdown-content">
+                  <select id="sort-dropdown">
+                    <option value="name">By Name</option>
+                    <option value="startDate">By Start Date</option>
+                    <option value="endDate">By End Date</option>
+                    <option value="category">By Category</option>
+                    <option value="priority">By Priority</option>
+                  </select>
+                  <button id="sort-order-toggle"><i class="fa-solid fa-sort"></i></button>
                 </div>
               </div>
-            </div>
+              <div class="search-bar-mini__input-bar">
+                <input
+                  class="input-bar-mini__main-input"
+                  aria-label="search"
+                  type="text"
+                  name="search-task"
+                  placeholder="Search by name"
+                />
+                <img
+                  class="input-bar__icon"
+                  src="./assets/images/icons/header-icons/search-bar-icon.svg"
+                  alt="search-icon"
+                  loading="lazy"
+                />
+              </div>
+            </article>
           </div>
 
           <div class="task-columns">
@@ -347,7 +344,7 @@
               <div class="task-list green"></div>
             </div>
           </div>
-        </div>
+        </section>
       </main>
     </div>
     <script type="module" src="./javascript/app.js"></script>

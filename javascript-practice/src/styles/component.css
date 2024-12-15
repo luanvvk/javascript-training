@@ -158,12 +158,18 @@
   color: var(--black);
 }
 
-.actions-buttons {
+.filter-wrapper {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  flex-direction: row;
   align-items: center;
+  justify-content: space-around;
+  gap: var(--space-32);
+
+  width: 100%;
   padding: 0 var(--space-32);
   margin-top: var(--space-48);
+  font-size: var(--font-size-15);
 }
 
 .sort-buttons {
@@ -257,14 +263,4 @@
   font-weight: var(--regular-weight);
   font-size: var(--font-size-20);
   color: var(--white);
-}
-
-.filter-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: space-around;
-  width: 100%;
-  gap: var(--space-32);
-  font-size: var(--font-size-15);
 }

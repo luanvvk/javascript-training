@@ -703,7 +703,7 @@ input[type='radio'] {
   width: 11.5rem;
 }
 
-.filter-dynamic-container {
+.filter__dynamic-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -752,7 +752,7 @@ input[type='radio'] {
   gap: var(--space-16);
   align-items: center;
 }
-.find-task-action {
+.filter__actions {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
