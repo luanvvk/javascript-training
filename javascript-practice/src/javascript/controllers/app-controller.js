@@ -5,13 +5,13 @@ import { showError } from '../helpers/error-handling.js';
 import { showDeletionNotification } from '../helpers/notifications.js';
 import { createFormElements } from '../template/create-task-popup.js';
 import { editFormElements } from '../template/edit-task-popup.js';
+import { setupPopupDropdowns } from '../template/dropdown-input-template.js';
 
 //Declaration
 // filter criteria
 const filterFieldDropdown = document.getElementById('filter-field-dropdown');
 const filterOptionsDropdown = document.getElementById('filter-options-dropdown');
-const searchInput = document.querySelector('.input-bar-mini__main-input');
-const popupSearchInput = document.querySelector('.input-bar-mini__main-input');
+
 //sort
 const sortDropdown = document.getElementById('sort-dropdown');
 const sortOrderToggle = document.getElementById('sort-order-toggle');
@@ -63,185 +63,8 @@ class TaskController {
     this.editTaskOverlay = document.getElementById('edit-task-overlay');
     this.editTaskPopup = this.editTaskOverlay.querySelector('.edit-popup');
     createFormElements();
-    this.setupDropdowns();
+    setupPopupDropdowns();
     editFormElements();
-  }
-
-  setupDropdowns() {
-    //create task overlay
-    // Priority Dropdown
-    const createPrioritySelect = this.createTaskOverlay.querySelector('.task-priority');
-    const createPriorityContainer = createPrioritySelect.querySelector('.priority-select');
-    const createPriorityDropdown = document.createElement('div');
-    createPriorityDropdown.classList.add('priority-dropdown');
-
-    const createPriorityOptions = [
-      { value: 'Not urgent', default: true },
-      { value: 'Urgent task', default: false },
-      { value: 'Important', default: false },
-    ];
-
-    const createDefaultOption = createPriorityOptions.find((option) => option.default);
-    createPriorityContainer.innerHTML = `
-     <div class="default-option-container">
-     <span class="default-option">${createDefaultOption.value}</span>
-     <img src="./assets/images/icons/create-task-modal-icon/priority-icon.svg" class="task-priority-icon" alt="Priority Icon">
-    </div>
-      `;
-
-    createPriorityOptions.forEach((option) => {
-      const optionElement = document.createElement('div');
-      optionElement.classList.add('priority-options');
-      optionElement.textContent = option.value;
-      optionElement.addEventListener('click', () => {
-        createPriorityContainer.querySelector('.default-option').textContent = option.value;
-        createPriorityDropdown.style.display = 'none';
-      });
-      createPriorityDropdown.appendChild(optionElement);
-    });
-
-    createPriorityContainer.appendChild(createPriorityDropdown);
-    createPriorityContainer.addEventListener('click', (e) => {
-      createPriorityDropdown.style.display =
-        createPriorityDropdown.style.display === 'none' ? 'flex' : 'none';
-      e.stopPropagation();
-    });
-
-    // Category Dropdown
-    const createCategorySelect = this.createTaskOverlay.querySelector(
-      '#create-task-overlay .task-category-input',
-    );
-    const createCategoryContainer = createCategorySelect.querySelector(
-      '#create-task-overlay .category-select',
-    );
-    const createCategoryDropdown = document.createElement('div');
-    createCategoryDropdown.classList.add('category-dropdown');
-
-    const createCategoryOptions = [
-      { value: 'Daily Task', default: true },
-      { value: 'Weekly task', default: false },
-      { value: 'Monthly task', default: false },
-    ];
-
-    const createDefaultCategoryOption = createCategoryOptions.find((option) => option.default);
-    createCategoryContainer.innerHTML = `
-    <div class="default-option-container">
-    <span class="default-option">${createDefaultCategoryOption.value}</span>
-      <img src="./assets/images/icons/create-task-modal-icon/priority-icon.svg" class="task-category-icon" alt="Category Icon">
-    </div>
-      `;
-
-    createCategoryOptions.forEach((option) => {
-      const optionElement = document.createElement('div');
-      optionElement.classList.add('category-options');
-      optionElement.textContent = option.value;
-      optionElement.addEventListener('click', () => {
-        createCategoryContainer.querySelector('.default-option').textContent = option.value;
-        createCategoryDropdown.style.display = 'none';
-      });
-      createCategoryDropdown.appendChild(optionElement);
-    });
-
-    createCategoryContainer.appendChild(createCategoryDropdown);
-    createCategoryContainer.addEventListener('click', (e) => {
-      createCategoryDropdown.style.display =
-        createCategoryDropdown.style.display === 'none' ? 'flex' : 'none';
-      e.stopPropagation();
-    });
-
-    // Close dropdowns when clicking outside
-    document.addEventListener('click', () => {
-      createPriorityDropdown.style.display = 'none';
-      createCategoryDropdown.style.display = 'none';
-    });
-    //edit task overlay
-    // Priority Dropdown
-    const editPrioritySelect = this.editTaskOverlay.querySelector('.task-priority');
-    const editPriorityContainer = editPrioritySelect.querySelector('.priority-select');
-    const editPriorityDropdown = document.createElement('div');
-    editPriorityDropdown.classList.add('priority-dropdown');
-
-    const editPriorityOptions = [
-      { value: 'Not urgent', default: true },
-      { value: 'Urgent task', default: false },
-      { value: 'Important', default: false },
-    ];
-
-    const editDefaultOption =
-      editPriorityOptions.find((option) => option.default) || editPriorityOptions[0];
-    editPriorityContainer.innerHTML = `
-     <div class="default-option-container">
-     <span class="default-option">${editDefaultOption.value}</span>
-     <img src="./assets/images/icons/create-task-modal-icon/priority-icon.svg" class="task-priority-icon" alt="Priority Icon">
-    </div>
-      `;
-
-    editPriorityOptions.forEach((option) => {
-      const optionElement = document.createElement('div');
-      optionElement.classList.add('priority-options');
-      optionElement.textContent = option.value;
-      optionElement.addEventListener('click', () => {
-        editPriorityContainer.querySelector('.default-option').textContent = option.value;
-        editPriorityDropdown.style.display = 'none';
-      });
-      editPriorityDropdown.appendChild(optionElement);
-    });
-
-    editPriorityContainer.appendChild(editPriorityDropdown);
-    editPriorityContainer.addEventListener('click', (e) => {
-      editPriorityDropdown.style.display =
-        editPriorityDropdown.style.display === 'none' ? 'flex' : 'none';
-      e.stopPropagation();
-    });
-
-    // Category Dropdown
-    const editCategorySelect = this.editTaskOverlay.querySelector(
-      '#edit-task-overlay .task-category-input',
-    );
-    const editCategoryContainer = editCategorySelect.querySelector(
-      '#edit-task-overlay .category-select',
-    );
-    const editCategoryDropdown = document.createElement('div');
-    editCategoryDropdown.classList.add('category-dropdown');
-
-    const editCategoryOptions = [
-      { value: 'Daily Task', default: true },
-      { value: 'Weekly task', default: false },
-      { value: 'Monthly task', default: false },
-    ];
-
-    const editDefaultCategoryOption =
-      editCategoryOptions.find((option) => option.default) || editCategoryOptions[0];
-    editCategoryContainer.innerHTML = `
-    <div class="default-option-container">
-    <span class="default-option">${editDefaultCategoryOption.value}</span>
-      <img src="./assets/images/icons/create-task-modal-icon/priority-icon.svg" class="task-category-icon" alt="Category Icon">
-    </div>
-      `;
-
-    editCategoryOptions.forEach((option) => {
-      const optionElement = document.createElement('div');
-      optionElement.classList.add('category-options');
-      optionElement.textContent = option.value;
-      optionElement.addEventListener('click', () => {
-        editCategoryContainer.querySelector('.default-option').textContent = option.value;
-        editCategoryDropdown.style.display = 'none';
-      });
-      editCategoryDropdown.appendChild(optionElement);
-    });
-
-    editCategoryContainer.appendChild(editCategoryDropdown);
-    editCategoryContainer.addEventListener('click', (e) => {
-      editCategoryDropdown.style.display =
-        editCategoryDropdown.style.display === 'none' ? 'flex' : 'none';
-      e.stopPropagation();
-    });
-
-    // Close dropdowns when clicking outside
-    document.addEventListener('click', () => {
-      editPriorityDropdown.style.display = 'none';
-      editCategoryDropdown.style.display = 'none';
-    });
   }
 
   setupEventListeners() {

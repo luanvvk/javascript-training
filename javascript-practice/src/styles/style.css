@@ -675,12 +675,11 @@ input[type='radio'] {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   gap: var(--space-32);
   padding: var(--space-16);
   border-radius: var(--border-radius-6);
   background-color: var(--light-pink);
-
   width: 100%;
 }
 
@@ -784,6 +783,7 @@ input[type='radio'] {
     grid-template-areas:
       'toDo running'
       'completed completed';
+    align-items: flex-start;
   }
   .task-column.green {
     margin-top: var(--space-32);
