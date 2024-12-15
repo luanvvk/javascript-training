@@ -11,6 +11,7 @@ import { editFormElements } from '../template/edit-task-popup.js';
 const filterFieldDropdown = document.getElementById('filter-field-dropdown');
 const filterOptionsDropdown = document.getElementById('filter-options-dropdown');
 const searchInput = document.querySelector('.input-bar-mini__main-input');
+const popupSearchInput = document.querySelector('.input-bar-mini__main-input');
 //sort
 const sortDropdown = document.getElementById('sort-dropdown');
 const sortOrderToggle = document.getElementById('sort-order-toggle');
@@ -35,7 +36,7 @@ class TaskController {
       field: 'name',
       order: 'asc',
     };
-
+    this.applyFilters = this.applyFilters.bind(this);
     this.initialize();
   }
 
@@ -272,8 +273,13 @@ class TaskController {
 
     //search
     const searchInput = document.querySelector('.input-bar__main-input');
+
     if (searchInput) {
       searchInput.addEventListener('input', this.searchTasks.bind(this));
+    }
+    const popupSearchInput = document.querySelector('#all-task-popup .input-bar-mini__main-input');
+    if (popupSearchInput) {
+      popupSearchInput.addEventListener('input', this.searchTasks.bind(this));
     }
     //open/close all task popup
     const searchBarTop = document.querySelector('.search-bar__input-bar');
@@ -281,7 +287,7 @@ class TaskController {
     const allTaskPopup = document.getElementById('all-task-popup');
     const allTaskBtn = document.querySelector('.completed-tasks');
     allTaskBtn.addEventListener('click', () => {
-      allTaskPopup.classList.remove('hide');
+      allTaskPopup.classList.toggle('hide');
       searchBarTop.classList.add('hide');
     });
     dashboardBtn.addEventListener('click', () => {
@@ -438,10 +444,14 @@ class TaskController {
   //Search tasks method
   searchTasks(e) {
     const searchText = e.target.value.toLowerCase().trim();
-
+    const isPopupSearch = e.target.closest('#all-task-popup') !== null;
     // If search is empty, render all tasks
     if (searchText === '') {
-      this.renderTasks();
+      if (isPopupSearch) {
+        this.view.renderAllTasksPopup(this.tasks);
+      } else {
+        this.renderTasks();
+      }
       return;
     }
 
@@ -455,8 +465,12 @@ class TaskController {
     );
 
     // Render filtered tasks
-    this.view.renderTasks(filteredTasks);
-    this.setupTaskActions();
+    if (isPopupSearch) {
+      this.view.renderAllTasksPopup(filteredTasks);
+    } else {
+      this.view.renderTasks(filteredTasks);
+      this.setupTaskActions();
+    }
   }
   formatSearchDate(dateString) {
     if (!dateString) return '';
@@ -473,35 +487,50 @@ class TaskController {
   filterTask(options = {}) {
     const { category = 'All', priority = 'All', status = 'All', searchText = '' } = options;
     console.log('filter options:', options);
+
+    console.log('Filter Task Debug:');
+    console.log('Options:', options);
+    console.log('Category:', category);
+    console.log('Priority:', priority);
+    console.log('Status:', status);
+    console.log('Search Text:', searchText);
+
     let filteredTasks = this.tasks;
+
+    console.log('Performing search filter');
+
     if (searchText) {
-      const lowerSearchText = searchText.toLowerCase().trim();
       filteredTasks = filteredTasks.filter((task) => {
-        return (
-          task.title.toLowerCase().includes(lowerSearchText) ||
-          task.description.toLowerCase().includes(lowerSearchText) ||
-          task.category.toLowerCase().includes(lowerSearchText) ||
-          task.priority.toLowerCase().includes(lowerSearchText)
-        );
+        const matches =
+          task.title.toLowerCase().includes(searchText) ||
+          task.description.toLowerCase().includes(searchText) ||
+          task.category.toLowerCase().includes(searchText) ||
+          task.priority.toLowerCase().includes(searchText);
+        console.log(`Task: ${task.title}, Matches: ${matches}`);
+        return matches;
       });
     }
     // Filter by category
     if (category !== 'All') {
+      console.log('Performing category filter');
+
       filteredTasks = filteredTasks.filter(
         (task) => task.category.toLowerCase() === category.toLowerCase(),
       );
     }
     //Filer by priority
     if (priority !== 'All') {
+      console.log('Performing priority filter');
       filteredTasks = filteredTasks.filter(
         (task) => task.priority.toLowerCase() === priority.toLowerCase(),
       );
     }
     //Filter by status
     if (status !== 'All') {
+      console.log('Performing status filter');
       filteredTasks = filteredTasks.filter((task) => task.status === status);
     }
-    console.log('filter tasks:', filteredTasks);
+    console.log('Final Filtered Tasks:', filteredTasks);
     return filteredTasks;
   }
   //Setup filter event listeners for filtering and sorting
@@ -515,6 +544,11 @@ class TaskController {
     if (filterOptionsDropdown) {
       filterOptionsDropdown.addEventListener('change', this.applyFilters.bind(this));
     }
+
+    const searchInputs = document.querySelectorAll('.input-bar-mini__main-input');
+    searchInputs.forEach((input) => {
+      input.addEventListener('input', this.applyFilters.bind(this));
+    });
     //for sorting event listeners
     if (sortDropdown) {
       sortDropdown.addEventListener('change', this.applyFilters.bind(this));
@@ -556,13 +590,30 @@ class TaskController {
   applyFilters() {
     const filterField = filterFieldDropdown ? filterFieldDropdown.value : 'category';
     const filterValue = filterOptionsDropdown ? filterOptionsDropdown.value : 'All';
-    const searchText = searchInput ? searchInput.value.trim() : '';
+    const searchInput = document.querySelector('.input-bar-mini__main-input');
+    const searchText = searchInput ? searchInput.value.toLowerCase().trim() : '';
 
-    const filterOptions = {};
-    filterOptions[filterField] = filterValue;
-    filterOptions['searchText'] = searchText;
+    console.log('Apply Filters Debug:');
+    console.log('Filter Field:', filterField);
+    console.log('Filter Value:', filterValue);
+    console.log('Search Text:', searchText);
+
+    const filterOptions = {
+      [filterField === 'status'
+        ? 'status'
+        : filterField === 'priority'
+          ? 'priority'
+          : filterField === 'category'
+            ? 'category'
+            : 'All']: filterValue,
+      searchText: searchText,
+    };
+
+    console.log('Filter Options:', filterOptions);
+
     //Filter tasks
     const filteredTasks = this.filterTask(filterOptions);
+    console.log('Filtered Tasks:', filteredTasks);
     this.view.renderAllTasksPopup(filteredTasks);
     this.view.renderTasks(filteredTasks);
     this.setupTaskActions();

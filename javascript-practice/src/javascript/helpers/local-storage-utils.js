@@ -1,3 +1,4 @@
+import { TASK_STORAGE_KEYS } from './constants.js';
 class LocalStorageUtil {
   constructor(storageKey = 'tasks') {
     this.storageKey = storageKey;
@@ -6,14 +7,14 @@ class LocalStorageUtil {
     try {
       // Convert tasks to JSON for storage
       const serializedTasks = tasks.map((task) => ({
-        id: task.id,
-        title: task.title,
-        startDate: task.startDate,
-        endDate: task.endDate,
-        priority: task.priority,
-        description: task.description,
-        category: task.category,
-        status: task.status,
+        [TASK_STORAGE_KEYS.ID]: task.id,
+        [TASK_STORAGE_KEYS.TITLE]: task.title,
+        [TASK_STORAGE_KEYS.START_DATE]: task.startDate,
+        [TASK_STORAGE_KEYS.END_DATE]: task.endDate,
+        [TASK_STORAGE_KEYS.PRIORITY]: task.priority,
+        [TASK_STORAGE_KEYS.DESCRIPTION]: task.description,
+        [TASK_STORAGE_KEYS.CATEGORY]: task.category,
+        [TASK_STORAGE_KEYS.STATUS]: task.status,
       }));
       localStorage.setItem(this.storageKey, JSON.stringify(serializedTasks));
     } catch (error) {
@@ -32,17 +33,17 @@ class LocalStorageUtil {
       // Reconstruct task objects using TaskModel
       return parsedTasks.map((taskData) => {
         const task = new TaskModel(
-          taskData.title,
-          taskData.startDate,
-          taskData.endDate,
-          taskData.description,
-          taskData.priority,
-          taskData.category,
+          taskData[TASK_STORAGE_KEYS.TITLE],
+          taskData[TASK_STORAGE_KEYS.START_DATE],
+          taskData[TASK_STORAGE_KEYS.END_DATE],
+          taskData[TASK_STORAGE_KEYS.DESCRIPTION],
+          taskData[TASK_STORAGE_KEYS.PRIORITY],
+          taskData[TASK_STORAGE_KEYS.CATEGORY],
         );
 
         // Restore additional properties
-        task.id = taskData.id;
-        task.status = taskData.status;
+        task.id = taskData[TASK_STORAGE_KEYS.ID];
+        task.status = taskData[TASK_STORAGE_KEYS.STATUS];
 
         return task;
       });

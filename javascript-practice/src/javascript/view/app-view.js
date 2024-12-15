@@ -96,7 +96,7 @@ class TaskView {
 
   // Open/close overlays
   openCreateTaskOverlay() {
-    this.createTaskOverlay.classList.remove('hide');
+    this.createTaskOverlay.classList.toggle('hide');
     document.body.classList.add('overflow-hidden');
   }
 
