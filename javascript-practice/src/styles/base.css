@@ -32,6 +32,10 @@ ul {
   list-style: none;
 }
 
+li::maker {
+  list-style: none;
+}
+
 a {
   text-decoration: none;
   color: inherit;

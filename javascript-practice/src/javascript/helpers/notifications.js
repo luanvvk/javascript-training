@@ -10,9 +10,9 @@ export function showDeletionNotification() {
 export function showNoTasksMessage(columns, viewType) {
   Object.keys(columns).forEach((key) => {
     if (!columns[key].children.length) {
-      const message = document.createElement('p');
+      const message = document.createElement('li');
       message.classList.add('no-tasks-message');
-      message.textContent = `No tasks in ${key.replace(/([A-Z])/g, ' $1').toLowerCase()} (${viewType})`;
+      message.innerHTML = `<h3>No tasks in ${key.replace(/([A-Z])/g, ' $1').toLowerCase()} (${viewType})</h3>`;
       columns[key].appendChild(message);
     }
   });
