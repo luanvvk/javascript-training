@@ -1,12 +1,11 @@
 /* task body */
-
 .task-item {
   display: flex;
   justify-content: space-between;
   flex-direction: row;
   padding: var(--space-8);
   width: 26.2rem;
-  min-height: 10.7rem;
+  min-height: 11.7rem;
   margin-bottom: var(--space-16);
   text-align: left;
   background-color: var(--cyan-blue);
@@ -44,7 +43,6 @@
 .button-icon {
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: 50%;
 }
 /* Sort components */
 .category-sort {

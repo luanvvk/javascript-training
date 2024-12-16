@@ -86,13 +86,15 @@ class TaskView {
     });
     //show message in case no matched results
     if (!popupToDoColumn.children.length) {
-      popupToDoColumn.innerHTML = '<p class="no-tasks-message">No tasks in To Do</p>';
+      popupToDoColumn.innerHTML = '<li class="no-tasks-message"><p>No tasks in To Do</p></li>';
     }
     if (!popupInProgressColumn.children.length) {
-      popupInProgressColumn.innerHTML = '<p class="no-tasks-message">No tasks In Progress</p>';
+      popupInProgressColumn.innerHTML =
+        '<li class="no-tasks-message"><p>No tasks In Progress</p></li>';
     }
     if (!popupCompletedColumn.children.length) {
-      popupCompletedColumn.innerHTML = '<p class="no-tasks-message">No Completed tasks</p>';
+      popupCompletedColumn.innerHTML =
+        '<li class="no-tasks-message"><p>No Completed tasks</p></li>';
     }
   }
 

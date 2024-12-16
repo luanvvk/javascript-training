@@ -211,7 +211,7 @@
             </div>
           </article>
         </section>
-
+        <!-- create task overlay -->
         <section id="create-task-overlay" class="overlay set-task-overlay hide" draggable="false">
           <article class="create-task-popup">
             <p class="popup-heading">Create your task</p>
@@ -265,20 +265,20 @@
             <div class="edit-controls"></div>
           </article>
         </section>
-
+        <!-- all task popup -->
         <section id="all-task-popup" class="overlay hide" draggable="false">
           <h2 class="popup-heading">All tasks</h2>
           <div class="filter-wrapper">
             <article class="filter__dynamic-container">
-              <label class="filter-label">Filter by:</label>
-              <select class="filter-field-dropdown"></select>
-              <select class="filter-options-dropdown"></select>
+              <label class="filter-label" for="filter-field-dropdown">Filter by:</label>
+              <select class="filter-field-dropdown" name="filter-field-dropdown"></select>
+              <select class="filter-options-dropdown" name="filter-options-dropdown"></select>
             </article>
             <article class="filter__actions">
               <div class="filter-container">
                 <label for="sort-dropdown" class="sort-label">Sort by:</label>
                 <div class="sort-dropdown-content">
-                  <select class="sort-dropdown"></select>
+                  <select class="sort-dropdown" name="sort-dropdown"></select>
                   <button class="sort-order-toggle"><i class="fa-solid fa-sort"></i></button>
                 </div>
               </div>

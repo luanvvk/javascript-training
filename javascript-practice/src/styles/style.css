@@ -88,6 +88,17 @@
   padding: 0.7rem;
   border-radius: 25%;
   background: var(--cyan-blue);
+  width: 3rem;
+  height: 3rem;
+}
+
+.task-name-icon,
+.task-start-icon,
+.task-end-icon,
+.priority-icon,
+.category-icon {
+  width: 2rem;
+  height: 2rem;
 }
 
 .list-screen .icon i {
@@ -220,6 +231,22 @@
   display: flex;
   flex-direction: row;
   gap: var(--space-16);
+}
+
+.user-icon-icon,
+.theme-icon {
+  width: 3rem;
+  height: 3rem;
+}
+
+.menu-bar-icon {
+  width: 3.1 rem;
+  height: 2.5rem;
+}
+
+.notification-icon {
+  width: 2.2rem;
+  height: 2.8rem;
 }
 
 .circle {
@@ -384,12 +411,22 @@
   margin: auto 0;
 }
 
+.list-view .task-item {
+  padding: 0 var(--space-8);
+}
+
 .list-view .task-item .status-button {
   grid-area: button;
   flex-direction: row-reverse;
-  align-items: flex-end;
-  margin-right: -2.5rem;
+  align-items: center;
+  margin-right: -3rem;
+  margin-top: 1.4rem;
   gap: var(--space-8);
+}
+
+.list-view .button-icon {
+  width: 3rem;
+  height: 3rem;
 }
 
 .list-view .task-item .task-item-actions {
@@ -783,12 +820,21 @@
   display: inline-flex;
 }
 
+.task-edit-icon,
+.task-delete-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
 @media (min-width: 1001px) {
   .board-view,
   .task-columns {
     display: grid;
     grid-template-areas: 'toDo running completed';
     align-items: flex-start;
+  }
+  .hiding-overlay {
+    display: none;
   }
 }
 
@@ -803,6 +849,9 @@
   }
   .task-column.green {
     margin-top: var(--space-32);
+  }
+  .hiding-overlay {
+    display: none;
   }
 }
 

@@ -114,6 +114,7 @@ class TaskController {
     if (popupSearchInput) {
       popupSearchInput.addEventListener('input', this.searchTasks.bind(this));
     }
+
     //open/close all task popup
     const searchBarTop = document.querySelector('.search-bar__input-bar');
     const dashboardBtn = document.querySelector('.dashboard');
@@ -125,12 +126,18 @@ class TaskController {
       mainBody.classList.add('active');
       hidingOverlay.classList.add('hide');
     });
+
     dashboardBtn.addEventListener('click', () => {
       allTaskPopup.classList.add('hide');
       searchBarTop.classList.remove('hide');
       mainBody.classList.add('active');
       this.view.closeCreateTaskOverlay();
       hidingOverlay.classList.add('hide');
+    });
+
+    hidingOverlay.addEventListener('click', () => {
+      hidingOverlay.classList.add('hide');
+      mainBody.classList.toggle('active');
     });
 
     // Toggle between views
@@ -284,6 +291,7 @@ class TaskController {
     this.view.renderTasks(this.tasks);
     this.setupTaskActions();
   }
+
   //Search tasks method
   searchTasks(e) {
     const searchText = e.target.value.toLowerCase().trim();
@@ -315,6 +323,7 @@ class TaskController {
       this.setupTaskActions();
     }
   }
+
   //filter task method
   filterTask(options = {}) {
     const { category = 'All', priority = 'All', status = 'All', searchText = '' } = options;
@@ -348,6 +357,7 @@ class TaskController {
     }
     return filteredTasks;
   }
+
   //Setup filter event listeners for filtering and sorting
   setupFilterEventListeners() {
     // Apply event listeners to filters
@@ -391,7 +401,9 @@ class TaskController {
         break;
       default:
         options = ['All'];
-    } // Populate filter options
+    }
+
+    // Populate filter options
     options.forEach((option) => {
       const optionElement = document.createElement('option');
       optionElement.value = option;
@@ -401,6 +413,7 @@ class TaskController {
     // Re-apply filters with default "All"
     this.applyFilters();
   }
+
   //Apply filters
   applyFilters() {
     const filterField = filterFieldDropdown ? filterFieldDropdown.value : 'category';
@@ -427,6 +440,7 @@ class TaskController {
     this.view.renderTasks(filteredTasks);
     this.setupTaskActions();
   }
+
   //Sort task method
   sortTasks(field, order = 'asc') {
     //validate input
@@ -473,8 +487,8 @@ class TaskController {
     this.currentSortSetting = { field, order };
     return sortedTasks;
   }
-  //Apply sorting
 
+  //change sort order state
   toggleSortOrder() {
     const currentOrder = this.currentSortSetting.order;
     const newOrder = currentOrder === 'asc' ? 'desc' : 'asc';

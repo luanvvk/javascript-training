@@ -16,7 +16,7 @@ export function createTaskElement(task) {
   }
   const tempDiv = document.createElement('div');
   tempDiv.innerHTML = `
-    <div class="task-item" data-task-id="${task.id}">
+    <li class="task-item" data-task-id="${task.id}">
     <div class="task-item__details">
       <h3 class="task-item__heading">${task.title}</h3>
       <h4 class="start-date">Start date: ${formatDate(task.startDate)}</h4>
@@ -36,6 +36,6 @@ export function createTaskElement(task) {
       <a class="task-delete" href="javascript:void(0)">
         <img class="task-delete-icon" src="./assets/images/icons/task-icons/task-delete-icon.svg" alt="task-delete-icon" />
       </a>
-    </div>`;
+    </li>`;
   return tempDiv.firstElementChild;
 }
