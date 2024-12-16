@@ -1,5 +1,6 @@
-import { createTaskElement } from '../template/task-template.js';
+import { createTaskElement } from '../templates/task-template.js';
 import { showNoTasksMessage } from '../helpers/notifications.js';
+import { renderSortingUI } from '../templates/sorting-ui.js';
 class TaskView {
   constructor() {
     this.listViewColumns = {
@@ -19,6 +20,8 @@ class TaskView {
     this.notification = document.getElementById('notification');
     this.sortDropdown = document.getElementById('sort-dropdown');
     this.sortOrderToggle = document.getElementById('sort-order-toggle');
+    this.filterFieldDropdown = document.getElementById('filter-field-dropdown');
+    this.filterOptionsDropdown = document.getElementById('filter-options-dropdown');
   }
 
   // Render tasks in both views
@@ -142,33 +145,6 @@ class TaskView {
     document.querySelector('.task-end-input').value = '';
     document.querySelector('.textarea-input').value = '';
   }
-  renderSortingUI() {
-    if (!this.sortDropdown) return;
-    this.sortDropdown.innerHTML = `
-      <option value="name">Name</option>
-      <option value="startDate">Start Date</option>
-      <option value="endDate">End Date</option>
-      <option value="category">Category</option>
-      <option value="priority">Priority</option>
-    `;
-    if (!this.sortOrderToggle) {
-      const sortContainer = document.createElement('div');
-      sortContainer.classList.add('sort-container');
-      sortContainer.innerHTML = `
-        <select id="sort-dropdown">
-          <option value="name">Name</option>
-          <option value="startDate">Start Date</option>
-          <option value="endDate">End Date</option>
-          <option value="category">Category</option>
-          <option value="priority">Priority</option>
-        </select>
-        <button id="sort-order-toggle">▲</button>
-        `;
-      const filterContainer = document.querySelector('.filter-container');
-      if (filterContainer) {
-        filterContainer.appendChild(sortContainer);
-      }
-    }
-  }
+  renderSortingUI() {}
 }
 export default TaskView;

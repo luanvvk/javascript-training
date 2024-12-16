@@ -3,9 +3,10 @@ import TaskView from '../view/app-view.js';
 import LocalStorageUtil from '../helpers/local-storage-utils.js';
 import { showError } from '../helpers/error-handling.js';
 import { showDeletionNotification } from '../helpers/notifications.js';
-import { createFormElements } from '../template/create-task-popup.js';
-import { editFormElements } from '../template/edit-task-popup.js';
-import { setupPopupDropdowns } from '../template/dropdown-input-template.js';
+import { createFormElements } from '../templates/create-task-popup.js';
+import { editFormElements } from '../templates/edit-task-popup.js';
+import { setupPopupDropdowns } from '../templates/dropdown-input-template.js';
+import { renderSortingUI } from '../templates/sorting-ui.js';
 
 //Declaration
 // filter criteria
@@ -48,6 +49,7 @@ class TaskController {
     this.setupEventListeners();
     this.setupFilterEventListeners();
     this.renderAllTasks();
+    renderSortingUI();
   }
 
   loadTasksFromLocalStorage() {
@@ -151,7 +153,6 @@ class TaskController {
         if (sideNavbar) sideNavbar.classList.toggle('active');
         if (mainBody) mainBody.classList.toggle('active');
         if (appLogo) appLogo.classList.toggle('active');
-
         if (editTask) editTask.classList.toggle('toggle');
         if (createTask) createTask.classList.toggle('toggle');
       });
@@ -318,19 +319,19 @@ class TaskController {
       })
       .toLowerCase();
   }
-  //filter task methood
+  //filter task method
   filterTask(options = {}) {
     const { category = 'All', priority = 'All', status = 'All', searchText = '' } = options;
 
     let filteredTasks = this.tasks;
     if (searchText) {
       filteredTasks = filteredTasks.filter((task) => {
-        const matches =
+        const matchedResult =
           task.title.toLowerCase().includes(searchText) ||
           task.description.toLowerCase().includes(searchText) ||
           task.category.toLowerCase().includes(searchText) ||
           task.priority.toLowerCase().includes(searchText);
-        return matches;
+        return matchedResult;
       });
     }
     // Filter by category
@@ -401,8 +402,8 @@ class TaskController {
       optionElement.textContent = option;
       filterOptionsDropdown.appendChild(optionElement);
     });
-
-    this.applyFilters(); // Re-apply filters with default "All"
+    // Re-apply filters with default "All"
+    this.applyFilters();
   }
   //Apply filters
   applyFilters() {
@@ -410,11 +411,6 @@ class TaskController {
     const filterValue = filterOptionsDropdown ? filterOptionsDropdown.value : 'All';
     const searchInput = document.querySelector('.input-bar-mini__main-input');
     const searchText = searchInput ? searchInput.value.toLowerCase().trim() : '';
-
-    console.log('Apply Filters Debug:');
-    console.log('Filter Field:', filterField);
-    console.log('Filter Value:', filterValue);
-    console.log('Search Text:', searchText);
 
     const filterOptions = {
       [filterField === 'status'
@@ -431,7 +427,6 @@ class TaskController {
 
     //Filter tasks
     const filteredTasks = this.filterTask(filterOptions);
-    console.log('Filtered Tasks:', filteredTasks);
     this.view.renderAllTasksPopup(filteredTasks);
     this.view.renderTasks(filteredTasks);
     this.setupTaskActions();
