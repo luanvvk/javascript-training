@@ -1,27 +1,26 @@
 import { createTaskElement } from '../templates/task-template.js';
 import { showNoTasksMessage } from '../helpers/notifications.js';
-import { renderSortingUI } from '../templates/sorting-ui.js';
 class TaskView {
   constructor() {
     this.listViewColumns = {
-      toDo: document.querySelector('#list-view .task-column.pink .task-list'),
-      running: document.querySelector('#list-view .task-column.blue .task-list'),
-      completed: document.querySelector('#list-view .task-column.green .task-list'),
+      toDo: document.querySelector('.list-view .task-column.pink .task-list'),
+      running: document.querySelector('.list-view .task-column.blue .task-list'),
+      completed: document.querySelector('.list-view .task-column.green .task-list'),
     };
 
     this.boardViewColumns = {
-      toDo: document.querySelector('#board-view #todo .task-list'),
-      running: document.querySelector('#board-view #doing .task-list'),
-      completed: document.querySelector('#board-view #done .task-list'),
+      toDo: document.querySelector('.board-view .task-column.pink .task-list'),
+      running: document.querySelector('.board-view .task-column.blue .task-list'),
+      completed: document.querySelector('.board-view .task-column.green .task-list'),
     };
 
     this.createTaskOverlay = document.getElementById('create-task-overlay');
     this.editTaskOverlay = document.getElementById('edit-task-overlay');
-    this.notification = document.getElementById('notification');
-    this.sortDropdown = document.getElementById('sort-dropdown');
-    this.sortOrderToggle = document.getElementById('sort-order-toggle');
-    this.filterFieldDropdown = document.getElementById('filter-field-dropdown');
-    this.filterOptionsDropdown = document.getElementById('filter-options-dropdown');
+    this.notification = document.querySelector('.notification');
+    this.sortDropdown = document.querySelector('.sort-dropdown');
+    this.sortOrderToggle = document.querySelector('.sort-order-toggle');
+    this.filterFieldDropdown = document.querySelector('.filter-field-dropdown');
+    this.filterOptionsDropdown = document.querySelector('.filter-options-dropdown');
   }
 
   // Render tasks in both views
@@ -145,6 +144,5 @@ class TaskView {
     document.querySelector('.task-end-input').value = '';
     document.querySelector('.textarea-input').value = '';
   }
-  renderSortingUI() {}
 }
 export default TaskView;

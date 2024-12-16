@@ -95,7 +95,7 @@
       </nav>
 
       <main class="main-body active">
-        <div id="notification" class="notification">
+        <div class="notification">
           <img
             class="completed-task-icon"
             src="./assets/images/icons/menu-bar-icons/completed-task-icon.svg"
@@ -144,7 +144,7 @@
                 loading="lazy"
             /></a>
 
-            <a class="user-info" href="javascript:void(0)">
+            <a class="user-info-icon" href="javascript:void(0)">
               <img
                 class="user-icon-icon"
                 src="./assets/images/icons/header-icons/user-icon.svg"
@@ -163,7 +163,7 @@
               alt="add-task-icon"
             />
           </button>
-          <article id="list-view" class="list-view hide">
+          <article class="list-view hide">
             <div class="task-column pink">
               <h2 class="list-header">
                 <span class="circle background-pink"></span><span class="text">To do tasks</span>
@@ -186,22 +186,22 @@
               <ul class="task-list green"></ul>
             </div>
           </article>
-          <article id="board-view" class="board-view">
-            <div id="todo" class="task-column pink">
+          <article class="board-view">
+            <div class="task-column pink">
               <h2 class="list-header">
                 <span class="circle background-pink"></span><span class="text">To do tasks</span>
               </h2>
 
               <ul class="task-list pink"></ul>
             </div>
-            <div id="doing" class="task-column blue">
+            <div class="task-column blue">
               <h2 class="list-header">
                 <span class="circle background-blue"></span>
                 <span class="text">Running tasks</span>
               </h2>
               <ul class="task-list blue"></ul>
             </div>
-            <div id="done" class="task-column green">
+            <div class="task-column green">
               <h2 class="list-header">
                 <span class="circle background-green"></span
                 ><span class="text">Completed tasks</span>
@@ -220,11 +220,11 @@
               <div class="task-end"></div>
               <div class="task-priority">
                 <h2 class="label">Priority</h2>
-                <div id="priority-select" class="priority-select"></div>
+                <div class="priority-select"></div>
               </div>
               <div class="task-category-input">
                 <h2 class="label">Category</h2>
-                <div id="category-select" class="category-select"></div>
+                <div class="category-select"></div>
               </div>
             </form>
             <div class="task-desc"></div>
@@ -245,11 +245,11 @@
 
               <div class="task-priority">
                 <h2 class="label">Priority</h2>
-                <div id="priority-select" class="priority-select"></div>
+                <div class="priority-select"></div>
               </div>
               <div class="task-category-input">
                 <h2 class="label">Category</h2>
-                <div id="category-select" class="category-select"></div>
+                <div class="category-select"></div>
               </div>
             </form>
             <div class="task-desc">
@@ -270,15 +270,15 @@
           <div class="filter-wrapper">
             <article class="filter__dynamic-container">
               <label class="filter-label">Filter by:</label>
-              <select id="filter-field-dropdown"></select>
-              <select id="filter-options-dropdown"></select>
+              <select class="filter-field-dropdown"></select>
+              <select class="filter-options-dropdown"></select>
             </article>
             <article class="filter__actions">
               <div class="filter-container">
                 <label for="sort-dropdown" class="sort-label">Sort by:</label>
                 <div class="sort-dropdown-content">
-                  <select id="sort-dropdown"></select>
-                  <button id="sort-order-toggle"><i class="fa-solid fa-sort"></i></button>
+                  <select class="sort-dropdown"></select>
+                  <button class="sort-order-toggle"><i class="fa-solid fa-sort"></i></button>
                 </div>
               </div>
               <div class="search-bar-mini__input-bar">

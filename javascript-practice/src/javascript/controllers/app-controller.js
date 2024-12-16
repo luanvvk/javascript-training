@@ -10,17 +10,17 @@ import { renderSortingUI } from '../templates/sorting-ui.js';
 
 //Declaration
 // filter criteria
-const filterFieldDropdown = document.getElementById('filter-field-dropdown');
-const filterOptionsDropdown = document.getElementById('filter-options-dropdown');
+const filterFieldDropdown = document.querySelector('.filter-field-dropdown');
+const filterOptionsDropdown = document.querySelector('.filter-options-dropdown');
 
 //sort
-const sortDropdown = document.getElementById('sort-dropdown');
-const sortOrderToggle = document.getElementById('sort-order-toggle');
+const sortDropdown = document.querySelector('.sort-dropdown');
+const sortOrderToggle = document.querySelector('.sort-order-toggle');
 //toggle elements
 const boardViewOption = document.querySelector('.board-screen');
 const listViewOption = document.querySelector('.list-screen');
-const listView = document.getElementById('list-view');
-const boardView = document.getElementById('board-view');
+const listView = document.querySelector('.list-view');
+const boardView = document.querySelector('.board-view');
 const editTask = document.getElementById('edit-task-overlay');
 const createTask = document.getElementById('create-task-overlay');
 //sidebar toggle elements
@@ -164,8 +164,8 @@ class TaskController {
     const title = document.querySelector('#task-name-input').value.trim();
     const startDate = document.querySelector('#task-start-input').value;
     const endDate = document.querySelector('#task-end-input').value;
-    const priority = document.querySelector('#priority-select .default-option').textContent.trim();
-    const category = document.querySelector('#category-select .default-option').textContent.trim();
+    const priority = document.querySelector('.priority-select .default-option').textContent.trim();
+    const category = document.querySelector('.category-select .default-option').textContent.trim();
     const description = document.querySelector('.textarea-input').value.trim();
     const task = new TaskModel(title, startDate, endDate, description, priority, category);
 
@@ -308,17 +308,6 @@ class TaskController {
       this.setupTaskActions();
     }
   }
-  formatSearchDate(dateString) {
-    if (!dateString) return '';
-    const date = new Date(dateString);
-    return date
-      .toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      })
-      .toLowerCase();
-  }
   //filter task method
   filterTask(options = {}) {
     const { category = 'All', priority = 'All', status = 'All', searchText = '' } = options;
@@ -379,7 +368,7 @@ class TaskController {
 
   // Populate the second dropdown based on the first chosen dropdown
   populateFilterOptions(field) {
-    const filterOptionsDropdown = document.getElementById('filter-options-dropdown');
+    const filterOptionsDropdown = document.querySelector('.filter-options-dropdown');
     filterOptionsDropdown.innerHTML = '';
 
     let options = [];

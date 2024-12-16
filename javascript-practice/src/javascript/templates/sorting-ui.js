@@ -1,6 +1,6 @@
-const sortDropdown = document.getElementById('sort-dropdown');
-const filterFieldDropdown = document.getElementById('filter-field-dropdown');
-const sortOrderToggle = document.getElementById('sort-order-toggle');
+const sortDropdown = document.querySelector('.sort-dropdown');
+const filterFieldDropdown = document.querySelector('.filter-field-dropdown');
+const sortOrderToggle = document.querySelector('.sort-order-toggle');
 export function renderSortingUI() {
   if (sortDropdown) {
     sortDropdown.innerHTML = '';
@@ -40,10 +40,10 @@ export function renderSortingUI() {
     sortContainer.innerHTML = `
      <label for="sort-dropdown" class="sort-label">Sort by:</label>
       <div class="sort-dropdown-content">
-        <select id="sort-dropdown">
+        <select class="sort-dropdown">
          
         </select>
-        <button id="sort-order-toggle"><i class="fa-solid fa-sort"></i></button>
+        <button class="sort-order-toggle"><i class="fa-solid fa-sort"></i></button>
       </div>
     `;
     document.querySelector('#task-controls').appendChild(sortContainer);
