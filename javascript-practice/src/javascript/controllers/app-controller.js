@@ -24,6 +24,7 @@ const boardView = document.querySelector('.board-view');
 const editTask = document.getElementById('edit-task-overlay');
 const createTask = document.getElementById('create-task-overlay');
 //sidebar toggle elements
+const hidingOverlay = document.querySelector('.hiding-overlay');
 const toggle = document.querySelector('.menu-bar-toggle');
 const sideNavbar = document.querySelector('.side-navbar');
 const mainBody = document.querySelector('.main-body');
@@ -79,6 +80,7 @@ class TaskController {
         this.view.openCreateTaskOverlay();
         mainBody.classList.add('active');
         allTaskPopup.classList.add('hide');
+        hidingOverlay.classList.add('hide');
       });
     });
 
@@ -121,12 +123,14 @@ class TaskController {
       allTaskPopup.classList.toggle('hide');
       searchBarTop.classList.add('hide');
       mainBody.classList.add('active');
+      hidingOverlay.classList.add('hide');
     });
     dashboardBtn.addEventListener('click', () => {
       allTaskPopup.classList.add('hide');
       searchBarTop.classList.remove('hide');
       mainBody.classList.add('active');
       this.view.closeCreateTaskOverlay();
+      hidingOverlay.classList.add('hide');
     });
 
     // Toggle between views
@@ -137,6 +141,7 @@ class TaskController {
       mainBody.classList.add('active');
       this.view.closeCreateTaskOverlay();
       allTaskPopup.classList.add('hide');
+      hidingOverlay.classList.add('hide');
     });
 
     listViewOption.addEventListener('click', (e) => {
@@ -145,6 +150,7 @@ class TaskController {
       mainBody.classList.add('active');
       this.view.closeCreateTaskOverlay();
       allTaskPopup.classList.add('hide');
+      hidingOverlay.classList.add('hide');
     });
 
     // Sidebar toggle
@@ -153,6 +159,7 @@ class TaskController {
         if (sideNavbar) sideNavbar.classList.toggle('active');
         if (mainBody) mainBody.classList.toggle('active');
         if (appLogo) appLogo.classList.toggle('active');
+        if (hidingOverlay) hidingOverlay.classList.toggle('hide');
         if (editTask) editTask.classList.toggle('toggle');
         if (createTask) createTask.classList.toggle('toggle');
       });
@@ -161,7 +168,7 @@ class TaskController {
 
   // Task Management Methods
   addTask() {
-    const title = document.querySelector('#task-name-input').value.trim();
+    const title = document.querySelector('.task-name-input').value.trim();
     const startDate = document.querySelector('#task-start-input').value;
     const endDate = document.querySelector('#task-end-input').value;
     const priority = document.querySelector('.priority-select .default-option').textContent.trim();
