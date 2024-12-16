@@ -17,6 +17,7 @@ const filterOptionsDropdown = document.querySelector('.filter-options-dropdown')
 const sortDropdown = document.querySelector('.sort-dropdown');
 const sortOrderToggle = document.querySelector('.sort-order-toggle');
 //toggle elements
+
 const boardViewOption = document.querySelector('.board-screen');
 const listViewOption = document.querySelector('.list-screen');
 const listView = document.querySelector('.list-view');
@@ -62,11 +63,6 @@ class TaskController {
   }
 
   setupDynamicForm() {
-    this.createTaskOverlay = document.getElementById('create-task-overlay');
-    this.createTaskPopup = this.createTaskOverlay.querySelector('.create-task-popup');
-
-    this.editTaskOverlay = document.getElementById('edit-task-overlay');
-    this.editTaskPopup = this.editTaskOverlay.querySelector('.edit-popup');
     createFormElements();
     setupPopupDropdowns();
     editFormElements();
@@ -122,9 +118,19 @@ class TaskController {
     const allTaskBtn = document.querySelector('.all-tasks');
     allTaskBtn.addEventListener('click', () => {
       allTaskPopup.classList.toggle('hide');
-      searchBarTop.classList.add('hide');
+      searchBarTop.classList.toggle('hide');
       mainBody.classList.add('active');
       hidingOverlay.classList.add('hide');
+    });
+
+    const closeCreatePopupBtn = document.querySelectorAll('#create-task-overlay .close-popup');
+    closeCreatePopupBtn.forEach((btn) => {
+      btn.addEventListener('click', () => this.view.closeCreateTaskOverlay());
+    });
+
+    const closeEditPopupBtn = document.querySelectorAll('#edit-task-overlay .close-popup');
+    closeEditPopupBtn.forEach((btn) => {
+      btn.addEventListener('click', () => this.view.closeEditTaskOverlay());
     });
 
     dashboardBtn.addEventListener('click', () => {

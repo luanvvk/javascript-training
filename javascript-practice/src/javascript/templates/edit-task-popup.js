@@ -3,7 +3,7 @@ export function editFormElements() {
   const editTaskOverlay = document.getElementById('edit-task-overlay');
   const taskNameContainer = editTaskOverlay.querySelector('.task-name');
   taskNameContainer.innerHTML = `
-    <h2 class="label">Task title</h2>
+     <label class="label" for="task-title">Task Title</label>
     <div class="task-name-container">
       <input type="text" name="task-name" id="task-title" class="task-name-input" required />
        <img class="task-name-icon"
@@ -15,7 +15,7 @@ export function editFormElements() {
   // Start Date Input
   const taskStartContainer = editTaskOverlay.querySelector('.task-start');
   taskStartContainer.innerHTML = `
-    <h2 class="label">Start date</h2>
+     <label class="label" for="start-date">Start Date</label>
     <div class="task-start-container">
       <span class="text-input"></span>
       <input type="date" name="task-start" id="start-date" class="task-start-input" />
@@ -28,7 +28,7 @@ export function editFormElements() {
   // End Date Input
   const taskEndContainer = editTaskOverlay.querySelector('.task-end');
   taskEndContainer.innerHTML = `
-    <h2 class="label">End date</h2>
+      <label class="label" for="end-date">End Date</label>
     <div class="task-end-container">
       <span class="text-input"></span>
       <input type="date" name="task-end" id="end-date" class="task-end-input" />
@@ -42,30 +42,30 @@ export function editFormElements() {
   // Task Description
   const taskDescContainer = editTaskOverlay.querySelector('.task-desc');
   taskDescContainer.innerHTML = `
-    <h2 class="label">Task description</h2>
+    <label class="label" for="description">Task Description</label>
     <textarea id="textarea" class="textarea-input" rows="8" placeholder="Enter task description"></textarea>
    `;
 
   // Button Controls
   const buttonControls = editTaskOverlay.querySelector('.edit-controls');
   buttonControls.innerHTML = `
-    <button class="edit-task-button">Confirm edit</button>
-            <button class="cancel">Cancel</button>
-            <button class="mark-completed" type="submit">
-              <img
-                class="move-task-icon"
-                src="./assets/images/icons/task-edit-modal-icons/mark-as-completed-icon.svg"
-                alt=""
-              />
-              Mark as completed
-            </button>
-            <button class="overlay-delete-button">
-              <img
-                class="delete-task-icon"
-                src="./assets/images/icons/task-edit-modal-icons/task-delete-icon.svg"
-                alt=""
-              />
-              Delete the task
-            </button>
+    <button type="submit" class="btn btn-primary edit-task-button">Save changes</button>
+    <button type="button" class="btn btn-cancel cancel">Cancel</button>
+    <button type="button" class="btn btn-success mark-completed" >
+      <img
+      class="move-task-icon"
+      src="./assets/images/icons/task-edit-modal-icons/mark-as-completed-icon.svg"
+      alt=""
+      />
+      Mark as completed
+    </button>
+    <button type="button" class="btn btn-secondary overlay-delete-button">
+      <img
+      class="delete-task-icon"
+      src="./assets/images/icons/task-edit-modal-icons/task-delete-icon.svg"
+      alt=""
+      />
+    Delete the task
+    </button>
   `;
 }

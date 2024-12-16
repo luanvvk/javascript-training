@@ -1,3 +1,4 @@
+const notification = document.querySelector('.notification');
 // Show task deletion notification
 export function showDeletionNotification() {
   notification.classList.add('show');

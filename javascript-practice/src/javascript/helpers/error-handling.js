@@ -1,6 +1,7 @@
 // Show error notification
 export function showError(message) {
   removeExistingErrors();
+
   const errorNotification = document.createElement('div');
   errorNotification.classList.add('error-notification');
   // Create error notification element

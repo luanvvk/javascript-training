@@ -43,6 +43,8 @@
 .button-icon {
   width: 2.5rem;
   height: 2.5rem;
+  background-color: var(--light-pink);
+  border-radius: 20%;
 }
 /* Sort components */
 .category-sort {

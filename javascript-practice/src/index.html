@@ -9,14 +9,10 @@
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Task management app</title>
+
     <link
-      rel="icon"
-      href="./assets/images/icons/menu-bar-icons/logo-icon.svg"
-      type="image/icon type"
-    />
-    <link
-      rel="preconnect"
-      href="'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css'"
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
     />
     <link rel="stylesheet" href="./styles/main.css" />
   </head>
@@ -217,60 +213,72 @@
         </section>
         <!-- create task overlay -->
         <section id="create-task-overlay" class="overlay set-task-overlay hide" draggable="false">
-          <article class="create-task-popup">
-            <p class="popup-heading">Create your task</p>
+          <article class="popup-container">
+            <div class="popup-header">
+              <h2 class="popup-title">Create New Task</h2>
+              <button class="close-popup">&times;</button>
+            </div>
+
             <form class="form" autocomplete="off">
-              <div class="task-name"></div>
-              <div class="task-start"></div>
-              <div class="task-end"></div>
-              <div class="task-priority">
-                <h2 class="label">Priority</h2>
-                <div class="priority-select"></div>
+              <div class="form-grid">
+                <div class="task-name"></div>
+                <div class="task-start"></div>
+                <div class="task-end"></div>
+                <div class="task-priority">
+                  <label class="label" for="task-priority">Priority</label>
+                  <div class="priority-select"></div>
+                </div>
+                <div class="task-category-input">
+                  <label class="label" for="task-category">Category</label>
+                  <div class="category-select"></div>
+                </div>
+                <div class="task-desc"></div>
               </div>
-              <div class="task-category-input">
-                <h2 class="label">Category</h2>
-                <div class="category-select"></div>
+              <div class="button-controls">
+                <button class="add-to-list">Add to list</button>
+                <button class="cancel">Cancel</button>
               </div>
             </form>
-            <div class="task-desc"></div>
-            <div class="button-controls">
-              <button class="add-to-list">Add to list</button>
-              <button class="cancel">Cancel</button>
-            </div>
           </article>
         </section>
         <!-- edit task overlay -->
         <section id="edit-task-overlay" class="overlay hide" draggable="false">
-          <article class="edit-popup">
-            <p class="popup-heading">Edit your task</p>
-            <form class="form" autocomplete="off">
-              <div class="task-name"></div>
-              <div class="task-start"></div>
-              <div class="task-end"></div>
-
-              <div class="task-priority">
-                <h2 class="label">Priority</h2>
-                <div class="priority-select"></div>
-              </div>
-              <div class="task-category-input">
-                <h2 class="label">Category</h2>
-                <div class="category-select"></div>
-              </div>
-            </form>
-            <div class="task-desc">
-              <label for="description" class="label">Task description</label>
-              <textarea
-                name="description"
-                rows="8"
-                class="textarea-input"
-                placeholder="Write important notes"
-              ></textarea>
+          <article class="popup-container">
+            <div class="popup-header">
+              <h2 class="popup-title">Edit Task</h2>
+              <button class="close-popup">&times;</button>
             </div>
-            <div class="edit-controls"></div>
+
+            <form class="form" autocomplete="off">
+              <div class="form-grid">
+                <div class="task-name"></div>
+                <div class="task-start"></div>
+                <div class="task-end"></div>
+
+                <div class="task-priority">
+                  <h2 class="label">Priority</h2>
+                  <div class="priority-select"></div>
+                </div>
+                <div class="task-category-input">
+                  <h2 class="label">Category</h2>
+                  <div class="category-select"></div>
+                </div>
+                <div class="task-desc">
+                  <label for="description" class="label">Task description</label>
+                  <textarea
+                    name="description"
+                    rows="8"
+                    class="textarea-input"
+                    placeholder="Write important notes"
+                  ></textarea>
+                </div>
+              </div>
+              <div class="edit-controls"></div>
+            </form>
           </article>
         </section>
         <!-- all task popup -->
-        <section id="all-task-popup" class="overlay hide" draggable="false">
+        <section id="all-task-popup" class="all-task-overlay hide" draggable="false">
           <h2 class="popup-heading">All tasks</h2>
           <div class="filter-wrapper">
             <article class="filter__dynamic-container">
