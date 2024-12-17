@@ -163,8 +163,8 @@ class TaskController {
       searchBarTop.classList.remove('hide');
       this.view.closeCreateTaskOverlay();
       hidingOverlay.classList.add('hide');
+      let width = window.matchMedia('(min-width: 800px)');
       if (!width.matches) {
-        let width = window.matchMedia('(min-width: 800px)');
         mainBody.classList.toggle('active');
         sideNavbar.classList.toggle('active');
       }
@@ -575,8 +575,8 @@ class TaskController {
     //update button visual state
     sortOrderToggle.innerHTML =
       newOrder === 'asc'
-        ? ' <img src="./assets/images/icons/sort-icons/sort-icon-asc.png" alt="sort-icon-up" />'
-        : ' <img src="./assets/images/icons/sort-icons/sort-icon-desc.png" alt="sort-icon-down" />';
+        ? ' <img class="sort-icon" src="./assets/images/icons/sort-icons/sort-icon-asc.png" alt="sort-icon-up" />'
+        : ' <img class="sort-icon" src="./assets/images/icons/sort-icons/sort-icon-desc.png" alt="sort-icon-down" />';
   }
 }
 export default TaskController;

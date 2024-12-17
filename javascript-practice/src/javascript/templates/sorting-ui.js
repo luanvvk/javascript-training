@@ -43,7 +43,7 @@ export function renderSortingUI() {
         <select class="sort-dropdown">
          
         </select>
-        <button class="sort-order-toggle"> <img src="./assets/images/icons/sort-icons/sort-icon-asc.png" alt="sort-icon-up" /></button>
+        <button class="sort-order-toggle"> <img class="sort-icon" src="./assets/images/icons/sort-icons/sort-icon-asc.png" alt="sort-icon-up" /></button>
       </div>
     `;
     document.querySelector('#task-controls').appendChild(sortContainer);
