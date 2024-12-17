@@ -340,9 +340,9 @@ class TaskController {
 
           // Check if edit is performed in "All Tasks" popup
           const isAllTaskPopupOpen = !allTaskPopup.classList.contains('hide');
-          if (!isAllTaskPopupOpen) {
+          if (isAllTaskPopupOpen) {
             this.view.closeEditTaskOverlay();
-            allTaskPopup.classList.remove('hide'); // Close overlay only if popup is not active
+            allTaskPopup.classList.remove('hide');
           }
         };
 

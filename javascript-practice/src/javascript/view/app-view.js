@@ -162,7 +162,7 @@ class TaskView {
 
   closeEditTaskOverlay() {
     const allTaskPopup = document.getElementById('all-task-popup');
-    if (allTaskPopup.classList.contains('hide')) {
+    if (!allTaskPopup.classList.contains('hide')) {
       this.editTaskOverlay.classList.add('hide');
       document.body.classList.remove('overflow-hidden');
     }
