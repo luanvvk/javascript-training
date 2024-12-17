@@ -943,6 +943,11 @@
   height: 2.5rem;
 }
 
+#all-task-popup .board-view.hide,
+#all-task-popup .list-view.hide {
+  display: none;
+}
+
 @media (min-width: 800px) {
   .side-navbar {
     width: 25.5rem;

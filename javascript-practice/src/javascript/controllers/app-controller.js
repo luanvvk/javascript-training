@@ -16,6 +16,8 @@ const filterOptionsDropdown = document.querySelector('.filter-options-dropdown')
 const sortDropdown = document.querySelector('.sort-dropdown');
 const sortOrderToggle = document.querySelector('.sort-order-toggle');
 //navigate/toggle elements
+const popupBoardView = document.querySelector('#all-task-popup .board-view');
+const popupListView = document.querySelector('#all-task-popup .list-view');
 const boardViewOption = document.querySelector('.board-screen');
 const listViewOption = document.querySelector('.list-screen');
 const listView = document.querySelector('.list-view');
@@ -101,7 +103,7 @@ class TaskController {
     this.view.openCreateTaskOverlay();
     mainBody.classList.remove('active');
     sideNavbar.classList.remove('active');
-    allTaskPopup.classList.add('hide');
+
     hidingOverlay.classList.add('hide');
   }
   //Cancel event
@@ -181,6 +183,7 @@ class TaskController {
 
     boardViewOption.addEventListener('click', () => {
       this.switchToView('board');
+      this.switchPopupView('board');
       allTaskPopup.classList.add('hide');
       boardView.classList.remove('hide');
       let width = window.matchMedia('(min-width: 800px)');
@@ -192,6 +195,7 @@ class TaskController {
 
     listViewOption.addEventListener('click', () => {
       this.switchToView('list');
+      this.switchPopupView('list');
       listView.classList.remove('hide');
       allTaskPopup.classList.add('hide');
       let width = window.matchMedia('(min-width: 800px)');
@@ -211,6 +215,16 @@ class TaskController {
       boardView.classList.add('hide');
     }
   }
+  switchPopupView(viewType) {
+    if (viewType === 'board') {
+      popupBoardView.classList.remove('hide');
+      popupListView.classList.add('hide');
+    } else {
+      popupBoardView.classList.add('hide');
+      popupListView.classList.remove('hide');
+    }
+  }
+
   // Side bar event
   setupSidebarToggleListener() {
     if (toggle) {
