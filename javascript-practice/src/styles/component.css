@@ -221,9 +221,6 @@
   opacity: 1;
 }
 
-.all-tasks-popup .task-area {
-  display: flex;
-}
 /* Notification prompted after user deleted a task */
 .notification,
 .error-notification {
@@ -294,7 +291,7 @@
   top: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.95;
+  opacity: 0.5;
   background-color: black;
 }
 

@@ -12,12 +12,10 @@ import { renderSortingUI } from '../templates/sorting-ui.js';
 // filter criteria
 const filterFieldDropdown = document.querySelector('.filter-field-dropdown');
 const filterOptionsDropdown = document.querySelector('.filter-options-dropdown');
-
 //sort
 const sortDropdown = document.querySelector('.sort-dropdown');
 const sortOrderToggle = document.querySelector('.sort-order-toggle');
-//toggle elements
-
+//navigate/toggle elements
 const boardViewOption = document.querySelector('.board-screen');
 const listViewOption = document.querySelector('.list-screen');
 const listView = document.querySelector('.list-view');
@@ -25,6 +23,10 @@ const boardView = document.querySelector('.board-view');
 const editTask = document.getElementById('edit-task-overlay');
 const createTask = document.getElementById('create-task-overlay');
 //sidebar toggle elements
+const dashboardBtn = document.querySelector('.dashboard');
+const searchBarTop = document.querySelector('.search-bar__input-bar');
+const allTaskPopup = document.getElementById('all-task-popup');
+const allTaskBtn = document.querySelector('.all-tasks');
 const hidingOverlay = document.querySelector('.hiding-overlay');
 const toggle = document.querySelector('.menu-bar-toggle');
 const sideNavbar = document.querySelector('.side-navbar');
@@ -69,76 +71,99 @@ class TaskController {
   }
 
   setupEventListeners() {
-    // Add Task Buttons
+    this.setupAddTaskListener();
+    this.setupCancelButtonListeners();
+    this.setupSearchListener();
+    this.setupNavigationListener();
+    this.setupSidebarToggleListener();
+  }
+  // Add task event
+  setupAddTaskListener() {
     const addTaskBtns = document.querySelectorAll('.add-a-task');
+    const addToListButton = document.querySelector('.button-controls .add-to-list');
     addTaskBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
-        this.view.openCreateTaskOverlay();
-        mainBody.classList.add('active');
-        allTaskPopup.classList.add('hide');
-        hidingOverlay.classList.add('hide');
+        this.handleAddTaskButtonClick();
       });
     });
-
-    // Add to List Button
-    const addToListButton = document.querySelector('.button-controls .add-to-list');
     if (addToListButton) {
       addToListButton.addEventListener('click', (e) => {
         e.preventDefault();
         this.addTask();
       });
     }
+  }
 
-    // Cancel Buttons
-    const cancelButtons = document.querySelectorAll('.button-controls .cancel');
-    cancelButtons.forEach((btn) => {
-      btn.addEventListener('click', () => this.view.closeCreateTaskOverlay());
-    });
-
-    const cancelEditButtons = document.querySelectorAll('.edit-controls .cancel');
-    cancelEditButtons.forEach((btn) => {
-      btn.addEventListener('click', () => this.view.closeEditTaskOverlay());
-    });
-
-    //search
-    const searchInput = document.querySelector('.input-bar__main-input');
-
-    if (searchInput) {
-      searchInput.addEventListener('input', this.searchTasks.bind(this));
+  handleAddTaskButtonClick() {
+    let width = window.matchMedia('(min-width: 800px)');
+    if (!width.matches) {
+      this.view.openCreateTaskOverlay();
+      mainBody.classList.add('active');
+      allTaskPopup.classList.add('hide');
+      hidingOverlay.classList.add('hide');
     }
+  }
+  //Cancel event
+  setupCancelButtonListeners() {
+    const cancelCreateButtons = document.querySelectorAll('#create-task-overlay .cancel');
+    const cancelEditButtons = document.querySelectorAll('#edit-task-overlay .cancel');
+    const closeCreatePopupBtns = document.querySelectorAll('#create-task-overlay .close-popup');
+    const closeEditPopupBtns = document.querySelectorAll('#edit-task-overlay .close-popup');
+
+    cancelCreateButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        this.view.closeCreateTaskOverlay();
+      });
+    });
+    cancelEditButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        this.view.closeEditTaskOverlay();
+      });
+    });
+    closeCreatePopupBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        this.view.closeCreateTaskOverlay();
+      });
+    });
+    closeEditPopupBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        this.view.closeEditTaskOverlay();
+      });
+    });
+  }
+  //Search event
+  setupSearchListener() {
+    const mainSearchInput = document.querySelector('.input-bar__main-input');
     const popupSearchInput = document.querySelector('#all-task-popup .input-bar-mini__main-input');
+
+    if (mainSearchInput) {
+      mainSearchInput.addEventListener('input', this.searchTasks.bind(this));
+    }
     if (popupSearchInput) {
       popupSearchInput.addEventListener('input', this.searchTasks.bind(this));
     }
-
-    //open/close all task popup
-    const searchBarTop = document.querySelector('.search-bar__input-bar');
-    const dashboardBtn = document.querySelector('.dashboard');
-    const allTaskPopup = document.getElementById('all-task-popup');
-    const allTaskBtn = document.querySelector('.all-tasks');
+  }
+  // Events for all all task popup, dashboard, main body, and view
+  setupNavigationListener() {
     allTaskBtn.addEventListener('click', () => {
-      allTaskPopup.classList.toggle('hide');
-      searchBarTop.classList.toggle('hide');
-      mainBody.classList.add('active');
-      hidingOverlay.classList.add('hide');
-    });
-
-    const closeCreatePopupBtn = document.querySelectorAll('#create-task-overlay .close-popup');
-    closeCreatePopupBtn.forEach((btn) => {
-      btn.addEventListener('click', () => this.view.closeCreateTaskOverlay());
-    });
-
-    const closeEditPopupBtn = document.querySelectorAll('#edit-task-overlay .close-popup');
-    closeEditPopupBtn.forEach((btn) => {
-      btn.addEventListener('click', () => this.view.closeEditTaskOverlay());
+      let width = window.matchMedia('(min-width: 800px)');
+      if (!width.matches) {
+        allTaskPopup.classList.toggle('hide');
+        searchBarTop.classList.toggle('hide');
+        mainBody.classList.add('active');
+        hidingOverlay.classList.add('hide');
+      }
     });
 
     dashboardBtn.addEventListener('click', () => {
-      allTaskPopup.classList.add('hide');
-      searchBarTop.classList.remove('hide');
-      mainBody.classList.add('active');
-      this.view.closeCreateTaskOverlay();
-      hidingOverlay.classList.add('hide');
+      let width = window.matchMedia('(min-width: 800px)');
+      if (!width.matches) {
+        allTaskPopup.classList.add('hide');
+        searchBarTop.classList.remove('hide');
+        mainBody.classList.add('active');
+        this.view.closeCreateTaskOverlay();
+        hidingOverlay.classList.add('hide');
+      }
     });
 
     hidingOverlay.addEventListener('click', () => {
@@ -146,37 +171,45 @@ class TaskController {
       mainBody.classList.toggle('active');
     });
 
-    // Toggle between views
+    boardViewOption.addEventListener('click', () => {
+      this.switchToView('board');
+    });
 
-    boardViewOption.addEventListener('click', (e) => {
+    listViewOption.addEventListener('click', () => {
+      this.switchToView('list');
+    });
+  }
+
+  switchToView(viewType) {
+    if (viewType === 'board') {
       listView.classList.add('hide');
       boardView.classList.remove('hide');
-      mainBody.classList.add('active');
-      this.view.closeCreateTaskOverlay();
-      allTaskPopup.classList.add('hide');
-      hidingOverlay.classList.add('hide');
-    });
-
-    listViewOption.addEventListener('click', (e) => {
+    } else {
       listView.classList.remove('hide');
       boardView.classList.add('hide');
+    }
+    let width = window.matchMedia('(min-width: 800px)');
+    if (!width.matches) {
       mainBody.classList.add('active');
       this.view.closeCreateTaskOverlay();
       allTaskPopup.classList.add('hide');
       hidingOverlay.classList.add('hide');
-    });
-
-    // Sidebar toggle
-    if (toggle) {
-      toggle.addEventListener('click', () => {
-        if (sideNavbar) sideNavbar.classList.toggle('active');
-        if (mainBody) mainBody.classList.toggle('active');
-        if (appLogo) appLogo.classList.toggle('active');
-        if (hidingOverlay) hidingOverlay.classList.toggle('hide');
-        if (editTask) editTask.classList.toggle('toggle');
-        if (createTask) createTask.classList.toggle('toggle');
-      });
     }
+  }
+  // Side bar event
+  setupSidebarToggleListener() {
+    toggle.addEventListener('click', () => {
+      this.toggleSidebar(sideNavbar, mainBody, appLogo, hidingOverlay, editTask, createTask);
+    });
+  }
+
+  toggleSidebar(sideNavbar, mainBody, appLogo, hidingOverlay, editTask, createTask) {
+    if (sideNavbar) sideNavbar.classList.toggle('active');
+    if (mainBody) mainBody.classList.toggle('active');
+    if (appLogo) appLogo.classList.toggle('active');
+    if (hidingOverlay) hidingOverlay.classList.toggle('hide');
+    if (editTask) editTask.classList.toggle('toggle');
+    if (createTask) createTask.classList.toggle('toggle');
   }
 
   // Task Management Methods

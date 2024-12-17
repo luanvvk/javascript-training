@@ -674,57 +674,13 @@
   flex-wrap: wrap;
   gap: var(--space-48);
 }
-
-/* all tasks section */
-.all-tasks-popup .task-list {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-48);
-}
-
 /* create task overlay */
-.overlay {
-  z-index: 100;
-  position: absolute;
-  width: 100%;
-  top: 4.4rem;
-  bottom: 0;
-
-  min-height: 100%;
-  background-color: var(--light-pink);
-  overflow-y: auto;
-}
-
 .overlay.toggle {
   width: 100%;
 }
 
 .overlay.hide {
   display: none;
-}
-
-.create-task-popup {
-  width: 100%;
-  margin: auto;
-  min-height: 100vh;
-
-  overflow-y: auto;
-  background-color: var(--light-pink);
-  border-radius: var(--radius-8);
-}
-.all-tasks-popup {
-  position: fixed;
-  width: 100%;
-  margin: auto;
-  min-height: 100vh;
-
-  overflow-y: auto;
-  background-color: var(--light-pink);
-  border-radius: var(--radius-8);
-  height: 100%;
 }
 
 .task-columns {
@@ -836,20 +792,21 @@
   height: 2.5rem;
 }
 /* popup */
-
 .overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+
+  z-index: 1000;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
-  opacity: 0;
   visibility: hidden;
+
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.5);
   transition:
     opacity 0.3s ease,
     visibility 0.3s ease;
@@ -859,14 +816,16 @@
   opacity: 1;
   visibility: visible;
 }
+
 .popup-container {
-  background-color: #ffffff;
-  border-radius: 12px;
+  position: relative;
   width: 100%;
   max-width: 55rem;
   max-height: 90vh;
+
+  background-color: #ffffff;
+  border-radius: 12px;
   overflow-y: auto;
-  position: relative;
   transform: scale(0.7);
   opacity: 0;
   transition: all 0.3s ease;
@@ -902,14 +861,14 @@
 }
 
 .form {
-  padding: 20px;
+  padding: 2rem;
   background-color: var(--light-pink);
 }
 
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
+  gap: 1.5rem;
 }
 
 .close-popup:hover {
@@ -918,7 +877,7 @@
 
 .form .label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 0.5rem;
   font-weight: var(--regular-weight);
   color: var(--cyan-blue);
 }
@@ -952,7 +911,7 @@
 .button-controls {
   display: flex;
   justify-content: space-around;
-  margin-top: 20px;
+  margin-top: 2rem;
 }
 
 .btn {
@@ -974,6 +933,8 @@
 }
 
 .btn-secondary {
+  display: flex;
+  gap: var(--space-8);
   background-color: #f53246;
   color: var(--white);
 }
@@ -982,6 +943,7 @@
   background-color: var(--cyan-blue);
   color: var(--white);
 }
+
 .all-task-overlay {
   z-index: 100;
   position: absolute;
