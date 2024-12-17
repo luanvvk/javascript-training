@@ -180,12 +180,10 @@ class TaskController {
         sideNavbar.classList.toggle('active');
       }
     });
-
+    // handle both views in all task popup and dashboard
     boardViewOption.addEventListener('click', () => {
       this.switchToView('board');
       this.switchPopupView('board');
-      allTaskPopup.classList.add('hide');
-      boardView.classList.remove('hide');
       let width = window.matchMedia('(min-width: 800px)');
       if (!width.matches) {
         sideNavbar.classList.toggle('active');
@@ -196,8 +194,6 @@ class TaskController {
     listViewOption.addEventListener('click', () => {
       this.switchToView('list');
       this.switchPopupView('list');
-      listView.classList.remove('hide');
-      allTaskPopup.classList.add('hide');
       let width = window.matchMedia('(min-width: 800px)');
       if (!width.matches) {
         sideNavbar.classList.toggle('active');
@@ -282,6 +278,7 @@ class TaskController {
     this.saveTasksToLocalStorage();
     this.view.resetCreateTaskForm();
     this.view.closeCreateTaskOverlay();
+    this.renderAllTasks();
   }
 
   renderTasks() {
@@ -330,18 +327,25 @@ class TaskController {
           task.category = document
             .querySelector('#edit-task-overlay .category-select .default-option')
             .textContent.trim();
+
           // Validate task
           const validationErrors = task.validate();
-
           if (validationErrors.length > 0) {
             validationErrors.forEach((error) => showError(error));
             return;
           }
 
-          this.renderAllTasks();
           this.saveTasksToLocalStorage();
-          this.view.closeEditTaskOverlay();
+          this.renderAllTasks();
+
+          // Check if edit is performed in "All Tasks" popup
+          const isAllTaskPopupOpen = !allTaskPopup.classList.contains('hide');
+          if (!isAllTaskPopupOpen) {
+            this.view.closeEditTaskOverlay();
+            allTaskPopup.classList.remove('hide'); // Close overlay only if popup is not active
+          }
         };
+
         // Mark as Completed in edit overlay
         const markCompletedButton = document.querySelector('.edit-controls .mark-completed');
         markCompletedButton.onclick = () => {

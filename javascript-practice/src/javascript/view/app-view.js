@@ -161,10 +161,12 @@ class TaskView {
   }
 
   closeEditTaskOverlay() {
-    this.editTaskOverlay.classList.add('hide');
-    document.body.classList.remove('overflow-hidden');
+    const allTaskPopup = document.getElementById('all-task-popup');
+    if (allTaskPopup.classList.contains('hide')) {
+      this.editTaskOverlay.classList.add('hide');
+      document.body.classList.remove('overflow-hidden');
+    }
   }
-
   // Populate edit form
   populateEditForm(task) {
     document.querySelector('#task-title').value = task.title;
