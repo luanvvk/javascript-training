@@ -6,6 +6,7 @@
   padding: var(--space-8);
   width: 26.2rem;
   min-height: 11.7rem;
+
   margin-bottom: var(--space-16);
   text-align: left;
   background-color: var(--cyan-blue);
@@ -53,6 +54,7 @@
   align-items: center;
   gap: var(--space-8);
   padding: var(--space-8);
+
   border: var(--border-radius-2) solid var(--cyan-blue);
   border-radius: var(--border-radius-2);
   color: var(--cyan-blue);
@@ -66,6 +68,7 @@
   align-items: center;
   gap: var(--space-8);
   padding: var(--space-8);
+
   background-color: var(--cyan-blue);
   border: var(--border-radius-2) solid var(--cyan-blue);
   border-radius: var(--border-radius-2);
@@ -79,6 +82,7 @@
   flex-direction: column;
   text-align: left;
   width: 100%;
+
   border: 0.3rem solid var(--cyan-blue);
   border-top: none;
   border-radius: var(--border-radius-7);
@@ -90,6 +94,7 @@
   flex-wrap: none;
   width: 13rem;
   height: 3.2rem;
+
   padding: var(--space-4);
   background-color: var(--light-pink);
   border-radius: var(--border-radius-6);
@@ -100,8 +105,9 @@
   border: none;
   flex: 1;
   width: 90%;
-  background-color: var(--light-pink);
   padding: var(--space-4);
+
+  background-color: var(--light-pink);
   color: var(--cyan-blue);
   font-size: var(--font-size-11);
   font-weight: var(--regular-weight);
@@ -140,17 +146,19 @@
 .edit-task-button,
 #edit-task-overlay .mark-completed,
 .overlay-delete-button {
-  width: 20rem;
-  padding: var(--space-8) 0;
-  background-color: var(--cyan-blue);
-  border: var(--border-radius-3) solid var(--cyan-blue);
-  border-radius: var(--border-radius-6);
-  font-size: var(--font-size-17);
-  font-weight: var(--regular-weight);
-  color: var(--light-pink);
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 20rem;
+  padding: var(--space-8) 0;
+
+  background-color: var(--cyan-blue);
+  border: var(--border-radius-3) solid var(--cyan-blue);
+  border-radius: var(--border-radius-6);
+
+  font-size: var(--font-size-17);
+  font-weight: var(--regular-weight);
+  color: var(--light-pink);
   -webkit-transition-duration: 0.4s;
   transition-duration: 0.4s;
 }
@@ -173,10 +181,12 @@
   width: 20rem;
   padding: var(--space-8) 0;
   background-color: var(--pink);
+
   border: var(--border-radius-3) solid var(--pink);
   border-radius: var(--border-radius-6);
   font-size: var(--font-size-17);
   font-weight: var(--regular-weight);
+
   color: var(--black);
   -webkit-transition-duration: 0.4s;
   transition-duration: 0.4s;
@@ -210,6 +220,7 @@
   border: var(--border-radius-3) solid var(--cyan-blue);
   border-radius: var(--border-radius-6);
   padding: var(--space-16);
+
   background-color: var(--light-pink);
   font-size: var(--font-size-15);
   font-weight: var(--regular-weight);

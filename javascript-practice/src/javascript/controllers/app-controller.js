@@ -181,10 +181,10 @@ class TaskController {
 
     boardViewOption.addEventListener('click', () => {
       this.switchToView('board');
+      allTaskPopup.classList.add('hide');
       boardView.classList.remove('hide');
       let width = window.matchMedia('(min-width: 800px)');
       if (!width.matches) {
-        allTaskPopup.classList.add('hide');
         sideNavbar.classList.toggle('active');
         mainBody.classList.toggle('active');
       }
@@ -193,11 +193,11 @@ class TaskController {
     listViewOption.addEventListener('click', () => {
       this.switchToView('list');
       listView.classList.remove('hide');
+      allTaskPopup.classList.add('hide');
       let width = window.matchMedia('(min-width: 800px)');
       if (!width.matches) {
         sideNavbar.classList.toggle('active');
         mainBody.classList.toggle('active');
-        allTaskPopup.classList.add('hide');
       }
     });
   }
