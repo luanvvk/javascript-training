@@ -9,11 +9,6 @@
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Task management app</title>
-
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
-    />
     <link rel="stylesheet" href="./styles/main.css" />
   </head>
   <body>
@@ -60,7 +55,7 @@
           <li class="navbar--list__item">
             <a class="list-screen" href="javascript:void(0)">
               <span class="icon">
-                <i class="fa-solid fa-list" style="color: #ffddd2"></i>
+                <img src="./assets/images/icons/menu-bar-icons/list.png" alt="list-view-icon" />
               </span>
               <span class="list-screen-heading">List view</span>
             </a>
@@ -291,7 +286,12 @@
                 <label for="sort-dropdown" class="sort-label">Sort by:</label>
                 <div class="sort-dropdown-content">
                   <select class="sort-dropdown" name="sort-dropdown"></select>
-                  <button class="sort-order-toggle"><i class="fa-solid fa-sort"></i></button>
+                  <button class="sort-order-toggle">
+                    <img
+                      src="./assets/images/icons/sort-icons/sort-icon-asc.png"
+                      alt="sort-icon-up"
+                    />
+                  </button>
                 </div>
               </div>
               <div class="search-bar-mini__input-bar">

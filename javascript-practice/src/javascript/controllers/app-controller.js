@@ -575,8 +575,8 @@ class TaskController {
     //update button visual state
     sortOrderToggle.innerHTML =
       newOrder === 'asc'
-        ? '<i class="fa-solid fa-sort-up"></i>'
-        : '<i class="fa-solid fa-sort-down"></i>';
+        ? ' <img src="./assets/images/icons/sort-icons/sort-icon-asc.png" alt="sort-icon-up" />'
+        : ' <img src="./assets/images/icons/sort-icons/sort-icon-desc.png" alt="sort-icon-down" />';
   }
 }
 export default TaskController;
