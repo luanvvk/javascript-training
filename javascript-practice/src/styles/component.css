@@ -224,11 +224,11 @@
 /* Notification prompted after user deleted a task */
 .notification,
 .error-notification {
-  position: fixed;
+  z-index: 1000;
+  position: absolute;
   top: -100%;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1000;
 
   display: flex;
   align-items: center;

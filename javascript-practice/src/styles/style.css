@@ -1,12 +1,17 @@
 /* Side navbar */
 .side-navbar {
+  z-index: 100;
   position: fixed;
-  width: 25rem;
+  width: 25.5rem;
   height: 100%;
 
   background-color: var(--cyan-blue);
   transition: 0.5s ease;
   overflow: hidden;
+}
+
+.side-navbar.active {
+  width: 5.5rem;
 }
 
 .side-navbar--list {
@@ -60,6 +65,14 @@
 
 .app-logo.active {
   justify-content: space-between;
+}
+
+.app-logo__heading {
+  display: block;
+}
+
+.app-logo__heading.active {
+  display: none;
 }
 
 .dashboard .icon,
@@ -128,40 +141,10 @@
   font-size: var(--font-size-20);
 }
 
-/* Curve nav */
-.navbar--list__item:hover a::before,
-.navbar--list__item.hovered a::before {
-  content: '';
-  position: absolute;
-  right: 0;
-  top: -5rem;
-  width: 5rem;
-  height: 5rem;
-
-  background-color: transparent;
-  border-radius: 50%;
-  box-shadow: 3.5rem 3.5rem 0 1rem var(--light-pink);
-  pointer-events: none;
-}
-
-.navbar--list__item:hover a::after,
-.navbar--list__item.hovered a::after {
-  content: '';
-  position: absolute;
-  right: 0;
-  bottom: -5rem;
-  width: 5rem;
-  height: 5rem;
-
-  background-color: transparent;
-  border-radius: 50%;
-  box-shadow: 3.5rem -3.5rem 0 1rem var(--light-pink);
-}
-
 /* Top bar */
 .main-body {
   position: absolute;
-  width: calc(100% - 25rem);
+  width: calc(100% - 25.5rem);
   left: 25rem;
   min-height: 100vh;
 
@@ -954,6 +937,48 @@
   min-height: 100%;
   background-color: var(--light-pink);
   overflow-y: auto;
+}
+
+@media (min-width: 800px) {
+  .side-navbar {
+    width: 25.5rem;
+  }
+
+  .main-body {
+    width: calc(100% - 25.5rem);
+    left: 25.5rem;
+  }
+
+  .main-body.active {
+    width: calc(100% - 5.5rem);
+    left: 5.5rem;
+  }
+}
+@media (max-width: 799px) {
+  .side-navbar {
+    width: 5.5rem;
+  }
+
+  .side-navbar.active {
+    width: 25.5rem;
+  }
+
+  .main-body {
+    width: calc(100% - 5.5rem);
+    left: 5.5rem;
+  }
+
+  .main-body.active {
+    width: calc(100% - 25.5rem);
+    left: 25.5rem;
+  }
+  .app-logo__heading {
+    display: none;
+  }
+
+  .app-logo__heading.active {
+    display: initial;
+  }
 }
 
 @media (min-width: 1001px) {

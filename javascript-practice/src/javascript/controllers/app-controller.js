@@ -31,6 +31,7 @@ const hidingOverlay = document.querySelector('.hiding-overlay');
 const toggle = document.querySelector('.menu-bar-toggle');
 const sideNavbar = document.querySelector('.side-navbar');
 const mainBody = document.querySelector('.main-body');
+const appLogoHeading = document.querySelector('.app-logo__heading');
 const appLogo = document.querySelector('.app-logo');
 
 class TaskController {
@@ -76,6 +77,8 @@ class TaskController {
     this.setupSearchListener();
     this.setupNavigationListener();
     this.setupSidebarToggleListener();
+    this.setupResponsiveDesignListener();
+    // this.toggleSidebar();
   }
   // Add task event
   setupAddTaskListener() {
@@ -95,13 +98,11 @@ class TaskController {
   }
 
   handleAddTaskButtonClick() {
-    let width = window.matchMedia('(min-width: 800px)');
-    if (!width.matches) {
-      this.view.openCreateTaskOverlay();
-      mainBody.classList.add('active');
-      allTaskPopup.classList.add('hide');
-      hidingOverlay.classList.add('hide');
-    }
+    this.view.openCreateTaskOverlay();
+    mainBody.classList.remove('active');
+    sideNavbar.classList.remove('active');
+    allTaskPopup.classList.add('hide');
+    hidingOverlay.classList.add('hide');
   }
   //Cancel event
   setupCancelButtonListeners() {
@@ -146,37 +147,58 @@ class TaskController {
   // Events for all all task popup, dashboard, main body, and view
   setupNavigationListener() {
     allTaskBtn.addEventListener('click', () => {
+      allTaskPopup.classList.remove('hide');
       let width = window.matchMedia('(min-width: 800px)');
-      if (!width.matches) {
-        allTaskPopup.classList.toggle('hide');
+      if (width.matches) {
         searchBarTop.classList.toggle('hide');
-        mainBody.classList.add('active');
         hidingOverlay.classList.add('hide');
+      } else {
+        mainBody.classList.toggle('active');
+        sideNavbar.classList.toggle('active');
       }
     });
 
     dashboardBtn.addEventListener('click', () => {
-      let width = window.matchMedia('(min-width: 800px)');
+      allTaskPopup.classList.add('hide');
+      searchBarTop.classList.remove('hide');
+      this.view.closeCreateTaskOverlay();
+      hidingOverlay.classList.add('hide');
       if (!width.matches) {
-        allTaskPopup.classList.add('hide');
-        searchBarTop.classList.remove('hide');
-        mainBody.classList.add('active');
-        this.view.closeCreateTaskOverlay();
-        hidingOverlay.classList.add('hide');
+        let width = window.matchMedia('(min-width: 800px)');
+        mainBody.classList.toggle('active');
+        sideNavbar.classList.toggle('active');
       }
     });
 
     hidingOverlay.addEventListener('click', () => {
       hidingOverlay.classList.add('hide');
       mainBody.classList.toggle('active');
+      let width = window.matchMedia('(min-width: 800px)');
+      if (!width.matches) {
+        sideNavbar.classList.toggle('active');
+      }
     });
 
     boardViewOption.addEventListener('click', () => {
       this.switchToView('board');
+      boardView.classList.remove('hide');
+      let width = window.matchMedia('(min-width: 800px)');
+      if (!width.matches) {
+        allTaskPopup.classList.add('hide');
+        sideNavbar.classList.toggle('active');
+        mainBody.classList.toggle('active');
+      }
     });
 
     listViewOption.addEventListener('click', () => {
       this.switchToView('list');
+      listView.classList.remove('hide');
+      let width = window.matchMedia('(min-width: 800px)');
+      if (!width.matches) {
+        sideNavbar.classList.toggle('active');
+        mainBody.classList.toggle('active');
+        allTaskPopup.classList.add('hide');
+      }
     });
   }
 
@@ -188,28 +210,40 @@ class TaskController {
       listView.classList.remove('hide');
       boardView.classList.add('hide');
     }
-    let width = window.matchMedia('(min-width: 800px)');
-    if (!width.matches) {
-      mainBody.classList.add('active');
-      this.view.closeCreateTaskOverlay();
-      allTaskPopup.classList.add('hide');
-      hidingOverlay.classList.add('hide');
-    }
   }
   // Side bar event
   setupSidebarToggleListener() {
-    toggle.addEventListener('click', () => {
-      this.toggleSidebar(sideNavbar, mainBody, appLogo, hidingOverlay, editTask, createTask);
-    });
+    if (toggle) {
+      toggle.addEventListener('click', () => {
+        sideNavbar.classList.toggle('active');
+        mainBody.classList.toggle('active');
+        if (sideNavbar.classList.contains('active')) {
+          sideNavbar.classList.add('active');
+          appLogoHeading.classList.add('active');
+        } else {
+          sideNavbar.classList.remove('active');
+          appLogoHeading.classList.remove('active');
+        }
+      });
+    }
   }
 
-  toggleSidebar(sideNavbar, mainBody, appLogo, hidingOverlay, editTask, createTask) {
-    if (sideNavbar) sideNavbar.classList.toggle('active');
-    if (mainBody) mainBody.classList.toggle('active');
-    if (appLogo) appLogo.classList.toggle('active');
-    if (hidingOverlay) hidingOverlay.classList.toggle('hide');
-    if (editTask) editTask.classList.toggle('toggle');
-    if (createTask) createTask.classList.toggle('toggle');
+  setupResponsiveDesignListener() {
+    function initCheck(event) {
+      if (event.matches) {
+        sideNavbar.classList.remove('active');
+        mainBody.classList.remove('active');
+      } else {
+        sideNavbar.classList.add('active');
+        mainBody.classList.add('active');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      let width = window.matchMedia('(min-width: 800px)');
+      initCheck(width);
+      width.addEventListener('change', initCheck);
+    });
   }
 
   // Task Management Methods
