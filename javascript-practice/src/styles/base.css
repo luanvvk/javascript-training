@@ -66,6 +66,10 @@ img {
   --blue: #82cfff;
   --green: #abe5bc;
   --black: #000;
+  --blue: #007bff;
+  --gray: #ccc;
+  --bright-red: #ff4d4d;
+  --dark-gray: #333;
 
   /* space */
   --space-4: 4px;

@@ -46,6 +46,10 @@ class TaskController {
       field: 'name',
       order: 'asc',
     };
+    this.deleteConfirmationPopup = null;
+    this.pendingTaskToDelete = null;
+    this.deleteOrigin = null;
+    this.setupDeleteConfirmationPopup();
     this.applyFilters = this.applyFilters.bind(this);
     this.initialize();
   }
@@ -358,15 +362,18 @@ class TaskController {
 
       // Delete Task
       taskElement.querySelector('.task-delete').addEventListener('click', () => {
+        this.openDeleteConfirmationPopup(taskId, 'main-view');
         this.tasks = this.tasks.filter((t) => t.id !== taskId);
         this.renderAllTasks();
         this.saveTasksToLocalStorage();
         showDeletionNotification();
       });
     });
+
     const editDeleteButton = document.querySelector('.overlay-delete-button');
     editDeleteButton.addEventListener('click', () => {
       const taskId = parseInt(editDeleteButton.dataset.taskId);
+      this.openDeleteConfirmationPopup(taskId, 'edit-overlay');
       this.tasks = this.tasks.filter((t) => t.id !== taskId);
       this.renderAllTasks();
       this.saveTasksToLocalStorage();
@@ -375,12 +382,58 @@ class TaskController {
     });
   }
 
+  setupDeleteConfirmationPopup() {
+    this.deleteConfirmationPopup = document.getElementById('delete-confirmation-popup');
+    if (!this.deleteConfirmationPopup) {
+      console.error('Delete confirmation popup not found');
+      return;
+    }
+
+    const closePopupButtons = this.deleteConfirmationPopup.querySelectorAll(
+      '.close-popup, .cancel-delete-btn',
+    );
+    const confirmDeleteButton = this.deleteConfirmationPopup.querySelector('.confirm-delete-btn');
+
+    closePopupButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        this.closeDeleteConfirmationPopup();
+      });
+    });
+    confirmDeleteButton.addEventListener('click', () => this.confirmTaskDeletion());
+  }
+  openDeleteConfirmationPopup(taskId, origin) {
+    this.pendingTaskToDelete = taskId;
+    this.deleteOrigin = origin;
+    // Show the confirmation popup
+    this.deleteConfirmationPopup.classList.remove('hide');
+    document.body.classList.add('overflow-hidden');
+  }
+
+  closeDeleteConfirmationPopup() {
+    this.deleteConfirmationPopup.classList.add('hide');
+    document.body.classList.add('overflow-hidden');
+    // Reset pending deletion info
+    this.pendingTaskIdToDelete = null;
+    this.deleteOrigin = null;
+  }
+  confirmTaskDeletion() {
+    if (this.pendingTaskIdToDelete === null) return;
+    this.tasks = this.tasks.filter((t) => t.id !== this.pendingTaskToDelete);
+    this.renderAllTasks();
+    this.saveTasksToLocalStorage();
+    showDeletionNotification();
+    this.closeDeleteConfirmationPopup();
+  }
   renderAllTasks() {
     // Render all tasks in the All Tasks Popup,
     this.view.renderAllTasksPopup(this.tasks);
     // Render all tasks in the main view
     this.view.renderTasks(this.tasks);
     this.setupTaskActions();
+
+    if (this.deleteOrigin === 'edit-overlay') {
+      this.view.closeEditTaskOverlay();
+    }
   }
 
   //Search tasks method

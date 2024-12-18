@@ -766,8 +766,9 @@
   width: 2.5rem;
   height: 2.5rem;
 }
-/* popup */
-.overlay {
+/* popup style */
+.overlay,
+.confirmation-popup {
   position: fixed;
   top: 0;
   left: 0;
@@ -798,7 +799,7 @@
   max-width: 55rem;
   max-height: 90vh;
 
-  background-color: #ffffff;
+  background-color: var(--white);
   border-radius: 12px;
   overflow-y: auto;
   transform: scale(0.7);
@@ -816,7 +817,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 1.2rem 2rem;
-  border-bottom: 0.2rem solid #e0e0e0;
+  border-bottom: 0.2rem solid var(--gray);
   background-color: var(--light-cyan-blue);
 }
 
@@ -830,7 +831,7 @@
   background: none;
   border: none;
   font-size: 2.5rem;
-  color: #e95252;
+  color: var(--bright-red);
   cursor: pointer;
   transition: color 0.2s ease;
 }
@@ -847,7 +848,7 @@
 }
 
 .close-popup:hover {
-  color: #333;
+  color: var(--dark-gray);
 }
 
 .form .label {
@@ -899,18 +900,18 @@
 
 .btn-cancel {
   background-color: var(--pink);
-  color: #333;
+  color: var(--dark-gray);
 }
 
 .btn-primary {
-  background-color: #007bff;
+  background-color: var(--blue);
   color: var(--white);
 }
 
 .btn-secondary {
   display: flex;
   gap: var(--space-8);
-  background-color: #f53246;
+  background-color: var(--bright-red);
   color: var(--white);
 }
 
@@ -947,7 +948,51 @@
 #all-task-popup .list-view.hide {
   display: none;
 }
+/* confirmation delete popup */
+.confirmation-container {
+  background-color: var(--light-pink);
 
+  border-radius: var(--border-radius-7);
+  max-width: 30rem;
+  width: 90%;
+  text-align: center;
+}
+
+.confirmation-content {
+  margin: 2rem 0;
+}
+
+.confirmation-message {
+  font-size: var(--font-size-15);
+  font-weight: var(--bold-weight);
+  color: var(--black);
+}
+
+.confirmation-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.confirm-delete-btn,
+.cancel-delete-btn {
+  padding: 1rem 2rem;
+  border-radius: var(--border-radius-4);
+  cursor: pointer;
+}
+
+.confirm-delete-btn {
+  background-color: var(--bright-red);
+  color: var(--white);
+  border: none;
+}
+
+.cancel-delete-btn {
+  background-color: var(--blue);
+  color: var(--white);
+  border: 1px solid var(--gray);
+}
 @media (min-width: 800px) {
   .side-navbar {
     width: 25.5rem;
