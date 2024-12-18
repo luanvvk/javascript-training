@@ -1,4 +1,14 @@
-{
+{ 
+  "name": "javascript-practice",
+"version": "1.0.0",
+"description": "",
+"source": "src/index.html",
+"scripts": {
+  "start": "parcel --open",
+  "build": "parcel build --dist-dir public"
+},
+"author": "luanvu",
+"license": "ISC",
   "devDependencies": {
     "eslint": "^8.2.0",
     "eslint-config-airbnb": "^19.0.4",
