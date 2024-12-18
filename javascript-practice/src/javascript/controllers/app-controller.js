@@ -1,5 +1,6 @@
 import TaskModel from '../models/task-model.js';
 import TaskView from '../view/app-view.js';
+import ValidationUtils from '../helpers/validation-utils.js';
 import LocalStorageUtil from '../helpers/local-storage-utils.js';
 import { showError } from '../helpers/error-handling.js';
 import { showDeletionNotification } from '../helpers/notifications.js';
@@ -43,6 +44,7 @@ class TaskController {
     this.view = new TaskView();
     this.tasks = [];
     this.localStorageUtil = new LocalStorageUtil();
+    this.validationUtils = new ValidationUtils();
     this.currentSortSetting = {
       field: 'name',
       order: 'asc',
@@ -70,6 +72,15 @@ class TaskController {
 
   saveTasksToLocalStorage() {
     this.localStorageUtil.save(this.tasks);
+  }
+
+  validate(task) {
+    const validationErrors = this.validationUtils.validateTask(task);
+    if (validationErrors.length > 0) {
+      validationErrors.forEach((error) => showError(error));
+      return false;
+    }
+    return true;
   }
 
   setupDynamicForm() {
@@ -107,8 +118,6 @@ class TaskController {
     this.view.openCreateTaskOverlay();
     mainBody.classList.remove('active');
     sideNavbar.classList.remove('active');
-
-    hidingOverlay.classList.add('hide');
   }
   //Cancel event
   setupCancelButtonListeners() {
@@ -157,7 +166,6 @@ class TaskController {
       let width = window.matchMedia('(min-width: 800px)');
       if (width.matches) {
         searchBarTop.classList.toggle('hide');
-        hidingOverlay.classList.add('hide');
       } else {
         mainBody.classList.toggle('active');
         sideNavbar.classList.toggle('active');
@@ -261,21 +269,15 @@ class TaskController {
     const description = document.querySelector('.textarea-input').value.trim();
     const task = new TaskModel(title, startDate, endDate, description, priority, category);
 
-    // Validate task
-    const validationErrors = task.validate();
-    if (validationErrors.length > 0) {
-      validationErrors.forEach((error) => showError(error));
-      return;
+    if (this.validate(task)) {
+      this.tasks.push(task);
+      this.renderTasks();
+      this.saveTasksToLocalStorage();
+      this.view.resetCreateTaskForm();
+      this.view.closeCreateTaskOverlay();
+      this.renderAllTasks();
     }
-
-    this.tasks.push(task);
-    this.renderTasks();
-    this.saveTasksToLocalStorage();
-    this.view.resetCreateTaskForm();
-    this.view.closeCreateTaskOverlay();
-    this.renderAllTasks();
   }
-
   renderTasks() {
     this.view.renderTasks(this.tasks);
     this.setupTaskActions();
@@ -326,22 +328,18 @@ class TaskController {
             .textContent.trim();
 
           // Validate task
-          const validationErrors = task.validate();
-          if (validationErrors.length > 0) {
-            validationErrors.forEach((error) => showError(error));
-            return;
-          }
 
-          this.saveTasksToLocalStorage();
-          this.renderAllTasks();
-          this.view.closeEditTaskOverlay();
-          // Check if edit is performed in "All Tasks" popup
-          const isAllTaskPopupOpen = !allTaskPopup.classList.contains('hide');
-          if (isAllTaskPopupOpen) {
-            allTaskPopup.classList.remove('hide');
+          if (this.validate(task)) {
+            this.saveTasksToLocalStorage();
+            this.renderAllTasks();
+            this.view.closeEditTaskOverlay();
+            // Check if edit is performed in "All Tasks" popup
+            const isAllTaskPopupOpen = !allTaskPopup.classList.contains('hide');
+            if (isAllTaskPopupOpen) {
+              allTaskPopup.classList.remove('hide');
+            }
           }
         };
-
         // Mark as Completed in edit overlay
         const markCompletedButton = document.querySelector('.edit-controls .mark-completed');
 
@@ -419,6 +417,7 @@ class TaskController {
       return;
     }
     this.tasks = this.tasks.filter((t) => t.id !== this.pendingTaskToDelete);
+    showDeletionNotification();
     this.renderAllTasks();
     this.saveTasksToLocalStorage();
     this.closeDeleteConfirmationPopup();

@@ -232,7 +232,7 @@
 /* Notification prompted after user deleted a task */
 .notification,
 .error-notification {
-  z-index: 1000;
+  z-index: 10000;
   position: absolute;
   top: -100%;
   left: 50%;

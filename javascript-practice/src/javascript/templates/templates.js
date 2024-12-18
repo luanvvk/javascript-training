@@ -202,16 +202,16 @@ export function createDropdown(options, containerSelector, dropdownType, overlay
 export function setupPopupDropdowns() {
   // Priority options
   const priorityOptions = [
-    { value: 'Not urgent', default: true },
-    { value: 'Urgent task', default: false },
+    { value: 'Not Urgent', default: true },
+    { value: 'Urgent Task', default: false },
     { value: 'Important', default: false },
   ];
 
   // Category options
   const categoryOptions = [
     { value: 'Daily Task', default: true },
-    { value: 'Weekly task', default: false },
-    { value: 'Monthly task', default: false },
+    { value: 'Weekly Task', default: false },
+    { value: 'Monthly Task', default: false },
   ];
 
   // Create dropdowns for create task overlay
