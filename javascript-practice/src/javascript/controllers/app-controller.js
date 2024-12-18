@@ -3,10 +3,12 @@ import TaskView from '../view/app-view.js';
 import LocalStorageUtil from '../helpers/local-storage-utils.js';
 import { showError } from '../helpers/error-handling.js';
 import { showDeletionNotification } from '../helpers/notifications.js';
-import { createFormElements } from '../templates/create-task-popup.js';
-import { editFormElements } from '../templates/edit-task-popup.js';
-import { setupPopupDropdowns } from '../templates/dropdown-input-template.js';
-import { renderSortingUI } from '../templates/sorting-ui.js';
+import {
+  createFormElements,
+  editFormElements,
+  setupPopupDropdowns,
+  renderSortingUI,
+} from '../templates/templates.js';
 
 //Declaration
 // filter criteria
@@ -84,7 +86,6 @@ class TaskController {
     this.setupNavigationListener();
     this.setupSidebarToggleListener();
     this.setupResponsiveDesignListener();
-    // this.toggleSidebar();
   }
   // Add task event
   setupAddTaskListener() {
@@ -292,7 +293,7 @@ class TaskController {
 
   setupTaskActions() {
     const taskElements = document.querySelectorAll('.task-item');
-
+    const allTaskPopup = document.getElementById('all-task-popup');
     taskElements.forEach((taskElement) => {
       const taskId = parseInt(taskElement.dataset.taskId);
       const task = this.tasks.find((t) => t.id === taskId);
@@ -309,6 +310,11 @@ class TaskController {
         this.renderAllTasks();
         this.saveTasksToLocalStorage();
       });
+      // Delete Task
+      taskElement.querySelector('.task-delete').addEventListener('click', () => {
+        this.openDeleteConfirmationPopup(taskId, 'main-view');
+        this.view.closeEditTaskOverlay();
+      });
 
       // Edit Task
       taskElement.querySelector('.task-edit').addEventListener('click', () => {
@@ -317,56 +323,54 @@ class TaskController {
         this.view.openEditTaskOverlay();
 
         const editDeleteButton = document.querySelector('.overlay-delete-button');
-        editDeleteButton.dataset.taskId = taskId;
-
+        if (editDeleteButton) {
+          editDeleteButton.dataset.taskId = taskId;
+        }
         // Save edit
-        document.querySelector('.edit-task-button').onclick = () => {
-          task.title = document.querySelector('#task-title').value.trim();
-          task.startDate = document.querySelector('#start-date').value;
-          task.endDate = document.querySelector('#end-date').value;
-          task.description = document.querySelector('.textarea-input').value.trim();
-          task.priority = document
-            .querySelector('#edit-task-overlay .priority-select .default-option')
-            .textContent.trim();
-          task.category = document
-            .querySelector('#edit-task-overlay .category-select .default-option')
-            .textContent.trim();
+        const editTaskButton = document.querySelector('.edit-task-button');
+        if (editTaskButton) {
+          editTaskButton.onclick = null;
+          editTaskButton.onclick = () => {
+            task.title = document.querySelector('#task-title').value.trim();
+            task.startDate = document.querySelector('#start-date').value;
+            task.endDate = document.querySelector('#end-date').value;
+            task.description = document.querySelector('.textarea-input').value.trim();
+            task.priority = document
+              .querySelector('#edit-task-overlay .priority-select .default-option')
+              .textContent.trim();
+            task.category = document
+              .querySelector('#edit-task-overlay .category-select .default-option')
+              .textContent.trim();
 
-          // Validate task
-          const validationErrors = task.validate();
-          if (validationErrors.length > 0) {
-            validationErrors.forEach((error) => showError(error));
-            return;
-          }
+            // Validate task
+            const validationErrors = task.validate();
+            if (validationErrors.length > 0) {
+              validationErrors.forEach((error) => showError(error));
+              return;
+            }
 
-          this.saveTasksToLocalStorage();
-          this.renderAllTasks();
-
-          // Check if edit is performed in "All Tasks" popup
-          const isAllTaskPopupOpen = !allTaskPopup.classList.contains('hide');
-          if (isAllTaskPopupOpen) {
+            this.saveTasksToLocalStorage();
+            this.renderAllTasks();
             this.view.closeEditTaskOverlay();
-            allTaskPopup.classList.remove('hide');
+            // Check if edit is performed in "All Tasks" popup
+            const isAllTaskPopupOpen = !allTaskPopup.classList.contains('hide');
+            if (isAllTaskPopupOpen) {
+              this.view.closeEditTaskOverlay();
+              allTaskPopup.classList.remove('hide');
+            }
+          };
+
+          // Mark as Completed in edit overlay
+          const markCompletedButton = document.querySelector('.edit-controls .mark-completed');
+          if (markCompletedButton) {
+            markCompletedButton.onclick = () => {
+              task.status = task.status === 'Completed' ? 'In Progress' : 'Completed';
+              this.renderAllTasks();
+              this.saveTasksToLocalStorage();
+              this.view.closeEditTaskOverlay();
+            };
           }
-        };
-
-        // Mark as Completed in edit overlay
-        const markCompletedButton = document.querySelector('.edit-controls .mark-completed');
-        markCompletedButton.onclick = () => {
-          task.status = task.status === 'Completed' ? 'In Progress' : 'Completed';
-          this.renderAllTasks();
-          this.saveTasksToLocalStorage();
-          this.view.closeEditTaskOverlay();
-        };
-      });
-
-      // Delete Task
-      taskElement.querySelector('.task-delete').addEventListener('click', () => {
-        this.openDeleteConfirmationPopup(taskId, 'main-view');
-        this.tasks = this.tasks.filter((t) => t.id !== taskId);
-        this.renderAllTasks();
-        this.saveTasksToLocalStorage();
-        showDeletionNotification();
+        }
       });
     });
 
@@ -374,10 +378,6 @@ class TaskController {
     editDeleteButton.addEventListener('click', () => {
       const taskId = parseInt(editDeleteButton.dataset.taskId);
       this.openDeleteConfirmationPopup(taskId, 'edit-overlay');
-      this.tasks = this.tasks.filter((t) => t.id !== taskId);
-      this.renderAllTasks();
-      this.saveTasksToLocalStorage();
-      showDeletionNotification();
       this.view.closeEditTaskOverlay();
     });
   }
@@ -423,6 +423,10 @@ class TaskController {
     this.saveTasksToLocalStorage();
     showDeletionNotification();
     this.closeDeleteConfirmationPopup();
+
+    if (this.deleteOrigin === 'edit-overlay') {
+      this.view.closeEditTaskOverlay();
+    }
   }
   renderAllTasks() {
     // Render all tasks in the All Tasks Popup,
@@ -430,10 +434,6 @@ class TaskController {
     // Render all tasks in the main view
     this.view.renderTasks(this.tasks);
     this.setupTaskActions();
-
-    if (this.deleteOrigin === 'edit-overlay') {
-      this.view.closeEditTaskOverlay();
-    }
   }
 
   //Search tasks method

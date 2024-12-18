@@ -1,4 +1,4 @@
-import { createTaskElement } from '../templates/task-template.js';
+import { createTaskElement } from '../templates/templates.js';
 import { showNoTasksMessage } from '../helpers/notifications.js';
 import { formatDate } from '../helpers/format-date-utils.js';
 class TaskView {
