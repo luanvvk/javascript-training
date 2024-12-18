@@ -168,6 +168,7 @@ class TaskView {
       document.body.classList.remove('overflow-hidden');
     } else {
       this.editTaskOverlay.classList.add('hide');
+      document.body.classList.remove('overflow-hidden');
     }
   }
   // Populate edit form

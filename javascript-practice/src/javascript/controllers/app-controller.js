@@ -348,7 +348,6 @@ class TaskController {
           // Check if edit is performed in "All Tasks" popup
           const isAllTaskPopupOpen = !allTaskPopup.classList.contains('hide');
           if (isAllTaskPopupOpen) {
-            this.view.closeEditTaskOverlay();
             allTaskPopup.classList.remove('hide');
           }
         };
@@ -425,7 +424,7 @@ class TaskController {
     console.log(
       `Confirming deletion for task ID: ${this.pendingTaskToDelete}, origin: ${this.deleteOrigin}`,
     );
-    if (this.pendingTaskToDelete === null) {
+    if (this.pendingTaskIdToDelete === null) {
       console.error('No task ID is set for deletion');
       return;
     }

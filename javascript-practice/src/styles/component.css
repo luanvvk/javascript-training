@@ -122,6 +122,7 @@
 }
 
 .add-task-icon {
+  z-index: 1000;
   position: fixed;
   top: 7rem;
   width: 5rem;
