@@ -2,7 +2,8 @@ import TaskModel from '../models/task-model.js';
 import TaskView from '../view/app-view.js';
 import ValidationUtils from '../helpers/validation-utils.js';
 import LocalStorageUtil from '../helpers/local-storage-utils.js';
-import { showError } from '../helpers/error-handling.js';
+import ErrorHandler from '../helpers/error-handler-utils.js';
+
 import { showDeletionNotification } from '../helpers/notifications.js';
 import {
   createFormElements,
@@ -45,6 +46,7 @@ class TaskController {
     this.tasks = [];
     this.localStorageUtil = new LocalStorageUtil();
     this.validationUtils = new ValidationUtils();
+    this.errorHandler = new ErrorHandler();
     this.currentSortSetting = {
       field: 'name',
       order: 'asc',
@@ -77,10 +79,14 @@ class TaskController {
   validate(task) {
     const validationErrors = this.validationUtils.validateTask(task);
     if (validationErrors.length > 0) {
-      validationErrors.forEach((error) => showError(error));
+      validationErrors.forEach((error) => this.showError(error));
       return false;
     }
     return true;
+  }
+
+  showError(message) {
+    this.errorHandler.showError(message);
   }
 
   setupDynamicForm() {
@@ -590,7 +596,7 @@ class TaskController {
     //validate input
     const validFields = ['name', 'startDate', 'endDate', 'category', 'priority'];
     if (!validFields.includes(field)) {
-      showError(`Invalid sort criteria. Please choose one of: ${validFields.join(', ')}`);
+      this.showError(`Invalid sort criteria. Please choose one of: ${validFields.join(', ')}`);
       return this.tasks;
     }
     //avoid mutating the original array
