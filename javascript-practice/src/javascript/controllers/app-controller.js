@@ -20,22 +20,21 @@ const sortOrderToggle = document.querySelector('.sort-order-toggle');
 //navigate/toggle elements
 const popupBoardView = document.querySelector('#all-task-popup .board-view');
 const popupListView = document.querySelector('#all-task-popup .list-view');
-const boardViewOption = document.querySelector('.board-screen');
-const listViewOption = document.querySelector('.list-screen');
+const boardViewOption = document.querySelector('.app__nav-link.app__nav-link--board-screen');
+const listViewOption = document.querySelector('.app__nav-link.app__nav-link--list-screen');
 const listView = document.querySelector('.list-view');
 const boardView = document.querySelector('.board-view');
 const editTask = document.getElementById('edit-task-overlay');
 const createTask = document.getElementById('create-task-overlay');
 //sidebar toggle elements
-const dashboardBtn = document.querySelector('.dashboard');
+const dashboardBtn = document.querySelector('.app__nav-link.app__nav-link--dashboard');
 const searchBarTop = document.querySelector('.search-bar__input-bar');
 const allTaskPopup = document.getElementById('all-task-popup');
-const allTaskBtn = document.querySelector('.all-tasks');
-const hidingOverlay = document.querySelector('.hiding-overlay');
+const allTaskBtn = document.querySelector('.app__nav-link.app__nav-link--all-tasks');
 const toggle = document.querySelector('.menu-bar-toggle');
-const sideNavbar = document.querySelector('.side-navbar');
-const mainBody = document.querySelector('.main-body');
-const appLogoHeading = document.querySelector('.app-logo__heading');
+const sideNavbar = document.querySelector('.app__sidebar');
+const mainBody = document.querySelector('.app-main');
+const appLogoHeading = document.querySelector('.app__logo-text');
 const appLogo = document.querySelector('.app-logo');
 
 class TaskController {
@@ -173,15 +172,6 @@ class TaskController {
       let width = window.matchMedia('(min-width: 800px)');
       if (!width.matches) {
         mainBody.classList.toggle('active');
-        sideNavbar.classList.toggle('active');
-      }
-    });
-
-    hidingOverlay.addEventListener('click', () => {
-      hidingOverlay.classList.add('hide');
-      mainBody.classList.toggle('active');
-      let width = window.matchMedia('(min-width: 800px)');
-      if (!width.matches) {
         sideNavbar.classList.toggle('active');
       }
     });

@@ -11,7 +11,7 @@ export function showError(message) {
        <span class="error-message">${message}</span>
      </div>
    `;
-  const mainBody = document.querySelector('.main-body');
+  const mainBody = document.querySelector('.app-main');
   const topBar = document.querySelector('.top-bar');
   const insertLocation = topBar || mainBody;
   if (insertLocation) {

@@ -115,17 +115,13 @@
   outline: none;
 }
 /* button controls */
-.add-a-task.desktop {
-  margin: var(--space-32) 0 var(--space-32) 0;
-  display: flex;
-  justify-content: end;
-}
 
 .add-task-icon {
   z-index: 1000;
   position: fixed;
   top: 7rem;
   width: 5rem;
+  right: 3rem;
   height: 5rem;
   float: right;
   margin-right: var(--space-32);

@@ -95,7 +95,7 @@ img {
   --black-shadow: 4px 4px 0px var(--black);
 }
 
-.max-width-container {
+.app-wrapper {
   width: 100%;
   margin: 0 auto;
 }

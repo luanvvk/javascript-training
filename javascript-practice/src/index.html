@@ -12,72 +12,72 @@
     <link rel="stylesheet" href="./styles/main.css" />
   </head>
   <body>
-    <div class="max-width-container">
-      <nav class="side-navbar">
-        <ul class="side-navbar--list">
-          <li class="navbar--list__item">
-            <h1 class="app-heading">
-              <a class="app-logo active" href="javascript:void(0)">
+    <div class="app-wrapper">
+      <nav class="app__sidebar">
+        <ul class="app__sidebar-list">
+          <li class="app__sidebar-items">
+            <h1 class="app__logo">
+              <a class="app__logo-linkactive" href="javascript:void(0)">
                 <img
-                  class="logo-icon"
+                  class="app__logo-icon"
                   src="./assets/images/icons/menu-bar-icons/logo-icon.svg"
-                  alt="logo-icon"
+                  alt="app__logo-icon"
                   loading="lazy" /></a
-              ><span class="app-logo__heading">Task manager</span>
+              ><span class="app__logo-text">Task manager</span>
             </h1>
           </li>
-          <li class="navbar--list__item">
-            <a class="dashboard" href="javascript:void(0)">
+          <li class="app__sidebar-items">
+            <a class="app__nav-link app__nav-link--dashboard" href="javascript:void(0)">
               <span class="icon">
                 <img
-                  class="dash-board-icon"
+                  class="app__nav-icon-image"
                   src="./assets/images/icons/menu-bar-icons/dashboard-icon.svg"
                   alt="dashboard-icon"
                   loading="lazy"
                 />
               </span>
-              <span class="dashboard-heading">Dashboard</span>
+              <span class="app__nav-text">Dashboard</span>
             </a>
           </li>
-          <li class="navbar--list__item">
-            <a class="board-screen" href="javascript:void(0)">
+          <li class="app__sidebar-items">
+            <a class="app__nav-link app__nav-link--board-screen" href="javascript:void(0)">
               <span class="icon">
                 <img
-                  class="board-screen-icon"
+                  class="app__nav-icon-image"
                   src="./assets/images/icons/menu-bar-icons/all-task-icon.svg"
-                  alt="all-tasks-icon"
+                  alt="board-screen-icon"
                   loading="lazy"
                 />
               </span>
-              <span class="board-screen-heading">Board view</span>
+              <span class="app__nav-text">Board view</span>
             </a>
           </li>
-          <li class="navbar--list__item">
-            <a class="list-screen" href="javascript:void(0)">
+          <li class="app__sidebar-items">
+            <a class="app__nav-link app__nav-link--list-screen" href="javascript:void(0)">
               <span class="icon">
                 <img
-                  class="list-screen-icon"
+                  class="app__nav-icon-image--link"
                   src="./assets/images/icons/menu-bar-icons/list.png"
                   alt="list-view-icon"
                 />
               </span>
-              <span class="list-screen-heading">List view</span>
+              <span class="app__nav-text">List view</span>
             </a>
           </li>
-          <li class="navbar--list__item">
-            <a class="all-tasks" href="javascript:void(0)">
+          <li class="app__sidebar-items">
+            <a class="app__nav-link app__nav-link--all-tasks" href="javascript:void(0)">
               <span class="icon">
                 <img
-                  class="all-tasks-icon"
+                  class="app__nav-link-icon-image"
                   src="./assets/images/icons/menu-bar-icons/completed-task-icon.svg"
-                  alt="completed-tasks-icon"
+                  alt="all-tasks-tasks-icon"
                   loading="lazy"
                 />
               </span>
-              <span class="all-tasks-heading">All Tasks</span>
+              <span class="app__nav-text">All Tasks</span>
             </a>
           </li>
-          <li class="navbar--list__item hide">
+          <li class="app__sidebar-items hide">
             <a class="add-a-task" href="javascript:void(0)">
               <span class="icon">
                 <img
@@ -87,13 +87,13 @@
                   loading="lazy"
                 />
               </span>
-              <span class="add-a-task-heading">Add a task</span>
+              <span class="add-a-task-text">Add a task</span>
             </a>
           </li>
         </ul>
       </nav>
 
-      <main class="main-body">
+      <main class="app-main">
         <div class="notification">
           <img
             class="completed-task-icon"
@@ -154,8 +154,7 @@
           </div>
         </section>
 
-        <section class="max-width-container main">
-          <div class="hiding-overlay hide"></div>
+        <section class="app-wrapper main">
           <button class="add-a-task desktop">
             <img
               class="add-task-icon"
