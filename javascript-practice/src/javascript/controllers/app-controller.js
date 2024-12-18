@@ -364,24 +364,26 @@ class TaskController {
         };
       });
       // Delete Task
-      taskElement.querySelector('.task-delete').addEventListener('click', () => {
-        this.openDeleteConfirmationPopup(taskId, 'main-view');
+      const deleteButton = taskElement.querySelector('.task-delete');
+      if (deleteButton) {
+        deleteButton.removeEventListener('click', this.handleDeleteTask); // Prevent duplicate listeners
+        deleteButton.addEventListener('click', () => {
+          console.log(`Delete button clicked for task ID: ${taskId}`);
 
-        this.renderAllTasks();
-        this.saveTasksToLocalStorage();
-      });
+          this.openDeleteConfirmationPopup(taskId, 'main-view'); // Pass origin if needed
+        });
+      }
     });
 
     const editDeleteButton = document.querySelector('.overlay-delete-button');
     editDeleteButton.addEventListener('click', () => {
       const taskId = parseInt(editDeleteButton.dataset.taskId);
       this.openDeleteConfirmationPopup(taskId, 'edit-overlay');
-      this.tasks = this.tasks.filter((t) => t.id !== taskId);
       this.renderAllTasks();
       this.saveTasksToLocalStorage();
-
       this.view.closeEditTaskOverlay();
     });
+    console.log(`Attaching delete listeners. Task count: ${taskElements.length}`);
   }
 
   setupDeleteConfirmationPopup() {
@@ -404,6 +406,7 @@ class TaskController {
     confirmDeleteButton.addEventListener('click', () => this.confirmTaskDeletion());
   }
   openDeleteConfirmationPopup(taskId, origin) {
+    console.log(`Opening delete confirmation for task ID: ${taskId}, origin: ${origin}`);
     this.pendingTaskToDelete = taskId;
     this.deleteOrigin = origin;
     // Show the confirmation popup
@@ -415,22 +418,27 @@ class TaskController {
     this.deleteConfirmationPopup.classList.add('hide');
     document.body.classList.add('overflow-hidden');
     // Reset pending deletion info
-    this.pendingTaskIdToDelete = null;
+    this.pendingTaskToDelete = null;
     this.deleteOrigin = null;
   }
   confirmTaskDeletion() {
-    if (this.pendingTaskIdToDelete === null) return;
+    console.log(
+      `Confirming deletion for task ID: ${this.pendingTaskToDelete}, origin: ${this.deleteOrigin}`,
+    );
+    if (this.pendingTaskToDelete === null) {
+      console.error('No task ID is set for deletion');
+      return;
+    }
     this.tasks = this.tasks.filter((t) => t.id !== this.pendingTaskToDelete);
     this.renderAllTasks();
     this.saveTasksToLocalStorage();
-    showDeletionNotification();
     this.closeDeleteConfirmationPopup();
 
     if (this.deleteOrigin === 'all-task-popup') {
       const allTaskPopup = document.getElementById('all-task-popup');
       allTaskPopup.classList.remove('hide');
-      this.view.closeEditTaskOverlay();
     }
+    console.log(`Task deleted. Remaining tasks: ${this.tasks.length}`);
   }
   renderAllTasks() {
     // Render all tasks in the All Tasks Popup,

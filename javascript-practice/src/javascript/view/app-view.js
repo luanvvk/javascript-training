@@ -1,6 +1,7 @@
 import { createTaskElement } from '../templates/templates.js';
 import { showNoTasksMessage } from '../helpers/notifications.js';
 import { formatDate } from '../helpers/format-date-utils.js';
+import TaskController from '../controllers/app-controller.js';
 class TaskView {
   constructor() {
     this.listViewColumns = {
