@@ -1,4 +1,4 @@
-import { createTaskElement } from '../templates/templates.js';
+import { createTaskElement } from '../templates/task-template.js';
 import { showNoTasksMessage } from '../helpers/notifications.js';
 import { formatDate } from '../helpers/format-date-utils.js';
 class TaskView {
@@ -165,8 +165,6 @@ class TaskView {
     if (!allTaskPopup.classList.contains('hide')) {
       this.editTaskOverlay.classList.add('hide');
       document.body.classList.remove('overflow-hidden');
-    } else {
-      this.editTaskOverlay.classList.add('hide');
     }
   }
   // Populate edit form

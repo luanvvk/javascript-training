@@ -63,7 +63,7 @@ img {
   --cyan-blue: #006d77;
   --light-cyan-blue: #83c5be;
   --pink: #ff9c9c;
-  --blue: #82cfff;
+  --light-blue: #82cfff;
   --green: #abe5bc;
   --black: #000;
   --blue: #007bff;
@@ -90,7 +90,7 @@ img {
 
   /* shadow */
   --green-shadow: 6px 6px 0px var(--green);
-  --blue-shadow: 6px 6px 0px var(--blue);
+  --blue-shadow: 6px 6px 0px var(--light-blue);
   --pink-shadow: 6px 6px 0px var(--pink);
   --black-shadow: 4px 4px 0px var(--black);
 }
@@ -111,7 +111,7 @@ img {
 }
 
 .background-blue {
-  background-color: var(--blue);
+  background-color: var(--light-blue);
 }
 
 .background-green {
