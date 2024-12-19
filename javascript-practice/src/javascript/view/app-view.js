@@ -51,6 +51,7 @@ class TaskView {
     // Show a "no tasks" message if columns are empty
     showNoTasksMessage(this.listViewColumns, 'list-view');
     showNoTasksMessage(this.boardViewColumns, 'board-view');
+    console.log('Rendering Sorted Tasks:', sortedTasks);
   }
 
   //render all task popup

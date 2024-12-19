@@ -51,6 +51,8 @@ class TaskController {
       field: 'name',
       order: 'asc',
     };
+    this.filterFieldDropdown = document.querySelector('.filter-field-dropdown');
+    this.filterOptionsDropdown = document.querySelector('.filter-options-dropdown');
     this.sortDropdown = document.querySelector('.sort-dropdown');
     this.sortOrderToggle = document.querySelector('.sort-order-toggle');
     this.mainContainer = document.querySelector('.app-main');
@@ -528,11 +530,15 @@ class TaskController {
   //Setup filter event listeners for filtering and sorting
   setupFilterEventListeners() {
     // Apply event listeners to filters
-    if (this.filterFieldDropdown) {
-      filterFieldDropdown.addEventListener('change', (e) => {
-        this.populateFilterOptions(e.target.value);
-      });
+    if (!this.filterFieldDropdown || !this.filterOptionsDropdown) {
+      console.error('Filter dropdowns not found');
+      return;
     }
+    this.populateFilterOptions('category');
+
+    filterFieldDropdown.addEventListener('change', (e) => {
+      this.populateFilterOptions(e.target.value);
+    });
     if (this.filterOptionsDropdown) {
       filterOptionsDropdown.addEventListener('change', this.applyFilters.bind(this));
     }
@@ -543,10 +549,16 @@ class TaskController {
     });
     //for sorting event listeners
     if (this.sortDropdown) {
-      sortDropdown.addEventListener('change', this.applyFilters.bind(this));
+      this.sortDropdown.addEventListener('change', this.applyFilters.bind(this));
     }
     if (this.sortOrderToggle) {
-      sortOrderToggle.addEventListener('click', this.toggleSortOrder.bind(this));
+      this.sortOrderToggle.removeEventListener('click', this.toggleSortOrderHandler);
+      this.toggleSortOrderHandler = this.toggleSortOrder.bind(this);
+      this.sortOrderToggle.addEventListener('click', this.toggleSortOrderHandler);
+    } else {
+      console.error('Sort order toggle button not found');
+      console.log('sort order toggle', this.sortOrderToggle);
+      console.log('sort field', sortField);
     }
   }
 
@@ -613,6 +625,7 @@ class TaskController {
     const validFields = ['name', 'startDate', 'endDate', 'category', 'priority'];
     if (!validFields.includes(field)) {
       this.showError(`Invalid sort criteria. Please choose one of: ${validFields.join(', ')}`);
+      console.error(`Invalid sort field: ${field}`);
       return this.tasks;
     }
     //avoid mutating the original array
@@ -651,24 +664,31 @@ class TaskController {
       return 0;
     });
     this.currentSortSetting = { field, order };
+    console.log('Current Sort Setting:', { field, order });
     return sortedTasks;
   }
 
   //change sort order state
-  toggleSortOrder() {
+  toggleSortOrder(e) {
+    e.stopPropagation();
+    console.log('toggleSortOrder fired');
+
     const currentOrder = this.currentSortSetting.order;
     const newOrder = currentOrder === 'asc' ? 'desc' : 'asc';
     //update sort order
     this.currentSortSetting.order = newOrder;
     const sortField = this.sortDropdown.value;
     const sortedTasks = this.sortTasks(sortField, newOrder);
+    console.log('Sorted Tasks:', sortedTasks);
     this.view.renderTasks(sortedTasks);
     this.view.renderAllTasksPopup(sortedTasks);
+
     //update button visual state
     sortOrderToggle.innerHTML =
       newOrder === 'asc'
         ? ' <img class="sort-icon" src="./assets/images/icons/sort-icons/sort-icon-asc.png" alt="sort-icon-up" />'
         : ' <img class="sort-icon" src="./assets/images/icons/sort-icons/sort-icon-desc.png" alt="sort-icon-down" />';
+    console.log('Sort Order Toggle Updated HTML:', sortOrderToggle.innerHTML);
   }
 }
 export default TaskController;
