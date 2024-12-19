@@ -179,13 +179,13 @@ class TaskView {
     const priorityContainer = document.querySelector(
       '#edit-task-overlay .priority-select .default-option-container .default-option',
     );
-    priorityContainer.textContent = task.priority;
+    priorityContainer.textContent = task.priority || 'Not Urgent';
 
     // Target category dropdown value
     const categoryContainer = document.querySelector(
       '#edit-task-overlay .category-select .default-option-container .default-option',
     );
-    categoryContainer.textContent = task.category;
+    categoryContainer.textContent = task.category || 'Daily Task';
   }
 
   // Reset create task form

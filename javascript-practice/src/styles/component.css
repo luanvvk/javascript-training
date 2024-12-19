@@ -77,8 +77,18 @@
   font-weight: var(--bold-weight);
 }
 
+.priority-select,
+.category-select {
+  position: relative;
+  display: inline-block;
+}
+
 .priority-dropdown,
 .category-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
   flex-direction: column;
   text-align: left;
   width: 100%;
@@ -87,6 +97,7 @@
   border-top: none;
   border-radius: var(--border-radius-7);
   padding: 0 var(--space-8);
+  background-color: var(--light-pink);
 }
 /* mini search bar */
 .search-bar-mini__input-bar {
