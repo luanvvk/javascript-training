@@ -94,6 +94,11 @@
   height: 3rem;
 }
 
+.app__nav-link.app__nav-link--list-screen img {
+  padding: 0;
+  background: var(--light-pink);
+}
+
 .task-name-icon,
 .task-start-icon,
 .task-end-icon,

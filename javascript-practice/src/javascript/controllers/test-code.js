@@ -3,7 +3,7 @@ import TaskView from '../view/app-view.js';
 import ValidationUtils from '../helpers/validation-utils.js';
 import LocalStorageUtil from '../helpers/local-storage-utils.js';
 import ErrorHandler from '../helpers/error-handler-utils.js';
-
+import EventDelegate from '../helpers/event-delegation-utils.js';
 import { showDeletionNotification } from '../helpers/notifications.js';
 import {
   createFormElements,
@@ -47,6 +47,7 @@ class TaskController {
     this.localStorageUtil = new LocalStorageUtil();
     this.validationUtils = new ValidationUtils();
     this.errorHandler = new ErrorHandler();
+    this.delegate = new EventDelegate();
     this.currentSortSetting = {
       field: 'name',
       order: 'asc',
@@ -61,11 +62,8 @@ class TaskController {
 
   initialize() {
     this.loadTasksFromLocalStorage();
-    this.setupDynamicForm();
-    this.setupEventListeners();
-    this.setupFilterEventListeners();
+    addEventDelegation();
     this.renderAllTasks();
-    renderSortingUI();
   }
 
   loadTasksFromLocalStorage() {
@@ -75,6 +73,8 @@ class TaskController {
   saveTasksToLocalStorage() {
     this.localStorageUtil.save(this.tasks);
   }
+
+  addEventDelegation() {}
 
   validate(task) {
     const validationErrors = this.validationUtils.validateTask(task);

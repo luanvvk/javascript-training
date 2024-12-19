@@ -142,7 +142,6 @@ class TaskView {
     });
   }
 
-  //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   // Open/close overlays
   openCreateTaskOverlay() {
     this.createTaskOverlay.classList.toggle('hide');
