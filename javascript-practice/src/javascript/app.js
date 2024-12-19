@@ -1,4 +1,4 @@
-import TaskController from './controllers/app-controller.js';
+import TaskController from './controllers/exp.js';
 import TaskModel from './models/task-model.js';
 import TaskView from './view/app-view.js';
 

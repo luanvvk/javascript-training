@@ -103,6 +103,7 @@ class TaskController {
     this.setupSidebarToggleListener();
     this.setupResponsiveDesignListener();
   }
+
   // Add task event
   setupAddTaskListener() {
     const addTaskBtns = document.querySelectorAll('.add-a-task');
@@ -125,6 +126,7 @@ class TaskController {
     mainBody.classList.remove('active');
     sideNavbar.classList.remove('active');
   }
+
   //Cancel event
   setupCancelButtonListeners() {
     const cancelCreateButtons = document.querySelectorAll('#create-task-overlay .cancel');
@@ -153,6 +155,7 @@ class TaskController {
       });
     });
   }
+
   //Search event
   setupSearchListener() {
     const mainSearchInput = document.querySelector('.input-bar__main-input');
@@ -165,6 +168,7 @@ class TaskController {
       popupSearchInput.addEventListener('input', this.searchTasks.bind(this));
     }
   }
+
   // Events for all all task popup, dashboard, main body, and view
   setupNavigationListener() {
     allTaskBtn.addEventListener('click', () => {

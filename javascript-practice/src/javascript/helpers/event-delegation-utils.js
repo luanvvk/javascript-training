@@ -1,4 +1,4 @@
-import ErrorHandler from './error-handler-utils';
+import ErrorHandler from './error-handler-utils.js';
 
 class EventDelegate {
   constructor() {
@@ -7,19 +7,20 @@ class EventDelegate {
   }
 
   addEventDelegation(parentSelector, eventType, childSelector, handler) {
-    const parent = document.querySelectorAll(parentSelector);
-    if (!parent) {
+    const parents = document.querySelectorAll(parentSelector);
+    if (!parents.length) {
       this.errorHandler.log(`Parent element not found: ${parentSelector}`, 'warn');
+      return;
     }
 
     const eventHandler = (event) => {
       const matchingChild = event.target.closest(childSelector);
-      if (matchingChild && parent.contains(matchingChild)) {
+      if (matchingChild) {
         handler(event, matchingChild);
       }
     };
     this.handlers.set(handler, eventHandler);
-    parent, addEventListener(eventType, eventHandler);
+    parents.forEach((parent) => parent.addEventListener(eventType, eventHandler));
   }
 }
 
