@@ -3,7 +3,6 @@ import TaskView from '../view/app-view.js';
 import ValidationUtils from '../helpers/validation-utils.js';
 import LocalStorageUtil from '../helpers/local-storage-utils.js';
 import ErrorHandler from '../helpers/error-handler-utils.js';
-
 import { showDeletionNotification } from '../helpers/notifications.js';
 import {
   createFormElements,
@@ -22,23 +21,15 @@ const sortOrderToggle = document.querySelector('.sort-order-toggle');
 //navigate/toggle elements
 const popupBoardView = document.querySelector('#all-task-popup .board-view');
 const popupListView = document.querySelector('#all-task-popup .list-view');
-const boardViewOption = document.querySelector('.app__nav-link.app__nav-link--board-screen');
-const listViewOption = document.querySelector('.app__nav-link.app__nav-link--list-screen');
 const listView = document.querySelector('.list-view');
 const boardView = document.querySelector('.board-view');
-const editTask = document.getElementById('edit-task-overlay');
-const createTask = document.getElementById('create-task-overlay');
 //sidebar toggle elements
-const dashboardBtn = document.querySelector('.app__nav-link.app__nav-link--dashboard');
 const searchBarTop = document.querySelector('.search-bar__input-bar');
 const allTaskPopup = document.getElementById('all-task-popup');
-const allTaskBtn = document.querySelector('.app__nav-link.app__nav-link--all-tasks');
 const toggle = document.querySelector('.menu-bar-toggle');
 const sideNavbar = document.querySelector('.app__sidebar');
 const mainBody = document.querySelector('.app-main');
 const appLogoHeading = document.querySelector('.app__logo-text');
-const appLogo = document.querySelector('.app-logo');
-
 class TaskController {
   constructor() {
     this.model = new TaskModel();
@@ -58,7 +49,6 @@ class TaskController {
     this.mainContainer = document.querySelector('.app-main');
     this.taskColumns = document.querySelectorAll('.task-list');
     this.editTaskOverlay = document.getElementById('edit-task-overlay');
-    this.overlayContainer = document.querySelector('.app-wrapper');
     this.deleteConfirmationPopup = document.getElementById('delete-confirmation-popup');
     this.pendingTaskToDelete = null;
     this.deleteOrigin = null;
@@ -455,6 +445,7 @@ class TaskController {
     }
     console.log(`Task deleted. Remaining tasks: ${this.tasks.length}`);
   }
+
   renderAllTasks() {
     // Render all tasks in the All Tasks Popup,
     this.view.renderAllTasksPopup(this.tasks);
