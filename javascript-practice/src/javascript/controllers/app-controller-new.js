@@ -32,6 +32,12 @@ const mainBody = document.querySelector('.app-main');
 const appLogoHeading = document.querySelector('.app__logo-text');
 class TaskController {
   constructor() {
+    this.initializeProperties();
+    this.bindMethods();
+    this.initialize();
+  }
+
+  initializeProperties() {
     this.model = new TaskModel();
     this.view = new TaskView();
     this.tasks = [];
@@ -42,6 +48,12 @@ class TaskController {
       field: 'name',
       order: 'asc',
     };
+    this.pendingTaskToDelete = null;
+    this.deleteOrigin = null;
+    this.initializeDOMElements();
+  }
+
+  initializeDOMElements() {
     this.filterFieldDropdown = document.querySelector('.filter__field-dropdown');
     this.filterOptionsDropdown = document.querySelector('.filter__options-dropdown');
     this.sortDropdown = document.querySelector('.sort__dropdown');
@@ -50,14 +62,15 @@ class TaskController {
     this.taskColumns = document.querySelectorAll('.task-list');
     this.editTaskOverlay = document.getElementById('edit-task-modal');
     this.deleteConfirmationPopup = document.getElementById('confirmation-popup--delete');
-    this.pendingTaskToDelete = null;
-    this.deleteOrigin = null;
+    this.sideNavbar = document.querySelector('.app__sidebar');
+    this.searchBarTop = document.querySelector('.search-bar__input-bar');
+  }
+
+  bindMethods() {
     this.applyFilters = this.applyFilters.bind(this);
-    // Bind methods
     this.handleTaskEdit = this.handleTaskEdit.bind(this);
     this.handleStatusChange = this.handleStatusChange.bind(this);
     this.confirmTaskDeletion = this.confirmTaskDeletion.bind(this);
-    this.initialize();
   }
 
   initialize() {
@@ -194,6 +207,40 @@ class TaskController {
     });
   }
 
+  addTask() {
+    const title = document.querySelector('.task-name-input').value.trim();
+    const startDate = document.querySelector('#task-start-input').value;
+    const endDate = document.querySelector('#task-end-input').value;
+    const priority = document
+      .querySelector('.form__priority-select .default-option')
+      .textContent.trim();
+    const category = document
+      .querySelector('.form__category-select .default-option')
+      .textContent.trim();
+    const description = document.querySelector('.textarea-input').value.trim();
+    const task = new TaskModel(title, startDate, endDate, description, priority, category);
+
+    if (this.validate(task)) {
+      this.tasks.push(task);
+      this.renderTasks();
+      this.saveTasksToLocalStorage();
+      this.view.resetCreateTaskForm();
+      this.view.closeCreateTaskOverlay();
+      this.renderAllTasks();
+    }
+  }
+
+  renderTasks() {
+    this.view.renderTasks(this.tasks);
+  }
+
+  renderAllTasks() {
+    // Render all tasks in the All Tasks Popup,
+    this.view.renderAllTasksPopup(this.tasks);
+    // Render all tasks in the main view
+    this.view.renderTasks(this.tasks);
+  }
+
   setupNavigationDelegation() {
     // Delegate navigation events
     document.querySelector('.app__sidebar').addEventListener('click', (e) => {
@@ -328,6 +375,7 @@ class TaskController {
       boardView.classList.add('hidden');
     }
   }
+
   switchPopupView(viewType) {
     if (viewType === 'board') {
       popupBoardView.classList.remove('hidden');
@@ -338,17 +386,42 @@ class TaskController {
     }
   }
 
-  //Search event
-  setupSearchListener() {
-    const mainSearchInput = document.querySelector('.input-bar__main-input');
-    const popupSearchInput = document.querySelector('#all-task-modal .input-bar-mini__main-input');
+  openDeleteConfirmationPopup(taskId, origin) {
+    console.log(`Opening delete confirmation for task ID: ${taskId}, origin: ${origin}`);
+    this.pendingTaskToDelete = taskId;
+    this.deleteOrigin = origin;
+    // Show the confirmation popup
+    this.deleteConfirmationPopup.classList.remove('hidden');
+    document.body.classList.add('overflow-hidden');
+  }
 
-    if (mainSearchInput) {
-      mainSearchInput.addEventListener('input', this.searchTasks.bind(this));
+  closeDeleteConfirmationPopup() {
+    this.deleteConfirmationPopup.classList.add('hidden');
+    document.body.classList.add('overflow-hidden');
+    // Reset pending deletion info
+    this.pendingTaskToDelete = null;
+    this.deleteOrigin = null;
+  }
+
+  confirmTaskDeletion() {
+    console.log(
+      `Confirming deletion for task ID: ${this.pendingTaskToDelete}, origin: ${this.deleteOrigin}`,
+    );
+    if (this.pendingTaskToDelete === null) {
+      console.error('No task ID is set for deletion');
+      return;
     }
-    if (popupSearchInput) {
-      popupSearchInput.addEventListener('input', this.searchTasks.bind(this));
+    this.tasks = this.tasks.filter((t) => t.id !== this.pendingTaskToDelete);
+    showDeletionNotification();
+    this.renderAllTasks();
+    this.saveTasksToLocalStorage();
+    this.closeDeleteConfirmationPopup();
+
+    if (this.deleteOrigin === 'all-task-modal') {
+      const allTaskPopup = document.getElementById('all-task-modal');
+      allTaskPopup.classList.remove('hidden');
     }
+    console.log(`Task deleted. Remaining tasks: ${this.tasks.length}`);
   }
 
   // Side bar event
@@ -386,75 +459,17 @@ class TaskController {
     });
   }
 
-  // Task Management Methods
-  addTask() {
-    const title = document.querySelector('.task-name-input').value.trim();
-    const startDate = document.querySelector('#task-start-input').value;
-    const endDate = document.querySelector('#task-end-input').value;
-    const priority = document
-      .querySelector('.form__priority-select .default-option')
-      .textContent.trim();
-    const category = document
-      .querySelector('.form__category-select .default-option')
-      .textContent.trim();
-    const description = document.querySelector('.textarea-input').value.trim();
-    const task = new TaskModel(title, startDate, endDate, description, priority, category);
+  //Search event
+  setupSearchListener() {
+    const mainSearchInput = document.querySelector('.input-bar__main-input');
+    const popupSearchInput = document.querySelector('#all-task-modal .input-bar-mini__main-input');
 
-    if (this.validate(task)) {
-      this.tasks.push(task);
-      this.renderTasks();
-      this.saveTasksToLocalStorage();
-      this.view.resetCreateTaskForm();
-      this.view.closeCreateTaskOverlay();
-      this.renderAllTasks();
+    if (mainSearchInput) {
+      mainSearchInput.addEventListener('input', this.searchTasks.bind(this));
     }
-  }
-  renderTasks() {
-    this.view.renderTasks(this.tasks);
-  }
-
-  openDeleteConfirmationPopup(taskId, origin) {
-    console.log(`Opening delete confirmation for task ID: ${taskId}, origin: ${origin}`);
-    this.pendingTaskToDelete = taskId;
-    this.deleteOrigin = origin;
-    // Show the confirmation popup
-    this.deleteConfirmationPopup.classList.remove('hidden');
-    document.body.classList.add('overflow-hidden');
-  }
-
-  closeDeleteConfirmationPopup() {
-    this.deleteConfirmationPopup.classList.add('hidden');
-    document.body.classList.add('overflow-hidden');
-    // Reset pending deletion info
-    this.pendingTaskToDelete = null;
-    this.deleteOrigin = null;
-  }
-  confirmTaskDeletion() {
-    console.log(
-      `Confirming deletion for task ID: ${this.pendingTaskToDelete}, origin: ${this.deleteOrigin}`,
-    );
-    if (this.pendingTaskToDelete === null) {
-      console.error('No task ID is set for deletion');
-      return;
+    if (popupSearchInput) {
+      popupSearchInput.addEventListener('input', this.searchTasks.bind(this));
     }
-    this.tasks = this.tasks.filter((t) => t.id !== this.pendingTaskToDelete);
-    showDeletionNotification();
-    this.renderAllTasks();
-    this.saveTasksToLocalStorage();
-    this.closeDeleteConfirmationPopup();
-
-    if (this.deleteOrigin === 'all-task-modal') {
-      const allTaskPopup = document.getElementById('all-task-modal');
-      allTaskPopup.classList.remove('hidden');
-    }
-    console.log(`Task deleted. Remaining tasks: ${this.tasks.length}`);
-  }
-
-  renderAllTasks() {
-    // Render all tasks in the All Tasks Popup,
-    this.view.renderAllTasksPopup(this.tasks);
-    // Render all tasks in the main view
-    this.view.renderTasks(this.tasks);
   }
 
   //Search tasks method
@@ -486,40 +501,6 @@ class TaskController {
     } else {
       this.view.renderTasks(filteredTasks);
     }
-  }
-
-  //filter task method
-  filterTask(options = {}) {
-    const { category = 'All', priority = 'All', status = 'All', searchText = '' } = options;
-
-    let filteredTasks = this.tasks;
-    if (searchText) {
-      filteredTasks = filteredTasks.filter((task) => {
-        const matchedResult =
-          task.title.toLowerCase().includes(searchText) ||
-          task.description.toLowerCase().includes(searchText) ||
-          task.category.toLowerCase().includes(searchText) ||
-          task.priority.toLowerCase().includes(searchText);
-        return matchedResult;
-      });
-    }
-    // Filter by category
-    if (category !== 'All') {
-      filteredTasks = filteredTasks.filter(
-        (task) => task.category.toLowerCase() === category.toLowerCase(),
-      );
-    }
-    //Filer by priority
-    if (priority !== 'All') {
-      filteredTasks = filteredTasks.filter(
-        (task) => task.priority.toLowerCase() === priority.toLowerCase(),
-      );
-    }
-    //Filter by status
-    if (status !== 'All') {
-      filteredTasks = filteredTasks.filter((task) => task.status === status);
-    }
-    return filteredTasks;
   }
 
   //Setup filter event listeners for filtering and sorting
@@ -612,6 +593,40 @@ class TaskController {
     const filteredTasks = this.filterTask(filterOptions);
     this.view.renderAllTasksPopup(filteredTasks);
     this.view.renderTasks(filteredTasks);
+  }
+
+  //filter task method
+  filterTask(options = {}) {
+    const { category = 'All', priority = 'All', status = 'All', searchText = '' } = options;
+
+    let filteredTasks = this.tasks;
+    if (searchText) {
+      filteredTasks = filteredTasks.filter((task) => {
+        const matchedResult =
+          task.title.toLowerCase().includes(searchText) ||
+          task.description.toLowerCase().includes(searchText) ||
+          task.category.toLowerCase().includes(searchText) ||
+          task.priority.toLowerCase().includes(searchText);
+        return matchedResult;
+      });
+    }
+    // Filter by category
+    if (category !== 'All') {
+      filteredTasks = filteredTasks.filter(
+        (task) => task.category.toLowerCase() === category.toLowerCase(),
+      );
+    }
+    //Filer by priority
+    if (priority !== 'All') {
+      filteredTasks = filteredTasks.filter(
+        (task) => task.priority.toLowerCase() === priority.toLowerCase(),
+      );
+    }
+    //Filter by status
+    if (status !== 'All') {
+      filteredTasks = filteredTasks.filter((task) => task.status === status);
+    }
+    return filteredTasks;
   }
 
   //Sort task method

@@ -2,6 +2,11 @@ import { createTaskElement } from '../templates/templates.js';
 import { showNoTasksMessage } from '../helpers/notifications.js';
 class TaskView {
   constructor() {
+    this.initializeProperties();
+    this.initializeDOMElements();
+  }
+
+  initializeProperties() {
     this.listViewColumns = {
       toDo: document.querySelector('.list-view .task-column.task-column--todo .task-list'),
       running: document.querySelector(
@@ -21,7 +26,9 @@ class TaskView {
         '.board-view .task-column.task-column--completed .task-list',
       ),
     };
+  }
 
+  initializeDOMElements() {
     this.createTaskOverlay = document.getElementById('create-task-modal');
     this.editTaskOverlay = document.getElementById('edit-task-modal');
     this.notification = document.querySelector('.notification');
@@ -134,6 +141,7 @@ class TaskView {
           break;
       }
     });
+
     //show message in case no matched results
     this.showNoTasksInColumns([
       { column: popupListToDoColumn, message: 'No tasks in To Do' },
@@ -176,6 +184,7 @@ class TaskView {
       document.body.classList.remove('overflow-hidden');
     }
   }
+
   // Populate edit form
   populateEditForm(task) {
     document.querySelector('#task-title').value = task.title;

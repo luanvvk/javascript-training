@@ -422,13 +422,6 @@
   font-size: var(--font-size-15);
 }
 
-.sort-buttons {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: var(--space-32);
-}
-
 /* confirmation delete popup */
 .confirmation-container {
   background-color: var(--light-pink);

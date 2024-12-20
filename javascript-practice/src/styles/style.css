@@ -226,11 +226,6 @@
   display: inline-block;
 }
 
-.app__main {
-  display: flex;
-  flex-direction: column;
-}
-
 .board {
   width: 100%;
   margin: 0 auto;
@@ -461,8 +456,7 @@
 .task-end-input,
 .default-option,
 .priority-options,
-.category-options,
-.status-options {
+.category-options {
   flex: 1;
   min-height: 4rem;
   font-size: var(--font-size-15);
@@ -506,22 +500,16 @@
 
 .default-option,
 .priority-options,
-.category-options,
-.status-options {
+.category-options {
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
 
 .priority-options,
-.category-options,
-.status-options {
+.category-options {
   display: inline-flex;
   padding: var(--space-8) 0;
-}
-
-.status-options {
-  margin-left: var(--space-8);
 }
 
 .form {
@@ -683,9 +671,6 @@
     grid-template-areas: 'toDo running completed';
     align-items: flex-start;
   }
-  .hiding-overlay {
-    display: none;
-  }
 }
 
 @media (min-width: 650px) and (max-width: 1000px) {
@@ -699,9 +684,6 @@
   }
   .task-column.task-column--completed {
     margin-top: var(--space-32);
-  }
-  .hiding-overlay {
-    display: none;
   }
   .filter-wrapper {
     padding: 0 var(--space-4);
