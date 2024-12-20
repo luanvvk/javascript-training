@@ -64,9 +64,7 @@ class TaskController {
     this.loadTasksFromLocalStorage();
     this.setupDynamicForm();
     this.setupEventListeners();
-    this.setupFilterEventListeners();
     this.renderAllTasks();
-    renderSortingUI();
   }
 
   loadTasksFromLocalStorage() {
@@ -94,6 +92,7 @@ class TaskController {
     createFormElements();
     setupPopupDropdowns();
     editFormElements();
+    renderSortingUI();
   }
 
   setupEventListeners() {
@@ -101,6 +100,7 @@ class TaskController {
     this.setupOverlayDelegation();
     this.setupNavigationDelegation();
     this.setupSearchListener();
+    this.setupFilterEventListeners();
     this.setupFilterEventListeners();
     this.setupSidebarToggleListener();
   }

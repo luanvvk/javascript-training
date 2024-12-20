@@ -42,71 +42,6 @@ export function createTaskElement(task) {
 }
 
 // ALL TASK POPUP
-export function createAllTasksListView(tasks) {
-  // Create main container for list view
-  const listViewContainer = document.createElement('div');
-  listViewContainer.classList.add('all-tasks-list-view');
-
-  // Create table structure
-  const table = document.createElement('table');
-  table.classList.add('tasks-list-table');
-
-  // Create table header
-  const thead = document.createElement('thead');
-  thead.innerHTML = `
-    <tr>
-      <th>Title</th>
-      <th>Start Date</th>
-      <th>End Date</th>
-      <th>Priority</th>
-      <th>Category</th>
-      <th>Status</th>
-      <th>Actions</th>
-    </tr>
-  `;
-  table.appendChild(thead);
-
-  // Create table body
-  const tbody = document.createElement('tbody');
-  tasks.forEach((task) => {
-    const row = document.createElement('tr');
-    row.dataset.taskId = task.id;
-    row.innerHTML = `
-      <td>${task.title}</td>
-      <td>${task.startDate || 'N/A'}</td>
-      <td>${task.endDate || 'N/A'}</td>
-      <td>
-        <span class="priority-badge priority-${task.priority.toLowerCase().replace(/\s+/g, '-')}">
-          ${task.priority}
-        </span>
-      </td>
-      <td>${task.category}</td>
-      <td>
-        <span class="status-badge status-${task.status.toLowerCase().replace(/\s+/g, '-')}">
-          ${task.status}
-        </span>
-      </td>
-      <td>
-        <div class="task-list-actions">
-          <button class="task-edit" aria-label="Edit Task">
-            <img src="./assets/images/icons/edit-icon.svg" alt="Edit"/>
-          </button>
-          <button class="task-delete" aria-label="Delete Task">
-            <img src="./assets/images/icons/delete-icon.svg" alt="Delete"/>
-          </button>
-        </div>
-      </td>
-    `;
-    tbody.appendChild(row);
-  });
-
-  table.appendChild(tbody);
-  listViewContainer.appendChild(table);
-
-  return listViewContainer;
-}
-
-// ALL TASK POPUP
 export function createFormElements() {
   // Task Name Input
   const createTaskOverlay = document.getElementById('create-task-overlay');
@@ -181,10 +116,19 @@ export function createDropdown(options, containerSelector, dropdownType, overlay
     const optionElement = document.createElement('div');
     optionElement.classList.add(`${dropdownType}-options`);
     optionElement.textContent = option.value;
-    optionElement.addEventListener('click', () => {
+
+    optionElement.addEventListener('click', (e) => {
+      e.stopPropagation();
       container.querySelector('.default-option').textContent = option.value;
       dropdown.style.display = 'none';
+
+      // Dispatch a custom event for the selection
+      const event = new CustomEvent('optionSelected', {
+        detail: { value: option.value, type: dropdownType },
+      });
+      container.dispatchEvent(event);
     });
+
     dropdown.appendChild(optionElement);
   });
 
@@ -192,10 +136,33 @@ export function createDropdown(options, containerSelector, dropdownType, overlay
 
   // Toggle dropdown visibility
   container.addEventListener('click', (e) => {
-    dropdown.style.display = dropdown.style.display === 'none' ? 'flex' : 'none';
-    e.stopPropagation();
+    // Only toggle if clicking the container itself or the default option
+    if (e.target.closest('.default-option-container')) {
+      const isVisible = dropdown.style.display === 'flex';
+
+      // Close all other open dropdowns first
+      const allDropdowns = document.querySelectorAll(`.${dropdownType}-dropdown`);
+      allDropdowns.forEach((d) => (d.style.display = 'none'));
+
+      // Toggle this dropdown
+      dropdown.style.display = isVisible ? 'none' : 'flex';
+      e.stopPropagation();
+    }
   });
 
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!container.contains(e.target)) {
+      dropdown.style.display = 'none';
+    }
+  });
+
+  // Close dropdown when pressing Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      dropdown.style.display = 'none';
+    }
+  });
   return dropdown;
 }
 
