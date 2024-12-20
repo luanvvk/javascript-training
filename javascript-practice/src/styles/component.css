@@ -16,8 +16,9 @@
 .task-item-actions {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   align-items: center;
+  gap: 0.5rem;
 }
 
 .task-item__details {
@@ -41,27 +42,248 @@
   color: var(--light-pink);
 }
 
+.default-option-container {
+  padding: 0 0.8rem;
+}
+
+.status-button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.confirm-button-desc {
+  font-size: var(--font-size-13);
+  font-weight: var(--regular-weight);
+  color: var(--light-pink);
+}
+
 .button-icon {
-  width: 2.5rem;
-  height: 2.5rem;
-  background-color: var(--light-pink);
+  width: 3rem;
+  height: 3rem;
   border-radius: 20%;
 }
-/* Sort components */
 
-.priority-sort {
+.task-edit-icon,
+.task-delete-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+/* buttons */
+
+.btn {
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: var(--border-radius-6);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: var(--font-size-17);
+  font-weight: var(--bold-weight);
+}
+
+.btn-cancel {
+  background-color: var(--pink);
+  color: var(--dark-gray);
+}
+
+.btn-primary {
+  background-color: var(--blue);
+  color: var(--white);
+}
+
+.btn-secondary {
+  display: flex;
+  gap: var(--space-8);
+  background-color: var(--bright-red);
+  color: var(--white);
+}
+
+.btn-success {
+  background-color: var(--cyan-blue);
+  color: var(--white);
+}
+
+.confirm-delete-btn,
+.cancel-delete-btn {
+  padding: 1rem 2rem;
+  border-radius: var(--border-radius-4);
+  font-size: var(--font-size-15);
+  font-weight: var(--bold-weight);
+  cursor: pointer;
+}
+
+.confirm-delete-btn {
+  background-color: var(--bright-red);
+  color: var(--white);
+  border: none;
+}
+
+.cancel-delete-btn {
+  background-color: var(--blue);
+  color: var(--white);
+  border: 1px solid var(--gray);
+}
+/* popup style */
+.overlay,
+.confirmation-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  z-index: 1000;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: var(--space-8);
-  padding: var(--space-8);
+  visibility: hidden;
 
-  background-color: var(--cyan-blue);
-  border: var(--border-radius-2) solid var(--cyan-blue);
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+}
+
+.overlay.toggle {
+  width: 100%;
+}
+
+.overlay.hidden {
+  display: none;
+}
+
+.overlay:not(.hidden) {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal__container {
+  position: relative;
+  width: 100%;
+  max-width: 55rem;
+  max-height: 90vh;
+
+  background-color: var(--white);
+  border-radius: 12px;
+  overflow-y: auto;
+  transform: scale(0.7);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.overlay:not(.hidden) .modal__container {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 2rem;
+  border-bottom: 0.2rem solid var(--gray);
+  background-color: var(--light-cyan-blue);
+}
+
+.modal__title {
+  margin: 0;
+  font-size: var(--font-size-15);
+  font-weight: var(--bold-weight);
+}
+
+.modal__close {
+  background: none;
+  border: none;
+  font-size: 2.5rem;
+  color: var(--bright-red);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.modal__close:hover {
+  color: var(--dark-gray);
+}
+
+/* Sort components */
+.sort__dropdown-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-4);
+
   border-radius: var(--border-radius-2);
+  background-color: var(--cyan-blue);
+  height: 3.3rem;
+  width: 13rem;
+}
+
+.filter__dynamic-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-16);
+  min-height: 3rem;
+}
+
+.filter__field-dropdown,
+.filter__options-dropdown,
+.sort__dropdown {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-8) var(--space-4);
+  border: none;
+  width: 13rem;
+
+  border-radius: var(--border-radius-2);
+  background-color: var(--cyan-blue);
+  outline: none;
+
   color: var(--light-pink);
   font-size: var(--font-size-13);
   font-weight: var(--bold-weight);
+}
+
+.sort__dropdown {
+  appearance: none;
+  padding-left: var(--space-8);
+  padding-right: 0;
+}
+
+.sort__order-toggle {
+  color: var(--light-pink);
+  padding-right: var(--space-4);
+}
+
+.filter__actions-container,
+.filter__actions {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--space-16);
+  align-items: center;
+}
+
+.filter__actions {
+  gap: var(--space-16);
+}
+
+.filter__label,
+.sort__label {
+  font-size: var(--font-size-17);
+  font-weight: var(--bold-weight);
+  text-align: left;
+  color: var(--cyan-blue);
+  display: inline-flex;
+}
+
+.sort__icon {
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
 .form__priority-select,
@@ -207,6 +429,32 @@
   gap: var(--space-32);
 }
 
+/* confirmation delete popup */
+.confirmation-container {
+  background-color: var(--light-pink);
+
+  border-radius: var(--border-radius-7);
+  max-width: 40rem;
+  width: 90%;
+  text-align: center;
+}
+
+.modal__confirmation-content {
+  margin: 2rem 0;
+}
+
+.modal__confirmation-message {
+  font-size: var(--font-size-15);
+  font-weight: var(--bold-weight);
+  color: var(--black);
+}
+
+.modal__confirmation-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
 /* text area input */
 .textarea-input {
   min-height: var(--space-128);
@@ -227,6 +475,14 @@
 }
 
 /* Notification prompted after user deleted a task */
+.no-tasks-message {
+  text-align: center;
+  font-size: var(--font-size-15);
+  color: var(--black);
+  margin-top: 1rem;
+  opacity: 0.8;
+}
+
 .notification,
 .error-notification {
   z-index: 10000;
@@ -289,17 +545,4 @@
   font-weight: var(--regular-weight);
   font-size: var(--font-size-20);
   color: var(--white);
-}
-
-.hiding-overlay {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.5;
-  background-color: black;
-}
-
-.hiding-overlay.hidden {
-  display: none;
 }

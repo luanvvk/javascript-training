@@ -71,6 +71,13 @@
   display: none;
 }
 
+.app__nav-icon-image--link {
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: var(--light-pink);
+  border-radius: 20%;
+}
+
 .app__nav-link .icon {
   display: block;
   min-width: 6rem;
@@ -229,25 +236,10 @@
   margin: 0 auto;
 }
 
-/*Task body*/
+/* lists view */
 .list-view {
   display: flex;
   flex-direction: column;
-}
-
-.status-button {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: var(--space-8);
-}
-
-#edit-task-modal.mark-completed {
-  justify-items: center;
-}
-
-/* lists view */
-.list-view {
   margin-top: var(--space-32);
 }
 
@@ -305,12 +297,6 @@
 .list-view .duration-badge,
 .list-view .confirm-button-desc {
   color: var(--cyan-blue);
-}
-
-.confirm-button-desc {
-  font-size: var(--font-size-13);
-  font-weight: var(--regular-weight);
-  color: var(--light-pink);
 }
 
 .list-view .button-icon,
@@ -379,6 +365,13 @@
   gap: var(--space-8);
 }
 
+.task-list.task-list--in-progress .button-icon {
+  width: 3rem;
+  height: 3rem;
+  background-color: var(--light-pink);
+  border: 0.3rem solid var(--cyan-blue);
+}
+
 /* broad view */
 .board-view {
   overflow-x: auto;
@@ -398,6 +391,11 @@
 
 .board-view .task-item {
   margin: var(--space-16) auto 0;
+}
+
+.board-view .task-item-actions {
+  justify-content: center;
+  gap: var(--space-8);
 }
 
 .board-view .task-list.task-list--todo .task-item {
@@ -425,20 +423,6 @@
 }
 
 /*Create task*/
-.all-task-modal__header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 12rem;
-  margin: 10rem 13% var(--space-32);
-
-  border-radius: var(--border-radius-4);
-  font-size: var(--font-size-38);
-  font-weight: var(--bold-weight);
-  color: var(--white);
-  background-color: var(--light-cyan-blue);
-}
-
 .form__label {
   display: block;
   padding-bottom: var(--space-8);
@@ -511,16 +495,6 @@
   cursor: pointer;
 }
 
-.task-start-input::-webkit-inner-spin-button,
-.task-end-input::-webkit-inner-spin-button {
-  z-index: 1;
-}
-
-.task-start-input::-webkit-clear-button,
-.task-end-input::-webkit-clear-button {
-  z-index: 1;
-}
-
 .form__task-name,
 .form__task-desc,
 .form__task-priority,
@@ -566,29 +540,6 @@
   width: 100%;
 }
 
-/* Edit popup  */
-.edit-task-button,
-.form__actions .mark-completed,
-.delete-button {
-  width: 20rem;
-}
-
-.form__actions {
-  display: flex;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-  gap: var(--space-48);
-  margin-top: 2rem;
-}
-/* create task overlay */
-.overlay.toggle {
-  width: 100%;
-}
-
-.overlay.hidden {
-  display: none;
-}
-
 .list-view.task-columns {
   display: flex;
   flex-direction: column;
@@ -602,171 +553,10 @@
   width: 100%;
 }
 
-.no-tasks-message {
-  text-align: center;
-  font-size: var(--font-size-15);
-  color: var(--black);
-  margin-top: 1rem;
-  opacity: 0.8;
-}
-
-.sort__dropdown-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: var(--space-4);
-
-  border-radius: var(--border-radius-2);
-  background-color: var(--cyan-blue);
-  height: 3.3rem;
-  width: 13rem;
-}
-
-.filter__dynamic-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: var(--space-16);
-  min-height: 3rem;
-}
-
-.filter__field-dropdown,
-.filter__options-dropdown,
-.sort__dropdown {
-  display: flex;
-  flex-direction: column;
-  padding: var(--space-8) var(--space-4);
-  border: none;
-  width: 13rem;
-
-  border-radius: var(--border-radius-2);
-  background-color: var(--cyan-blue);
-  outline: none;
-
-  color: var(--light-pink);
-  font-size: var(--font-size-13);
-  font-weight: var(--bold-weight);
-}
-
-.sort__dropdown {
-  appearance: none;
-  padding-left: var(--space-8);
-  padding-right: 0;
-}
-
-.sort__order-toggle {
-  color: var(--light-pink);
-  padding-right: var(--space-4);
-}
-
-.filter__actions-container,
-.filter__actions {
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: var(--space-16);
-  align-items: center;
-}
-
-.filter__actions {
-  gap: var(--space-16);
-}
-
-.filter__label,
-.sort__label {
-  font-size: var(--font-size-17);
-  font-weight: var(--bold-weight);
-  text-align: left;
-  color: var(--cyan-blue);
-  display: inline-flex;
-}
-
-.task-edit-icon,
-.task-delete-icon {
-  width: 2.5rem;
-  height: 2.5rem;
-}
-/* popup style */
-.overlay,
-.confirmation-popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-
-  z-index: 1000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  visibility: hidden;
-
-  opacity: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  transition:
-    opacity 0.3s ease,
-    visibility 0.3s ease;
-}
-
-.overlay:not(.hidden) {
-  opacity: 1;
-  visibility: visible;
-}
-
-.modal__container {
-  position: relative;
-  width: 100%;
-  max-width: 55rem;
-  max-height: 90vh;
-
-  background-color: var(--white);
-  border-radius: 12px;
-  overflow-y: auto;
-  transform: scale(0.7);
-  opacity: 0;
-  transition: all 0.3s ease;
-}
-
-.overlay:not(.hidden) .modal__container {
-  transform: scale(1);
-  opacity: 1;
-}
-
-.modal__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.2rem 2rem;
-  border-bottom: 0.2rem solid var(--gray);
-  background-color: var(--light-cyan-blue);
-}
-
-.modal__title {
-  margin: 0;
-  font-size: var(--font-size-15);
-  font-weight: var(--bold-weight);
-}
-
-.modal__close {
-  background: none;
-  border: none;
-  font-size: 2.5rem;
-  color: var(--bright-red);
-  cursor: pointer;
-  transition: color 0.2s ease;
-}
-
 .form__grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
-}
-
-.modal__close:hover {
-  color: var(--dark-gray);
 }
 
 .task-name-container,
@@ -794,38 +584,25 @@
   transform: translateY(-50%);
 }
 
-.btn {
-  padding: 1rem 1.5rem;
-  border: none;
-  border-radius: var(--border-radius-6);
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  font-size: var(--font-size-17);
-  font-weight: var(--bold-weight);
+/* Edit task modal */
+.edit-task-button,
+.form__actions .mark-completed,
+.delete-button {
+  width: 20rem;
 }
 
-.btn-cancel {
-  background-color: var(--pink);
-  color: var(--dark-gray);
-}
-
-.btn-primary {
-  background-color: var(--blue);
-  color: var(--white);
-}
-
-.btn-secondary {
+.form__actions {
   display: flex;
-  gap: var(--space-8);
-  background-color: var(--bright-red);
-  color: var(--white);
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: var(--space-48);
+  margin-top: 2rem;
 }
 
-.btn-success {
-  background-color: var(--cyan-blue);
-  color: var(--white);
+#edit-task-modal.mark-completed {
+  justify-items: center;
 }
-
+/* all task modal */
 .all-task-overlay {
   z-index: 100;
   position: absolute;
@@ -838,69 +615,25 @@
   overflow-y: auto;
 }
 
-.app__nav-icon-image--link {
-  width: 2.5rem;
-  height: 2.5rem;
-  background-color: var(--light-pink);
-  border-radius: 20%;
-}
+.all-task-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 12rem;
+  margin: 10rem 13% var(--space-32);
 
-.sort__icon {
-  width: 2.5rem;
-  height: 2.5rem;
+  border-radius: var(--border-radius-4);
+  font-size: var(--font-size-38);
+  font-weight: var(--bold-weight);
+  color: var(--white);
+  background-color: var(--light-cyan-blue);
 }
 
 #all-task-modal .board-view.hidden,
 #all-task-modal .list-view.hidden {
   display: none;
 }
-/* confirmation delete popup */
-.confirmation-container {
-  background-color: var(--light-pink);
 
-  border-radius: var(--border-radius-7);
-  max-width: 40rem;
-  width: 90%;
-  text-align: center;
-}
-
-.modal__confirmation-content {
-  margin: 2rem 0;
-}
-
-.modal__confirmation-message {
-  font-size: var(--font-size-15);
-  font-weight: var(--bold-weight);
-  color: var(--black);
-}
-
-.modal__confirmation-actions {
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-top: 1.5rem;
-}
-
-.confirm-delete-btn,
-.cancel-delete-btn {
-  padding: 1rem 2rem;
-  border-radius: var(--border-radius-4);
-  font-size: var(--font-size-15);
-  font-weight: var(--bold-weight);
-  cursor: pointer;
-}
-
-.confirm-delete-btn {
-  background-color: var(--bright-red);
-  color: var(--white);
-  border: none;
-}
-
-.cancel-delete-btn {
-  background-color: var(--blue);
-  color: var(--white);
-  border: 1px solid var(--gray);
-}
 @media (min-width: 800px) {
   .app__sidebar {
     width: 25.5rem;
