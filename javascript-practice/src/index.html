@@ -77,7 +77,7 @@
               <span class="app__nav-text">All Tasks</span>
             </a>
           </li>
-          <li class="app__sidebar-items hide">
+          <li class="app__sidebar-items hidden">
             <a class="add-a-task" href="javascript:void(0)">
               <span class="icon">
                 <img
@@ -96,16 +96,16 @@
       <main class="app-main">
         <div class="notification">
           <img
-            class="completed-task-icon"
+            class="notification__icon"
             src="./assets/images/icons/menu-bar-icons/completed-task-icon.svg"
-            alt="completed-task-icon"
+            alt="notification__icon "
           />
-          <p class="notification-message">The task was deleted</p>
+          <p class="notification__message">The task was deleted</p>
         </div>
-        <section class="top-bar">
-          <a class="menu-bar-toggle" href="javascript:void(0)">
+        <section class="topbar">
+          <a class="topbar__menu-toggle" href="javascript:void(0)">
             <img
-              class="menu-bar-icon"
+              class="topbar__menu-icon"
               src="./assets/images/icons/header-icons/menu-icon.svg"
               alt="menu-bar-icon"
               loading="lazy"
@@ -126,26 +126,26 @@
               loading="lazy"
             />
           </div>
-          <div class="utility-icons">
-            <a class="notification-icon" href="javascript:void(0)"
+          <div class="utility">
+            <a class="utility__link utility__link--notification" href="javascript:void(0)"
               ><img
-                class="list-icon"
+                class="utility__icon"
                 src="./assets/images/icons/header-icons/notification-icon.svg"
                 alt="notification-icon"
                 loading="lazy"
             /></a>
 
-            <a class="theme-icon" href="javascript:void(0)"
+            <a class="utility__link utility__link--theme" href="javascript:void(0)"
               ><img
-                class="theme-icon"
+                class="utility__icon"
                 src="./assets/images/icons/header-icons/night-mode-icon.svg"
                 alt="theme-icon"
                 loading="lazy"
             /></a>
 
-            <a class="user-info-icon" href="javascript:void(0)">
+            <a class="utility__link utility__link--user" href="javascript:void(0)">
               <img
-                class="user-icon-icon"
+                class="utility__icon"
                 src="./assets/images/icons/header-icons/user-icon.svg"
                 alt="user-icon"
                 loading="lazy"
@@ -154,115 +154,116 @@
           </div>
         </section>
 
-        <section class="app-wrapper main">
-          <button class="add-a-task desktop">
+        <section class="board">
+          <button class="board__add-task">
             <img
-              class="add-task-icon"
+              class="board__add-task-icon"
               src="./assets/images/icons/add-task-icon/add-task-icon.svg"
               alt="add-task-icon"
             />
           </button>
-          <article class="list-view hide">
-            <div class="task-column pink">
-              <h2 class="list-header">
-                <span class="circle background-pink"></span><span class="text">To do tasks</span>
+          <article class="list-view hidden">
+            <div class="task-column task-column--todo">
+              <h2 class="task-column__header">
+                <span class="task-column__indicator task-column__indicator--pink"></span
+                ><span class="task-column__title">To do tasks</span>
               </h2>
-
-              <ul class="task-list pink"></ul>
+              <ul class="task-list task-list--todo"></ul>
             </div>
-            <div class="task-column blue">
-              <h2 class="list-header">
-                <span class="circle background-blue"></span>
-                <span class="text">In Progress</span>
+            <div class="task-column task-column--in-progress">
+              <h2 class="task-column__header">
+                <span class="task-column__indicator task-column__indicator--blue"></span>
+                <span class="task-column__title">In Progress</span>
               </h2>
-              <ul class="task-list blue"></ul>
+              <ul class="task-list task-list--in-progress"></ul>
             </div>
-            <div class="task-column green">
-              <h2 class="list-header">
-                <span class="circle background-green"></span
-                ><span class="text">Completed tasks</span>
+            <div class="task-column task-column--completed">
+              <h2 class="task-column__header">
+                <span class="task-column__indicator task-column__indicator--green"></span
+                ><span class="task-column__title">Completed tasks</span>
               </h2>
-              <ul class="task-list green"></ul>
+              <ul class="task-list task-list--completed"></ul>
             </div>
           </article>
           <article class="board-view">
-            <div class="task-column pink">
-              <h2 class="list-header">
-                <span class="circle background-pink"></span><span class="text">To do tasks</span>
+            <div class="task-column task-column--todo">
+              <h2 class="task-column__header">
+                <span class="task-column__indicator task-column__indicator--pink"></span
+                ><span class="task-column__title">To do tasks</span>
               </h2>
 
-              <ul class="task-list pink"></ul>
+              <ul class="task-list task-list--todo"></ul>
             </div>
-            <div class="task-column blue">
-              <h2 class="list-header">
-                <span class="circle background-blue"></span>
-                <span class="text">Running tasks</span>
+            <div class="task-column task-column--in-progress">
+              <h2 class="task-column__header">
+                <span class="task-column__indicator task-column__indicator--blue"></span>
+                <span class="task-column__title">In Progress</span>
               </h2>
-              <ul class="task-list blue"></ul>
+              <ul class="task-list task-list--in-progress"></ul>
             </div>
-            <div class="task-column green">
-              <h2 class="list-header">
-                <span class="circle background-green"></span
-                ><span class="text">Completed tasks</span>
+            <div class="task-column task-column--completed">
+              <h2 class="task-column__header">
+                <span class="task-column__indicator task-column__indicator--green"></span
+                ><span class="task-column__title">Completed tasks</span>
               </h2>
-              <ul class="task-list green"></ul>
+              <ul class="task-list task-list--completed"></ul>
             </div>
           </article>
         </section>
         <!-- create task overlay -->
-        <section id="create-task-overlay" class="overlay set-task-overlay hide" draggable="false">
-          <article class="popup-container">
-            <div class="popup-header">
-              <h2 class="popup-title">Create New Task</h2>
-              <button class="close-popup">&times;</button>
+        <section id="create-task-modal" class="overlay hidden" draggable="false">
+          <article class="modal__container">
+            <div class="modal__header">
+              <h2 class="modal__title">Create New Task</h2>
+              <button class="modal__close">&times;</button>
             </div>
 
             <form class="form" autocomplete="off">
-              <div class="form-grid">
-                <div class="task-name"></div>
-                <div class="task-start"></div>
-                <div class="task-end"></div>
-                <div class="task-priority">
-                  <label class="label" for="task-priority">Priority</label>
-                  <div class="priority-select"></div>
+              <div class="form__grid">
+                <div class="form__task-name"></div>
+                <div class="form__task-start"></div>
+                <div class="form__task-end"></div>
+                <div class="form__task-priority">
+                  <label class="form__label" for="form__task-priority">Priority</label>
+                  <div class="form__priority-select"></div>
                 </div>
-                <div class="task-category-input">
-                  <label class="label" for="task-category">Category</label>
-                  <div class="category-select"></div>
+                <div class="form__task-category">
+                  <label class="form__label" for="form__task-category">Category</label>
+                  <div class="form__category-select"></div>
                 </div>
-                <div class="task-desc"></div>
+                <div class="form__task-desc"></div>
               </div>
-              <div class="button-controls">
-                <button class="add-to-list">Add to list</button>
-                <button class="cancel">Cancel</button>
+              <div class="form__actions">
+                <button class="form__button form__button--add">Add to list</button>
+                <button class="form__button form__button--cancel">Cancel</button>
               </div>
             </form>
           </article>
         </section>
         <!-- edit task overlay -->
-        <section id="edit-task-overlay" class="overlay hide" draggable="false">
-          <article class="popup-container">
-            <div class="popup-header">
-              <h2 class="popup-title">Edit Task</h2>
-              <button class="close-popup">&times;</button>
+        <section id="edit-task-modal" class="overlay hidden" draggable="false">
+          <article class="modal__container">
+            <div class="modal__header">
+              <h2 class="modal__title">Edit Task</h2>
+              <button class="modal__close">&times;</button>
             </div>
 
             <form class="form" autocomplete="off">
-              <div class="form-grid">
-                <div class="task-name"></div>
-                <div class="task-start"></div>
-                <div class="task-end"></div>
+              <div class="form__grid">
+                <div class="form__task-name"></div>
+                <div class="form__task-start"></div>
+                <div class="form__task-end"></div>
 
-                <div class="task-priority">
-                  <h2 class="label">Priority</h2>
-                  <div class="priority-select"></div>
+                <div class="form__task-priority">
+                  <h2 class="form__label">Priority</h2>
+                  <div class="form__priority-select"></div>
                 </div>
-                <div class="task-category-input">
-                  <h2 class="label">Category</h2>
-                  <div class="category-select"></div>
+                <div class="form__task-category">
+                  <h2 class="form__label">Category</h2>
+                  <div class="form__category-select"></div>
                 </div>
-                <div class="task-desc">
-                  <label for="description" class="label">Task description</label>
+                <div class="form__task-desc">
+                  <label for="description" class="form__label">Task description</label>
                   <textarea
                     name="description"
                     rows="8"
@@ -271,29 +272,29 @@
                   ></textarea>
                 </div>
               </div>
-              <div class="edit-controls"></div>
+              <div class="form__actions"></div>
             </form>
           </article>
         </section>
         <!-- all task popup -->
-        <section id="all-task-popup" class="all-task-overlay hide" draggable="false">
-          <h2 class="popup-heading">All tasks</h2>
+        <section id="all-task-modal" class="all-task-overlay hidden" draggable="false">
+          <h2 class="all-task-modal__header">All tasks</h2>
           <div class="filter-wrapper">
             <article class="filter__dynamic-container">
-              <label class="filter-label" for="filter-field-dropdown">Filter by:</label>
-              <select class="filter-field-dropdown" name="filter-field-dropdown"></select>
-              <select class="filter-options-dropdown" name="filter-options-dropdown"></select>
+              <label class="filter__label" for="filter__field-dropdown">Filter by:</label>
+              <select class="filter__field-dropdown" name="filter__field-dropdown"></select>
+              <select class="filter__options-dropdown" name="filter__options-dropdown"></select>
             </article>
             <article class="filter__actions">
-              <div class="filter-container">
-                <label for="sort-dropdown" class="sort-label">Sort by:</label>
-                <div class="sort-dropdown-content">
-                  <select class="sort-dropdown" name="sort-dropdown"></select>
-                  <button class="sort-order-toggle">
+              <div class="filter__actions-container">
+                <label for="sort__dropdown" class="sort__label">Sort by:</label>
+                <div class="sort__dropdown-content">
+                  <select class="sort__dropdown" name="sort__dropdown"></select>
+                  <button class="sort__order-toggle">
                     <img
-                      class="sort-icon"
+                      class="sort__icon"
                       src="./assets/images/icons/sort-icons/sort-icon-asc.png"
-                      alt="sort-icon-up"
+                      alt="sort__icon-up"
                     />
                   </button>
                 </div>
@@ -316,72 +317,74 @@
             </article>
           </div>
 
-          <div class="board-view task-columns hide">
+          <div class="board-view task-columns hidden">
             <!-- To Do Column -->
             <div class="task-column todo">
-              <h3 class="list-header">
-                <span class="circle background-pink"></span><span class="text">To do tasks</span>
+              <h3 class="task-column__header">
+                <span class="task-column__indicator task-column__indicator--pink"></span
+                ><span class="task-column__title">To do tasks</span>
               </h3>
-              <ul class="task-list pink"></ul>
+              <ul class="task-list task-list--todo"></ul>
             </div>
             <!-- In Progress Column -->
             <div class="task-column in-progress">
-              <h3 class="list-header">
-                <span class="circle background-blue"></span>
-                <span class="text">In Progress</span>
+              <h3 class="task-column__header">
+                <span class="task-column__indicator task-column__indicator--blue"></span>
+                <span class="task-column__title">In Progress</span>
               </h3>
-              <ul class="task-list blue"></ul>
+              <ul class="task-list task-list--in-progress"></ul>
             </div>
             <!-- Completed Column -->
             <div class="task-column completed">
-              <h3 class="list-header">
-                <span class="circle background-green"></span
-                ><span class="text">Completed tasks</span>
+              <h3 class="task-column__header">
+                <span class="task-column__indicator task-column__indicator--green"></span
+                ><span class="task-column__title">Completed tasks</span>
               </h3>
-              <ul class="task-list green"></ul>
+              <ul class="task-list task-list--completed"></ul>
             </div>
           </div>
           <div class="list-view task-columns">
             <!-- To Do Column -->
             <div class="task-column todo">
-              <h3 class="list-header">
-                <span class="circle background-pink"></span><span class="text">To do tasks</span>
+              <h3 class="task-column__header">
+                <span class="task-column__indicator task-column__indicator--pink"></span
+                ><span class="task-column__title">To do tasks</span>
               </h3>
-              <ul class="task-list pink"></ul>
+              <ul class="task-list task-list--todo"></ul>
             </div>
             <!-- In Progress Column -->
             <div class="task-column in-progress">
-              <h3 class="list-header">
-                <span class="circle background-blue"></span>
-                <span class="text">In Progress</span>
+              <h3 class="task-column__header">
+                <span class="task-column__indicator task-column__indicator--blue"></span>
+                <span class="task-column__title">In Progress</span>
               </h3>
-              <ul class="task-list blue"></ul>
+              <ul class="task-list task-list--in-progress"></ul>
             </div>
             <!-- Completed Column -->
             <div class="task-column completed">
-              <h3 class="list-header">
-                <span class="circle background-green"></span
-                ><span class="text">Completed tasks</span>
+              <h3 class="task-column__header">
+                <span class="task-column__indicator task-column__indicator--green"></span
+                ><span class="task-column__title">Completed tasks</span>
               </h3>
-              <ul class="task-list green"></ul>
+              <ul class="task-list task-list--completed"></ul>
             </div>
           </div>
         </section>
         <section
-          id="delete-confirmation-popup"
-          class="overlay confirmation-popup hide"
+          id="confirmation-popup--delete"
+          class="overlay confirmation-popup hidden"
           draggable="false"
         >
-          <article class="popup-container confirmation-container">
-            <div class="popup-header">
-              <h2 class="popup-title">Confirm Deletion</h2>
-              <button class="close-popup">&times;</button>
+          <article class="modal__container confirmation-container">
+            <div class="modal__header">
+              <h2 class="modal__title">Confirm Deletion</h2>
+              <button class="modal__close">&times;</button>
             </div>
-            <div class="confirmation-content">
-              <p class="confirmation-message">Are you sure you want to delete this task?</p>
-              <div class="confirmation-actions">
-                <button class="confirm-delete-btn">Delete</button>
-                <button class="cancel-delete-btn">Cancel</button>
+            <div class="modal__confirmation-content">
+              <p class="modal__confirmation-message">Are you sure you want to delete this task?</p>
+              <div class="modal__confirmation-actions">
+                <button class="btn confirm-delete-btn">Delete</button>
+                <button class="btn cancel-delete-btn">Cancel</button>
               </div>
             </div>
           </article>

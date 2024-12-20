@@ -13,20 +13,20 @@ import {
 
 //Declaration
 // filter criteria
-const filterFieldDropdown = document.querySelector('.filter-field-dropdown');
-const filterOptionsDropdown = document.querySelector('.filter-options-dropdown');
+const filterFieldDropdown = document.querySelector('.filter__field-dropdown');
+const filterOptionsDropdown = document.querySelector('.filter__options-dropdown');
 //sort
-const sortDropdown = document.querySelector('.sort-dropdown');
-const sortOrderToggle = document.querySelector('.sort-order-toggle');
+const sortDropdown = document.querySelector('.sort__dropdown');
+const sortOrderToggle = document.querySelector('.sort__order-toggle');
 //navigate/toggle elements
-const popupBoardView = document.querySelector('#all-task-popup .board-view');
-const popupListView = document.querySelector('#all-task-popup .list-view');
+const popupBoardView = document.querySelector('#all-task-modal .board-view');
+const popupListView = document.querySelector('#all-task-modal .list-view');
 const listView = document.querySelector('.list-view');
 const boardView = document.querySelector('.board-view');
 //sidebar toggle elements
 const searchBarTop = document.querySelector('.search-bar__input-bar');
-const allTaskPopup = document.getElementById('all-task-popup');
-const toggle = document.querySelector('.menu-bar-toggle');
+const allTaskPopup = document.getElementById('all-task-modal');
+const toggle = document.querySelector('.topbar__menu-toggle');
 const sideNavbar = document.querySelector('.app__sidebar');
 const mainBody = document.querySelector('.app-main');
 const appLogoHeading = document.querySelector('.app__logo-text');
@@ -42,14 +42,14 @@ class TaskController {
       field: 'name',
       order: 'asc',
     };
-    this.filterFieldDropdown = document.querySelector('.filter-field-dropdown');
-    this.filterOptionsDropdown = document.querySelector('.filter-options-dropdown');
-    this.sortDropdown = document.querySelector('.sort-dropdown');
-    this.sortOrderToggle = document.querySelector('.sort-order-toggle');
+    this.filterFieldDropdown = document.querySelector('.filter__field-dropdown');
+    this.filterOptionsDropdown = document.querySelector('.filter__options-dropdown');
+    this.sortDropdown = document.querySelector('.sort__dropdown');
+    this.sortOrderToggle = document.querySelector('.sort__order-toggle');
     this.mainContainer = document.querySelector('.app-main');
     this.taskColumns = document.querySelectorAll('.task-list');
-    this.editTaskOverlay = document.getElementById('edit-task-overlay');
-    this.deleteConfirmationPopup = document.getElementById('delete-confirmation-popup');
+    this.editTaskOverlay = document.getElementById('edit-task-modal');
+    this.deleteConfirmationPopup = document.getElementById('confirmation-popup--delete');
     this.pendingTaskToDelete = null;
     this.deleteOrigin = null;
     this.applyFilters = this.applyFilters.bind(this);
@@ -138,20 +138,20 @@ class TaskController {
     // Delegate all overlay-related events
     document.querySelector('.app-main').addEventListener('click', (e) => {
       // Create task events
-      if (e.target.closest('.add-a-task')) {
+      if (e.target.closest('.board__add-task')) {
         this.handleAddTaskButtonClick();
       }
-      if (e.target.closest('.button-controls .add-to-list')) {
+      if (e.target.closest('.form__actions .form__button.form__button--add')) {
         e.preventDefault();
         this.addTask();
       }
 
-      // Cancel button events
-      if (e.target.matches('.cancel, .close-popup')) {
+      // form__button--cancel button events
+      if (e.target.matches('.form__button--cancel, .modal__close')) {
         const overlay = e.target.closest('.overlay');
-        if (overlay.id === 'create-task-overlay') {
+        if (overlay.id === 'create-task-modal') {
           this.view.closeCreateTaskOverlay();
-        } else if (overlay.id === 'edit-task-overlay') {
+        } else if (overlay.id === 'edit-task-modal') {
           this.view.closeEditTaskOverlay();
         }
       }
@@ -188,7 +188,7 @@ class TaskController {
       if (e.target.matches('.confirm-delete-btn')) {
         this.confirmTaskDeletion();
       }
-      if (e.target.matches('.cancel-delete-btn, #delete-confirmation-popup .close-popup')) {
+      if (e.target.matches('.cancel-delete-btn, #confirmation-popup--delete .modal__close')) {
         this.closeDeleteConfirmationPopup();
       }
     });
@@ -263,10 +263,10 @@ class TaskController {
       endDate: document.querySelector('#end-date').value,
       description: document.querySelector('.textarea-input').value.trim(),
       priority: document
-        .querySelector('#edit-task-overlay .priority-select .default-option')
+        .querySelector('#edit-task-modal .form__priority-select .default-option')
         .textContent.trim(),
       category: document
-        .querySelector('#edit-task-overlay .category-select .default-option')
+        .querySelector('#edit-task-modal .form__category-select .default-option')
         .textContent.trim(),
     };
     if (this.validate(updatedTask)) {
@@ -278,11 +278,11 @@ class TaskController {
   }
 
   handleAllTasksNavigation() {
-    const allTaskPopup = document.getElementById('all-task-popup');
-    allTaskPopup.classList.remove('hide');
+    const allTaskPopup = document.getElementById('all-task-modal');
+    allTaskPopup.classList.remove('hidden');
     const width = window.matchMedia('(min-width: 800px)');
     if (width.matches) {
-      document.querySelector('.search-bar__input-bar').classList.toggle('hide');
+      document.querySelector('.search-bar__input-bar').classList.toggle('hidden');
     } else {
       this.mainContainer.classList.toggle('active');
       document.querySelector('.app__sidebar').classList.toggle('active');
@@ -290,8 +290,8 @@ class TaskController {
   }
 
   handleDashboardNavigation() {
-    allTaskPopup.classList.add('hide');
-    searchBarTop.classList.remove('hide');
+    allTaskPopup.classList.add('hidden');
+    searchBarTop.classList.remove('hidden');
     this.view.closeCreateTaskOverlay();
     let width = window.matchMedia('(min-width: 800px)');
     if (!width.matches) {
@@ -321,27 +321,27 @@ class TaskController {
 
   switchToView(viewType) {
     if (viewType === 'board') {
-      listView.classList.add('hide');
-      boardView.classList.remove('hide');
+      listView.classList.add('hidden');
+      boardView.classList.remove('hidden');
     } else {
-      listView.classList.remove('hide');
-      boardView.classList.add('hide');
+      listView.classList.remove('hidden');
+      boardView.classList.add('hidden');
     }
   }
   switchPopupView(viewType) {
     if (viewType === 'board') {
-      popupBoardView.classList.remove('hide');
-      popupListView.classList.add('hide');
+      popupBoardView.classList.remove('hidden');
+      popupListView.classList.add('hidden');
     } else {
-      popupBoardView.classList.add('hide');
-      popupListView.classList.remove('hide');
+      popupBoardView.classList.add('hidden');
+      popupListView.classList.remove('hidden');
     }
   }
 
   //Search event
   setupSearchListener() {
     const mainSearchInput = document.querySelector('.input-bar__main-input');
-    const popupSearchInput = document.querySelector('#all-task-popup .input-bar-mini__main-input');
+    const popupSearchInput = document.querySelector('#all-task-modal .input-bar-mini__main-input');
 
     if (mainSearchInput) {
       mainSearchInput.addEventListener('input', this.searchTasks.bind(this));
@@ -391,8 +391,12 @@ class TaskController {
     const title = document.querySelector('.task-name-input').value.trim();
     const startDate = document.querySelector('#task-start-input').value;
     const endDate = document.querySelector('#task-end-input').value;
-    const priority = document.querySelector('.priority-select .default-option').textContent.trim();
-    const category = document.querySelector('.category-select .default-option').textContent.trim();
+    const priority = document
+      .querySelector('.form__priority-select .default-option')
+      .textContent.trim();
+    const category = document
+      .querySelector('.form__category-select .default-option')
+      .textContent.trim();
     const description = document.querySelector('.textarea-input').value.trim();
     const task = new TaskModel(title, startDate, endDate, description, priority, category);
 
@@ -414,12 +418,12 @@ class TaskController {
     this.pendingTaskToDelete = taskId;
     this.deleteOrigin = origin;
     // Show the confirmation popup
-    this.deleteConfirmationPopup.classList.remove('hide');
+    this.deleteConfirmationPopup.classList.remove('hidden');
     document.body.classList.add('overflow-hidden');
   }
 
   closeDeleteConfirmationPopup() {
-    this.deleteConfirmationPopup.classList.add('hide');
+    this.deleteConfirmationPopup.classList.add('hidden');
     document.body.classList.add('overflow-hidden');
     // Reset pending deletion info
     this.pendingTaskToDelete = null;
@@ -429,7 +433,7 @@ class TaskController {
     console.log(
       `Confirming deletion for task ID: ${this.pendingTaskToDelete}, origin: ${this.deleteOrigin}`,
     );
-    if (this.pendingTaskIdToDelete === null) {
+    if (this.pendingTaskToDelete === null) {
       console.error('No task ID is set for deletion');
       return;
     }
@@ -439,9 +443,9 @@ class TaskController {
     this.saveTasksToLocalStorage();
     this.closeDeleteConfirmationPopup();
 
-    if (this.deleteOrigin === 'all-task-popup') {
-      const allTaskPopup = document.getElementById('all-task-popup');
-      allTaskPopup.classList.remove('hide');
+    if (this.deleteOrigin === 'all-task-modal') {
+      const allTaskPopup = document.getElementById('all-task-modal');
+      allTaskPopup.classList.remove('hidden');
     }
     console.log(`Task deleted. Remaining tasks: ${this.tasks.length}`);
   }
@@ -456,7 +460,7 @@ class TaskController {
   //Search tasks method
   searchTasks(e) {
     const searchText = e.target.value.toLowerCase().trim();
-    const isPopupSearch = e.target.closest('#all-task-popup') !== null;
+    const isPopupSearch = e.target.closest('#all-task-modal') !== null;
     // If search is empty, render all tasks
     if (searchText === '') {
       if (isPopupSearch) {
@@ -555,7 +559,7 @@ class TaskController {
 
   // Populate the second dropdown based on the first chosen dropdown
   populateFilterOptions(field) {
-    const filterOptionsDropdown = document.querySelector('.filter-options-dropdown');
+    const filterOptionsDropdown = document.querySelector('.filter__options-dropdown');
     filterOptionsDropdown.innerHTML = '';
 
     let options = [];
@@ -677,8 +681,8 @@ class TaskController {
     //update button visual state
     sortOrderToggle.innerHTML =
       newOrder === 'asc'
-        ? ' <img class="sort-icon" src="./assets/images/icons/sort-icons/sort-icon-asc.png" alt="sort-icon-up" />'
-        : ' <img class="sort-icon" src="./assets/images/icons/sort-icons/sort-icon-desc.png" alt="sort-icon-down" />';
+        ? ' <img class="sort__icon" src="./assets/images/icons/sort-icons/sort-icon-asc.png" alt="sort-icon-up" />'
+        : ' <img class="sort__icon" src="./assets/images/icons/sort-icons/sort-icon-desc.png" alt="sort-icon-down" />';
     console.log('Sort Order Toggle Updated HTML:', sortOrderToggle.innerHTML);
   }
 }

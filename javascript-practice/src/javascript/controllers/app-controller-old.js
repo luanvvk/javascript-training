@@ -14,26 +14,26 @@ import {
 
 //Declaration
 // filter criteria
-const filterFieldDropdown = document.querySelector('.filter-field-dropdown');
-const filterOptionsDropdown = document.querySelector('.filter-options-dropdown');
+const filterFieldDropdown = document.querySelector('.filter__field-dropdown');
+const filterOptionsDropdown = document.querySelector('.filter__options-dropdown');
 //sort
-const sortDropdown = document.querySelector('.sort-dropdown');
-const sortOrderToggle = document.querySelector('.sort-order-toggle');
+const sortDropdown = document.querySelector('.sort__dropdown');
+const sortOrderToggle = document.querySelector('.sort__order-toggle');
 //navigate/toggle elements
-const popupBoardView = document.querySelector('#all-task-popup .board-view');
-const popupListView = document.querySelector('#all-task-popup .list-view');
+const popupBoardView = document.querySelector('#all-task-modal .board-view');
+const popupListView = document.querySelector('#all-task-modal .list-view');
 const boardViewOption = document.querySelector('.app__nav-link.app__nav-link--board-screen');
 const listViewOption = document.querySelector('.app__nav-link.app__nav-link--list-screen');
 const listView = document.querySelector('.list-view');
 const boardView = document.querySelector('.board-view');
-const editTask = document.getElementById('edit-task-overlay');
-const createTask = document.getElementById('create-task-overlay');
+const editTask = document.getElementById('edit-task-modal');
+const createTask = document.getElementById('create-task-modal');
 //sidebar toggle elements
 const dashboardBtn = document.querySelector('.app__nav-link.app__nav-link--dashboard');
 const searchBarTop = document.querySelector('.search-bar__input-bar');
-const allTaskPopup = document.getElementById('all-task-popup');
+const allTaskPopup = document.getElementById('all-task-modal');
 const allTaskBtn = document.querySelector('.app__nav-link.app__nav-link--all-tasks');
-const toggle = document.querySelector('.menu-bar-toggle');
+const toggle = document.querySelector('.topbar__menu-toggle');
 const sideNavbar = document.querySelector('.app__sidebar');
 const mainBody = document.querySelector('.app-main');
 const appLogoHeading = document.querySelector('.app__logo-text');
@@ -106,8 +106,10 @@ class TaskController {
 
   // Add task event
   setupAddTaskListener() {
-    const addTaskBtns = document.querySelectorAll('.add-a-task');
-    const addToListButton = document.querySelector('.button-controls .add-to-list');
+    const addTaskBtns = document.querySelectorAll('.board__add-task');
+    const addToListButton = document.querySelector(
+      '.form__actions .form__button.form__button--add',
+    );
     addTaskBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
         this.handleAddTaskButtonClick();
@@ -129,10 +131,10 @@ class TaskController {
 
   //Cancel event
   setupCancelButtonListeners() {
-    const cancelCreateButtons = document.querySelectorAll('#create-task-overlay .cancel');
-    const cancelEditButtons = document.querySelectorAll('#edit-task-overlay .cancel');
-    const closeCreatePopupBtns = document.querySelectorAll('#create-task-overlay .close-popup');
-    const closeEditPopupBtns = document.querySelectorAll('#edit-task-overlay .close-popup');
+    const cancelCreateButtons = document.querySelectorAll('#create-task-modal .cancel');
+    const cancelEditButtons = document.querySelectorAll('#edit-task-modal .cancel');
+    const closeCreatePopupBtns = document.querySelectorAll('#create-task-modal .modal__close');
+    const closeEditPopupBtns = document.querySelectorAll('#edit-task-modal .modal__close');
 
     cancelCreateButtons.forEach((btn) => {
       btn.addEventListener('click', () => {
@@ -159,7 +161,7 @@ class TaskController {
   //Search event
   setupSearchListener() {
     const mainSearchInput = document.querySelector('.input-bar__main-input');
-    const popupSearchInput = document.querySelector('#all-task-popup .input-bar-mini__main-input');
+    const popupSearchInput = document.querySelector('#all-task-modal .input-bar-mini__main-input');
 
     if (mainSearchInput) {
       mainSearchInput.addEventListener('input', this.searchTasks.bind(this));
@@ -172,10 +174,10 @@ class TaskController {
   // Events for all all task popup, dashboard, main body, and view
   setupNavigationListener() {
     allTaskBtn.addEventListener('click', () => {
-      allTaskPopup.classList.remove('hide');
+      allTaskPopup.classList.remove('hidden');
       let width = window.matchMedia('(min-width: 800px)');
       if (width.matches) {
-        searchBarTop.classList.toggle('hide');
+        searchBarTop.classList.toggle('hidden');
       } else {
         mainBody.classList.toggle('active');
         sideNavbar.classList.toggle('active');
@@ -183,8 +185,8 @@ class TaskController {
     });
 
     dashboardBtn.addEventListener('click', () => {
-      allTaskPopup.classList.add('hide');
-      searchBarTop.classList.remove('hide');
+      allTaskPopup.classList.add('hidden');
+      searchBarTop.classList.remove('hidden');
       this.view.closeCreateTaskOverlay();
       let width = window.matchMedia('(min-width: 800px)');
       if (!width.matches) {
@@ -216,20 +218,20 @@ class TaskController {
 
   switchToView(viewType) {
     if (viewType === 'board') {
-      listView.classList.add('hide');
-      boardView.classList.remove('hide');
+      listView.classList.add('hidden');
+      boardView.classList.remove('hidden');
     } else {
-      listView.classList.remove('hide');
-      boardView.classList.add('hide');
+      listView.classList.remove('hidden');
+      boardView.classList.add('hidden');
     }
   }
   switchPopupView(viewType) {
     if (viewType === 'board') {
-      popupBoardView.classList.remove('hide');
-      popupListView.classList.add('hide');
+      popupBoardView.classList.remove('hidden');
+      popupListView.classList.add('hidden');
     } else {
-      popupBoardView.classList.add('hide');
-      popupListView.classList.remove('hide');
+      popupBoardView.classList.add('hidden');
+      popupListView.classList.remove('hidden');
     }
   }
 
@@ -273,8 +275,12 @@ class TaskController {
     const title = document.querySelector('.task-name-input').value.trim();
     const startDate = document.querySelector('#task-start-input').value;
     const endDate = document.querySelector('#task-end-input').value;
-    const priority = document.querySelector('.priority-select .default-option').textContent.trim();
-    const category = document.querySelector('.category-select .default-option').textContent.trim();
+    const priority = document
+      .querySelector('.form__priority-select .default-option')
+      .textContent.trim();
+    const category = document
+      .querySelector('.form__category-select .default-option')
+      .textContent.trim();
     const description = document.querySelector('.textarea-input').value.trim();
     const task = new TaskModel(title, startDate, endDate, description, priority, category);
 
@@ -294,7 +300,7 @@ class TaskController {
 
   setupTaskActions() {
     const taskElements = document.querySelectorAll('.task-item');
-    const allTaskPopup = document.getElementById('all-task-popup');
+    const allTaskPopup = document.getElementById('all-task-modal');
     taskElements.forEach((taskElement) => {
       const taskId = parseInt(taskElement.dataset.taskId);
       const task = this.tasks.find((t) => t.id === taskId);
@@ -330,10 +336,10 @@ class TaskController {
           task.endDate = document.querySelector('#end-date').value;
           task.description = document.querySelector('.textarea-input').value.trim();
           task.priority = document
-            .querySelector('#edit-task-overlay .priority-select .default-option')
+            .querySelector('#edit-task-modal .form__priority-select .default-option')
             .textContent.trim();
           task.category = document
-            .querySelector('#edit-task-overlay .category-select .default-option')
+            .querySelector('#edit-task-modal .category-select .default-option')
             .textContent.trim();
 
           // Validate task
@@ -343,14 +349,14 @@ class TaskController {
             this.renderAllTasks();
             this.view.closeEditTaskOverlay();
             // Check if edit is performed in "All Tasks" popup
-            const isAllTaskPopupOpen = !allTaskPopup.classList.contains('hide');
+            const isAllTaskPopupOpen = !allTaskPopup.classList.contains('hidden');
             if (isAllTaskPopupOpen) {
-              allTaskPopup.classList.remove('hide');
+              allTaskPopup.classList.remove('hidden');
             }
           }
         };
         // Mark as Completed in edit overlay
-        const markCompletedButton = document.querySelector('.edit-controls .mark-completed');
+        const markCompletedButton = document.querySelector('.form__actions .mark-completed');
 
         markCompletedButton.onclick = () => {
           task.status = task.status === 'Completed' ? 'In Progress' : 'Completed';
@@ -383,14 +389,14 @@ class TaskController {
   }
 
   setupDeleteConfirmationPopup() {
-    this.deleteConfirmationPopup = document.getElementById('delete-confirmation-popup');
+    this.deleteConfirmationPopup = document.getElementById('confirmation-popup--delete');
     if (!this.deleteConfirmationPopup) {
       console.error('Delete confirmation popup not found');
       return;
     }
 
     const closePopupButtons = this.deleteConfirmationPopup.querySelectorAll(
-      '.close-popup, .cancel-delete-btn',
+      '.modal__close, .cancel-delete-btn',
     );
     const confirmDeleteButton = this.deleteConfirmationPopup.querySelector('.confirm-delete-btn');
 
@@ -406,12 +412,12 @@ class TaskController {
     this.pendingTaskToDelete = taskId;
     this.deleteOrigin = origin;
     // Show the confirmation popup
-    this.deleteConfirmationPopup.classList.remove('hide');
+    this.deleteConfirmationPopup.classList.remove('hidden');
     document.body.classList.add('overflow-hidden');
   }
 
   closeDeleteConfirmationPopup() {
-    this.deleteConfirmationPopup.classList.add('hide');
+    this.deleteConfirmationPopup.classList.add('hidden');
     document.body.classList.add('overflow-hidden');
     // Reset pending deletion info
     this.pendingTaskToDelete = null;
@@ -431,9 +437,9 @@ class TaskController {
     this.saveTasksToLocalStorage();
     this.closeDeleteConfirmationPopup();
 
-    if (this.deleteOrigin === 'all-task-popup') {
-      const allTaskPopup = document.getElementById('all-task-popup');
-      allTaskPopup.classList.remove('hide');
+    if (this.deleteOrigin === 'all-task-modal') {
+      const allTaskPopup = document.getElementById('all-task-modal');
+      allTaskPopup.classList.remove('hidden');
     }
     console.log(`Task deleted. Remaining tasks: ${this.tasks.length}`);
   }
@@ -448,7 +454,7 @@ class TaskController {
   //Search tasks method
   searchTasks(e) {
     const searchText = e.target.value.toLowerCase().trim();
-    const isPopupSearch = e.target.closest('#all-task-popup') !== null;
+    const isPopupSearch = e.target.closest('#all-task-modal') !== null;
     // If search is empty, render all tasks
     if (searchText === '') {
       if (isPopupSearch) {
@@ -538,7 +544,7 @@ class TaskController {
 
   // Populate the second dropdown based on the first chosen dropdown
   populateFilterOptions(field) {
-    const filterOptionsDropdown = document.querySelector('.filter-options-dropdown');
+    const filterOptionsDropdown = document.querySelector('.filter__options-dropdown');
     filterOptionsDropdown.innerHTML = '';
 
     let options = [];

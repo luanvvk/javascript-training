@@ -44,10 +44,10 @@ export function createTaskElement(task) {
 // ALL TASK POPUP
 export function createFormElements() {
   // Task Name Input
-  const createTaskOverlay = document.getElementById('create-task-overlay');
-  const taskNameContainer = createTaskOverlay.querySelector('.task-name');
+  const createTaskOverlay = document.getElementById('create-task-modal');
+  const taskNameContainer = createTaskOverlay.querySelector('.form__task-name');
   taskNameContainer.innerHTML = `
-    <label class="label" for="task-name-input">Task Title</label>
+    <label class="form__label" for="task-name-input">Task Title</label>
     <div class="task-name-container">
       <input type="text" id="task-name-input" class="task-name-input" placeholder="Enter task title" required>
       <img src="./assets/images/icons/create-task-modal-icon/task-title-icon.svg" class="task-name-icon" alt="Task Title Icon">
@@ -55,9 +55,9 @@ export function createFormElements() {
   `;
 
   // Start Date Input
-  const taskStartContainer = createTaskOverlay.querySelector('.task-start');
+  const taskStartContainer = createTaskOverlay.querySelector('.form__task-start');
   taskStartContainer.innerHTML = `
-    <label class="label" for="task-start-input">Start Date</label>
+    <label class="form__label" for="task-start-input">Start Date</label>
     <div class="task-start-container">
     <span class="text-input"></span>
       <input type="date" id="task-start-input" class="task-start-input" required >
@@ -66,9 +66,9 @@ export function createFormElements() {
   `;
 
   // End Date Input
-  const taskEndContainer = createTaskOverlay.querySelector('.task-end');
+  const taskEndContainer = createTaskOverlay.querySelector('.form__task-end');
   taskEndContainer.innerHTML = `
-    <label class="label" for="task-end-input">End Date</label>
+    <label class="form__label" for="task-end-input">End Date</label>
     <div class="task-end-container">
       <span class="text-input"></span>
       <input type="date" id="task-end-input" class="task-end-input" required >
@@ -77,17 +77,17 @@ export function createFormElements() {
   `;
 
   // Task Description
-  const taskDescContainer = createTaskOverlay.querySelector('.task-desc');
+  const taskDescContainer = createTaskOverlay.querySelector('.form__task-desc');
   taskDescContainer.innerHTML = `
-    <label class="label" for="textarea-input">Task Description</label>
+    <label class="form__label" for="textarea-input">Task Description</label>
     <textarea id="textarea-input" class="textarea-input" rows="5" placeholder="Enter task description"></textarea>
   `;
 
   // Button Controls
-  const buttonControls = createTaskOverlay.querySelector('.button-controls');
+  const buttonControls = createTaskOverlay.querySelector('.form__actions');
   buttonControls.innerHTML = `
-    <button type="submit" class="btn btn-primary add-to-list">Add to list</button>
-    <button type="button" class="btn btn-cancel cancel">Cancel</button>
+    <button type="submit" class="btn btn-primary form__button form__button--add">Add to list</button>
+    <button type="button" class="btn btn-cancel form__button form__button--cancel">Cancel</button>
   `;
 }
 
@@ -184,31 +184,31 @@ export function setupPopupDropdowns() {
   // Create dropdowns for create task overlay
   const createPriorityDropdown = createDropdown(
     priorityOptions,
-    '.task-priority .priority-select',
+    '.form__task-priority .form__priority-select',
     'priority',
-    'create-task-overlay',
+    'create-task-modal',
   );
 
   const createCategoryDropdown = createDropdown(
     categoryOptions,
-    '#create-task-overlay .task-category-input .category-select',
+    '#create-task-modal .form__task-category .form__category-select',
     'category',
-    'create-task-overlay',
+    'create-task-modal',
   );
 
   // Create dropdowns for edit task overlay
   const editPriorityDropdown = createDropdown(
     priorityOptions,
-    '.task-priority .priority-select',
+    '.form__task-priority .form__priority-select',
     'priority',
-    'edit-task-overlay',
+    'edit-task-modal',
   );
 
   const editCategoryDropdown = createDropdown(
     categoryOptions,
-    '#edit-task-overlay .task-category-input .category-select',
+    '#edit-task-modal .form__task-category .form__category-select',
     'category',
-    'edit-task-overlay',
+    'edit-task-modal',
   );
 
   // Close dropdowns when clicking outside
@@ -223,10 +223,10 @@ export function setupPopupDropdowns() {
 // EDIT TASK POPUP
 export function editFormElements() {
   // Task Name Input
-  const editTaskOverlay = document.getElementById('edit-task-overlay');
-  const taskNameContainer = editTaskOverlay.querySelector('.task-name');
+  const editTaskOverlay = document.getElementById('edit-task-modal');
+  const taskNameContainer = editTaskOverlay.querySelector('.form__task-name');
   taskNameContainer.innerHTML = `
-     <label class="label" for="task-title">Task Title</label>
+     <label class="form__label" for="task-title">Task Title</label>
     <div class="task-name-container">
       <input type="text" name="task-name" id="task-title" class="task-name-input" required />
        <img class="task-name-icon"
@@ -236,9 +236,9 @@ export function editFormElements() {
     </div>
   `;
   // Start Date Input
-  const taskStartContainer = editTaskOverlay.querySelector('.task-start');
+  const taskStartContainer = editTaskOverlay.querySelector('.form__task-start');
   taskStartContainer.innerHTML = `
-     <label class="label" for="start-date">Start Date</label>
+     <label class="form__label" for="start-date">Start Date</label>
     <div class="task-start-container">
       <span class="text-input"></span>
       <input type="date" name="task-start" id="start-date" class="task-start-input" />
@@ -249,9 +249,9 @@ export function editFormElements() {
   `;
 
   // End Date Input
-  const taskEndContainer = editTaskOverlay.querySelector('.task-end');
+  const taskEndContainer = editTaskOverlay.querySelector('.form__task-end');
   taskEndContainer.innerHTML = `
-      <label class="label" for="end-date">End Date</label>
+      <label class="form__label" for="end-date">End Date</label>
     <div class="task-end-container">
       <span class="text-input"></span>
       <input type="date" name="task-end" id="end-date" class="task-end-input" />
@@ -263,17 +263,17 @@ export function editFormElements() {
   `;
 
   // Task Description
-  const taskDescContainer = editTaskOverlay.querySelector('.task-desc');
+  const taskDescContainer = editTaskOverlay.querySelector('.form__task-desc');
   taskDescContainer.innerHTML = `
-    <label class="label" for="description">Task Description</label>
+    <label class="form__label" for="description">Task Description</label>
     <textarea id="textarea" class="textarea-input" rows="8" placeholder="Enter task description"></textarea>
    `;
 
   // Button Controls
-  const buttonControls = editTaskOverlay.querySelector('.edit-controls');
+  const buttonControls = editTaskOverlay.querySelector('.form__actions');
   buttonControls.innerHTML = `
     <button type="submit" class="btn btn-primary edit-task-button">Save changes</button>
-    <button type="button" class="btn btn-cancel cancel">Cancel</button>
+    <button type="button" class="btn btn-cancel form__button form__button--cancel">Cancel</button>
     <button type="button" class="btn btn-success mark-completed" >
       <img
       class="move-task-icon"
@@ -294,9 +294,9 @@ export function editFormElements() {
 }
 
 //SORTING UI
-const sortDropdown = document.querySelector('.sort-dropdown');
-const filterFieldDropdown = document.querySelector('.filter-field-dropdown');
-const sortOrderToggle = document.querySelector('.sort-order-toggle');
+const sortDropdown = document.querySelector('.sort__dropdown');
+const filterFieldDropdown = document.querySelector('.filter__field-dropdown');
+const sortOrderToggle = document.querySelector('.sort__order-toggle');
 export function renderSortingUI() {
   if (sortDropdown) {
     sortDropdown.innerHTML = '';
@@ -334,12 +334,12 @@ export function renderSortingUI() {
     const sortContainer = document.createElement('div');
     sortContainer.classList.add('sort-container');
     sortContainer.innerHTML = `
-     <label for="sort-dropdown" class="sort-label">Sort by:</label>
-      <div class="sort-dropdown-content">
-        <select class="sort-dropdown">
+     <label for="sort__dropdown" class="sort__label">Sort by:</label>
+      <div class="sort__dropdown-content">
+        <select class="sort__dropdown">
          
         </select>
-        <button class="sort-order-toggle"> <img class="sort-icon" src="./assets/images/icons/sort-icons/sort-icon-asc.png" alt="sort-icon-up" /></button>
+        <button class="sort__order-toggle"> <img class="sort__icon" src="./assets/images/icons/sort-icons/sort-icon-asc.png" alt="sort-icon-up" /></button>
       </div>
     `;
     document.querySelector('#task-controls').appendChild(sortContainer);

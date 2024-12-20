@@ -103,20 +103,20 @@ img {
 .flex {
   display: flex;
 }
-.hide {
+.hidden {
   display: none;
 }
-.background-pink {
+.task-column__indicator--pink {
   background-color: var(--pink);
 }
 
-.background-blue {
+.task-column__indicator--blue {
   background-color: var(--light-blue);
 }
 
-.background-green {
+.task-column__indicator--green {
   background-color: var(--green);
 }
-.status-dropdown.hide {
+.status-dropdown.hidden {
   display: none;
 }

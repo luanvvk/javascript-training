@@ -77,8 +77,8 @@
   font-weight: var(--bold-weight);
 }
 
-.priority-select,
-.category-select {
+.form__priority-select,
+.form__category-select {
   position: relative;
   display: inline-block;
 }
@@ -127,7 +127,7 @@
 }
 /* button controls */
 
-.add-task-icon {
+.board__add-task-icon {
   z-index: 1000;
   position: fixed;
   top: 7rem;
@@ -138,7 +138,7 @@
   margin-right: var(--space-32);
 }
 
-.button-controls {
+.form__actions {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -150,9 +150,9 @@
   margin-right: -2.5rem;
 }
 
-.add-to-list,
+.form__button.form__button--add,
 .edit-task-button,
-#edit-task-overlay .mark-completed,
+#edit-task-modal .mark-completed,
 .overlay-delete-button {
   display: flex;
   justify-content: center;
@@ -160,7 +160,6 @@
   width: 20rem;
   padding: var(--space-8) 0;
 
-  background-color: var(--cyan-blue);
   border: var(--border-radius-3) solid var(--cyan-blue);
   border-radius: var(--border-radius-6);
 
@@ -171,21 +170,21 @@
   transition-duration: 0.4s;
 }
 
-.add-to-list:hover,
+.form__button.form__button--add:hover,
 .edit-task-button:hover,
-#edit-task-overlay .mark-completed:hover,
+#edit-task-modal .mark-completed:hover,
 .overlay-delete-button:hover,
-.cancel:hover {
+.form__button.form__button--cancel:hover {
   box-shadow:
     0 12px 16px 0 rgba(0, 0, 0, 0.24),
     0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
 
-.add-to-list {
+.form__button.form__button--add {
   width: 20rem;
 }
 
-.cancel {
+.form__button.form__button--cancel {
   width: 20rem;
   padding: var(--space-8) 0;
   background-color: var(--pink);
@@ -282,7 +281,7 @@
   opacity: 1;
 }
 
-.notification-message {
+.notification__message {
   color: var(--light-pink);
   font-size: var(--font-size-20);
   font-weight: var(--regular-weight);
@@ -314,6 +313,6 @@
   background-color: black;
 }
 
-.hiding-overlay.hide {
+.hiding-overlay.hidden {
   display: none;
 }

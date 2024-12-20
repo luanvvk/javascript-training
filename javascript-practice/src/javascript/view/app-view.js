@@ -3,24 +3,32 @@ import { showNoTasksMessage } from '../helpers/notifications.js';
 class TaskView {
   constructor() {
     this.listViewColumns = {
-      toDo: document.querySelector('.list-view .task-column.pink .task-list'),
-      running: document.querySelector('.list-view .task-column.blue .task-list'),
-      completed: document.querySelector('.list-view .task-column.green .task-list'),
+      toDo: document.querySelector('.list-view .task-column.task-column--todo .task-list'),
+      running: document.querySelector(
+        '.list-view .task-column.task-column--in-progress .task-list',
+      ),
+      completed: document.querySelector(
+        '.list-view .task-column.task-column--completed .task-list',
+      ),
     };
 
     this.boardViewColumns = {
-      toDo: document.querySelector('.board-view .task-column.pink .task-list'),
-      running: document.querySelector('.board-view .task-column.blue .task-list'),
-      completed: document.querySelector('.board-view .task-column.green .task-list'),
+      toDo: document.querySelector('.board-view .task-column.task-column--todo .task-list'),
+      running: document.querySelector(
+        '.board-view .task-column.task-column--in-progress .task-list',
+      ),
+      completed: document.querySelector(
+        '.board-view .task-column.task-column--completed .task-list',
+      ),
     };
 
-    this.createTaskOverlay = document.getElementById('create-task-overlay');
-    this.editTaskOverlay = document.getElementById('edit-task-overlay');
+    this.createTaskOverlay = document.getElementById('create-task-modal');
+    this.editTaskOverlay = document.getElementById('edit-task-modal');
     this.notification = document.querySelector('.notification');
-    this.sortDropdown = document.querySelector('.sort-dropdown');
-    this.sortOrderToggle = document.querySelector('.sort-order-toggle');
-    this.filterFieldDropdown = document.querySelector('.filter-field-dropdown');
-    this.filterOptionsDropdown = document.querySelector('.filter-options-dropdown');
+    this.sortDropdown = document.querySelector('.sort__dropdown');
+    this.sortOrderToggle = document.querySelector('.sort__order-toggle');
+    this.filterFieldDropdown = document.querySelector('.filter__field-dropdown');
+    this.filterOptionsDropdown = document.querySelector('.filter__options-dropdown');
   }
 
   // Render tasks in both views
@@ -57,13 +65,13 @@ class TaskView {
   renderAllTasksPopup(tasks) {
     //board view
     const popupBoardToDoColumn = document.querySelector(
-      '#all-task-popup .board-view.task-columns .task-column.todo .task-list',
+      '#all-task-modal .board-view.task-columns .task-column.todo .task-list',
     );
     const popupBoardInProgressColumn = document.querySelector(
-      '#all-task-popup .board-view.task-columns .task-column.in-progress .task-list',
+      '#all-task-modal .board-view.task-columns .task-column.in-progress .task-list',
     );
     const popupBoardCompletedColumn = document.querySelector(
-      '#all-task-popup .board-view.task-columns .task-column.completed .task-list',
+      '#all-task-modal .board-view.task-columns .task-column.completed .task-list',
     );
 
     if (!popupBoardToDoColumn || !popupBoardInProgressColumn || !popupBoardCompletedColumn) return;
@@ -96,13 +104,13 @@ class TaskView {
 
     //list view
     const popupListToDoColumn = document.querySelector(
-      '#all-task-popup .list-view.task-columns .task-column.todo .task-list',
+      '#all-task-modal .list-view.task-columns .task-column.todo .task-list',
     );
     const popupListInProgressColumn = document.querySelector(
-      '#all-task-popup .list-view.task-columns .task-column.in-progress .task-list',
+      '#all-task-modal .list-view.task-columns .task-column.in-progress .task-list',
     );
     const popupListCompletedColumn = document.querySelector(
-      '#all-task-popup .list-view.task-columns .task-column.completed .task-list',
+      '#all-task-modal .list-view.task-columns .task-column.completed .task-list',
     );
 
     if (!popupListToDoColumn || !popupListInProgressColumn || !popupListCompletedColumn) return;
@@ -144,27 +152,27 @@ class TaskView {
 
   // Open/close overlays
   openCreateTaskOverlay() {
-    this.createTaskOverlay.classList.toggle('hide');
+    this.createTaskOverlay.classList.toggle('hidden');
     document.body.classList.add('overflow-hidden');
   }
 
   closeCreateTaskOverlay() {
-    this.createTaskOverlay.classList.add('hide');
+    this.createTaskOverlay.classList.add('hidden');
     document.body.classList.remove('overflow-hidden');
   }
 
   openEditTaskOverlay() {
-    this.editTaskOverlay.classList.remove('hide');
+    this.editTaskOverlay.classList.remove('hidden');
     document.body.classList.add('overflow-hidden');
   }
 
   closeEditTaskOverlay() {
-    const allTaskPopup = document.getElementById('all-task-popup');
-    if (!allTaskPopup.classList.contains('hide')) {
-      this.editTaskOverlay.classList.add('hide');
+    const allTaskPopup = document.getElementById('all-task-modal');
+    if (!allTaskPopup.classList.contains('hidden')) {
+      this.editTaskOverlay.classList.add('hidden');
       document.body.classList.remove('overflow-hidden');
     } else {
-      this.editTaskOverlay.classList.add('hide');
+      this.editTaskOverlay.classList.add('hidden');
       document.body.classList.remove('overflow-hidden');
     }
   }
@@ -177,13 +185,13 @@ class TaskView {
 
     // target priority dropdown value
     const priorityContainer = document.querySelector(
-      '#edit-task-overlay .priority-select .default-option-container .default-option',
+      '#edit-task-modal .form__priority-select .default-option-container .default-option',
     );
     priorityContainer.textContent = task.priority || 'Not Urgent';
 
     // Target category dropdown value
     const categoryContainer = document.querySelector(
-      '#edit-task-overlay .category-select .default-option-container .default-option',
+      '#edit-task-modal .form__category-select .default-option-container .default-option',
     );
     categoryContainer.textContent = task.category || 'Daily Task';
   }

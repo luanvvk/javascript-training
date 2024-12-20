@@ -20,7 +20,7 @@ class ErrorHandler {
        </div>
      `;
     const mainBody = document.querySelector('.app-main');
-    const topBar = document.querySelector('.top-bar');
+    const topBar = document.querySelector('.topbar');
     const insertLocation = topBar || mainBody;
     if (insertLocation) {
       insertLocation.insertAdjacentElement('afterend', errorNotification);
