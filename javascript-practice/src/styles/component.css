@@ -48,19 +48,6 @@
   border-radius: 20%;
 }
 /* Sort components */
-.category-sort {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: var(--space-8);
-  padding: var(--space-8);
-
-  border: var(--border-radius-2) solid var(--cyan-blue);
-  border-radius: var(--border-radius-2);
-  color: var(--cyan-blue);
-  font-size: var(--font-size-13);
-  font-weight: var(--bold-weight);
-}
 
 .priority-sort {
   display: flex;
