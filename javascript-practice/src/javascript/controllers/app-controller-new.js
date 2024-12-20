@@ -16,7 +16,6 @@ import {
 const filterFieldDropdown = document.querySelector('.filter__field-dropdown');
 const filterOptionsDropdown = document.querySelector('.filter__options-dropdown');
 //sort
-const sortDropdown = document.querySelector('.sort__dropdown');
 const sortOrderToggle = document.querySelector('.sort__order-toggle');
 //navigate/toggle elements
 const popupBoardView = document.querySelector('#all-task-modal .board-view');
@@ -48,6 +47,7 @@ class TaskController {
       field: 'name',
       order: 'asc',
     };
+    this.sortField = '';
     this.pendingTaskToDelete = null;
     this.deleteOrigin = null;
     this.initializeDOMElements();
@@ -534,7 +534,7 @@ class TaskController {
     } else {
       console.error('Sort order toggle button not found');
       console.log('sort order toggle', this.sortOrderToggle);
-      console.log('sort field', sortField);
+      console.log('sort field', this.sortField);
     }
   }
 
@@ -659,13 +659,16 @@ class TaskController {
           valueB = b.category.toLowerCase();
           break;
         case 'priority':
-          const priorityOrder = {
-            'Not urgent': 1,
-            'Urgent Task': 2,
-            Important: 3,
-          };
-          valueA = priorityOrder[a.priority] || 0;
-          valueB = priorityOrder[b.priority] || 0;
+          {
+            const priorityOrder = {
+              'Not urgent': 1,
+              'Urgent Task': 2,
+              Important: 3,
+            };
+            valueA = priorityOrder[a.priority] || 0;
+            valueB = priorityOrder[b.priority] || 0;
+          }
+
           break;
       }
       //sort conditions

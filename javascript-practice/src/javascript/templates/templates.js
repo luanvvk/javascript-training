@@ -134,18 +134,21 @@ export function createDropdown(options, containerSelector, dropdownType, overlay
 
   container.appendChild(dropdown);
 
+  let isDropdownVisible = false;
+
   // Toggle dropdown visibility
   container.addEventListener('click', (e) => {
     // Only toggle if clicking the container itself or the default option
-    if (e.target.closest('.default-option-container')) {
-      const isVisible = dropdown.style.display === 'flex';
+    const clickedDefaultOption = e.target.closest('.default-option-container');
+    if (clickedDefaultOption) {
+      isDropdownVisible = !isDropdownVisible;
 
       // Close all other open dropdowns first
       const allDropdowns = document.querySelectorAll(`.${dropdownType}-dropdown`);
       allDropdowns.forEach((d) => (d.style.display = 'none'));
 
       // Toggle this dropdown
-      dropdown.style.display = isVisible ? 'none' : 'flex';
+      dropdown.style.display = isDropdownVisible ? 'none' : 'flex';
       e.stopPropagation();
     }
   });
@@ -154,6 +157,7 @@ export function createDropdown(options, containerSelector, dropdownType, overlay
   document.addEventListener('click', (e) => {
     if (!container.contains(e.target)) {
       dropdown.style.display = 'none';
+      isDropdownVisible = false;
     }
   });
 
@@ -161,6 +165,7 @@ export function createDropdown(options, containerSelector, dropdownType, overlay
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       dropdown.style.display = 'none';
+      isDropdownVisible = false;
     }
   });
   return dropdown;
