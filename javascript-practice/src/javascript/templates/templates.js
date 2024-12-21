@@ -145,10 +145,16 @@ export function createDropdown(options, containerSelector, dropdownType, overlay
 
       // Close all other open dropdowns first
       const allDropdowns = document.querySelectorAll(`.${dropdownType}-dropdown`);
-      allDropdowns.forEach((d) => (d.style.display = 'none'));
+      allDropdowns.forEach((d) => d.classList.remove('visible'));
 
       // Toggle this dropdown
-      dropdown.style.display = isDropdownVisible ? 'none' : 'flex';
+      if (isDropdownVisible) {
+        dropdown.classList.add('visible');
+        dropdown.style.display = 'flex'; // Show dropdown
+      } else {
+        dropdown.classList.remove('visible');
+        dropdown.style.display = 'none'; // Hide dropdown
+      }
       e.stopPropagation();
     }
   });
@@ -156,6 +162,7 @@ export function createDropdown(options, containerSelector, dropdownType, overlay
   // Close dropdown when clicking outside
   document.addEventListener('click', (e) => {
     if (!container.contains(e.target)) {
+      dropdown.classList.remove('visible');
       dropdown.style.display = 'none';
       isDropdownVisible = false;
     }
@@ -164,6 +171,7 @@ export function createDropdown(options, containerSelector, dropdownType, overlay
   // Close dropdown when pressing Escape key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
+      dropdown.classList.remove('visible');
       dropdown.style.display = 'none';
       isDropdownVisible = false;
     }

@@ -307,7 +307,14 @@
   border-radius: var(--border-radius-7);
   padding: 0 var(--space-8);
   background-color: var(--light-pink);
+  display: none;
 }
+
+.priority-dropdown.visible,
+.category-dropdown.visible {
+  display: flex; /* Shown when the 'visible' class is added */
+}
+
 /* mini search bar */
 .search-bar-mini__input-bar {
   display: flex;
