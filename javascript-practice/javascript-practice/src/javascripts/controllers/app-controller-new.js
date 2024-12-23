@@ -1,5 +1,5 @@
 import TaskModel from '../models/task-model.js';
-import TaskView from '../view/app-view.js';
+import TaskView from '../views/app-view.js';
 import ValidationUtils from '../helpers/validation-utils.js';
 import LocalStorageUtil from '../helpers/local-storage-utils.js';
 import ErrorHandler from '../helpers/error-handler-utils.js';
@@ -195,8 +195,6 @@ class TaskController {
           this.saveTasksToLocalStorage();
           this.view.closeEditTaskOverlay();
         }
-      } else {
-        console.log('Invalid task ID');
       }
       if (e.target.matches('.confirm-delete-btn')) {
         this.confirmTaskDeletion();
@@ -264,15 +262,7 @@ class TaskController {
   }
 
   handleTaskEdit(taskElement) {
-    if (!taskElement) {
-      console.error('No task element provided to handleTaskEdit');
-      return;
-    }
     const taskId = parseInt(taskElement.dataset.taskId);
-    if (isNaN(taskId)) {
-      console.error('Invalid task ID:', taskElement.dataset.taskId);
-      return;
-    }
 
     const task = this.tasks.find((t) => t.id === taskId);
     if (task) {
@@ -280,8 +270,6 @@ class TaskController {
       this.view.populateEditForm(task);
       this.view.openEditTaskOverlay();
       this.editTaskOverlay.dataset.taskId = taskId;
-    } else {
-      console.log('Task not found');
     }
   }
 
@@ -387,7 +375,6 @@ class TaskController {
   }
 
   openDeleteConfirmationPopup(taskId, origin) {
-    console.log(`Opening delete confirmation for task ID: ${taskId}, origin: ${origin}`);
     this.pendingTaskToDelete = taskId;
     this.deleteOrigin = origin;
     // Show the confirmation popup
@@ -404,13 +391,6 @@ class TaskController {
   }
 
   confirmTaskDeletion() {
-    console.log(
-      `Confirming deletion for task ID: ${this.pendingTaskToDelete}, origin: ${this.deleteOrigin}`,
-    );
-    if (this.pendingTaskToDelete === null) {
-      console.error('No task ID is set for deletion');
-      return;
-    }
     this.tasks = this.tasks.filter((t) => t.id !== this.pendingTaskToDelete);
     showDeletionNotification();
     this.renderAllTasks();
@@ -421,7 +401,6 @@ class TaskController {
       const allTaskPopup = document.getElementById('all-task-modal');
       allTaskPopup.classList.remove('hidden');
     }
-    console.log(`Task deleted. Remaining tasks: ${this.tasks.length}`);
   }
 
   // Side bar event
@@ -506,10 +485,7 @@ class TaskController {
   //Setup filter event listeners for filtering and sorting
   setupFilterEventListeners() {
     // Apply event listeners to filters
-    if (!this.filterFieldDropdown || !this.filterOptionsDropdown) {
-      console.error('Filter dropdowns not found');
-      return;
-    }
+
     this.populateFilterOptions('category');
 
     filterFieldDropdown.addEventListener('change', (e) => {
@@ -531,10 +507,6 @@ class TaskController {
       this.sortOrderToggle.removeEventListener('click', this.toggleSortOrderHandler);
       this.toggleSortOrderHandler = this.toggleSortOrder.bind(this);
       this.sortOrderToggle.addEventListener('click', this.toggleSortOrderHandler);
-    } else {
-      console.error('Sort order toggle button not found');
-      console.log('sort order toggle', this.sortOrderToggle);
-      console.log('sort field', this.sortField);
     }
   }
 
@@ -587,8 +559,6 @@ class TaskController {
       searchText: searchText,
     };
 
-    console.log('Filter Options:', filterOptions);
-
     //Filter tasks
     const filteredTasks = this.filterTask(filterOptions);
     this.view.renderAllTasksPopup(filteredTasks);
@@ -635,7 +605,7 @@ class TaskController {
     const validFields = ['name', 'startDate', 'endDate', 'category', 'priority'];
     if (!validFields.includes(field)) {
       this.showError(`Invalid sort criteria. Please choose one of: ${validFields.join(', ')}`);
-      console.error(`Invalid sort field: ${field}`);
+
       return this.tasks;
     }
     //avoid mutating the original array
@@ -677,14 +647,13 @@ class TaskController {
       return 0;
     });
     this.currentSortSetting = { field, order };
-    console.log('Current Sort Setting:', { field, order });
+
     return sortedTasks;
   }
 
   //change sort order state
   toggleSortOrder(e) {
     e.stopPropagation();
-    console.log('toggleSortOrder fired');
 
     const currentOrder = this.currentSortSetting.order;
     const newOrder = currentOrder === 'asc' ? 'desc' : 'asc';
@@ -692,7 +661,7 @@ class TaskController {
     this.currentSortSetting.order = newOrder;
     const sortField = this.sortDropdown.value;
     const sortedTasks = this.sortTasks(sortField, newOrder);
-    console.log('Sorted Tasks:', sortedTasks);
+
     this.view.renderTasks(sortedTasks);
     this.view.renderAllTasksPopup(sortedTasks);
 
@@ -701,7 +670,6 @@ class TaskController {
       newOrder === 'asc'
         ? ' <img class="sort__icon" src="./assets/images/icons/sort-icons/sort-icon-asc.png" alt="sort-icon-up" />'
         : ' <img class="sort__icon" src="./assets/images/icons/sort-icons/sort-icon-desc.png" alt="sort-icon-down" />';
-    console.log('Sort Order Toggle Updated HTML:', sortOrderToggle.innerHTML);
   }
 }
 export default TaskController;

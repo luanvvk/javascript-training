@@ -1,6 +1,6 @@
 import TaskController from './controllers/app-controller-new.js';
 import TaskModel from './models/task-model.js';
-import TaskView from './view/app-view.js';
+import TaskView from './views/app-view.js';
 
 document.addEventListener('DOMContentLoaded', () => new TaskController());
 document.addEventListener('DOMContentLoaded', () => new TaskView());
