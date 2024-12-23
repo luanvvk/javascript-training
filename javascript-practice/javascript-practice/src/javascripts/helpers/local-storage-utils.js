@@ -1,4 +1,4 @@
-import { TASK_STORAGE_KEYS } from './constants.js';
+import { TASK_STORAGE_KEYS } from '../constants/local-storage-keys.js';
 class LocalStorageUtil {
   constructor(storageKey = 'tasks') {
     this.storageKey = storageKey;

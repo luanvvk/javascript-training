@@ -40,10 +40,14 @@ class ErrorHandler {
   }
 
   removeExistingErrors() {
-    const existingErrors = document.querySelector('.error-notification');
-    if (existingErrors) {
-      existingErrors.classList.remove('show');
-      existingErrors.classList.add('hide');
+    try {
+      const existingErrors = document.querySelector('.error-notification');
+      if (existingErrors) {
+        existingErrors.classList.remove('show');
+        existingErrors.classList.add('hide');
+      }
+    } catch (error) {
+      this.log(`Fail to remove existing error: ${error.message}`, 'error');
     }
   }
 }

@@ -1,5 +1,6 @@
 import { createTaskElement } from '../templates/templates.js';
 import { showNoTasksMessage } from '../helpers/notifications.js';
+import TASK_STATUS from '../constants/task-status.js';
 class TaskView {
   constructor() {
     this.initializeProperties();
@@ -8,23 +9,15 @@ class TaskView {
 
   initializeProperties() {
     this.listViewColumns = {
-      toDo: document.querySelector('.list-view .task-column.task-column--todo .task-list'),
-      running: document.querySelector(
-        '.list-view .task-column.task-column--in-progress .task-list',
-      ),
-      completed: document.querySelector(
-        '.list-view .task-column.task-column--completed .task-list',
-      ),
+      toDo: document.querySelector(`.list-view ${TASK_STATUS.TODO_CLASS}`),
+      running: document.querySelector(`.list-view ${TASK_STATUS.RUNNING_CLASS}`),
+      completed: document.querySelector(`.list-view ${TASK_STATUS.COMPLETED_CLASS}`),
     };
 
     this.boardViewColumns = {
-      toDo: document.querySelector('.board-view .task-column.task-column--todo .task-list'),
-      running: document.querySelector(
-        '.board-view .task-column.task-column--in-progress .task-list',
-      ),
-      completed: document.querySelector(
-        '.board-view .task-column.task-column--completed .task-list',
-      ),
+      toDo: document.querySelector(`.board-view ${TASK_STATUS.TODO_CLASS}`),
+      running: document.querySelector(`.board-view ${TASK_STATUS.RUNNING_CLASS}`),
+      completed: document.querySelector(`.board-view ${TASK_STATUS.COMPLETED_CLASS}`),
     };
   }
 

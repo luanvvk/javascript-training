@@ -4,6 +4,8 @@ import ValidationUtils from '../helpers/validation-utils.js';
 import LocalStorageUtil from '../helpers/local-storage-utils.js';
 import ErrorHandler from '../helpers/error-handler-utils.js';
 import { showDeletionNotification } from '../helpers/notifications.js';
+import SORT_SETTING from '../constants/sort-setting.js';
+import DOM_ELEMENTS from '../constants/dom-elements.js';
 import {
   createFormElements,
   editFormElements,
@@ -13,21 +15,21 @@ import {
 
 //Declaration
 // filter criteria
-const filterFieldDropdown = document.querySelector('.filter__field-dropdown');
-const filterOptionsDropdown = document.querySelector('.filter__options-dropdown');
+const filterFieldDropdown = document.querySelector(DOM_ELEMENTS.FILTER_FIELD_DROPDOWN_SELECTOR);
+const filterOptionsDropdown = document.querySelector(DOM_ELEMENTS.FILTER_OPTIONS_DROPDOWN_SELECTOR);
 //sort
-const sortOrderToggle = document.querySelector('.sort__order-toggle');
+const sortOrderToggle = document.querySelector(DOM_ELEMENTS.SORT_ORDER_TOGGLE_SELECTOR);
 //navigate/toggle elements
 const popupBoardView = document.querySelector('#all-task-modal .board-view');
 const popupListView = document.querySelector('#all-task-modal .list-view');
 const listView = document.querySelector('.list-view');
 const boardView = document.querySelector('.board-view');
 //sidebar toggle elements
-const searchBarTop = document.querySelector('.search-bar__input-bar');
+const searchBarTop = document.querySelector(DOM_ELEMENTS.SEARCH_BAR_TOP_SELECTOR);
 const allTaskPopup = document.getElementById('all-task-modal');
 const toggle = document.querySelector('.topbar__menu-toggle');
-const sideNavbar = document.querySelector('.app__sidebar');
-const mainBody = document.querySelector('.app-main');
+const sideNavbar = document.querySelector(DOM_ELEMENTS.SIDE_NAVBAR_SELECTOR);
+const mainBody = document.querySelector(DOM_ELEMENTS.MAIN_CONTAINER_SELECTOR);
 const appLogoHeading = document.querySelector('.app__logo-text');
 class TaskController {
   constructor() {
@@ -44,8 +46,8 @@ class TaskController {
     this.validationUtils = new ValidationUtils();
     this.errorHandler = new ErrorHandler();
     this.currentSortSetting = {
-      field: 'name',
-      order: 'asc',
+      field: SORT_SETTING.FIELD,
+      order: SORT_SETTING.SORT_ORDER_ASC,
     };
     this.sortField = '';
     this.pendingTaskToDelete = null;
@@ -54,16 +56,26 @@ class TaskController {
   }
 
   initializeDOMElements() {
-    this.filterFieldDropdown = document.querySelector('.filter__field-dropdown');
-    this.filterOptionsDropdown = document.querySelector('.filter__options-dropdown');
-    this.sortDropdown = document.querySelector('.sort__dropdown');
-    this.sortOrderToggle = document.querySelector('.sort__order-toggle');
-    this.mainContainer = document.querySelector('.app-main');
-    this.taskColumns = document.querySelectorAll('.task-list');
-    this.editTaskOverlay = document.getElementById('edit-task-modal');
-    this.deleteConfirmationPopup = document.getElementById('confirmation-popup--delete');
-    this.sideNavbar = document.querySelector('.app__sidebar');
-    this.searchBarTop = document.querySelector('.search-bar__input-bar');
+    try {
+      this.filterFieldDropdown = document.querySelector(
+        DOM_ELEMENTS.FILTER_FIELD_DROPDOWN_SELECTOR,
+      );
+      this.filterOptionsDropdown = document.querySelector(
+        DOM_ELEMENTS.FILTER_FIELD_DROPDOWN_SELECTOR,
+      );
+      this.sortDropdown = document.querySelector(DOM_ELEMENTS.SORT_DROPDOWN_SELECTOR);
+      this.sortOrderToggle = document.querySelector(DOM_ELEMENTS.SORT_ORDER_TOGGLE_SELECTOR);
+      this.mainContainer = document.querySelector(DOM_ELEMENTS.MAIN_CONTAINER_SELECTOR);
+      this.taskColumns = document.querySelectorAll(DOM_ELEMENTS.TASK_LIST_SELECTOR);
+      this.editTaskOverlay = document.getElementById(DOM_ELEMENTS.EDIT_TASK_MODAL_ID);
+      this.deleteConfirmationPopup = document.getElementById(
+        DOM_ELEMENTS.DELETE_CONFIRMATION_POPUP_ID,
+      );
+      this.sideNavbar = document.querySelector(DOM_ELEMENTS.SIDE_NAVBAR_SELECTOR);
+      this.searchBarTop = document.querySelector(DOM_ELEMENTS.SEARCH_BAR_TOP_SELECTOR);
+    } catch (error) {
+      this.errorHandler.log(`Error initializing DOM elements: ${error.message}`, 'error');
+    }
   }
 
   bindMethods() {
@@ -74,10 +86,14 @@ class TaskController {
   }
 
   initialize() {
-    this.loadTasksFromLocalStorage();
-    this.setupDynamicForm();
-    this.setupEventListeners();
-    this.renderAllTasks();
+    try {
+      this.loadTasksFromLocalStorage();
+      this.setupDynamicForm();
+      this.setupEventListeners();
+      this.renderAllTasks();
+    } catch (error) {
+      this.errorHandler.log(`Error during initialization: ${error.message}`, 'error');
+    }
   }
 
   loadTasksFromLocalStorage() {
@@ -89,12 +105,16 @@ class TaskController {
   }
 
   validate(task) {
-    const validationErrors = this.validationUtils.validateTask(task);
-    if (validationErrors.length > 0) {
-      validationErrors.forEach((error) => this.showError(error));
-      return false;
+    try {
+      const validationErrors = this.validationUtils.validateTask(task);
+      if (validationErrors.length > 0) {
+        validationErrors.forEach((error) => this.showError(error));
+        return false;
+      }
+      return true;
+    } catch (error) {
+      this.errorHandler.log(`Error validating task: ${error.message}`, 'error');
     }
-    return true;
   }
 
   showError(message) {
@@ -140,7 +160,7 @@ class TaskController {
         }
 
         // Handle delete button clicks
-        if (e.target.closest('.task-delete')) {
+        if (e.target.closest(DOM_ELEMENTS.TASK_DELETE_SELECTOR)) {
           this.openDeleteConfirmationPopup(taskId, 'main-view');
         }
       });
@@ -149,28 +169,28 @@ class TaskController {
 
   setupOverlayDelegation() {
     // Delegate all overlay-related events
-    document.querySelector('.app-main').addEventListener('click', (e) => {
+    document.querySelector(DOM_ELEMENTS.APP_MAIN_SELECTOR).addEventListener('click', (e) => {
       // Create task events
-      if (e.target.closest('.board__add-task')) {
+      if (e.target.closest(DOM_ELEMENTS.BOARD_ADD_TASK_SELECTOR)) {
         this.handleAddTaskButtonClick();
       }
-      if (e.target.closest('.form__actions .form__button.form__button--add')) {
+      if (e.target.closest(DOM_ELEMENTS.FORM_ADD_BUTTON_SELECTOR)) {
         e.preventDefault();
         this.addTask();
       }
 
       // form__button--cancel button events
-      if (e.target.matches('.form__button--cancel, .modal__close')) {
+      if (e.target.matches(DOM_ELEMENTS.FORM_CANCEL_BUTTON_SELECTOR)) {
         const overlay = e.target.closest('.overlay');
-        if (overlay.id === 'create-task-modal') {
+        if (overlay.id === DOM_ELEMENTS.CREATE_TASK_MODAL_ID) {
           this.view.closeCreateTaskOverlay();
-        } else if (overlay.id === 'edit-task-modal') {
+        } else if (overlay.id === DOM_ELEMENTS.EDIT_TASK_MODAL_ID) {
           this.view.closeEditTaskOverlay();
         }
       }
 
       // Edit form submission
-      if (e.target.matches('.edit-task-button')) {
+      if (e.target.matches(DOM_ELEMENTS.EDIT_TASK_BUTTON_SELECTOR)) {
         this.handleEditFormSubmission(e);
       }
 
@@ -656,7 +676,10 @@ class TaskController {
     e.stopPropagation();
 
     const currentOrder = this.currentSortSetting.order;
-    const newOrder = currentOrder === 'asc' ? 'desc' : 'asc';
+    const newOrder =
+      currentOrder === SORT_SETTING.SORT_ORDER_ASC
+        ? SORT_SETTING.SORT_ORDER_DESC
+        : SORT_SETTING.SORT_ORDER_ASC;
     //update sort order
     this.currentSortSetting.order = newOrder;
     const sortField = this.sortDropdown.value;
@@ -667,7 +690,7 @@ class TaskController {
 
     //update button visual state
     sortOrderToggle.innerHTML =
-      newOrder === 'asc'
+      newOrder === SORT_SETTING.SORT_ORDER_ASC
         ? ' <img class="sort__icon" src="./assets/images/icons/sort-icons/sort-icon-asc.png" alt="sort-icon-up" />'
         : ' <img class="sort__icon" src="./assets/images/icons/sort-icons/sort-icon-desc.png" alt="sort-icon-down" />';
   }
