@@ -127,20 +127,48 @@ export function createFormElements(formType = 'create') {
 // TEMPLATE FOR DROPDOWN INPUT
 export function createDropdown(options, containerSelector, dropdownType, overlayId) {
   const overlay = document.getElementById(overlayId);
+  if (!overlay) {
+    console.error(`Overlay with id ${overlayId} not found.`);
+    return;
+  }
+
   const container = overlay.querySelector(containerSelector);
+  if (!container) {
+    console.error(
+      `Container with selector ${containerSelector} not found in overlay ${overlayId}.`,
+    );
+    return;
+  }
   const dropdown = document.createElement('div');
   dropdown.classList.add(`${dropdownType}-dropdown`);
 
   // Find default option
   const defaultOption = options.find((option) => option.default) || options[0];
 
+  // Get appropriate icon for status
+  const getIconPath = (type, value) => {
+    if (type === 'status') {
+      switch (value) {
+        case 'To Do':
+          return './assets/images/icons/task-icons/todo-task-icon.svg';
+        case 'In Progress':
+          return './assets/images/icons/task-icons/running-task-icon.png';
+        case 'Completed':
+          return './assets/images/icons/task-icons/completed-task-icon.svg';
+        default:
+          return './assets/images/icons/task-icons/todo-task-icon.svg';
+      }
+    }
+    return `./assets/images/icons/create-task-modal-icon/${dropdownType}-icon.svg`;
+  };
   // Create default option container
   container.innerHTML = `
     <div class="default-option-container">
       <span class="default-option">${defaultOption.value}</span>
-      <img src="./assets/images/icons/create-task-modal-icon/priority-icon.svg" 
+      <img src="${getIconPath(dropdownType, defaultOption.value)}" 
            class="${dropdownType}-icon" 
            alt="${dropdownType.charAt(0).toUpperCase() + dropdownType.slice(1)} Icon">
+
     </div>
   `;
 
@@ -148,11 +176,40 @@ export function createDropdown(options, containerSelector, dropdownType, overlay
   options.forEach((option) => {
     const optionElement = document.createElement('div');
     optionElement.classList.add(`${dropdownType}-options`);
-    optionElement.textContent = option.value;
+
+    if (dropdownType === 'status') {
+      optionElement.innerHTML = `
+      <img src="${getIconPath('status', option.value)}"
+      class="status-option-icon"
+      alt="${option.value} icon">
+      <span>${option.value}</span>
+      `;
+    } else {
+      optionElement.textContent = option.value;
+    }
 
     optionElement.addEventListener('click', (e) => {
       e.stopPropagation();
-      container.querySelector('.default-option').textContent = option.value;
+      const defaultOption = container.querySelector('.default-option');
+      const defaultIcon = container.querySelector(`.${dropdownType}-icon`);
+      if (defaultOption) {
+        defaultOption.textContent = option.value;
+      }
+
+      if (defaultIcon) {
+        defaultIcon.src = getIconPath(dropdownType, option.value);
+        if (option.value === 'In Progress') {
+          defaultIcon.style.background = 'transparent';
+          defaultIcon.style.padding = '0';
+        } else {
+          defaultIcon.style.background = 'var(--cyan-blue)';
+          defaultIcon.style.padding = '0.5rem';
+        }
+      }
+
+      if (dropdownType === 'status') {
+        container.querySelector('img').src = getIconPath('status', option.value);
+      }
       dropdown.style.display = 'none';
 
       // Dispatch a custom event for the selection
@@ -212,7 +269,7 @@ export function createDropdown(options, containerSelector, dropdownType, overlay
   return dropdown;
 }
 
-export function setupPopupDropdowns() {
+export function setupPopupDropdowns(task) {
   // Priority options
   const priorityOptions = [
     { value: 'Not Urgent', default: true },
@@ -225,6 +282,13 @@ export function setupPopupDropdowns() {
     { value: 'Daily Task', default: true },
     { value: 'Weekly Task', default: false },
     { value: 'Monthly Task', default: false },
+  ];
+
+  //Status options
+  const statusOptions = [
+    { value: 'To Do', default: task?.status === 'To Do' },
+    { value: 'In Progress', default: task?.status === 'In Progress' },
+    { value: 'Completed', default: task?.status === 'Completed' },
   ];
 
   // Create dropdowns for create task overlay
@@ -257,12 +321,20 @@ export function setupPopupDropdowns() {
     'edit-task-modal',
   );
 
+  const editStatusDropdown = createDropdown(
+    statusOptions,
+    '.form__task-status .form__status-select',
+    'status',
+    'edit-task-modal',
+  );
+
   // Close dropdowns when clicking outside
   document.addEventListener('click', () => {
     createPriorityDropdown.style.display = 'none';
     createCategoryDropdown.style.display = 'none';
     editPriorityDropdown.style.display = 'none';
     editCategoryDropdown.style.display = 'none';
+    editStatusDropdown.style.display = 'none';
   });
 }
 

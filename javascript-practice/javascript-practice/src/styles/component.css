@@ -287,13 +287,15 @@
 }
 
 .form__priority-select,
-.form__category-select {
+.form__category-select,
+.form__status-select {
   position: relative;
   display: inline-block;
 }
 
 .priority-dropdown,
-.category-dropdown {
+.category-dropdown,
+.status-dropdown {
   position: absolute;
   top: 100%;
   left: 0;
@@ -307,12 +309,33 @@
   border-radius: var(--border-radius-7);
   padding: 0 var(--space-8);
   background-color: var(--light-pink);
-  display: none;
 }
 
 .priority-dropdown.visible,
-.category-dropdown.visible {
+.category-dropdown.visible,
+.status-dropdown.visible {
   display: flex; /* Shown when the 'visible' class is added */
+}
+
+.status-options {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.status-option-icon,
+.status-icon {
+  width: 3rem;
+  height: 3rem;
+  background-color: var(--cyan-blue);
+  padding: 0.5rem;
+  border-radius: 20%;
+}
+
+.status-dropdown.visible > .status-options:nth-child(2) > .status-option-icon {
+  background-color: transparent;
+  padding: 0;
 }
 
 /* mini search bar */

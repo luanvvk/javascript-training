@@ -434,6 +434,7 @@
 .task-end-container,
 .form__priority-select,
 .form__category-select,
+.form__status-select,
 .default-option-container {
   display: flex;
   align-items: center;
@@ -446,7 +447,8 @@
 }
 
 .form__priority-select,
-.form__category-select {
+.form__category-select,
+.form__status-select {
   flex-direction: column;
   border: none;
 }
@@ -456,7 +458,8 @@
 .task-end-input,
 .default-option,
 .priority-options,
-.category-options {
+.category-options,
+.status-options {
   flex: 1;
   min-height: 4rem;
   font-size: var(--font-size-15);
@@ -565,7 +568,7 @@
 
 .task-name-container .task-name-icon,
 .task-start-container .task-start-icon,
-.task-end-container .task-end-icon {
+.task-end-container .task-start-icon {
   position: absolute;
   right: var(--space-8);
   top: 50%;

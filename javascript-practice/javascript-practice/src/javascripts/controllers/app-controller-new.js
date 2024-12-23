@@ -333,6 +333,9 @@ class TaskController {
       category: document
         .querySelector('#edit-task-modal .form__category-select .default-option')
         .textContent.trim(),
+      status: document
+        .querySelector('#edit-task-modal .form__status-select .default-option')
+        .textContent.trim(),
     };
     if (this.validate(updatedTask)) {
       Object.assign(task, updatedTask);
