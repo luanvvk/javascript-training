@@ -10,39 +10,41 @@ class ErrorHandler {
   showError(message) {
     this.removeExistingErrors();
 
-    const errorNotification = document.createElement('div');
-    errorNotification.classList.add('error-notification');
-    // Create error notification element
-    errorNotification.innerHTML = `
+    let errorNotification = document.querySelector('.error-notification');
+    if (!errorNotification) {
+      errorNotification = document.createElement('div');
+      errorNotification.classList.add('error-notification');
+      // Create error notification element
+      errorNotification.innerHTML = `
        <div class="error-content">
          <img src="./assets/images/icons/error-icon/error-icon.svg" alt="Error Icon" class="error-icon">
          <span class="error-message">${message}</span>
        </div>
      `;
-    const mainBody = document.querySelector('.app-main');
-    const topBar = document.querySelector('.topbar');
-    const insertLocation = topBar || mainBody;
-    if (insertLocation) {
-      insertLocation.insertAdjacentElement('afterend', errorNotification);
+      const mainBody = document.querySelector('.app-main');
+      const topBar = document.querySelector('.topbar');
+      const insertLocation = topBar || mainBody;
+      if (insertLocation) {
+        insertLocation.insertAdjacentElement('afterend', errorNotification);
+      }
     }
 
-    setTimeout(() => {
-      errorNotification.classList.add('show');
-    }, 10);
+    errorNotification.querySelector('.error-message').textContent = message;
+    errorNotification.classList.remove('hide');
+    errorNotification.classList.add('show');
 
-    // Remove error after 3 seconds
     setTimeout(() => {
-      this.removeExistingErrors();
+      errorNotification.classList.remove('show');
+      errorNotification.classList.add('hide');
     }, 3000);
-    this.log(message, 'warn');
   }
 
   removeExistingErrors() {
-    const existingErrors = document.querySelectorAll('.error-notification');
-    existingErrors.forEach((error) => {
-      error.classList.remove('show');
-      error.remove();
-    });
+    const existingErrors = document.querySelector('.error-notification');
+    if (existingErrors) {
+      existingErrors.classList.remove('show');
+      existingErrors.classList.add('hide');
+    }
   }
 }
 

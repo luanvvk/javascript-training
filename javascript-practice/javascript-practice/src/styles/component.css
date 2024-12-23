@@ -515,13 +515,19 @@
 }
 
 .error-notification {
+  opacity: 0;
   background-color: rgb(245, 144, 144);
+  transition: opacity 0.5s ease;
 }
 
 .notification.show,
 .error-notification.show {
   top: 2rem;
   opacity: 1;
+}
+
+.error-notification.hide {
+  opacity: 0;
 }
 
 .notification__message {
