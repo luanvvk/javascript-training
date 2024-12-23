@@ -3,7 +3,11 @@ class ErrorHandler {
     const time = new Date().toISOString();
     const logMessage = `[${time}] ${type.toUpperCase()}: ${message}`;
 
-    // Console logging
+    // Ensure the type is a valid console method
+    const validType = ['log', 'error', 'warn', 'info'];
+    if (!validType.includes(type)) {
+      type = 'error';
+    }
     console[type](logMessage);
   }
 

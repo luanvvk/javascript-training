@@ -6,6 +6,7 @@ import ErrorHandler from '../helpers/error-handler-utils.js';
 import { showDeletionNotification } from '../helpers/notifications.js';
 import SORT_SETTING from '../constants/sort-setting.js';
 import DOM_ELEMENTS from '../constants/dom-elements.js';
+
 import {
   createFormElements,
   editFormElements,
@@ -31,6 +32,8 @@ const toggle = document.querySelector('.topbar__menu-toggle');
 const sideNavbar = document.querySelector(DOM_ELEMENTS.SIDE_NAVBAR_SELECTOR);
 const mainBody = document.querySelector(DOM_ELEMENTS.MAIN_CONTAINER_SELECTOR);
 const appLogoHeading = document.querySelector('.app__logo-text');
+const TASK_STORAGE_KEY = 'tasks';
+
 class TaskController {
   constructor() {
     this.initializeProperties();
@@ -42,13 +45,14 @@ class TaskController {
     this.model = new TaskModel();
     this.view = new TaskView();
     this.tasks = [];
-    this.localStorageUtil = new LocalStorageUtil();
+    this.localStorageUtil = new LocalStorageUtil(TASK_STORAGE_KEY);
     this.validationUtils = new ValidationUtils();
     this.errorHandler = new ErrorHandler();
     this.currentSortSetting = {
       field: SORT_SETTING.FIELD,
       order: SORT_SETTING.SORT_ORDER_ASC,
     };
+    this.TASK_STORAGE_KEY = 'tasks';
     this.sortField = '';
     this.pendingTaskToDelete = null;
     this.deleteOrigin = null;
@@ -97,11 +101,19 @@ class TaskController {
   }
 
   loadTasksFromLocalStorage() {
-    this.tasks = this.localStorageUtil.load(TaskModel);
+    try {
+      this.tasks = this.localStorageUtil.load();
+    } catch (error) {
+      this.errorHandler.log(`Error loading tasks from local storage: ${error.message}`, 'error');
+    }
   }
 
   saveTasksToLocalStorage() {
-    this.localStorageUtil.save(this.tasks);
+    try {
+      this.localStorageUtil.save(this.tasks);
+    } catch (error) {
+      this.errorHandler.log(`Error saving tasks to local storage: ${error.message}`, 'error');
+    }
   }
 
   validate(task) {
