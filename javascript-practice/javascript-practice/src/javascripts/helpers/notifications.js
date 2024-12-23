@@ -13,7 +13,7 @@ export function showNoTasksMessage(columns, viewType) {
     if (!columns[key].children.length) {
       const message = document.createElement('li');
       message.classList.add('no-tasks-message');
-      message.innerHTML = `<h3>No tasks in ${key.replace(/([A-Z])/g, ' $1').toLowerCase()} (${viewType})</h3>`;
+      message.innerHTML = `<h3>No tasks in ${key.replace(/([A-Z])/g, ' $1').toUpperCase()} column (${viewType})</h3>`;
       columns[key].appendChild(message);
     }
   });

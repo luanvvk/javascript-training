@@ -497,9 +497,16 @@
   opacity: 1;
 }
 
+.task-column {
+  margin-top: var(--space-64);
+}
+
 /* Notification prompted after user deleted a task */
-.no-tasks-message {
+.no-tasks-message,
+.no-tasks-message h3,
+.no-tasks-message span {
   text-align: center;
+  font-weight: var(--regular-weight);
   font-size: var(--font-size-15);
   color: var(--black);
   margin-top: 1rem;

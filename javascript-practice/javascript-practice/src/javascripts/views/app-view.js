@@ -11,13 +11,13 @@ class TaskView {
   initializeProperties() {
     this.listViewColumns = {
       toDo: document.querySelector(`.list-view ${TASK_STATUS.TODO_CLASS}`),
-      running: document.querySelector(`.list-view ${TASK_STATUS.RUNNING_CLASS}`),
+      'In Progress': document.querySelector(`.list-view ${TASK_STATUS.RUNNING_CLASS}`),
       completed: document.querySelector(`.list-view ${TASK_STATUS.COMPLETED_CLASS}`),
     };
 
     this.boardViewColumns = {
       toDo: document.querySelector(`.board-view ${TASK_STATUS.TODO_CLASS}`),
-      running: document.querySelector(`.board-view ${TASK_STATUS.RUNNING_CLASS}`),
+      'In Progress': document.querySelector(`.board-view ${TASK_STATUS.RUNNING_CLASS}`),
       completed: document.querySelector(`.board-view ${TASK_STATUS.COMPLETED_CLASS}`),
     };
   }
@@ -48,8 +48,8 @@ class TaskView {
           this.boardViewColumns.toDo.appendChild(taskHTML.cloneNode(true));
           break;
         case 'In Progress':
-          this.listViewColumns.running.appendChild(taskHTML.cloneNode(true));
-          this.boardViewColumns.running.appendChild(taskHTML.cloneNode(true));
+          this.listViewColumns['In Progress'].appendChild(taskHTML.cloneNode(true));
+          this.boardViewColumns['In Progress'].appendChild(taskHTML.cloneNode(true));
           break;
         case 'Completed':
           this.listViewColumns.completed.appendChild(taskHTML.cloneNode(true));
