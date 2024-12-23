@@ -9,7 +9,6 @@ import DOM_ELEMENTS from '../constants/dom-elements.js';
 
 import {
   createFormElements,
-  editFormElements,
   setupPopupDropdowns,
   renderSortingUI,
 } from '../templates/templates.js';
@@ -136,7 +135,6 @@ class TaskController {
   setupDynamicForm() {
     createFormElements();
     setupPopupDropdowns();
-    editFormElements();
     renderSortingUI();
   }
 
@@ -299,9 +297,9 @@ class TaskController {
     const task = this.tasks.find((t) => t.id === taskId);
     if (task) {
       setupPopupDropdowns(task);
-      this.view.populateEditForm(task);
-      this.view.openEditTaskOverlay();
       this.editTaskOverlay.dataset.taskId = taskId;
+      this.view.openEditTaskOverlay();
+      this.view.populateEditForm(task);
     }
   }
 

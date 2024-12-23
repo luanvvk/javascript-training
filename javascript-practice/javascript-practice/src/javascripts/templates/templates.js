@@ -41,54 +41,87 @@ export function createTaskElement(task) {
   return tempDiv.firstElementChild;
 }
 
-// ALL TASK POPUP
-export function createFormElements() {
-  // Task Name Input
-  const createTaskOverlay = document.getElementById('create-task-modal');
-  const taskNameContainer = createTaskOverlay.querySelector('.form__task-name');
-  taskNameContainer.innerHTML = `
-    <label class="form__label" for="task-name-input">Task Title</label>
-    <div class="task-name-container">
-      <input type="text" id="task-name-input" class="task-name-input" placeholder="Enter task title" required>
-      <img src="./assets/images/icons/create-task-modal-icon/task-title-icon.svg" class="task-name-icon" alt="Task Title Icon">
-    </div>
-  `;
+// Generic forms for both createTaskPopup and editTaskPopup
+export function createFormElements(formType = 'create') {
+  //Identify if this is create or edit popup
+  const isCreate = formType === 'create';
+  const modalId = isCreate ? 'create-task-modal' : 'edit-task-modal';
+  const overlay = document.getElementById(modalId);
 
-  // Start Date Input
-  const taskStartContainer = createTaskOverlay.querySelector('.form__task-start');
+  //Task name input
+  const taskNameContainer = overlay.querySelector('.form__task-name');
+  taskNameContainer.innerHTML = `
+<label class="form__label" for="${isCreate ? 'task-name-input' : 'task-title'}">Task Title</label>
+<div class="task-name-container">
+ <input type="text" id="${isCreate ? 'task-name-input' : 'task-title'}" class="task-name-input" ${isCreate ? 'placeholder="Enter task title"' : ''} required />
+  <img class="task-name-icon"
+       src="./assets/images/icons/create-task-modal-icon/task-title-icon.svg"
+       alt="Task Title Icon" 
+       />
+</div>
+`;
+  //Start Date input
+  const taskStartContainer = overlay.querySelector('.form__task-start');
   taskStartContainer.innerHTML = `
-    <label class="form__label" for="task-start-input">Start Date</label>
-    <div class="task-start-container">
+   <label class="form__label" for="${isCreate ? 'task-start-input' : 'start-date'} ">Start Date</label>
+  <div class="task-start-container">
     <span class="text-input"></span>
-      <input type="date" id="task-start-input" class="task-start-input" required >
-      <img src="./assets/images/icons/create-task-modal-icon/end-date-icon.svg" class="task-start-icon" alt="Start Date Icon">
-    </div>
-  `;
+    <input type="date"  id="${isCreate ? 'task-start-input' : 'start-date'}" class="task-start-input" />
+     <img class="task-start-icon" src="./assets/images/icons/create-task-modal-icon/end-date-icon.svg"
+          alt="Start Date Icon"
+      />
+  </div>
+`;
 
   // End Date Input
-  const taskEndContainer = createTaskOverlay.querySelector('.form__task-end');
+  const taskEndContainer = overlay.querySelector('.form__task-end');
   taskEndContainer.innerHTML = `
-    <label class="form__label" for="task-end-input">End Date</label>
-    <div class="task-end-container">
-      <span class="text-input"></span>
-      <input type="date" id="task-end-input" class="task-end-input" required >
-      <img src="./assets/images/icons/create-task-modal-icon/end-date-icon.svg" class="task-end-icon" alt="End Date Icon">
-    </div>
-  `;
+   <label class="form__label" for="${isCreate ? 'task-end-input' : 'end-date'} ">End Date</label>
+  <div class="task-end-container">
+    <span class="text-input"></span>
+    <input type="date"  id="${isCreate ? 'task-end-input' : 'end-date'}" class="task-end-input" />
+     <img class="task-start-icon" src="./assets/images/icons/create-task-modal-icon/end-date-icon.svg"
+          alt="End Date Icon"
+      />
+  </div>
+`;
 
-  // Task Description
-  const taskDescContainer = createTaskOverlay.querySelector('.form__task-desc');
+  //Task Description
+  const taskDescContainer = overlay.querySelector('.form__task-desc');
   taskDescContainer.innerHTML = `
-    <label class="form__label" for="textarea-input">Task Description</label>
-    <textarea id="textarea-input" class="textarea-input" rows="5" placeholder="Enter task description"></textarea>
-  `;
+  <label class="form__label" for="${isCreate ? 'text-area-input' : 'textarea'}">Task Description</label>
+  <textarea id="${isCreate ? 'text-area-input' : 'textarea'}" class="textarea-input" rows="8" placeholder="Enter task description"></textarea>
+ `;
 
-  // Button Controls
-  const buttonControls = createTaskOverlay.querySelector('.form__actions');
-  buttonControls.innerHTML = `
-    <button type="submit" class="btn btn-primary form__button form__button--add">Add to list</button>
+  //Button controls
+  const buttonControls = overlay.querySelector('.form__actions');
+  if (isCreate) {
+    buttonControls.innerHTML = `
+   <button type="submit" class="btn btn-primary form__button form__button--add">Add to list</button>
     <button type="button" class="btn btn-cancel form__button form__button--cancel">Cancel</button>
   `;
+  } else {
+    buttonControls.innerHTML = `
+  <button type="submit" class="btn btn-primary edit-task-button">Save changes</button>
+  <button type="button" class="btn btn-cancel form__button form__button--cancel">Cancel</button>
+  <button type="button" class="btn btn-success mark-completed" >
+    <img
+    class="move-task-icon"
+    src="./assets/images/icons/task-edit-modal-icons/mark-as-completed-icon.svg"
+    alt=""
+    />
+    Mark as completed
+  </button>
+  <button type="button" class="btn btn-secondary overlay-delete-button">
+    <img
+    class="delete-task-icon"
+    src="./assets/images/icons/task-edit-modal-icons/task-delete-icon.svg"
+    alt=""
+    />
+  Delete the task
+  </button>
+`;
+  }
 }
 
 // TEMPLATE FOR DROPDOWN INPUT
@@ -231,79 +264,6 @@ export function setupPopupDropdowns() {
     editPriorityDropdown.style.display = 'none';
     editCategoryDropdown.style.display = 'none';
   });
-}
-
-// EDIT TASK POPUP
-export function editFormElements() {
-  // Task Name Input
-  const editTaskOverlay = document.getElementById('edit-task-modal');
-  const taskNameContainer = editTaskOverlay.querySelector('.form__task-name');
-  taskNameContainer.innerHTML = `
-     <label class="form__label" for="task-title">Task Title</label>
-    <div class="task-name-container">
-      <input type="text" name="task-name" id="task-title" class="task-name-input" required />
-       <img class="task-name-icon"
-            src="./assets/images/icons/create-task-modal-icon/task-title-icon.svg"
-            alt="task-name-icon" 
-            />
-    </div>
-  `;
-  // Start Date Input
-  const taskStartContainer = editTaskOverlay.querySelector('.form__task-start');
-  taskStartContainer.innerHTML = `
-     <label class="form__label" for="start-date">Start Date</label>
-    <div class="task-start-container">
-      <span class="text-input"></span>
-      <input type="date" name="task-start" id="start-date" class="task-start-input" />
-       <img class="task-start-icon" src="./assets/images/icons/create-task-modal-icon/end-date-icon.svg"
-            alt="task-start-icon"
-        />
-    </div>
-  `;
-
-  // End Date Input
-  const taskEndContainer = editTaskOverlay.querySelector('.form__task-end');
-  taskEndContainer.innerHTML = `
-      <label class="form__label" for="end-date">End Date</label>
-    <div class="task-end-container">
-      <span class="text-input"></span>
-      <input type="date" name="task-end" id="end-date" class="task-end-input" />
-      <img class="task-end-icon"
-           src="./assets/images/icons/create-task-modal-icon/end-date-icon.svg"
-          alt="task-end-icon"
-      />
-    </div>
-  `;
-
-  // Task Description
-  const taskDescContainer = editTaskOverlay.querySelector('.form__task-desc');
-  taskDescContainer.innerHTML = `
-    <label class="form__label" for="description">Task Description</label>
-    <textarea id="textarea" class="textarea-input" rows="8" placeholder="Enter task description"></textarea>
-   `;
-
-  // Button Controls
-  const buttonControls = editTaskOverlay.querySelector('.form__actions');
-  buttonControls.innerHTML = `
-    <button type="submit" class="btn btn-primary edit-task-button">Save changes</button>
-    <button type="button" class="btn btn-cancel form__button form__button--cancel">Cancel</button>
-    <button type="button" class="btn btn-success mark-completed" >
-      <img
-      class="move-task-icon"
-      src="./assets/images/icons/task-edit-modal-icons/mark-as-completed-icon.svg"
-      alt=""
-      />
-      Mark as completed
-    </button>
-    <button type="button" class="btn btn-secondary overlay-delete-button">
-      <img
-      class="delete-task-icon"
-      src="./assets/images/icons/task-edit-modal-icons/task-delete-icon.svg"
-      alt=""
-      />
-    Delete the task
-    </button>
-  `;
 }
 
 //SORTING UI

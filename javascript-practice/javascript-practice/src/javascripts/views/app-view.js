@@ -1,6 +1,7 @@
 import { createTaskElement } from '../templates/templates.js';
 import { showNoTasksMessage } from '../helpers/notifications.js';
 import TASK_STATUS from '../constants/task-status.js';
+import { createFormElements } from '../templates/templates.js';
 class TaskView {
   constructor() {
     this.initializeProperties();
@@ -153,6 +154,7 @@ class TaskView {
 
   // Open/close overlays
   openCreateTaskOverlay() {
+    createFormElements('create');
     this.createTaskOverlay.classList.toggle('hidden');
     document.body.classList.add('overflow-hidden');
   }
@@ -163,6 +165,7 @@ class TaskView {
   }
 
   openEditTaskOverlay() {
+    createFormElements('edit');
     this.editTaskOverlay.classList.remove('hidden');
     document.body.classList.add('overflow-hidden');
   }
