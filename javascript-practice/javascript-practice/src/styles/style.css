@@ -59,10 +59,6 @@
   color: var(--cyan-blue);
 }
 
-.app-logo.active {
-  justify-content: space-between;
-}
-
 .app__logo-text {
   display: block;
 }
@@ -120,8 +116,6 @@
   justify-content: center;
   align-items: center;
   gap: var(--space-16);
-
-  padding-right: 1rem;
   height: 2.5rem;
 
   color: var(--light-pink);
@@ -717,5 +711,15 @@
   .modal__container {
     width: 95%;
     margin: 0 auto;
+  }
+
+  .filter__dynamic-container,
+  .filter__actions,
+  .filter__actions-container {
+    flex-direction: column;
+  }
+
+  .filter-wrapper {
+    padding: 0 var(--space-4);
   }
 }

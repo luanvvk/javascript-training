@@ -25,11 +25,6 @@ class TaskView {
   initializeDOMElements() {
     this.createTaskOverlay = document.getElementById('create-task-modal');
     this.editTaskOverlay = document.getElementById('edit-task-modal');
-    this.notification = document.querySelector('.notification');
-    this.sortDropdown = document.querySelector('.sort__dropdown');
-    this.sortOrderToggle = document.querySelector('.sort__order-toggle');
-    this.filterFieldDropdown = document.querySelector('.filter__field-dropdown');
-    this.filterOptionsDropdown = document.querySelector('.filter__options-dropdown');
   }
 
   // Render tasks in both views

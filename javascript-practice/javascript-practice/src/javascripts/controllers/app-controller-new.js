@@ -17,8 +17,6 @@ import {
 // filter criteria
 const filterFieldDropdown = document.querySelector(DOM_ELEMENTS.FILTER_FIELD_DROPDOWN_SELECTOR);
 const filterOptionsDropdown = document.querySelector(DOM_ELEMENTS.FILTER_OPTIONS_DROPDOWN_SELECTOR);
-//sort
-const sortOrderToggle = document.querySelector(DOM_ELEMENTS.SORT_ORDER_TOGGLE_SELECTOR);
 //navigate/toggle elements
 const popupBoardView = document.querySelector('#all-task-modal .board-view');
 const popupListView = document.querySelector('#all-task-modal .list-view');
@@ -41,20 +39,24 @@ class TaskController {
   }
 
   initializeProperties() {
+    //Core components
     this.model = new TaskModel();
     this.view = new TaskView();
     this.tasks = [];
+
+    // Utilities
     this.localStorageUtil = new LocalStorageUtil(TASK_STORAGE_KEY);
     this.validationUtils = new ValidationUtils();
     this.errorHandler = new ErrorHandler();
+    // Setting
     this.currentSortSetting = {
       field: SORT_SETTING.FIELD,
       order: SORT_SETTING.SORT_ORDER_ASC,
     };
-    this.TASK_STORAGE_KEY = 'tasks';
-    this.sortField = '';
+    // task deletion state
     this.pendingTaskToDelete = null;
     this.deleteOrigin = null;
+
     this.initializeDOMElements();
   }
 
@@ -68,6 +70,7 @@ class TaskController {
       );
       this.sortDropdown = document.querySelector(DOM_ELEMENTS.SORT_DROPDOWN_SELECTOR);
       this.sortOrderToggle = document.querySelector(DOM_ELEMENTS.SORT_ORDER_TOGGLE_SELECTOR);
+      // Only initialize elements which not handled by TaskView
       this.mainContainer = document.querySelector(DOM_ELEMENTS.MAIN_CONTAINER_SELECTOR);
       this.taskColumns = document.querySelectorAll(DOM_ELEMENTS.TASK_LIST_SELECTOR);
       this.editTaskOverlay = document.getElementById(DOM_ELEMENTS.EDIT_TASK_MODAL_ID);
@@ -82,10 +85,22 @@ class TaskController {
   }
 
   bindMethods() {
-    this.applyFilters = this.applyFilters.bind(this);
-    this.handleTaskEdit = this.handleTaskEdit.bind(this);
-    this.handleStatusChange = this.handleStatusChange.bind(this);
-    this.confirmTaskDeletion = this.confirmTaskDeletion.bind(this);
+    const methodToBind = [
+      'applyFilters',
+      'handleTaskEdit',
+      'handleStatusChange',
+      'confirmTaskDeletion',
+      'handleSearchInput',
+      'toggleSortOrder',
+    ];
+
+    methodToBind.forEach((method) => {
+      this[method] = this[method].bind(this);
+    });
+    // this.applyFilters = this.applyFilters.bind(this);
+    // this.handleTaskEdit = this.handleTaskEdit.bind(this);
+    // this.handleStatusChange = this.handleStatusChange.bind(this);
+    // this.confirmTaskDeletion = this.confirmTaskDeletion.bind(this);
   }
 
   initialize() {
@@ -133,19 +148,26 @@ class TaskController {
   }
 
   setupDynamicForm() {
-    createFormElements();
-    setupPopupDropdowns();
-    renderSortingUI();
+    try {
+      createFormElements();
+      setupPopupDropdowns();
+      renderSortingUI();
+    } catch (error) {
+      this.errorHandler.log(`Error setting up dynamic form: ${error.message}`, 'error');
+    }
   }
 
   setupEventListeners() {
-    this.setupTaskDelegation();
-    this.setupOverlayDelegation();
-    this.setupNavigationDelegation();
-    this.setupSearchListener();
-    this.setupFilterEventListeners();
-    this.setupFilterEventListeners();
-    this.setupSidebarToggleListener();
+    try {
+      this.setupTaskDelegation();
+      this.setupOverlayDelegation();
+      this.setupNavigationDelegation();
+      this.setupSearchListener();
+      this.setupFilterEventListeners();
+      this.setupSidebarToggleListener();
+    } catch (error) {
+      this.errorHandler.log(`Error setting up event listener: ${error.message}`, 'error');
+    }
   }
 
   setupTaskDelegation() {
@@ -477,42 +499,30 @@ class TaskController {
     const popupSearchInput = document.querySelector('#all-task-modal .input-bar-mini__main-input');
 
     if (mainSearchInput) {
-      mainSearchInput.addEventListener('input', this.searchTasks.bind(this));
+      mainSearchInput.addEventListener('input', this.handleSearchInput.bind(this));
     }
     if (popupSearchInput) {
-      popupSearchInput.addEventListener('input', this.searchTasks.bind(this));
+      popupSearchInput.addEventListener('input', this.handleSearchInput.bind(this));
     }
   }
 
   //Search tasks method
-  searchTasks(e) {
+  handleSearchInput(e) {
     const searchText = e.target.value.toLowerCase().trim();
     const isPopupSearch = e.target.closest('#all-task-modal') !== null;
-    // If search is empty, render all tasks
-    if (searchText === '') {
-      if (isPopupSearch) {
-        this.view.renderAllTasksPopup(this.tasks);
-      } else {
-        this.renderTasks();
-      }
-      return;
-    }
+    const filteredTasks = searchText ? this.searchTasks(searchText) : this.tasks;
 
-    // Filter tasks based on search criteria
-    const filteredTasks = this.tasks.filter(
-      (task) =>
-        task.title.toLowerCase().includes(searchText) ||
-        task.description.toLowerCase().includes(searchText) ||
-        task.category.toLowerCase().includes(searchText) ||
-        task.priority.toLowerCase().includes(searchText),
+    isPopupSearch
+      ? this.view.renderAllTasksPopup(filteredTasks)
+      : this.view.renderTasks(filteredTasks);
+  }
+  //check if having at least one field matched the search text
+  searchTasks(searchText) {
+    return this.tasks.filter((task) =>
+      ['title', 'description', 'category', 'priority'].some((field) =>
+        task[field].toLowerCase().includes(searchText),
+      ),
     );
-
-    // Render filtered tasks
-    if (isPopupSearch) {
-      this.view.renderAllTasksPopup(filteredTasks);
-    } else {
-      this.view.renderTasks(filteredTasks);
-    }
   }
 
   //Setup filter event listeners for filtering and sorting
@@ -641,44 +651,41 @@ class TaskController {
 
       return this.tasks;
     }
-    //avoid mutating the original array
+    // Sort handling method:
+    const getSortValue = (task, field) => {
+      const sortMap = {
+        name: () => task.title.toLowerCase(),
+        startDate: () => new Date(task.startDate || '9999-12-31'),
+        endDate: () => new Date(task.endDate || '9999-12-31'),
+        category: () => task.category.toLowerCase(),
+        priority: () => {
+          const priorityOrder = {
+            'Not urgent': 1,
+            'Urgent Task': 2,
+            Important: 3,
+          };
+          return priorityOrder[task.priority] || 0;
+        },
+      };
+      return sortMap[field]();
+    };
     const sortedTasks = [...this.tasks].sort((a, b) => {
-      let valueA, valueB;
-      switch (field) {
-        case 'name':
-          valueA = a.title.toLowerCase();
-          valueB = b.title.toLowerCase();
-          break;
-        case 'startDate':
-          valueA = a.startDate ? new Date(a.startDate) : new Date(9999, 12, 31);
-          valueB = b.startDate ? new Date(b.startDate) : new Date(9999, 12, 31);
-          break;
-        case 'endDate':
-          valueA = a.endDate ? new Date(a.endDate) : new Date(9999, 12, 31);
-          valueB = b.endDate ? new Date(b.endDate) : new Date(9999, 12, 31);
-          break;
-        case 'category':
-          valueA = a.category.toLowerCase();
-          valueB = b.category.toLowerCase();
-          break;
-        case 'priority':
-          {
-            const priorityOrder = {
-              'Not urgent': 1,
-              'Urgent Task': 2,
-              Important: 3,
-            };
-            valueA = priorityOrder[a.priority] || 0;
-            valueB = priorityOrder[b.priority] || 0;
-          }
+      const valueA = getSortValue(a, field);
+      const valueB = getSortValue(b, field);
 
-          break;
-      }
-      //sort conditions
-      if (valueA < valueB) return order === 'asc' ? -1 : 1;
-      if (valueA > valueB) return order === 'asc' ? 1 : -1;
-      return 0;
+      return order === 'asc'
+        ? valueA < valueB
+          ? -1
+          : valueA > valueB
+            ? 1
+            : 0
+        : valueA > valueB
+          ? -1
+          : valueA < valueB
+            ? 1
+            : 0;
     });
+
     this.currentSortSetting = { field, order };
 
     return sortedTasks;
@@ -702,7 +709,7 @@ class TaskController {
     this.view.renderAllTasksPopup(sortedTasks);
 
     //update button visual state
-    sortOrderToggle.innerHTML =
+    this.sortOrderToggle.innerHTML =
       newOrder === SORT_SETTING.SORT_ORDER_ASC
         ? ' <img class="sort__icon" src="./assets/images/icons/sort-icons/sort-icon-asc.png" alt="sort-icon-up" />'
         : ' <img class="sort__icon" src="./assets/images/icons/sort-icons/sort-icon-desc.png" alt="sort-icon-down" />';
