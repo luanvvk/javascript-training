@@ -326,7 +326,7 @@ class TaskController {
       title: document.querySelector('#task-title').value.trim(),
       startDate: document.querySelector('#start-date').value,
       endDate: document.querySelector('#end-date').value,
-      description: document.querySelector('.textarea-input').value.trim(),
+      description: document.querySelector('#textarea').value.trim(),
       priority: document
         .querySelector('#edit-task-modal .form__priority-select .default-option')
         .textContent.trim(),
