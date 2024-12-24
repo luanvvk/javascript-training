@@ -29,7 +29,6 @@ const toggle = document.querySelector('.topbar__menu-toggle');
 const sideNavbar = document.querySelector(DOM_ELEMENTS.SIDE_NAVBAR_SELECTOR);
 const mainBody = document.querySelector(DOM_ELEMENTS.MAIN_CONTAINER_SELECTOR);
 const appLogoHeading = document.querySelector('.app__logo-text');
-const TASK_STORAGE_KEY = 'tasks';
 
 class TaskController {
   constructor() {
@@ -45,7 +44,7 @@ class TaskController {
     this.tasks = [];
 
     // Utilities
-    this.localStorageUtil = new LocalStorageUtil(TASK_STORAGE_KEY);
+    this.localStorageUtil = new LocalStorageUtil('tasks');
     this.validationUtils = new ValidationUtils();
     this.errorHandler = new ErrorHandler();
     // Setting
@@ -70,7 +69,6 @@ class TaskController {
       );
       this.sortDropdown = document.querySelector(DOM_ELEMENTS.SORT_DROPDOWN_SELECTOR);
       this.sortOrderToggle = document.querySelector(DOM_ELEMENTS.SORT_ORDER_TOGGLE_SELECTOR);
-      // Only initialize elements which not handled by TaskView
       this.mainContainer = document.querySelector(DOM_ELEMENTS.MAIN_CONTAINER_SELECTOR);
       this.taskColumns = document.querySelectorAll(DOM_ELEMENTS.TASK_LIST_SELECTOR);
       this.editTaskOverlay = document.getElementById(DOM_ELEMENTS.EDIT_TASK_MODAL_ID);

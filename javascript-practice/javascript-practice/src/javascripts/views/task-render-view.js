@@ -17,26 +17,31 @@ class TaskRenderView extends TaskBaseView {
   }
 
   // Render tasks in appropriate columns
-  renderTask(task) {
-    const taskHTML = createTaskElement(task);
+  renderTasks(tasks) {
+    // Clear previous tasks
+    Object.values(this.listViewColumns).forEach((column) => (column.innerHTML = ''));
+    Object.values(this.boardViewColumns).forEach((column) => (column.innerHTML = ''));
 
-    switch (task.status) {
-      case 'To Do':
-        this.listViewColumns.toDo.appendChild(taskHTML.cloneNode(true));
-        this.boardViewColumns.toDo.appendChild(taskHTML.cloneNode(true));
-        break;
-      case 'In Progress':
-        this.listViewColumns['In Progress'].appendChild(taskHTML.cloneNode(true));
-        this.boardViewColumns['In Progress'].appendChild(taskHTML.cloneNode(true));
-        break;
-      case 'Completed':
-        this.listViewColumns.completed.appendChild(taskHTML.cloneNode(true));
-        this.boardViewColumns.completed.appendChild(taskHTML.cloneNode(true));
-        break;
-    }
-  }
-  // Show a "no tasks" message if columns are empty
-  showEmptyStateMessages() {
+    // Render tasks in appropriate columns
+    tasks.forEach((task) => {
+      const taskHTML = createTaskElement(task);
+
+      switch (task.status) {
+        case 'To Do':
+          this.listViewColumns.toDo.appendChild(taskHTML.cloneNode(true));
+          this.boardViewColumns.toDo.appendChild(taskHTML.cloneNode(true));
+          break;
+        case 'In Progress':
+          this.listViewColumns['In Progress'].appendChild(taskHTML.cloneNode(true));
+          this.boardViewColumns['In Progress'].appendChild(taskHTML.cloneNode(true));
+          break;
+        case 'Completed':
+          this.listViewColumns.completed.appendChild(taskHTML.cloneNode(true));
+          this.boardViewColumns.completed.appendChild(taskHTML.cloneNode(true));
+          break;
+      }
+    });
+    // Show a "no tasks" message if columns are empty
     showNoTasksMessage(this.listViewColumns, 'list-view');
     showNoTasksMessage(this.boardViewColumns, 'board-view');
   }
