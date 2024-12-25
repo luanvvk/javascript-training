@@ -16,7 +16,6 @@ const DOM_ELEMENTS = {
   FORM_CANCEL_BUTTON_SELECTOR: '.form__button--cancel, .modal__close',
   EDIT_TASK_BUTTON_SELECTOR: '.edit-task-button',
   CREATE_TASK_MODAL_ID: 'create-task-modal',
-  EDIT_TASK_MODAL_ID: 'edit-task-modal',
 };
 
 export default DOM_ELEMENTS;

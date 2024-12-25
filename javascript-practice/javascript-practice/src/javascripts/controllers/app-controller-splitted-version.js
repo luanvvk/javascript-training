@@ -1,17 +1,23 @@
-import TaskModel from './models/TaskModel.js';
-import TaskView from './views/TaskView.js';
+import TaskModel from '../models/task-model.js';
+import TaskView from '../views/app-view.js';
 import ValidationUtils from '../helpers/validation-utils.js';
-import SearchController from './controllers/search-controller.js';
-import FilterController from './controllers/filter-controller.js';
-import NavigationController from './controllers/navigation-controller.js';
-import TaskActionController from './controllers/taskAction-controller.js';
-import { ErrorHandler } from '../helpers/error-handler-utils.js';
-import { LocalStorageUtil } from '../helpers/local-storage-utils.js';
+import SearchController from '../controllers/search-controller.js';
+import FilterController from '../controllers/filter-controller.js';
+import NavigationController from '../controllers/navigation-controller.js';
+import TaskActionController from '../controllers/task-action-controller.js';
+import ErrorHandler from '../helpers/error-handler-utils.js';
+import LocalStorageUtil from '../helpers/local-storage-utils.js';
 import {
   createFormElements,
   setupPopupDropdowns,
   renderSortingUI,
 } from '../templates/templates.js';
+
+//Declaration
+const sideNavbar = document.querySelector('.search-bar__input-bar');
+const mainBody = document.querySelector('.app-main');
+const toggle = document.querySelector('.topbar__menu-toggle');
+const appLogoHeading = document.querySelector('.app__logo-text');
 
 class TaskController {
   constructor() {
@@ -37,6 +43,7 @@ class TaskController {
     this.taskActionController = new TaskActionController(
       this.tasks,
       this.model,
+      this.view,
       this.storageUtil,
       this.errorHandler,
     );
@@ -49,24 +56,20 @@ class TaskController {
 
   initializeDOMElements() {
     try {
-      this.mainContainer = document.querySelector(DOM_ELEMENTS.MAIN_CONTAINER_SELECTOR);
-      this.taskColumns = document.querySelectorAll(DOM_ELEMENTS.TASK_LIST_SELECTOR);
-      this.editTaskOverlay = document.getElementById(DOM_ELEMENTS.EDIT_TASK_MODAL_ID);
-      this.deleteConfirmationPopup = document.getElementById(
-        DOM_ELEMENTS.DELETE_CONFIRMATION_POPUP_ID,
-      );
-      this.sideNavbar = document.querySelector(DOM_ELEMENTS.SIDE_NAVBAR_SELECTOR);
-      this.searchBarTop = document.querySelector(DOM_ELEMENTS.SEARCH_BAR_TOP_SELECTOR);
+      this.mainContainer = document.querySelector('.app-main');
+      this.taskColumns = document.querySelectorAll('.task-list');
+      this.editTaskOverlay = document.getElementById('edit-task-modal');
+      this.deleteConfirmationPopup = document.getElementById('confirmation-popup--delete');
+      this.sideNavbar = document.querySelector('.app__sidebar');
+      this.searchBarTop = document.querySelector('.search-bar__input-bar');
     } catch (error) {
       this.errorHandler.log(`Error initializing DOM elements: ${error.message} `, 'error');
     }
   }
 
   bindMethods() {
-    const methodToBind = ['handleTaskEdit', 'handleStatusChange', 'confirmTaskDeletion'];
-    methodToBind.forEach((method) => {
-      this[method] = this[method].bind(this);
-    });
+    this.handleTaskEdit = this.handleTaskEdit.bind(this);
+    this.handleStatusChange = this.handleStatusChange.bind(this);
   }
 
   initialize() {
@@ -75,6 +78,8 @@ class TaskController {
       this.setupDynamicForm();
       this.setupEventDelegation();
       this.renderAllTasks();
+      this.setupSidebarToggleListener();
+      this.setupResponsiveDesignListener();
     } catch (error) {
       this.errorHandler.log(`Initialization error: ${error.message}`);
     }
@@ -93,19 +98,6 @@ class TaskController {
       this.localStorageUtil.save(this.tasks);
     } catch (error) {
       this.errorHandler.log(`Error saving tasks to local storage: ${error.message}`, 'error');
-    }
-  }
-
-  validate(task) {
-    try {
-      const validationErrors = this.validationUtils.validateTask(task);
-      if (validationErrors.length > 0) {
-        validationErrors.forEach((error) => this.showError(error));
-        return false;
-      }
-      return true;
-    } catch (error) {
-      this.errorHandler.log(`Error validating task: ${error.message}`, 'error');
     }
   }
 
@@ -131,10 +123,6 @@ class TaskController {
         this.handleAddTaskButtonClick();
       }
 
-      if (target.closest('.form__actions .form__button.form__button--add')) {
-        e.preventDefault();
-        this.taskActionController.handleAddTask();
-      }
       if (target.closest('.task-item')) {
         this.handleTaskItemEvents(e);
       }
@@ -147,6 +135,18 @@ class TaskController {
     sideNavbar.classList.remove('active');
   }
 
+  handleTaskEdit(taskElement) {
+    const taskId = parseInt(taskElement.dataset.taskId);
+
+    const task = this.tasks.find((t) => t.id === taskId);
+    if (task) {
+      setupPopupDropdowns(task);
+      this.editTaskOverlay.dataset.taskId = taskId;
+      this.view.openEditTaskOverlay();
+      this.view.populateEditForm(task);
+    }
+  }
+
   handleTaskItemEvents(e) {
     const taskItem = e.target.closest('.task-item');
     const taskId = parseInt(taskItem.dataset.taskId);
@@ -155,16 +155,74 @@ class TaskController {
     if (!task) return;
 
     if (e.target.closest('.status-button')) {
-      this.taskActionController.handleStatusChange(task);
+      this.handleStatusChange(task);
     }
 
     if (e.target.closest('.task-edit')) {
-      this.taskActionController.handleTaskEdit(task);
+      this.handleTaskEdit(taskItem);
     }
 
     if (e.target.closest('.task-delete')) {
-      this.taskActionController.handleTaskDelete(taskId);
+      this.taskActionController.openDeleteConfirmationPopup(taskId, 'main-view');
     }
+  }
+
+  handleStatusChange(task) {
+    if (task.status === 'To Do') {
+      task.status = 'In Progress';
+    } else if (task.status === 'In Progress') {
+      task.status = 'Completed';
+    } else if (task.status === 'Completed') {
+      task.status = 'In Progress';
+    }
+    this.renderAllTasks();
+    this.saveTasksToLocalStorage();
+  }
+
+  renderTasks() {
+    this.view.renderTasks(this.tasks);
+  }
+
+  renderAllTasks() {
+    // Render all tasks in the All Tasks Popup,
+    this.view.renderAllTasksPopup(this.tasks);
+    // Render all tasks in the main view
+    this.view.renderTasks(this.tasks);
+  }
+
+  // Side bar event
+  setupSidebarToggleListener() {
+    if (toggle) {
+      toggle.addEventListener('click', () => {
+        sideNavbar.classList.toggle('active');
+        mainBody.classList.toggle('active');
+        if (sideNavbar.classList.contains('active')) {
+          sideNavbar.classList.add('active');
+          appLogoHeading.classList.add('active');
+        } else {
+          sideNavbar.classList.remove('active');
+          appLogoHeading.classList.remove('active');
+        }
+      });
+    }
+  }
+
+  setupResponsiveDesignListener() {
+    function initCheck(event) {
+      if (event.matches) {
+        sideNavbar.classList.remove('active');
+        mainBody.classList.remove('active');
+      } else {
+        sideNavbar.classList.add('active');
+        mainBody.classList.add('active');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      let width = window.matchMedia('(min-width: 800px)');
+      initCheck(width);
+      width.addEventListener('change', initCheck);
+    });
   }
 }
 export default TaskController;

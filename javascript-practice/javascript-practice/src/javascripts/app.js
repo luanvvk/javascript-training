@@ -1,4 +1,4 @@
-import TaskController from './controllers/app-controller-new.js';
+import TaskController from './controllers/app-controller-splitted-version.js';
 import TaskModel from './models/task-model.js';
 import TaskView from './views/app-view.js';
 

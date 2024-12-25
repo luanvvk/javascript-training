@@ -4,7 +4,7 @@ import ErrorHandler from '../helpers/error-handler-utils.js';
 class TaskBaseView {
   constructor() {
     this.initializeProperties();
-    this.initializeProperties();
+    this.initializeDOMElements();
   }
 
   initializeProperties() {
@@ -21,7 +21,7 @@ class TaskBaseView {
     };
   }
 
-  initializeProperties() {
+  initializeDOMElements() {
     this.errorHandler = new ErrorHandler();
     this.createTaskOverlay = document.getElementById('create-task-modal');
     this.editTaskOverlay = document.getElementById('edit-task-modal');

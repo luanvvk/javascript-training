@@ -17,7 +17,7 @@ class TaskRenderView extends TaskBaseView {
   }
 
   // Render tasks in appropriate columns
-  renderTasks(tasks) {
+  renderTask(tasks) {
     // Clear previous tasks
     Object.values(this.listViewColumns).forEach((column) => (column.innerHTML = ''));
     Object.values(this.boardViewColumns).forEach((column) => (column.innerHTML = ''));
