@@ -7,6 +7,7 @@ import TaskFormController from './task-form-controller.js';
 import TaskModel from '../models/task-model.js';
 import TaskBaseController from './task-base-controller.js';
 import ErrorHandler from '../helpers/error-handler-utils.js';
+import LocalStorageUtil from '../helpers/local-storage-utils.js';
 import {
   createFormElements,
   setupPopupDropdowns,
@@ -15,28 +16,49 @@ import {
 
 class MainTaskController {
   constructor() {
+    console.log('Creating dependencies...');
     this.model = new TaskModel();
-    this.renderView = new TaskRenderView();
     this.modalView = new TaskModalView();
+    this.renderView = new TaskRenderView();
     this.errorHandler = new ErrorHandler();
-    this.initialize();
+
+    this.localStorageUtil = new LocalStorageUtil('tasks');
+
+    console.log('Creating FormController with:', {
+      model: !!this.model,
+      modalView: !!this.modalView,
+      renderView: !!this.renderView,
+      errorHandler: !!this.errorHandler,
+    });
+
     // Initialize sub-controllers
-    this.formController = new TaskFormController(this.model, this.modalView, this.renderView);
-    // this.statusController = new TaskStatusController(this.model, this.modalView, this.renderView);
+    this.formController = new TaskFormController(
+      this.model,
+      this.modalView,
+      this.renderView,
+      this.errorHandler,
+    );
+    this.taskBaseController = new TaskBaseController(
+      this.model,
+      this.modalView,
+      this.renderView,
+      this.errorHandler,
+    );
+
     this.filterController = new FilterController(this.model, this.modalView, this.renderView);
     this.searchController = new SearchController(this.model, this.modalView, this.renderView);
-    this.baseController = new TaskBaseController(this.model, this.modalView, this.renderView);
     this.navigationController = new NavigationController(
       this.model,
       this.modalView,
       this.renderView,
     );
+    this.initialize();
   }
 
   initialize() {
     try {
-      this.formController.loadTasksFromLocalStorage();
       this.setupDynamicForm();
+
       this.renderView.renderAllTasksPopup(this.formController.tasks);
       this.renderView.renderTasks(this.formController.tasks);
     } catch (error) {

@@ -1,14 +1,15 @@
 import TaskBaseController from './task-base-controller.js';
 
 export default class FilterController extends TaskBaseController {
-  constructor(modalView, renderView, model) {
-    super(modalView, renderView, model);
+  constructor(model, modalView, renderView) {
+    super(model, modalView, renderView);
 
     this.currentSortSetting = {
       field: 'name',
       order: 'asc',
     };
-
+    this.sortDropdown = document.querySelector('.sort__dropdown');
+    this.sortOrderToggle = document.querySelector('.sort__order-toggle');
     this.setupFilterEventListeners();
   }
 
@@ -115,10 +116,10 @@ export default class FilterController extends TaskBaseController {
   }
   getSortValue = (task, field) => {
     const sortMap = {
-      name: () => task.title.toLowerCase(),
+      name: () => (task.title ? task.title.toLowerCase() : ''),
       startDate: () => new Date(task.startDate || '9999-12-31'),
       endDate: () => new Date(task.endDate || '9999-12-31'),
-      category: () => task.category.toLowerCase(),
+      category: () => (task.category ? task.category.toLowerCase() : ''),
       priority: () => {
         const priorityOrder = {
           'Not urgent': 1,

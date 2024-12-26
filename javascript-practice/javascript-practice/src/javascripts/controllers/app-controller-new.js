@@ -17,14 +17,6 @@ import {
 // filter criteria
 const filterFieldDropdown = document.querySelector(DOM_ELEMENTS.FILTER_FIELD_DROPDOWN_SELECTOR);
 const filterOptionsDropdown = document.querySelector(DOM_ELEMENTS.FILTER_OPTIONS_DROPDOWN_SELECTOR);
-//navigate/toggle elements
-const popupBoardView = document.querySelector('#all-task-modal .board-view');
-const popupListView = document.querySelector('#all-task-modal .list-view');
-const listView = document.querySelector('.list-view');
-const boardView = document.querySelector('.board-view');
-//sidebar toggle elements
-const searchBarTop = document.querySelector(DOM_ELEMENTS.SEARCH_BAR_TOP_SELECTOR);
-const allTaskPopup = document.getElementById('all-task-modal');
 const toggle = document.querySelector('.topbar__menu-toggle');
 const sideNavbar = document.querySelector(DOM_ELEMENTS.SIDE_NAVBAR_SELECTOR);
 const mainBody = document.querySelector(DOM_ELEMENTS.MAIN_CONTAINER_SELECTOR);
@@ -95,11 +87,6 @@ class TaskController {
     methodToBind.forEach((method) => {
       this[method] = this[method].bind(this);
     });
-
-    // this.applyFilters = this.applyFilters.bind(this);
-    // this.handleTaskEdit = this.handleTaskEdit.bind(this);
-    // this.handleStatusChange = this.handleStatusChange.bind(this);
-    // this.confirmTaskDeletion = this.confirmTaskDeletion.bind(this);
   }
 
   initialize() {
@@ -191,7 +178,7 @@ class TaskController {
         }
 
         // Handle delete button clicks
-        if (e.target.closest(DOM_ELEMENTS.TASK_DELETE_SELECTOR)) {
+        if (e.target.closest('.task-delete')) {
           this.openDeleteConfirmationPopup(taskId, 'main-view');
         }
       });
@@ -200,18 +187,18 @@ class TaskController {
 
   setupOverlayDelegation() {
     // Delegate all overlay-related events
-    document.querySelector(DOM_ELEMENTS.APP_MAIN_SELECTOR).addEventListener('click', (e) => {
+    document.querySelector('.app-main').addEventListener('click', (e) => {
       // Create task events
-      if (e.target.closest(DOM_ELEMENTS.BOARD_ADD_TASK_SELECTOR)) {
+      if (e.target.closest('.board__add-task')) {
         this.handleAddTaskButtonClick();
       }
-      if (e.target.closest(DOM_ELEMENTS.FORM_ADD_BUTTON_SELECTOR)) {
+      if (e.target.closest('.form__button--add')) {
         e.preventDefault();
         this.addTask();
       }
 
       // form__button--cancel button events
-      if (e.target.matches(DOM_ELEMENTS.FORM_CANCEL_BUTTON_SELECTOR)) {
+      if (e.target.matches('.form__button--cancel, .modal__close')) {
         const overlay = e.target.closest('.overlay');
         if (overlay.id === DOM_ELEMENTS.CREATE_TASK_MODAL_ID) {
           this.view.closeCreateTaskOverlay();
@@ -271,7 +258,6 @@ class TaskController {
 
     if (this.validate(task)) {
       this.tasks.push(task);
-      this.renderTasks();
       this.saveTasksToLocalStorage();
       this.view.resetCreateTaskForm();
       this.view.closeCreateTaskOverlay();
@@ -294,13 +280,13 @@ class TaskController {
     // Delegate navigation events
     document.querySelector('.app__sidebar').addEventListener('click', (e) => {
       if (e.target.closest('.app__nav-link--all-tasks')) {
-        this.handleAllTasksNavigation();
+        this.showAllTasks();
       } else if (e.target.closest('.app__nav-link--dashboard')) {
-        this.handleDashboardNavigation();
+        this.showDashboard();
       } else if (e.target.closest('.app__nav-link--board-screen')) {
-        this.handleBoardViewNavigation();
+        this.showBoardView();
       } else if (e.target.closest('.app__nav-link--list-screen')) {
-        this.handleListViewNavigation();
+        this.showListView();
       }
     });
   }
@@ -365,66 +351,32 @@ class TaskController {
       this.view.closeEditTaskOverlay();
     }
   }
+  showAllTasks() {
+    document.getElementById('all-task-modal').classList.remove('hidden');
+    this.toggleResponsiveView();
+  }
 
-  handleAllTasksNavigation() {
-    const allTaskPopup = document.getElementById('all-task-modal');
-    allTaskPopup.classList.remove('hidden');
-    const width = window.matchMedia('(min-width: 800px)');
-    if (width.matches) {
-      document.querySelector('.search-bar__input-bar').classList.toggle('hidden');
-    } else {
-      this.mainContainer.classList.toggle('active');
+  showDashboard() {
+    document.getElementById('all-task-modal').classList.add('hidden');
+    this.toggleResponsiveView();
+  }
+
+  showBoardView() {
+    document.querySelector('.board-view').classList.remove('hidden');
+    document.querySelector('.list-view').classList.add('hidden');
+    this.toggleResponsiveView();
+  }
+
+  showListView() {
+    document.querySelector('.list-view').classList.remove('hidden');
+    document.querySelector('.board-view').classList.add('hidden');
+    this.toggleResponsiveView();
+  }
+
+  toggleResponsiveView() {
+    if (window.innerWidth < 800) {
       document.querySelector('.app__sidebar').classList.toggle('active');
-    }
-  }
-
-  handleDashboardNavigation() {
-    allTaskPopup.classList.add('hidden');
-    searchBarTop.classList.remove('hidden');
-    this.view.closeCreateTaskOverlay();
-    let width = window.matchMedia('(min-width: 800px)');
-    if (!width.matches) {
-      mainBody.classList.toggle('active');
-      sideNavbar.classList.toggle('active');
-    }
-  }
-
-  handleBoardViewNavigation() {
-    this.switchToView('board');
-    this.switchPopupView('board');
-    let width = window.matchMedia('(min-width: 800px)');
-    if (!width.matches) {
-      sideNavbar.classList.toggle('active');
-      mainBody.classList.toggle('active');
-    }
-  }
-  handleListViewNavigation() {
-    this.switchToView('list');
-    this.switchPopupView('list');
-    let width = window.matchMedia('(min-width: 800px)');
-    if (!width.matches) {
-      sideNavbar.classList.toggle('active');
-      mainBody.classList.toggle('active');
-    }
-  }
-
-  switchToView(viewType) {
-    if (viewType === 'board') {
-      listView.classList.add('hidden');
-      boardView.classList.remove('hidden');
-    } else {
-      listView.classList.remove('hidden');
-      boardView.classList.add('hidden');
-    }
-  }
-
-  switchPopupView(viewType) {
-    if (viewType === 'board') {
-      popupBoardView.classList.remove('hidden');
-      popupListView.classList.add('hidden');
-    } else {
-      popupBoardView.classList.add('hidden');
-      popupListView.classList.remove('hidden');
+      document.querySelector('.app-main').classList.toggle('active');
     }
   }
 
@@ -461,29 +413,19 @@ class TaskController {
   setupSidebarToggleListener() {
     if (toggle) {
       toggle.addEventListener('click', () => {
-        sideNavbar.classList.toggle('active');
-        mainBody.classList.toggle('active');
-        if (sideNavbar.classList.contains('active')) {
-          sideNavbar.classList.add('active');
-          appLogoHeading.classList.add('active');
-        } else {
-          sideNavbar.classList.remove('active');
-          appLogoHeading.classList.remove('active');
-        }
+        const isActive = sideNavbar.classList.toggle('active');
+        mainBody.classList.toggle('active', isActive);
+        appLogoHeading.classList.toggle('active', isActive);
       });
     }
   }
 
   setupResponsiveDesignListener() {
-    function initCheck(event) {
-      if (event.matches) {
-        sideNavbar.classList.remove('active');
-        mainBody.classList.remove('active');
-      } else {
-        sideNavbar.classList.add('active');
-        mainBody.classList.add('active');
-      }
-    }
+    const initCheck = (event) => {
+      const isActive = !event.matches;
+      sideNavbar.classList.toggle('active', isActive);
+      mainBody.classList.toggle('active', isActive);
+    };
 
     document.addEventListener('DOMContentLoaded', () => {
       let width = window.matchMedia('(min-width: 800px)');
@@ -494,15 +436,14 @@ class TaskController {
 
   //Search event
   setupSearchListener() {
-    const mainSearchInput = document.querySelector('.input-bar__main-input');
-    const popupSearchInput = document.querySelector('#all-task-modal .input-bar-mini__main-input');
-
-    if (mainSearchInput) {
-      mainSearchInput.addEventListener('input', this.handleSearchInput.bind(this));
-    }
-    if (popupSearchInput) {
-      popupSearchInput.addEventListener('input', this.handleSearchInput.bind(this));
-    }
+    ['.input-bar__main-input', '#all-task-modal .input-bar-mini__main-input'].forEach(
+      (selector) => {
+        const inputElement = document.querySelector(selector);
+        if (inputElement) {
+          inputElement.addEventListener('input', this.handleSearchInput.bind(this));
+        }
+      },
+    );
   }
 
   //Search tasks method
@@ -557,30 +498,17 @@ class TaskController {
     const filterOptionsDropdown = document.querySelector('.filter__options-dropdown');
     filterOptionsDropdown.innerHTML = '';
 
-    let options = [];
-    switch (field) {
-      case 'category':
-        options = ['All', 'Daily Task', 'Weekly Task', 'Monthly Task'];
-        break;
-      case 'priority':
-        options = ['All', 'Not Urgent', 'Urgent Task', 'Important'];
-        break;
-      case 'status':
-        options = ['All', 'To Do', 'In Progress', 'Completed'];
-        break;
-      default:
-        options = ['All'];
-    }
+    const options =
+      {
+        category: ['All', 'Daily Task', 'Weekly Task', 'Monthly Task'],
+        priority: ['All', 'Not Urgent', 'Urgent Task', 'Important'],
+        status: ['All', 'To Do', 'In Progress', 'Completed'],
+      }[field] || [];
 
     // Populate filter options
-    options.forEach((option) => {
-      const optionElement = document.createElement('option');
-      optionElement.value = option;
-      optionElement.textContent = option;
-      filterOptionsDropdown.appendChild(optionElement);
-    });
-    // Re-apply filters with default "All"
-    this.applyFilters();
+    filterOptionsDropdown.innerHTML = options
+      .map((opt) => `<option value="${opt}">${opt}</option>`)
+      .join('');
   }
 
   //Apply filters
@@ -604,7 +532,6 @@ class TaskController {
     //Filter tasks
     const filteredTasks = this.filterTask(filterOptions);
     this.view.renderAllTasksPopup(filteredTasks);
-    this.view.renderTasks(filteredTasks);
   }
 
   //filter task method
@@ -613,14 +540,11 @@ class TaskController {
 
     let filteredTasks = this.tasks;
     if (searchText) {
-      filteredTasks = filteredTasks.filter((task) => {
-        const matchedResult =
-          task.title.toLowerCase().includes(searchText) ||
-          task.description.toLowerCase().includes(searchText) ||
-          task.category.toLowerCase().includes(searchText) ||
-          task.priority.toLowerCase().includes(searchText);
-        return matchedResult;
-      });
+      filteredTasks = filteredTasks.filter((task) =>
+        ['title', 'description', 'category', 'priority'].some((field) =>
+          task[field]?.toLowerCase().includes(searchText),
+        ),
+      );
     }
     // Filter by category
     if (category !== 'All') {
@@ -653,40 +577,30 @@ class TaskController {
     // Sort handling method:
     const getSortValue = (task, field) => {
       const sortMap = {
-        name: () => task.title.toLowerCase(),
-        startDate: () => new Date(task.startDate || '9999-12-31'),
-        endDate: () => new Date(task.endDate || '9999-12-31'),
-        category: () => task.category.toLowerCase(),
-        priority: () => {
-          const priorityOrder = {
+        name: task.title?.toLowerCase() || '',
+        startDate: new Date(task.startDate || '9999-12-31'),
+        endDate: new Date(task.endDate || '9999-12-31'),
+        category: task.category?.toLowerCase() || '',
+        priority:
+          {
             'Not urgent': 1,
             'Urgent Task': 2,
             Important: 3,
-          };
-          return priorityOrder[task.priority] || 0;
-        },
+          }[task.priority] || 0,
       };
-      return sortMap[field]();
+      return sortMap[field];
     };
+
     const sortedTasks = [...this.tasks].sort((a, b) => {
       const valueA = getSortValue(a, field);
       const valueB = getSortValue(b, field);
 
-      return order === 'asc'
-        ? valueA < valueB
-          ? -1
-          : valueA > valueB
-            ? 1
-            : 0
-        : valueA > valueB
-          ? -1
-          : valueA < valueB
-            ? 1
-            : 0;
+      if (valueA < valueB) return order === 'asc' ? -1 : 1;
+      if (valueA > valueB) return order === 'asc' ? 1 : -1;
+      return 0;
     });
 
     this.currentSortSetting = { field, order };
-
     return sortedTasks;
   }
 
@@ -695,16 +609,11 @@ class TaskController {
     e.stopPropagation();
 
     const currentOrder = this.currentSortSetting.order;
-    const newOrder =
-      currentOrder === SORT_SETTING.SORT_ORDER_ASC
-        ? SORT_SETTING.SORT_ORDER_DESC
-        : SORT_SETTING.SORT_ORDER_ASC;
+    const newOrder = currentOrder === 'asc' ? 'desc' : 'asc';
     //update sort order
     this.currentSortSetting.order = newOrder;
     const sortField = this.sortDropdown.value;
     const sortedTasks = this.sortTasks(sortField, newOrder);
-
-    this.view.renderTasks(sortedTasks);
     this.view.renderAllTasksPopup(sortedTasks);
 
     //update button visual state

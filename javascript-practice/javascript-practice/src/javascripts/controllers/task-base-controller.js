@@ -1,16 +1,29 @@
 import ValidationUtils from '../helpers/validation-utils.js';
-import ErrorHandler from '../helpers/error-handler-utils.js';
 import LocalStorageUtil from '../helpers/local-storage-utils.js';
+import TaskModel from '../models/task-model.js';
+import TaskModalView from '../views/task-modal-view.js';
+import TaskRenderView from '../views/task-render-view.js';
+import ErrorHandler from '../helpers/error-handler-utils.js';
 
-export default class TaskBaseController {
-  constructor(model, modalView, renderView) {
-    this.model = model;
-    this.renderView = renderView;
-    this.modalView = modalView;
+class TaskBaseController {
+  constructor(model, modalView, renderView, errorHandler) {
+    if (!this.model) {
+      this.model = model || new TaskModel();
+    }
+
+    if (!this.modalView) {
+      this.modalView = modalView || new TaskModalView();
+    }
+
+    if (!this.renderView) {
+      this.renderView = renderView || new TaskRenderView();
+    }
+    this.errorHandler = errorHandler || new ErrorHandler();
     this.tasks = [];
-    this.errorHandler = new ErrorHandler();
+
     this.localStorageUtil = new LocalStorageUtil('tasks');
     this.validationUtils = new ValidationUtils();
+    this.loadTasksFromLocalStorage();
   }
 
   loadTasksFromLocalStorage() {
@@ -70,3 +83,4 @@ export default class TaskBaseController {
     }
   }
 }
+export default TaskBaseController;

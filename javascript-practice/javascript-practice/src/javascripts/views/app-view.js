@@ -1,6 +1,5 @@
 import { createTaskElement } from '../templates/templates.js';
-import { showNoTasksMessage } from '../helpers/notifications.js';
-import TASK_STATUS from '../constants/task-status.js';
+
 import { createFormElements } from '../templates/templates.js';
 class TaskView {
   constructor() {

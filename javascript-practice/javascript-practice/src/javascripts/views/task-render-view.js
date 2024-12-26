@@ -7,7 +7,7 @@
  **/
 
 import { createTaskElement } from '../templates/templates.js';
-import { showNoTasksMessage } from '../helpers/notifications.js';
+
 import TaskBaseView from './task-base-view.js';
 
 class TaskRenderView extends TaskBaseView {
