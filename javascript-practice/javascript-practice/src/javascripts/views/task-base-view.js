@@ -8,16 +8,28 @@ class TaskBaseView {
   }
 
   initializeProperties() {
-    this.listViewColumns = {
-      toDo: document.querySelector(`.list-view ${TASK_STATUS.TODO_CLASS}`),
-      'In Progress': document.querySelector(`.list-view ${TASK_STATUS.RUNNING_CLASS}`),
-      completed: document.querySelector(`.list-view ${TASK_STATUS.COMPLETED_CLASS}`),
-    };
-
-    this.boardViewColumns = {
-      toDo: document.querySelector(`.board-view ${TASK_STATUS.TODO_CLASS}`),
-      'In Progress': document.querySelector(`.board-view ${TASK_STATUS.RUNNING_CLASS}`),
-      completed: document.querySelector(`.board-view ${TASK_STATUS.COMPLETED_CLASS}`),
+    // Define column configurations for all views
+    this.columnConfigs = {
+      mainList: {
+        toDo: document.querySelector('.list-view .task-list--todo'),
+        inProgress: document.querySelector('.list-view .task-list--in-progress'),
+        completed: document.querySelector('.list-view .task-list--completed'),
+      },
+      mainBoard: {
+        toDo: document.querySelector('.board-view .task-list--todo'),
+        inProgress: document.querySelector('.board-view .task-list--in-progress'),
+        completed: document.querySelector('.board-view .task-list--completed'),
+      },
+      popupList: {
+        toDo: document.querySelector('#all-task-modal .list-view .task-list--todo'),
+        inProgress: document.querySelector('#all-task-modal .list-view .task-list--in-progress'),
+        completed: document.querySelector('#all-task-modal .list-view .task-list--completed'),
+      },
+      popupBoard: {
+        toDo: document.querySelector('#all-task-modal .board-view .task-list--todo'),
+        inProgress: document.querySelector('#all-task-modal .board-view .task-list--in-progress'),
+        completed: document.querySelector('#all-task-modal .board-view .task-list--completed'),
+      },
     };
   }
 

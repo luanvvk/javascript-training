@@ -1,4 +1,10 @@
-import { createFormElements } from '../templates/templates';
+/**
+ * This file handles the state of openness and closeness of the all popup.
+ * In case of Edit task popup, it will also populate the data back to its original input
+ *
+ * */
+
+import { createFormElements } from '../templates/templates.js';
 import TaskBaseView from './task-base-view.js';
 
 class TaskModalView extends TaskBaseView {
@@ -8,7 +14,7 @@ class TaskModalView extends TaskBaseView {
     this.editTaskOverlay = document.getElementById('edit-task-modal');
   }
 
-  // Open/close overlays
+  // Open/close create task popup
   openCreateTaskOverlay() {
     createFormElements('create');
     this.createTaskOverlay.classList.toggle('hidden');
@@ -20,6 +26,7 @@ class TaskModalView extends TaskBaseView {
     document.body.classList.remove('overflow-hidden');
   }
 
+  // Open/close edit task popup
   openEditTaskOverlay() {
     createFormElements('edit');
     this.editTaskOverlay.classList.remove('hidden');

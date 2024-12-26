@@ -1,7 +1,11 @@
-import TaskController from './controllers/app-controller-splitted-version.js';
+import TaskController from './controllers/app-controller-new.js';
 import TaskModel from './models/task-model.js';
 import TaskView from './views/app-view.js';
-
+import TaskBaseView from './views/task-base-view.js';
+import TaskModalView from './views/task-modal-view.js';
+import TaskRenderView from './views/task-render-view.js';
 document.addEventListener('DOMContentLoaded', () => new TaskController());
-document.addEventListener('DOMContentLoaded', () => new TaskView());
+document.addEventListener('DOMContentLoaded', () => new TaskBaseView());
+document.addEventListener('DOMContentLoaded', () => new TaskRenderView());
+document.addEventListener('DOMContentLoaded', () => new TaskModalView());
 document.addEventListener('DOMContentLoaded', () => new TaskModel());

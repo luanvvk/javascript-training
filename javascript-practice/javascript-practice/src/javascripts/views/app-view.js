@@ -9,16 +9,28 @@ class TaskView {
   }
 
   initializeProperties() {
-    this.listViewColumns = {
-      toDo: document.querySelector(`.list-view ${TASK_STATUS.TODO_CLASS}`),
-      'In Progress': document.querySelector(`.list-view ${TASK_STATUS.RUNNING_CLASS}`),
-      completed: document.querySelector(`.list-view ${TASK_STATUS.COMPLETED_CLASS}`),
-    };
-
-    this.boardViewColumns = {
-      toDo: document.querySelector(`.board-view ${TASK_STATUS.TODO_CLASS}`),
-      'In Progress': document.querySelector(`.board-view ${TASK_STATUS.RUNNING_CLASS}`),
-      completed: document.querySelector(`.board-view ${TASK_STATUS.COMPLETED_CLASS}`),
+    // Define column configurations for all views
+    this.columnConfigs = {
+      mainList: {
+        toDo: document.querySelector('.list-view .task-list--todo'),
+        inProgress: document.querySelector('.list-view .task-list--in-progress'),
+        completed: document.querySelector('.list-view .task-list--completed'),
+      },
+      mainBoard: {
+        toDo: document.querySelector('.board-view .task-list--todo'),
+        inProgress: document.querySelector('.board-view .task-list--in-progress'),
+        completed: document.querySelector('.board-view .task-list--completed'),
+      },
+      popupList: {
+        toDo: document.querySelector('#all-task-modal .list-view .task-list--todo'),
+        inProgress: document.querySelector('#all-task-modal .list-view .task-list--in-progress'),
+        completed: document.querySelector('#all-task-modal .list-view .task-list--completed'),
+      },
+      popupBoard: {
+        toDo: document.querySelector('#all-task-modal .board-view .task-list--todo'),
+        inProgress: document.querySelector('#all-task-modal .board-view .task-list--in-progress'),
+        completed: document.querySelector('#all-task-modal .board-view .task-list--completed'),
+      },
     };
   }
 
@@ -27,122 +39,65 @@ class TaskView {
     this.editTaskOverlay = document.getElementById('edit-task-modal');
   }
 
-  // Render tasks in both views
   renderTasks(tasks) {
-    // Clear previous tasks
-    Object.values(this.listViewColumns).forEach((column) => (column.innerHTML = ''));
-    Object.values(this.boardViewColumns).forEach((column) => (column.innerHTML = ''));
-
-    // Render tasks in appropriate columns
-    tasks.forEach((task) => {
-      const taskHTML = createTaskElement(task);
-
-      switch (task.status) {
-        case 'To Do':
-          this.listViewColumns.toDo.appendChild(taskHTML.cloneNode(true));
-          this.boardViewColumns.toDo.appendChild(taskHTML.cloneNode(true));
-          break;
-        case 'In Progress':
-          this.listViewColumns['In Progress'].appendChild(taskHTML.cloneNode(true));
-          this.boardViewColumns['In Progress'].appendChild(taskHTML.cloneNode(true));
-          break;
-        case 'Completed':
-          this.listViewColumns.completed.appendChild(taskHTML.cloneNode(true));
-          this.boardViewColumns.completed.appendChild(taskHTML.cloneNode(true));
-          break;
-      }
-    });
-    // Show a "no tasks" message if columns are empty
-    showNoTasksMessage(this.listViewColumns, 'list-view');
-    showNoTasksMessage(this.boardViewColumns, 'board-view');
+    // Render tasks in both main views (list and board)
+    this.renderTasksInView(tasks, 'mainList');
+    this.renderTasksInView(tasks, 'mainBoard');
   }
 
-  //render all task popup
   renderAllTasksPopup(tasks) {
-    //board view
-    const popupBoardToDoColumn = document.querySelector(
-      '#all-task-modal .board-view.task-columns .task-column.todo .task-list',
-    );
-    const popupBoardInProgressColumn = document.querySelector(
-      '#all-task-modal .board-view.task-columns .task-column.in-progress .task-list',
-    );
-    const popupBoardCompletedColumn = document.querySelector(
-      '#all-task-modal .board-view.task-columns .task-column.completed .task-list',
-    );
-
-    if (!popupBoardToDoColumn || !popupBoardInProgressColumn || !popupBoardCompletedColumn) return;
-    //clear previous tasks
-    popupBoardToDoColumn.innerHTML = '';
-    popupBoardInProgressColumn.innerHTML = '';
-    popupBoardCompletedColumn.innerHTML = '';
-    //add filter task
-    tasks.forEach((task) => {
-      const taskElement = createTaskElement(task);
-
-      switch (task.status) {
-        case 'To Do':
-          popupBoardToDoColumn.appendChild(taskElement);
-          break;
-        case 'In Progress':
-          popupBoardInProgressColumn.appendChild(taskElement);
-          break;
-        case 'Completed':
-          popupBoardCompletedColumn.appendChild(taskElement);
-          break;
-      }
-    });
-    //show message in case no matched results
-    this.showNoTasksInColumns([
-      { column: popupBoardToDoColumn, message: 'No tasks in To Do' },
-      { column: popupBoardInProgressColumn, message: 'No tasks In Progress' },
-      { column: popupBoardCompletedColumn, message: 'No Completed tasks' },
-    ]);
-
-    //list view
-    const popupListToDoColumn = document.querySelector(
-      '#all-task-modal .list-view.task-columns .task-column.todo .task-list',
-    );
-    const popupListInProgressColumn = document.querySelector(
-      '#all-task-modal .list-view.task-columns .task-column.in-progress .task-list',
-    );
-    const popupListCompletedColumn = document.querySelector(
-      '#all-task-modal .list-view.task-columns .task-column.completed .task-list',
-    );
-
-    if (!popupListToDoColumn || !popupListInProgressColumn || !popupListCompletedColumn) return;
-    //clear previous tasks
-    popupListToDoColumn.innerHTML = '';
-    popupListInProgressColumn.innerHTML = '';
-    popupListCompletedColumn.innerHTML = '';
-    //add filter task
-    tasks.forEach((task) => {
-      const taskElement = createTaskElement(task);
-
-      switch (task.status) {
-        case 'To Do':
-          popupListToDoColumn.appendChild(taskElement);
-          break;
-        case 'In Progress':
-          popupListInProgressColumn.appendChild(taskElement);
-          break;
-        case 'Completed':
-          popupListCompletedColumn.appendChild(taskElement);
-          break;
-      }
-    });
-
-    //show message in case no matched results
-    this.showNoTasksInColumns([
-      { column: popupListToDoColumn, message: 'No tasks in To Do' },
-      { column: popupListInProgressColumn, message: 'No tasks In Progress' },
-      { column: popupListCompletedColumn, message: 'No Completed tasks' },
-    ]);
+    // Render tasks in both popup views (list and board)
+    this.renderTasksInView(tasks, 'popupList');
+    this.renderTasksInView(tasks, 'popupBoard');
   }
 
-  showNoTasksInColumns(columnConfigs) {
-    columnConfigs.forEach(({ column, message }) => {
-      if (!column.children.length) {
-        column.innerHTML = `<li class="no-tasks-message"><span>${message}</span></li>`;
+  renderTasksInView(tasks, viewType) {
+    const columns = this.columnConfigs[viewType];
+    if (!columns) return;
+
+    // Clear all columns
+    Object.values(columns).forEach((column) => {
+      if (column) column.innerHTML = '';
+    });
+
+    // Distribute tasks to appropriate columns
+    tasks.forEach((task) => {
+      const taskElement = this.createTaskElement(task);
+      const column = this.getColumnForTask(task.status, columns);
+
+      if (column) {
+        column.appendChild(taskElement.cloneNode(true));
+      }
+    });
+
+    // Show "no tasks" message if columns are empty
+    this.showNoTasksMessages(columns);
+  }
+
+  getColumnForTask(status, columns) {
+    const columnMap = {
+      'To Do': columns.toDo,
+      'In Progress': columns.inProgress,
+      Completed: columns.completed,
+    };
+    return columnMap[status];
+  }
+
+  createTaskElement(task) {
+    // Import the existing createTaskElement function
+    return createTaskElement(task);
+  }
+
+  showNoTasksMessages(columns) {
+    const messages = {
+      toDo: 'No tasks in To Do',
+      inProgress: 'No tasks In Progress',
+      completed: 'No Completed tasks',
+    };
+
+    Object.entries(columns).forEach(([key, column]) => {
+      if (column && !column.children.length) {
+        column.innerHTML = `<li class="no-tasks-message"><span>${messages[key]}</span></li>`;
       }
     });
   }
