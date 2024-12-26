@@ -6,6 +6,7 @@ import NavigationController from './navigation-controller.js';
 import TaskFormController from './task-form-controller.js';
 import TaskModel from '../models/task-model.js';
 import TaskBaseController from './task-base-controller.js';
+import ErrorHandler from '../helpers/error-handler-utils.js';
 import {
   createFormElements,
   setupPopupDropdowns,
@@ -17,6 +18,7 @@ class MainTaskController {
     this.model = new TaskModel();
     this.renderView = new TaskRenderView();
     this.modalView = new TaskModalView();
+    this.errorHandler = new ErrorHandler();
     this.initialize();
     // Initialize sub-controllers
     this.formController = new TaskFormController(this.model, this.modalView, this.renderView);
@@ -38,10 +40,7 @@ class MainTaskController {
       this.renderView.renderAllTasksPopup(this.formController.tasks);
       this.renderView.renderTasks(this.formController.tasks);
     } catch (error) {
-      this.formController.errorHandler.log(
-        `Error during initialization: ${error.message}`,
-        'error',
-      );
+      this.errorHandler.log(`Error during initialization: ${error.message}`, 'error');
     }
   }
 

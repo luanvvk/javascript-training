@@ -4,6 +4,8 @@ import TaskBaseController from './task-base-controller.js';
 import TaskModalView from '../views/task-modal-view.js';
 import { setupPopupDropdowns } from '../templates/templates.js';
 import TaskRenderView from '../views/task-render-view.js';
+import ErrorHandler from '../helpers/error-handler-utils.js';
+import LocalStorageUtil from '../helpers/local-storage-utils.js';
 
 //Declaration
 const sideNavbar = document.querySelector('.search-bar__input-bar');
@@ -12,12 +14,13 @@ const toggle = document.querySelector('.topbar__menu-toggle');
 const appLogoHeading = document.querySelector('.app__logo-text');
 
 export default class TaskFormController extends TaskBaseController {
-  constructor(model, renderView) {
+  constructor(model, renderView, errorHandler) {
     super();
     this.model = model || new TaskModel();
     this.renderView = renderView || new TaskRenderView();
     this.modalView = new TaskModalView();
-
+    this.errorHandler = errorHandler || new ErrorHandler();
+    this.localStorageUtil = this.localStorageUtil || new LocalStorageUtil('tasks');
     this.setupFormEventListeners();
     this.setupTaskItemActions();
     this.setupSidebarToggleListener();
