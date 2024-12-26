@@ -1,11 +1,14 @@
-class FilterController {
-  constructor(tasks, view) {
-    this.tasks = tasks;
-    this.view = view;
+import TaskBaseController from './task-base-controller.js';
+
+export default class FilterController extends TaskBaseController {
+  constructor(modalView, renderView, model) {
+    super(modalView, renderView, model);
+
     this.currentSortSetting = {
       field: 'name',
       order: 'asc',
     };
+
     this.setupFilterEventListeners();
   }
 
@@ -17,18 +20,13 @@ class FilterController {
 
     filterField?.addEventListener('change', (e) => {
       this.populateFilterOptions(e.target.value);
-      this.applyFilters();
     });
 
     filterOptions?.addEventListener('change', () => this.applyFilters());
 
     sortDropdown?.addEventListener('change', () => this.applyFilters());
 
-    if (sortOrderToggle) {
-      sortOrderToggle.removeEventListener('click', this.toggleSortOrderHandler);
-      this.toggleSortOrderHandler = this.toggleSortOrder.bind(this);
-      sortOrderToggle.addEventListener('click', this.toggleSortOrderHandler);
-    }
+    sortOrderToggle?.addEventListener('click', (e) => this.toggleSortOrder(e));
   }
 
   // Populate the second dropdown based on the first chosen dropdown
@@ -84,8 +82,8 @@ class FilterController {
 
     //Filter tasks
     const filteredTasks = this.filterTasks(filterOptions);
-    this.view.renderAllTasksPopup(filteredTasks);
-    this.view.renderTasks(filteredTasks);
+    this.renderView.renderAllTasksPopup(filteredTasks);
+    this.renderView.renderTasks(filteredTasks);
   }
 
   filterTasks(options) {
@@ -144,8 +142,8 @@ class FilterController {
     const sortField = this.sortDropdown.value;
     const sortedTasks = this.sortTasks(sortField, newOrder);
 
-    this.view.renderTasks(sortedTasks);
-    this.view.renderAllTasksPopup(sortedTasks);
+    this.renderView.renderTasks(sortedTasks);
+    this.renderView.renderAllTasksPopup(sortedTasks);
 
     //update button visual state
     this.sortOrderToggle.innerHTML =
@@ -154,4 +152,3 @@ class FilterController {
         : ' <img class="sort__icon" src="./assets/images/icons/sort-icons/sort-icon-desc.png" alt="sort-icon-down" />';
   }
 }
-export default FilterController;

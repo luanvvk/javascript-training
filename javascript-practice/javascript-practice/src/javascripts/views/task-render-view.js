@@ -3,7 +3,7 @@
  * It also have function to render the created task to target column: to do, in progress and completed tasks
  * This file also need refinement as there are some repeated codes
  * Cloning node is necessary as one exactly same node cannot be existed at the same time in DOM (board-view and list-view)
- * FUnction to show no task in columns
+ * Function to show no task in columns
  **/
 
 import { createTaskElement } from '../templates/templates.js';
@@ -11,6 +11,9 @@ import { showNoTasksMessage } from '../helpers/notifications.js';
 import TaskBaseView from './task-base-view.js';
 
 class TaskRenderView extends TaskBaseView {
+  constructor() {
+    super();
+  }
   // Render tasks in both views
   renderTasks(tasks) {
     // Render tasks in both main views (list and board)

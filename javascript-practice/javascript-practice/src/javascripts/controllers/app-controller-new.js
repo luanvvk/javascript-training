@@ -95,6 +95,7 @@ class TaskController {
     methodToBind.forEach((method) => {
       this[method] = this[method].bind(this);
     });
+
     // this.applyFilters = this.applyFilters.bind(this);
     // this.handleTaskEdit = this.handleTaskEdit.bind(this);
     // this.handleStatusChange = this.handleStatusChange.bind(this);
