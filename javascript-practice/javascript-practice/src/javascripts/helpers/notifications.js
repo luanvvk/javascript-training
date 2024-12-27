@@ -1,10 +1,21 @@
-const notification = document.querySelector('.notification');
 // Show task deletion notification
-export function showDeletionNotification() {
-  notification.classList.add('show');
+export function showNotification(message, type = 'success') {
+  const notification = document.createElement('div');
+  notification.className = `notification notification--${type} show`;
+  notification.innerHTML = `
+          <img
+            class="notification__icon"
+            src="./assets/images/icons/menu-bar-icons/completed-task-icon.svg"
+            alt="notification__icon "
+          />
+          <p class="notification__message">${message}</p>
+          `;
+
+  document.querySelector('.app-main').appendChild(notification);
+
   setTimeout(() => {
-    notification.classList.remove('show');
-  }, 3000);
+    notification.remove('show');
+  }, 3000); // Remove notification after 3 seconds
 }
 
 // Show a "no tasks" message if columns are empty

@@ -523,7 +523,7 @@
 
   display: flex;
   align-items: center;
-  gap: var(--space-8);
+  gap: var(--space-16);
 
   padding: var(--space-32);
   height: 8rem;
@@ -534,6 +534,7 @@
   transition-duration: 0.5s;
 
   border-radius: var(--border-radius-7);
+  text-align: left;
   font-size: var(--font-size-20);
   font-weight: var(--regular-weight);
   transition: all 0.3s ease-in-out;
@@ -542,6 +543,27 @@
 .notification {
   background-color: var(--cyan-blue);
   color: var(--light-pink);
+}
+
+.notification--success {
+  background-color: var(--cyan-blue);
+  color: var(--light-pink);
+}
+
+.notification--error {
+  background-color: var(--bright-red);
+}
+
+.notification--info {
+  background-color: var(--blue);
+}
+
+.notification--warning {
+  background-color: #ff9800;
+}
+
+.notification.show {
+  opacity: 1;
 }
 
 .error-notification {

@@ -1,4 +1,4 @@
-import { showDeletionNotification } from '../helpers/notifications.js';
+import { showNotification } from '../helpers/notifications.js';
 
 export default class PopupController {
   constructor(taskController) {
@@ -45,24 +45,7 @@ export default class PopupController {
 
         // Handle status button clicks
         if (e.target.closest('.status-button')) {
-          const statusButton = e.target.closest('.status-button');
-          if (statusButton && !statusButton.dataset.processing) {
-            //  prevent double-clicks
-            statusButton.dataset.processing = 'true';
-
-            const taskItem = e.target.closest('.task-item');
-            if (!taskItem) return;
-
-            const taskId = parseInt(taskItem.dataset.taskId);
-            const task = this.taskController.tasks.find((t) => t.id === taskId);
-            if (!task) return;
-
-            this.handleStatusChange(task);
-
-            setTimeout(() => {
-              delete statusButton.dataset.processing;
-            }, 100);
-          }
+          this.handleStatusChange(task);
         }
 
         // Handle edit button clicks
@@ -100,7 +83,6 @@ export default class PopupController {
     }
 
     this.taskController.renderAllTasks(this.taskController.tasks);
-
     this.taskController.saveTasksToLocalStorage();
   }
 
@@ -222,6 +204,7 @@ export default class PopupController {
       this.taskController.saveTasksToLocalStorage();
       this.taskController.renderAllTasks(this.taskController.tasks);
       this.modalView.closeEditTaskOverlay();
+      showNotification('Task successfully edited!', 'success');
     }
   }
 
@@ -245,7 +228,7 @@ export default class PopupController {
     this.taskController.tasks = this.taskController.tasks.filter(
       (t) => t.id !== this.pendingTaskToDelete,
     );
-    showDeletionNotification();
+    showNotification('Task successfully deleted!', 'success');
     this.taskController.renderAllTasks(this.taskController.tasks);
     this.taskController.saveTasksToLocalStorage();
     this.closeDeleteConfirmationPopup();

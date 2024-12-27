@@ -8,12 +8,7 @@ export default class NavigationController {
     this.initDOMElements();
   }
 
-  initDOMElements() {
-    this.toggle = document.querySelector('.topbar__menu-toggle');
-    this.sideNavbar = document.querySelector('.app__sidebar');
-    this.mainBody = document.querySelector('.app-main');
-    this.appLogoHeading = document.querySelector('.app__logo-text');
-  }
+  initDOMElements() {}
 
   setupNavigationListeners() {
     document.querySelector('.app__sidebar').addEventListener('click', (e) => {
@@ -75,11 +70,15 @@ export default class NavigationController {
   }
   // Side bar event
   setupSidebarToggleListener() {
-    if (this.toggle) {
-      this.toggle.addEventListener('click', () => {
-        const isActive = this.sideNavbar.classList.toggle('active');
-        this.mainBody.classList.toggle('active', isActive);
-        this.appLogoHeading.classList.toggle('active', isActive);
+    const menuToggle = document.querySelector('.topbar__menu-toggle');
+    const sideNavbar = document.querySelector('.app__sidebar');
+    const mainBody = document.querySelector('.app-main');
+    const appLogoHeading = document.querySelector('.app__logo-text');
+    if (menuToggle) {
+      menuToggle.addEventListener('click', () => {
+        const isActive = sideNavbar.classList.toggle('active');
+        mainBody.classList.toggle('active', isActive);
+        appLogoHeading.classList.toggle('active', isActive);
       });
     }
   }
