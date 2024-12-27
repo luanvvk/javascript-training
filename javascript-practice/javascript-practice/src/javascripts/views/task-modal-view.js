@@ -17,7 +17,7 @@ class TaskModalView extends TaskBaseView {
   // Open/close create task popup
   openCreateTaskOverlay() {
     createFormElements('create');
-    this.createTaskOverlay.classList.toggle('hidden');
+    this.createTaskOverlay.classList.remove('hidden');
     document.body.classList.add('overflow-hidden');
   }
 

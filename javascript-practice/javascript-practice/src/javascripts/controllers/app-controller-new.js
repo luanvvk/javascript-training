@@ -11,10 +11,11 @@ import {
   setupPopupDropdowns,
   renderSortingUI,
 } from '../templates/templates.js';
-import { PopupController } from './popup-controller.js';
+import PopupController from './popup-controller.js';
 import SearchController from './search-controller.js';
 import NavigationController from './navigation-controller.js';
 import FilterController from './filter-controller.js';
+import TaskBaseView from '../views/task-base-view.js';
 
 //Declaration
 // filter criteria
@@ -27,15 +28,16 @@ class TaskController {
   constructor() {
     this.initializeCoreComponents();
     this.initializeControllers();
-    // this.bindMethods();
     this.initialize();
+    // this.bindMethods();
   }
 
   initializeCoreComponents() {
     //Core components
     this.model = new TaskModel();
-    this.renderView = new TaskRenderView();
+    this.baseView = new TaskBaseView();
     this.modalView = new TaskModalView();
+    this.renderView = new TaskRenderView();
     this.tasks = [];
     // Utilities
     this.localStorageUtil = new LocalStorageUtil('tasks');
@@ -47,7 +49,7 @@ class TaskController {
     this.popupController = new PopupController(this);
     this.searchController = new SearchController(this);
     this.navigationController = new NavigationController(this);
-    this.filterController = new FilterController(this, this.renderView);
+    this.filterController = new FilterController(this);
   }
 
   initializeDOMElements() {
@@ -79,7 +81,7 @@ class TaskController {
       this.loadTasksFromLocalStorage();
       this.setupDynamicForm();
       this.setupEventListeners();
-      this.renderAllTasks();
+      this.renderAllTasks(this.tasks);
     } catch (error) {
       this.errorHandler.log(`Error during initialization: ${error.message}`, 'error');
     }
@@ -87,7 +89,7 @@ class TaskController {
 
   loadTasksFromLocalStorage() {
     try {
-      this.tasks = this.localStorageUtil.load();
+      this.tasks = this.localStorageUtil.load() || [];
     } catch (error) {
       this.errorHandler.log(`Error loading tasks from local storage: ${error.message}`, 'error');
     }
@@ -127,7 +129,9 @@ class TaskController {
       this.errorHandler.log(`Error setting up dynamic form: ${error.message}`, 'error');
     }
   }
-
+  setupPopupDropdowns(task) {
+    setupPopupDropdowns(task);
+  }
   setupEventListeners() {
     try {
       this.setupSidebarToggleListener();
@@ -138,6 +142,7 @@ class TaskController {
 
   renderTasks() {
     this.renderView.renderTasks(this.tasks);
+    console.log(this.tasks);
   }
 
   renderAllTasks() {

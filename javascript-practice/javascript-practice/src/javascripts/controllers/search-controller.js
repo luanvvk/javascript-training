@@ -24,7 +24,7 @@ export default class SearchController {
   }
 
   searchTasks(searchText) {
-    if (!searchText) return this.tasks;
+    if (!searchText) return this.taskController.tasks;
 
     return this.taskController.tasks.filter((task) => {
       if (!task) return false;

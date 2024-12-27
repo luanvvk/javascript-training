@@ -1,9 +1,14 @@
 import { showDeletionNotification } from '../helpers/notifications.js';
-import TaskController from './app-controller-new.js';
-import TaskModel from '../models/task-model.js';
-import TaskModalView from '../views/task-modal-view.js';
-import TaskRenderView from '../views/task-render-view.js';
-export class PopupController {
+// import TaskController from './app-controller-new.js';
+// import TaskModel from '../models/task-model.js';
+// import TaskModalView from '../views/task-modal-view.js';
+// import TaskRenderView from '../views/task-render-view.js';
+import {
+  createFormElements,
+  setupPopupDropdowns,
+  renderSortingUI,
+} from '../templates/templates.js';
+export default class PopupController {
   constructor(taskController) {
     console.log(taskController);
     if (!taskController) {
@@ -22,7 +27,7 @@ export class PopupController {
     }
 
     this.modalView = this.taskController.modalView;
-    this.renderView = this.taskController.renderView;
+
     this.handleTaskItemActions();
     this.handlePopupEventListener();
     // task deletion state
@@ -33,6 +38,8 @@ export class PopupController {
   }
 
   handleTaskItemActions() {
+    this.sideNavbar = document.querySelector('.app__sidebar');
+    this.editTaskOverlay = document.getElementById('edit-task-modal');
     this.mainBody = document.querySelector('.app-main');
     this.taskColumns = document.querySelectorAll('.task-list');
     // Delegate all task-related events to task columns
@@ -47,7 +54,24 @@ export class PopupController {
 
         // Handle status button clicks
         if (e.target.closest('.status-button')) {
-          this.handleStatusChange(task);
+          const statusButton = e.target.closest('.status-button');
+          if (statusButton && !statusButton.dataset.processing) {
+            //  prevent double-clicks
+            statusButton.dataset.processing = 'true';
+
+            const taskItem = e.target.closest('.task-item');
+            if (!taskItem) return;
+
+            const taskId = parseInt(taskItem.dataset.taskId);
+            const task = this.taskController.tasks.find((t) => t.id === taskId);
+            if (!task) return;
+
+            this.handleStatusChange(task);
+
+            setTimeout(() => {
+              delete statusButton.dataset.processing;
+            }, 100);
+          }
         }
 
         // Handle edit button clicks
@@ -83,7 +107,9 @@ export class PopupController {
     } else if (task.status === 'Completed') {
       task.status = 'In Progress';
     }
-    this.taskController.renderAllTasks();
+
+    this.taskController.renderAllTasks(this.taskController.tasks);
+
     this.taskController.saveTasksToLocalStorage();
   }
 
@@ -103,9 +129,9 @@ export class PopupController {
       if (e.target.matches('.form__button--cancel, .modal__close')) {
         const overlay = e.target.closest('.overlay');
         if (overlay.id === 'create-task-modal') {
-          this.renderView.closeCreateTaskOverlay();
+          this.modalView.closeCreateTaskOverlay();
         } else if (overlay.id === 'edit-task-modal') {
-          this.renderView.closeEditTaskOverlay();
+          this.modalView.closeEditTaskOverlay();
         }
       }
 
@@ -120,9 +146,9 @@ export class PopupController {
         const task = this.taskController.tasks.find((t) => t.id === parseInt(taskId));
         if (task) {
           task.status = task.status === 'Completed' ? 'In Progress' : 'Completed';
-          this.taskController.renderAllTasks();
+          this.taskController.renderAllTasks(this.taskController.tasks);
           this.taskController.saveTasksToLocalStorage();
-          this.renderView.closeEditTaskOverlay();
+          this.modalView.closeEditTaskOverlay();
         }
       }
 
@@ -131,9 +157,9 @@ export class PopupController {
         const taskId = parseInt(this.editTaskOverlay.dataset.taskId);
         if (!isNaN(taskId)) {
           this.openDeleteConfirmationPopup(taskId, 'edit-overlay');
-          this.taskColumns.renderAllTasks();
+          this.taskColumns.renderAllTasks(this.taskController.tasks);
           this.taskController.saveTasksToLocalStorage();
-          this.renderView.closeEditTaskOverlay();
+          this.modalView.closeEditTaskOverlay();
         }
       }
       if (e.target.matches('.confirm-delete-btn')) {
@@ -146,7 +172,7 @@ export class PopupController {
   }
   // Handler methods
   handleAddTaskButtonClick() {
-    this.renderView.openCreateTaskOverlay();
+    this.modalView.openCreateTaskOverlay();
     this.mainBody.classList.remove('active');
     this.sideNavbar.classList.remove('active');
   }
@@ -169,12 +195,12 @@ export class PopupController {
       formData.category,
     );
 
-    if (this.validate(task)) {
+    if (this.taskController.validate(task)) {
       this.taskController.tasks.push(task);
+      this.taskController.renderAllTasks(this.taskController.tasks);
       this.taskController.saveTasksToLocalStorage();
       this.modalView.resetCreateTaskForm();
-      this.renderView.closeCreateTaskOverlay();
-      this.taskController.renderAllTasks();
+      this.modalView.closeCreateTaskOverlay();
     }
   }
 
@@ -203,8 +229,8 @@ export class PopupController {
     if (this.taskController.validate(updatedTask)) {
       Object.assign(task, updatedTask);
       this.taskController.saveTasksToLocalStorage();
-      this.taskController.renderAllTasks();
-      this.renderView.closeEditTaskOverlay();
+      this.taskController.renderAllTasks(this.taskController.tasks);
+      this.modalView.closeEditTaskOverlay();
     }
   }
 
@@ -229,7 +255,7 @@ export class PopupController {
       (t) => t.id !== this.pendingTaskToDelete,
     );
     showDeletionNotification();
-    this.taskController.renderAllTasks();
+    this.taskController.renderAllTasks(this.taskController.tasks);
     this.taskController.saveTasksToLocalStorage();
     this.closeDeleteConfirmationPopup();
 

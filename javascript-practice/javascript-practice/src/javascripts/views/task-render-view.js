@@ -13,24 +13,46 @@ import TaskBaseView from './task-base-view.js';
 class TaskRenderView extends TaskBaseView {
   constructor() {
     super();
+    this.initializeColumnConfigs();
+  }
+  initializeColumnConfigs() {
+    this.columnConfigs = {
+      mainList: {
+        toDo: document.querySelector('.list-view .task-list--todo'),
+        inProgress: document.querySelector('.list-view .task-list--in-progress'),
+        completed: document.querySelector('.list-view .task-list--completed'),
+      },
+      mainBoard: {
+        toDo: document.querySelector('.board-view .task-list--todo'),
+        inProgress: document.querySelector('.board-view .task-list--in-progress'),
+        completed: document.querySelector('.board-view .task-list--completed'),
+      },
+      popupList: {
+        toDo: document.querySelector('#all-task-modal .list-view .task-list--todo'),
+        inProgress: document.querySelector('#all-task-modal .list-view .task-list--in-progress'),
+        completed: document.querySelector('#all-task-modal .list-view .task-list--completed'),
+      },
+      popupBoard: {
+        toDo: document.querySelector('#all-task-modal .board-view .task-list--todo'),
+        inProgress: document.querySelector('#all-task-modal .board-view .task-list--in-progress'),
+        completed: document.querySelector('#all-task-modal .board-view .task-list--completed'),
+      },
+    };
   }
   // Render tasks in both views
   renderTasks(tasks) {
-    console.log('Rendering tasks:', tasks);
     // Render tasks in both main views (list and board)
     this.renderTasksInView(tasks, 'mainList');
     this.renderTasksInView(tasks, 'mainBoard');
   }
 
   renderAllTasksPopup(tasks) {
-    console.log('Rendering popup tasks:', tasks);
     // Render tasks in both popup views (list and board)
     this.renderTasksInView(tasks, 'popupList');
     this.renderTasksInView(tasks, 'popupBoard');
   }
 
   renderTasksInView(tasks, viewType) {
-    console.log(`Rendering ${viewType} with tasks:`, tasks);
     const columns = this.columnConfigs[viewType];
     if (!columns) return;
 
