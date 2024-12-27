@@ -379,12 +379,13 @@
 }
 
 .board-view .task-item {
-  margin: var(--space-16) auto 0;
+  width: 26.2rem;
 }
 
 .board-view .task-item-actions {
-  justify-content: center;
-  gap: var(--space-8);
+  justify-content: flex-start;
+  padding-top: 5%;
+  gap: var(--space-16);
 }
 
 .board-view .task-list.task-list--todo .task-item {

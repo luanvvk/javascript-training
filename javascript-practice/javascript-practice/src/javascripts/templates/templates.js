@@ -20,8 +20,8 @@ export function createTaskElement(task) {
     <li class="task-item" data-task-id="${task.id}">
     <div class="task-item__details">
       <h3 class="task-item__heading">${task.title}</h3>
-      <h4 class="start-date">Start date: ${formatDate(task.startDate)}</h4>
-      <h4 class="end-date">End date: ${formatDate(task.endDate)}</h4>
+      <h4 class="start-date">Start: ${formatDate(task.startDate)}</h4>
+      <h4 class="end-date">Due: ${formatDate(task.endDate)}</h4>
       <div class="task-duration">
         <span class="duration-badge">Duration: ${calculateTaskDuration(task.startDate, task.endDate)}</span>
       </div>
