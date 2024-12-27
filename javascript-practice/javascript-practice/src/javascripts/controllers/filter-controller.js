@@ -1,33 +1,46 @@
-import TaskBaseController from './task-base-controller.js';
+// import TaskRenderView from '../views/task-render-view.js';
 
-export default class FilterController extends TaskBaseController {
-  constructor(model, modalView, renderView) {
-    super(model, modalView, renderView);
-
+export default class FilterController {
+  constructor(taskController) {
+    this.taskController = taskController;
+    this.modalView = taskController.modalView;
+    this.renderView = taskController.renderView;
     this.currentSortSetting = {
       field: 'name',
       order: 'asc',
     };
+
     this.sortDropdown = document.querySelector('.sort__dropdown');
     this.sortOrderToggle = document.querySelector('.sort__order-toggle');
     this.setupFilterEventListeners();
   }
 
   setupFilterEventListeners() {
-    const filterField = document.querySelector('.filter__field-dropdown');
-    const filterOptions = document.querySelector('.filter__options-dropdown');
-    const sortDropdown = document.querySelector('.sort__dropdown');
-    const sortOrderToggle = document.querySelector('.sort__order-toggle');
+    // Apply event listeners to filters
+    const filterFieldDropdown = document.querySelector('.filter__field-dropdown');
+    const filterOptionsDropdown = document.querySelector('.filter__options-dropdown');
+    this.populateFilterOptions('category');
 
-    filterField?.addEventListener('change', (e) => {
+    filterFieldDropdown.addEventListener('change', (e) => {
       this.populateFilterOptions(e.target.value);
     });
+    if (this.filterOptionsDropdown) {
+      filterOptionsDropdown.addEventListener('change', this.applyFilters.bind(this));
+    }
 
-    filterOptions?.addEventListener('change', () => this.applyFilters());
-
-    sortDropdown?.addEventListener('change', () => this.applyFilters());
-
-    sortOrderToggle?.addEventListener('click', (e) => this.toggleSortOrder(e));
+    const searchInputs = document.querySelectorAll('.input-bar-mini__main-input');
+    searchInputs.forEach((input) => {
+      input.addEventListener('input', this.applyFilters.bind(this));
+    });
+    //for sorting event listeners
+    if (this.sortDropdown) {
+      this.sortDropdown.addEventListener('change', this.applyFilters.bind(this));
+    }
+    if (this.sortOrderToggle) {
+      this.sortOrderToggle.removeEventListener('click', this.toggleSortOrderHandler);
+      this.toggleSortOrderHandler = this.toggleSortOrder.bind(this);
+      this.sortOrderToggle.addEventListener('click', this.toggleSortOrderHandler);
+    }
   }
 
   // Populate the second dropdown based on the first chosen dropdown
@@ -35,38 +48,23 @@ export default class FilterController extends TaskBaseController {
     const filterOptionsDropdown = document.querySelector('.filter__options-dropdown');
     filterOptionsDropdown.innerHTML = '';
 
-    let options = [];
-    switch (field) {
-      case 'category':
-        options = ['All', 'Daily Task', 'Weekly Task', 'Monthly Task'];
-        break;
-      case 'priority':
-        options = ['All', 'Not Urgent', 'Urgent Task', 'Important'];
-        break;
-      case 'status':
-        options = ['All', 'To Do', 'In Progress', 'Completed'];
-        break;
-      default:
-        options = ['All'];
-    }
+    const options =
+      {
+        category: ['All', 'Daily Task', 'Weekly Task', 'Monthly Task'],
+        priority: ['All', 'Not Urgent', 'Urgent Task', 'Important'],
+        status: ['All', 'To Do', 'In Progress', 'Completed'],
+      }[field] || [];
 
     // Populate filter options
-    options.forEach((option) => {
-      const optionElement = document.createElement('option');
-      optionElement.value = option;
-      optionElement.textContent = option;
-      filterOptionsDropdown.appendChild(optionElement);
-    });
-    // Re-apply filters with default "All"
-    this.applyFilters();
+    filterOptionsDropdown.innerHTML = options
+      .map((opt) => `<option value="${opt}">${opt}</option>`)
+      .join('');
   }
 
+  //Apply filters
   applyFilters() {
-    const filterFieldDropdown = document.querySelector('.filter__field-dropdown');
-    const filterOptionsDropdown = document.querySelector('.filter__options-dropdown');
-    //navigate/toggle elements
-    const filterField = filterFieldDropdown ? filterFieldDropdown.value : 'category';
-    const filterValue = filterOptionsDropdown ? filterOptionsDropdown.value : 'All';
+    const filterField = this.filterFieldDropdown ? filterFieldDropdown.value : 'category';
+    const filterValue = this.filterOptionsDropdown ? filterOptionsDropdown.value : 'All';
     const searchInput = document.querySelector('.input-bar-mini__main-input');
     const searchText = searchInput ? searchInput.value.toLowerCase().trim() : '';
 
@@ -82,55 +80,79 @@ export default class FilterController extends TaskBaseController {
     };
 
     //Filter tasks
-    const filteredTasks = this.filterTasks(filterOptions);
-    this.renderView.renderAllTasksPopup(filteredTasks);
-    this.renderView.renderTasks(filteredTasks);
+    const filteredTasks = this.filterTask(filterOptions);
+    this.renderView.renderAllTasks(filteredTasks);
   }
 
-  filterTasks(options) {
-    return this.tasks.filter((task) => {
-      const matchesCategory = options.category === 'All' || task.category === options.category;
-      const matchesPriority = options.priority === 'All' || task.priority === options.priority;
-      const matchesStatus = options.status === 'All' || task.status === options.status;
+  //filter task method
+  filterTask(options = {}) {
+    const { category = 'All', priority = 'All', status = 'All', searchText = '' } = options;
 
-      return matchesCategory && matchesPriority && matchesStatus;
-    });
+    let filteredTasks = this.taskController.tasks;
+    if (searchText) {
+      filteredTasks = filteredTasks.filter((task) =>
+        ['title', 'description', 'category', 'priority'].some((field) =>
+          task[field]?.toLowerCase().includes(searchText),
+        ),
+      );
+    }
+    // Filter by category
+    if (category !== 'All') {
+      filteredTasks = filteredTasks.filter(
+        (task) => task.category.toLowerCase() === category.toLowerCase(),
+      );
+    }
+    //Filer by priority
+    if (priority !== 'All') {
+      filteredTasks = filteredTasks.filter(
+        (task) => task.priority.toLowerCase() === priority.toLowerCase(),
+      );
+    }
+    //Filter by status
+    if (status !== 'All') {
+      filteredTasks = filteredTasks.filter((task) => task.status === status);
+    }
+    return filteredTasks;
   }
 
-  sortTasks(tasks) {
-    const { field, order } = this.currentSortSetting;
+  //Sort task method
+  sortTasks(field, order = 'asc') {
     //validate input
     const validFields = ['name', 'startDate', 'endDate', 'category', 'priority'];
     if (!validFields.includes(field)) {
       this.showError(`Invalid sort criteria. Please choose one of: ${validFields.join(', ')}`);
 
-      return this.tasks;
+      return this.taskController.tasks;
     }
-
-    return [...tasks].sort((a, b) => {
-      const valueA = this.getSortValue(a, field);
-      const valueB = this.getSortValue(b, field);
-      return order === 'asc' ? valueA - valueB : valueB - valueA;
-    });
     // Sort handling method:
-  }
-  getSortValue = (task, field) => {
-    const sortMap = {
-      name: () => (task.title ? task.title.toLowerCase() : ''),
-      startDate: () => new Date(task.startDate || '9999-12-31'),
-      endDate: () => new Date(task.endDate || '9999-12-31'),
-      category: () => (task.category ? task.category.toLowerCase() : ''),
-      priority: () => {
-        const priorityOrder = {
-          'Not urgent': 1,
-          'Urgent Task': 2,
-          Important: 3,
-        };
-        return priorityOrder[task.priority] || 0;
-      },
+    const getSortValue = (task, field) => {
+      const sortMap = {
+        name: task.title?.toLowerCase() || '',
+        startDate: new Date(task.startDate || '9999-12-31'),
+        endDate: new Date(task.endDate || '9999-12-31'),
+        category: task.category?.toLowerCase() || '',
+        priority:
+          {
+            'Not urgent': 1,
+            'Urgent Task': 2,
+            Important: 3,
+          }[task.priority] || 0,
+      };
+      return sortMap[field];
     };
-    return sortMap[field]();
-  };
+
+    const sortedTasks = [...this.taskController.tasks].sort((a, b) => {
+      const valueA = getSortValue(a, field);
+      const valueB = getSortValue(b, field);
+
+      if (valueA < valueB) return order === 'asc' ? -1 : 1;
+      if (valueA > valueB) return order === 'asc' ? 1 : -1;
+      return 0;
+    });
+
+    this.currentSortSetting = { field, order };
+    return sortedTasks;
+  }
 
   //change sort order state
   toggleSortOrder(e) {
@@ -142,9 +164,7 @@ export default class FilterController extends TaskBaseController {
     this.currentSortSetting.order = newOrder;
     const sortField = this.sortDropdown.value;
     const sortedTasks = this.sortTasks(sortField, newOrder);
-
-    this.renderView.renderTasks(sortedTasks);
-    this.renderView.renderAllTasksPopup(sortedTasks);
+    this.renderView.renderAllTasks(sortedTasks);
 
     //update button visual state
     this.sortOrderToggle.innerHTML =

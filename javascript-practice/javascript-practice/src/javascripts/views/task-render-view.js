@@ -16,18 +16,21 @@ class TaskRenderView extends TaskBaseView {
   }
   // Render tasks in both views
   renderTasks(tasks) {
+    console.log('Rendering tasks:', tasks);
     // Render tasks in both main views (list and board)
     this.renderTasksInView(tasks, 'mainList');
     this.renderTasksInView(tasks, 'mainBoard');
   }
 
   renderAllTasksPopup(tasks) {
+    console.log('Rendering popup tasks:', tasks);
     // Render tasks in both popup views (list and board)
     this.renderTasksInView(tasks, 'popupList');
     this.renderTasksInView(tasks, 'popupBoard');
   }
 
   renderTasksInView(tasks, viewType) {
+    console.log(`Rendering ${viewType} with tasks:`, tasks);
     const columns = this.columnConfigs[viewType];
     if (!columns) return;
 

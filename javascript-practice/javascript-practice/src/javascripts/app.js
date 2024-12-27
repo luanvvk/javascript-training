@@ -9,12 +9,14 @@ import TaskModel from './models/task-model.js';
 import TaskModalView from './views/task-modal-view.js';
 import TaskRenderView from './views/task-render-view.js';
 import TaskController from './controllers/app-controller-new.js';
+import { PopupController } from './controllers/popup-controller.js';
 // document.addEventListener('DOMContentLoaded', () => new MainTaskController());
 // document.addEventListener('DOMContentLoaded', () => new TaskBaseController());
 // document.addEventListener('DOMContentLoaded', () => new TaskFormController());
 // document.addEventListener('DOMContentLoaded', () => new TaskBaseView());
-document.addEventListener('DOMContentLoaded', () => new TaskModel());
 document.addEventListener('DOMContentLoaded', () => new TaskController());
+document.addEventListener('DOMContentLoaded', () => new TaskModel());
+document.addEventListener('DOMContentLoaded', () => new PopupController());
 
 document.addEventListener('DOMContentLoaded', () => new TaskRenderView());
 document.addEventListener('DOMContentLoaded', () => new TaskModalView());

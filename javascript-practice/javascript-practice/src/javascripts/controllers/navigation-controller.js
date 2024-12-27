@@ -1,8 +1,6 @@
-import TaskBaseController from './task-base-controller.js';
-
-export default class NavigationController extends TaskBaseController {
-  constructor(model, modalView, renderView) {
-    super(model, modalView, renderView);
+export default class NavigationController {
+  constructor(taskController) {
+    this.taskController = taskController;
     this.setupNavigationListeners();
   }
 

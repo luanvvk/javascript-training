@@ -1,8 +1,6 @@
-import TaskBaseController from './task-base-controller.js';
-
-export default class SearchController extends TaskBaseController {
-  constructor(model, modalView, renderView) {
-    super(model, modalView, renderView);
+export default class SearchController {
+  constructor(taskController) {
+    this.taskController = taskController;
     this.setupSearchListeners();
   }
 
@@ -21,14 +19,14 @@ export default class SearchController extends TaskBaseController {
     const filteredTasks = this.searchTasks(searchText);
 
     isPopupSearch
-      ? this.renderView.renderAllTasksPopup(filteredTasks)
-      : this.renderView.renderTasks(filteredTasks);
+      ? this.taskController.renderView.renderAllTasksPopup(filteredTasks)
+      : this.taskController.renderView.renderTasks(filteredTasks);
   }
 
   searchTasks(searchText) {
     if (!searchText) return this.tasks;
 
-    return this.tasks.filter((task) => {
+    return this.taskController.tasks.filter((task) => {
       if (!task) return false;
 
       return ['title', 'description', 'category', 'priority'].some((field) => {
