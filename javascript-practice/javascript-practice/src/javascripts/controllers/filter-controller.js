@@ -1,13 +1,13 @@
-// import TaskRenderView from '../views/task-render-view.js';
-
 export default class FilterController {
   constructor(taskController) {
     this.taskController = taskController;
+
     this.currentSortSetting = {
       field: 'name',
       order: 'asc',
     };
-
+    this.filterFieldDropdown = document.querySelector('.filter__field-dropdown');
+    this.filterOptionsDropdown = document.querySelector('.filter__options-dropdown');
     this.sortDropdown = document.querySelector('.sort__dropdown');
     this.sortOrderToggle = document.querySelector('.sort__order-toggle');
     this.setupFilterEventListeners();
@@ -15,20 +15,15 @@ export default class FilterController {
 
   setupFilterEventListeners() {
     // Apply event listeners to filters
-    console.log('Setting up filter event listeners');
-    const filterFieldDropdown = document.querySelector('.filter__field-dropdown');
-    const filterOptionsDropdown = document.querySelector('.filter__options-dropdown');
     this.populateFilterOptions('category');
-    if (!filterFieldDropdown || !filterOptionsDropdown) {
+    if (!this.filterFieldDropdown || !this.filterOptionsDropdown) {
       console.error('Filter dropdown elements not found!');
       return;
     }
-    filterFieldDropdown.addEventListener('change', (e) => {
+    this.filterFieldDropdown.addEventListener('change', (e) => {
       this.populateFilterOptions(e.target.value);
-      console.log('Dropdown changed:', e.target.value);
     });
     if (this.filterOptionsDropdown) {
-      console.log('Dropdown changed:', e.target.value);
       this.filterOptionsDropdown.addEventListener('change', (e) => {
         e.stopPropagation();
         this.applyFilters.bind(this);
@@ -54,8 +49,7 @@ export default class FilterController {
 
   // Populate the second dropdown based on the first chosen dropdown
   populateFilterOptions(field) {
-    const filterOptionsDropdown = document.querySelector('.filter__options-dropdown');
-    filterOptionsDropdown.innerHTML = '';
+    this.filterOptionsDropdown.innerHTML = '';
 
     const options =
       {
@@ -63,18 +57,17 @@ export default class FilterController {
         priority: ['All', 'Not Urgent', 'Urgent Task', 'Important'],
         status: ['All', 'To Do', 'In Progress', 'Completed'],
       }[field] || [];
-    console.log(`Populating options for ${field}:`, options);
+
     // Populate filter options
-    filterOptionsDropdown.innerHTML = options
+    this.filterOptionsDropdown.innerHTML = options
       .map((opt) => `<option value="${opt}">${opt}</option>`)
       .join('');
 
-    filterOptionsDropdown.addEventListener('change', this.applyFilters.bind(this));
+    this.filterOptionsDropdown.addEventListener('change', this.applyFilters.bind(this));
   }
 
   //Apply filters
   applyFilters() {
-    console.log('applyFilters triggered');
     const filterField = this.filterFieldDropdown ? this.filterFieldDropdown.value : 'category';
     const filterValue = this.filterOptionsDropdown ? this.filterOptionsDropdown.value : 'All';
     const searchInput = document.querySelector('.input-bar-mini__main-input');
@@ -93,15 +86,17 @@ export default class FilterController {
 
     //Filter tasks
     const filteredTasks = this.filterTask(filterOptions);
-    console.log('Filtered Tasks:', filteredTasks);
-    this.taskController.renderAllTasks(filteredTasks);
+
+    this.taskController.renderView.renderAllTasksPopup(filteredTasks);
+    this.taskController.renderView.renderTasks(filteredTasks);
   }
 
   //filter task method
   filterTask(options = {}) {
     const { category = 'All', priority = 'All', status = 'All', searchText = '' } = options;
-    console.log('Filtering with options:', options);
-    let filteredTasks = this.taskController.tasks;
+
+    // Create a copy of tasks
+    let filteredTasks = [...this.taskController.tasks];
     if (searchText) {
       filteredTasks = filteredTasks.filter((task) =>
         ['title', 'description', 'category', 'priority'].some((field) =>
@@ -125,9 +120,7 @@ export default class FilterController {
     if (status !== 'All') {
       filteredTasks = filteredTasks.filter((task) => task.status === status);
     }
-    console.log(filteredTasks);
-    console.log('All Tasks:', this.taskController.tasks);
-    console.log('Filtered tasks passed to render:', filteredTasks);
+
     return filteredTasks;
   }
 

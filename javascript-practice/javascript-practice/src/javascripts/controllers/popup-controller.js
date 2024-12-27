@@ -1,16 +1,7 @@
 import { showDeletionNotification } from '../helpers/notifications.js';
-// import TaskController from './app-controller-new.js';
-// import TaskModel from '../models/task-model.js';
-// import TaskModalView from '../views/task-modal-view.js';
-// import TaskRenderView from '../views/task-render-view.js';
-import {
-  createFormElements,
-  setupPopupDropdowns,
-  renderSortingUI,
-} from '../templates/templates.js';
+
 export default class PopupController {
   constructor(taskController) {
-    console.log(taskController);
     if (!taskController) {
       throw new Error('TaskController must be provided to PopupController');
     }
@@ -157,7 +148,7 @@ export default class PopupController {
         const taskId = parseInt(this.editTaskOverlay.dataset.taskId);
         if (!isNaN(taskId)) {
           this.openDeleteConfirmationPopup(taskId, 'edit-overlay');
-          this.taskColumns.renderAllTasks(this.taskController.tasks);
+          this.taskController.renderAllTasks(this.taskController.tasks);
           this.taskController.saveTasksToLocalStorage();
           this.modalView.closeEditTaskOverlay();
         }

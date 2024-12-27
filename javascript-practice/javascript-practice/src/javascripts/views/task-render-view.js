@@ -13,32 +13,8 @@ import TaskBaseView from './task-base-view.js';
 class TaskRenderView extends TaskBaseView {
   constructor() {
     super();
-    this.initializeColumnConfigs();
   }
-  initializeColumnConfigs() {
-    this.columnConfigs = {
-      mainList: {
-        toDo: document.querySelector('.list-view .task-list--todo'),
-        inProgress: document.querySelector('.list-view .task-list--in-progress'),
-        completed: document.querySelector('.list-view .task-list--completed'),
-      },
-      mainBoard: {
-        toDo: document.querySelector('.board-view .task-list--todo'),
-        inProgress: document.querySelector('.board-view .task-list--in-progress'),
-        completed: document.querySelector('.board-view .task-list--completed'),
-      },
-      popupList: {
-        toDo: document.querySelector('#all-task-modal .list-view .task-list--todo'),
-        inProgress: document.querySelector('#all-task-modal .list-view .task-list--in-progress'),
-        completed: document.querySelector('#all-task-modal .list-view .task-list--completed'),
-      },
-      popupBoard: {
-        toDo: document.querySelector('#all-task-modal .board-view .task-list--todo'),
-        inProgress: document.querySelector('#all-task-modal .board-view .task-list--in-progress'),
-        completed: document.querySelector('#all-task-modal .board-view .task-list--completed'),
-      },
-    };
-  }
+
   // Render tasks in both views
   renderTasks(tasks) {
     // Render tasks in both main views (list and board)
@@ -61,6 +37,11 @@ class TaskRenderView extends TaskBaseView {
       if (column) column.innerHTML = '';
     });
 
+    // If no tasks, show empty state
+    if (!tasks || tasks.length === 0) {
+      this.showNoTasksMessages(columns);
+      return;
+    }
     // Distribute tasks to appropriate columns
     tasks.forEach((task) => {
       const taskElement = this.createTaskElement(task);

@@ -34,8 +34,6 @@ class TaskBaseView {
 
   initializeDOMElements() {
     this.errorHandler = new ErrorHandler();
-    this.createTaskOverlay = document.getElementById('create-task-modal');
-    this.editTaskOverlay = document.getElementById('edit-task-modal');
   }
 
   showError(message) {
