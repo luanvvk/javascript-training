@@ -15,10 +15,10 @@
 }
 
 .app__sidebar .app__logo-text {
-  display: none;
+  display: block;
 }
 .app__sidebar.active .app__logo-text {
-  display: initial;
+  display: none;
 }
 
 .app__sidebar-list {
@@ -476,6 +476,12 @@
   }
   .search-bar__input-bar {
     width: 55%;
+  }
+  .app__sidebar .app__logo-text {
+    display: none;
+  }
+  .app__sidebar.active .app__logo-text {
+    display: block;
   }
 }
 
