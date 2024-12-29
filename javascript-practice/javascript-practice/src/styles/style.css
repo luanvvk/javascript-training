@@ -103,8 +103,11 @@
   height: 3rem;
 }
 
-.app__nav-link.app__nav-link--list-screen img {
-  padding: 0;
+.app__nav-link.app__nav-link--list-screen img,
+.app__nav-link.app__nav-link--notification img,
+.app__nav-link.app__nav-link--theme img,
+.app__nav-link.app__nav-link--login img {
+  padding: 0.2rem;
   background: var(--light-pink);
 }
 
@@ -536,6 +539,11 @@
   .utility__icon,
   .utility {
     display: none;
+  }
+  .app__sidebar-items:nth-child(6),
+  .app__sidebar-items:nth-child(7),
+  .app__sidebar-items:nth-child(8) {
+    display: block;
   }
   .form__grid {
     grid-template-columns: 1fr;
