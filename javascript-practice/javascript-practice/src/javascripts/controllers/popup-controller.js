@@ -82,7 +82,7 @@ export default class PopupController {
       task.status = 'In Progress';
     }
 
-    this.taskController.renderAllTasks(this.taskController.tasks);
+    this.taskController.renderTasks(this.taskController.tasks);
     this.taskController.saveTasksToLocalStorage();
   }
 
@@ -119,7 +119,7 @@ export default class PopupController {
         const task = this.taskController.tasks.find((t) => t.id === parseInt(taskId));
         if (task) {
           task.status = task.status === 'Completed' ? 'In Progress' : 'Completed';
-          this.taskController.renderAllTasks(this.taskController.tasks);
+          this.taskController.renderTasks(this.taskController.tasks);
           this.taskController.saveTasksToLocalStorage();
           this.modalView.closeEditTaskOverlay();
         }
@@ -130,7 +130,7 @@ export default class PopupController {
         const taskId = parseInt(this.editTaskOverlay.dataset.taskId);
         if (!isNaN(taskId)) {
           this.openDeleteConfirmationPopup(taskId, 'edit-overlay');
-          this.taskController.renderAllTasks(this.taskController.tasks);
+          this.taskController.renderTasks(this.taskController.tasks);
           this.taskController.saveTasksToLocalStorage();
           this.modalView.closeEditTaskOverlay();
         }
@@ -170,7 +170,7 @@ export default class PopupController {
 
     if (this.taskController.validate(task)) {
       this.taskController.tasks.push(task);
-      this.taskController.renderAllTasks(this.taskController.tasks);
+      this.taskController.renderTasks(this.taskController.tasks);
       this.taskController.saveTasksToLocalStorage();
       this.modalView.resetCreateTaskForm();
       this.modalView.closeCreateTaskOverlay();
@@ -202,7 +202,7 @@ export default class PopupController {
     if (this.taskController.validate(updatedTask)) {
       Object.assign(task, updatedTask);
       this.taskController.saveTasksToLocalStorage();
-      this.taskController.renderAllTasks(this.taskController.tasks);
+      this.taskController.renderTasks(this.taskController.tasks);
       this.modalView.closeEditTaskOverlay();
       showNotification('Task successfully edited!', 'success');
     }
@@ -229,7 +229,7 @@ export default class PopupController {
       (t) => t.id !== this.pendingTaskToDelete,
     );
     showNotification('Task successfully deleted!', 'success');
-    this.taskController.renderAllTasks(this.taskController.tasks);
+    this.taskController.renderTasks(this.taskController.tasks);
     this.taskController.saveTasksToLocalStorage();
     this.closeDeleteConfirmationPopup();
 

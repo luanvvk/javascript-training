@@ -19,7 +19,7 @@ export default class SearchController {
     const filteredTasks = this.searchTasks(searchText);
 
     isPopupSearch
-      ? this.taskController.renderView.renderAllTasksPopup(filteredTasks)
+      ? this.taskController.renderView.renderTasks(filteredTasks)
       : this.taskController.renderView.renderTasks(filteredTasks);
   }
 

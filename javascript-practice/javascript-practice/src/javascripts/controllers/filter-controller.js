@@ -87,8 +87,8 @@ export default class FilterController {
     //Filter tasks
     const filteredTasks = this.filterTask(filterOptions);
 
-    this.taskController.renderView.renderAllTasksPopup(filteredTasks);
     this.taskController.renderView.renderTasks(filteredTasks);
+    // this.taskController.renderView.renderTasks(filteredTasks);
   }
 
   //filter task method
@@ -174,7 +174,7 @@ export default class FilterController {
     this.currentSortSetting.order = newOrder;
     const sortField = this.sortDropdown.value;
     const sortedTasks = this.sortTasks(sortField, newOrder);
-    this.taskController.renderAllTasks(sortedTasks);
+    this.taskController.renderTasks(sortedTasks);
 
     //update button visual state
     this.sortOrderToggle.innerHTML =

@@ -15,17 +15,11 @@ class TaskRenderView extends TaskBaseView {
     super();
   }
 
-  // Render tasks in both views
-  renderTasks(tasks) {
-    // Render tasks in both main views (list and board)
-    this.renderTasksInView(tasks, 'mainList');
-    this.renderTasksInView(tasks, 'mainBoard');
-  }
-
-  renderAllTasksPopup(tasks) {
-    // Render tasks in both popup views (list and board)
-    this.renderTasksInView(tasks, 'popupList');
-    this.renderTasksInView(tasks, 'popupBoard');
+  // Render tasks in specified views
+  renderTasks(tasks, viewTypes = ['mainList', 'mainBoard', 'popupList', 'popupBoard']) {
+    viewTypes.forEach((viewType) => {
+      this.renderTasksInView(tasks, viewType);
+    });
   }
 
   renderTasksInView(tasks, viewType) {

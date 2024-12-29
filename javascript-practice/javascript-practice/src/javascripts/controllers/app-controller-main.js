@@ -46,7 +46,7 @@ class TaskController {
     try {
       this.loadTasksFromLocalStorage();
       this.setupDynamicForm();
-      this.renderAllTasks(this.tasks);
+      this.renderTasks(this.tasks);
     } catch (error) {
       this.errorHandler.log(`Error during initialization: ${error.message}`, 'error');
     }
@@ -99,13 +99,6 @@ class TaskController {
   }
 
   renderTasks() {
-    this.renderView.renderTasks(this.tasks);
-  }
-
-  renderAllTasks() {
-    // Render all tasks in the All Tasks Popup,
-    this.renderView.renderAllTasksPopup(this.tasks);
-    // Render all tasks in the main view
     this.renderView.renderTasks(this.tasks);
   }
 }
