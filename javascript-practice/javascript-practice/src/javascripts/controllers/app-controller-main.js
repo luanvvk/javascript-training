@@ -33,29 +33,13 @@ class TaskController {
     this.localStorageUtil = new LocalStorageUtil('tasks');
     this.validationUtils = new ValidationUtils();
     this.errorHandler = new ErrorHandler();
-    this.initializeDOMElements();
   }
+
   initializeControllers() {
     this.popupController = new PopupController(this);
     this.searchController = new SearchController(this);
     this.navigationController = new NavigationController(this);
     this.filterController = new FilterController(this);
-  }
-
-  initializeDOMElements() {
-    try {
-      this.filterFieldDropdown = document.querySelector('.filter__field-dropdown');
-      this.filterOptionsDropdown = document.querySelector('.filter__options-dropdown');
-      this.sortDropdown = document.querySelector('.sort__dropdown');
-      this.sortOrderToggle = document.querySelector('.sort__order-toggle');
-      this.mainContainer = document.querySelector('.app-main');
-      this.editTaskOverlay = document.getElementById('edit-task-modal');
-      this.deleteConfirmationPopup = document.getElementById('confirmation-popup--delete');
-      this.sideNavbar = document.querySelector('.app__sidebar');
-      this.searchBarTop = document.querySelector('.search-bar__input-bar');
-    } catch (error) {
-      this.errorHandler.log(`Error initializing DOM elements: ${error.message}`, 'error');
-    }
   }
 
   initialize() {

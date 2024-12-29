@@ -1,3 +1,13 @@
+//Declaration
+const allTaskModal = document.getElementById('all-task-modal');
+const menuToggle = document.querySelector('.topbar__menu-toggle');
+const sideNavbar = document.querySelector('.app__sidebar');
+const mainBody = document.querySelector('.app-main');
+const appLogoHeading = document.querySelector('.app__logo-text');
+const boardMainView = document.querySelector('.board > .board-view');
+const listMainView = document.querySelector('.board > .list-view');
+const boardPopupView = document.querySelector('#all-task-modal .board-view.task-columns');
+const listPopupView = document.querySelector('#all-task-modal .list-view.task-columns');
 export default class NavigationController {
   constructor(taskController) {
     this.taskController = taskController;
@@ -28,36 +38,36 @@ export default class NavigationController {
   }
 
   showAllTasks() {
-    document.getElementById('all-task-modal').classList.remove('hidden');
+    allTaskModal.classList.remove('hidden');
     this.toggleResponsiveView();
   }
 
   showDashboard() {
-    document.getElementById('all-task-modal').classList.add('hidden');
+    allTaskModal.classList.add('hidden');
     this.toggleResponsiveView();
   }
 
   showBoardView() {
-    if (document.getElementById('all-task-modal').classList.contains('hidden')) {
+    if (allTaskModal.classList.contains('hidden')) {
       // Main view
-      document.querySelector('.board > .board-view').classList.remove('hidden');
-      document.querySelector('.board > .list-view').classList.add('hidden');
+      boardMainView.classList.remove('hidden');
+      listMainView.classList.add('hidden');
     } else {
       // All tasks popup view
-      document.querySelector('#all-task-modal .board-view.task-columns').classList.remove('hidden');
-      document.querySelector('#all-task-modal .list-view.task-columns').classList.add('hidden');
+      boardPopupView.classList.remove('hidden');
+      listPopupView.classList.add('hidden');
     }
     this.toggleResponsiveView();
   }
   showListView() {
-    if (document.getElementById('all-task-modal').classList.contains('hidden')) {
+    if (allTaskModal.classList.contains('hidden')) {
       // Main view
-      document.querySelector('.board > .board-view').classList.add('hidden');
-      document.querySelector('.board > .list-view').classList.remove('hidden');
+      boardMainView.classList.add('hidden');
+      listMainView.classList.remove('hidden');
     } else {
       // All tasks popup view
-      document.querySelector('#all-task-modal .board-view.task-columns').classList.add('hidden');
-      document.querySelector('#all-task-modal .list-view.task-columns').classList.remove('hidden');
+      boardPopupView.classList.add('hidden');
+      listPopupView.classList.remove('hidden');
     }
     this.toggleResponsiveView();
   }
@@ -70,10 +80,6 @@ export default class NavigationController {
   }
   // Side bar event
   setupSidebarToggleListener() {
-    const menuToggle = document.querySelector('.topbar__menu-toggle');
-    const sideNavbar = document.querySelector('.app__sidebar');
-    const mainBody = document.querySelector('.app-main');
-    const appLogoHeading = document.querySelector('.app__logo-text');
     if (menuToggle) {
       menuToggle.addEventListener('click', () => {
         const isActive = sideNavbar.classList.toggle('active');
