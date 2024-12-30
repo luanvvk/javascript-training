@@ -135,6 +135,41 @@
   font-size: var(--font-size-20);
 }
 
+.sidebar__close-btn {
+  z-index: 1000;
+  position: absolute;
+  top: 1.6rem;
+  right: 2rem;
+  width: 2.4rem;
+  height: 2.4rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: 50%;
+
+  cursor: pointer;
+  background: transparent;
+  transition: background-color 0.2s ease;
+}
+
+.sidebar__close-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar__close-icon {
+  width: 100%;
+  height: 100%;
+  color: var(--light-pink);
+  display: none;
+}
+
+/* Hide close button when sidebar is collapsed */
+.app__sidebar.active .sidebar__close-btn {
+  display: none;
+}
+
 /* Top bar */
 .app-main {
   position: absolute;
@@ -459,6 +494,7 @@
     left: 5.5rem;
   }
 }
+
 @media (max-width: 799px) {
   .app__sidebar {
     width: 5.5rem;
@@ -488,6 +524,14 @@
 
   .app__sidebar.active .app__logo-text {
     display: block;
+  }
+
+  .sidebar__close-btn {
+    display: none;
+  }
+
+  .app__sidebar.active .sidebar__close-btn {
+    display: flex;
   }
 }
 
@@ -620,5 +664,9 @@
 
   .app-main.active .board .board__add-task {
     display: none;
+  }
+
+  .sidebar__close-icon {
+    display: initial;
   }
 }

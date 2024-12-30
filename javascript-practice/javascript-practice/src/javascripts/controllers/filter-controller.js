@@ -95,9 +95,7 @@ export default class FilterController {
 
     //Filter tasks
     const filteredTasks = this.filterTask(filterOptions);
-
     this.taskController.renderView.renderTasks(filteredTasks);
-    // this.taskController.renderView.renderTasks(filteredTasks);
   }
 
   //filter task method

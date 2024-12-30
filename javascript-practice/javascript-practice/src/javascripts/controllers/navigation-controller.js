@@ -12,6 +12,7 @@ const boardMainView = document.querySelector('.board > .board-view');
 const listMainView = document.querySelector('.board > .list-view');
 const boardPopupView = document.querySelector('#all-task-modal .board-view.task-columns');
 const listPopupView = document.querySelector('#all-task-modal .list-view.task-columns');
+const closeButton = document.querySelector('.sidebar__close-btn');
 export default class NavigationController {
   constructor(taskController) {
     // Store reference to task controller
@@ -35,6 +36,10 @@ export default class NavigationController {
         this.showBoardView();
       } else if (target.classList.contains('app__nav-link--list-screen')) {
         this.showListView();
+      } else if (
+        target.matches('.app__nav-link--notification, .app__nav-link--theme, .app__nav-link--login')
+      ) {
+        this.closeSideBar();
       }
     });
   }
@@ -90,6 +95,19 @@ export default class NavigationController {
         appLogoHeading.classList.toggle('active', isActive);
       });
     }
+    if (closeButton) {
+      closeButton.addEventListener('click', () => {
+        sideNavbar.classList.remove('active');
+        mainBody.classList.remove('active');
+        appLogoHeading.classList.remove('active');
+      });
+    }
+  }
+
+  closeSideBar() {
+    sideNavbar.classList.remove('active');
+    mainBody.classList.remove('active');
+    appLogoHeading.classList.remove('active');
   }
 
   setupResponsiveDesignListener() {
