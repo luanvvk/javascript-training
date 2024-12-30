@@ -82,8 +82,8 @@ export default class NavigationController {
 
   toggleResponsiveView() {
     if (window.innerWidth < 800) {
-      document.querySelector('.app__sidebar').classList.toggle('active');
-      document.querySelector('.app-main').classList.toggle('active');
+      document.querySelector('.app__sidebar').classList.remove('active');
+      document.querySelector('.app-main').classList.remove('active');
     }
   }
   // Side bar event
