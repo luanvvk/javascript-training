@@ -3,24 +3,27 @@
  */
 
 //Declaration
-const allTaskModal = document.getElementById('all-task-modal');
-const menuToggle = document.querySelector('.topbar__menu-toggle');
-const sideNavbar = document.querySelector('.app__sidebar');
-const mainBody = document.querySelector('.app-main');
-const appLogoHeading = document.querySelector('.app__logo-text');
-const boardMainView = document.querySelector('.board > .board-view');
-const listMainView = document.querySelector('.board > .list-view');
-const boardPopupView = document.querySelector('#all-task-modal .board-view.task-columns');
-const listPopupView = document.querySelector('#all-task-modal .list-view.task-columns');
-const closeButton = document.querySelector('.sidebar__close-btn');
+
 export default class NavigationController {
   constructor(taskController) {
     // Store reference to task controller
     this.taskController = taskController;
-
+    this.initDOMElements();
     this.setupNavigationListeners();
     this.setupSidebarToggleListener();
     this.setupResponsiveDesignListener();
+  }
+  initDOMElements() {
+    this.allTaskModal = document.getElementById('all-task-modal');
+    this.menuToggle = document.querySelector('.topbar__menu-toggle');
+    this.sideNavbar = document.querySelector('.app__sidebar');
+    this.mainBody = document.querySelector('.app-main');
+    this.appLogoHeading = document.querySelector('.app__logo-text');
+    this.closeButton = document.querySelector('.sidebar__close-btn');
+    this.boardMainView = document.querySelector('.board > .board-view');
+    this.listMainView = document.querySelector('.board > .list-view');
+    this.boardPopupView = document.querySelector('#all-task-modal .board-view.task-columns');
+    this.listPopupView = document.querySelector('#all-task-modal .list-view.task-columns');
   }
 
   setupNavigationListeners() {
@@ -45,76 +48,75 @@ export default class NavigationController {
   }
 
   showAllTasks() {
-    allTaskModal.classList.remove('hidden');
-    this.toggleResponsiveView();
+    this.toggleModalVisibility(false);
   }
 
   showDashboard() {
-    allTaskModal.classList.add('hidden');
-    this.toggleResponsiveView();
+    this.toggleModalVisibility(true);
   }
 
   showBoardView() {
-    if (allTaskModal.classList.contains('hidden')) {
-      // Main view
-      boardMainView.classList.remove('hidden');
-      listMainView.classList.add('hidden');
-    } else {
-      // All tasks popup view
-      boardPopupView.classList.remove('hidden');
-      listPopupView.classList.add('hidden');
-    }
-    this.toggleResponsiveView();
+    this.toggleView(this.boardMainView, this.listMainView, this.boardPopupView, this.listPopupView);
   }
 
   showListView() {
-    if (allTaskModal.classList.contains('hidden')) {
-      // Main view
-      boardMainView.classList.add('hidden');
-      listMainView.classList.remove('hidden');
-    } else {
-      // All tasks popup view
-      boardPopupView.classList.add('hidden');
-      listPopupView.classList.remove('hidden');
+    this.toggleView(this.listMainView, this.boardMainView, this.listPopupView, this.boardPopupView);
+  }
+
+  toggleModalVisibility(isDashboard) {
+    if (this.allTaskModal) {
+      this.allTaskModal.classList.toggle('hidden', isDashboard);
     }
     this.toggleResponsiveView();
   }
 
-  toggleResponsiveView() {
-    if (window.innerWidth < 800) {
-      document.querySelector('.app__sidebar').classList.remove('active');
-      document.querySelector('.app-main').classList.remove('active');
+  toggleView(mainViewToShow, mainViewToHide, popupViewToShow, popupViewToHide) {
+    const isMainView = this.allTaskModal && this.allTaskModal.classList.contains('hidden');
+    if (isMainView) {
+      mainViewToShow.classList.remove('hidden');
+      mainViewToHide.classList.add('hidden');
+    } else {
+      popupViewToShow.classList.remove('hidden');
+      popupViewToHide.classList.add('hidden');
     }
+    this.toggleResponsiveView();
   }
+
+  toggleClass(elements, className, isActive) {
+    elements.forEach((element) => {
+      element.classList.toggle(className, isActive);
+    });
+  }
+
   // Side bar event
   setupSidebarToggleListener() {
-    if (menuToggle) {
-      menuToggle.addEventListener('click', () => {
-        const isActive = sideNavbar.classList.toggle('active');
-        mainBody.classList.toggle('active', isActive);
-        appLogoHeading.classList.toggle('active', isActive);
+    if (this.menuToggle) {
+      this.menuToggle.addEventListener('click', () => {
+        const isActive = this.sideNavbar && this.sideNavbar.classList.toggle('active');
+        this.toggleClass([this.mainBody, this.appLogoHeading], 'active', isActive);
       });
     }
-    if (closeButton) {
-      closeButton.addEventListener('click', () => {
-        sideNavbar.classList.remove('active');
-        mainBody.classList.remove('active');
-        appLogoHeading.classList.remove('active');
+    if (this.closeButton) {
+      this.closeButton.addEventListener('click', () => {
+        this.closeSideBar();
       });
     }
   }
 
   closeSideBar() {
-    sideNavbar.classList.remove('active');
-    mainBody.classList.remove('active');
-    appLogoHeading.classList.remove('active');
+    this.toggleClass([this.sideNavbar, this.mainBody, this.appLogoHeading], 'active', false);
+  }
+
+  toggleResponsiveView() {
+    if (window.innerWidth < 800) {
+      this.closeSideBar();
+    }
   }
 
   setupResponsiveDesignListener() {
     const initCheck = (event) => {
       const isActive = !event.matches;
-      this.sideNavbar.classList.toggle('active', isActive);
-      this.mainBody.classList.toggle('active', isActive);
+      this.toggleClass([this.sideNavbar, this.mainBody], 'active', isActive);
     };
 
     document.addEventListener('DOMContentLoaded', () => {

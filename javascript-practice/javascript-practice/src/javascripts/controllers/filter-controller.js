@@ -16,12 +16,21 @@ export default class FilterController {
       field: 'name',
       order: 'asc',
     };
+    // Initialize DOM elements
+    this.initializeDOMElements();
+  }
+  initializeDOMElements() {
     this.filterFieldDropdown = document.querySelector('.filter__field-dropdown');
     this.filterOptionsDropdown = document.querySelector('.filter__options-dropdown');
     this.sortDropdown = document.querySelector('.sort__dropdown');
     this.sortOrderToggle = document.querySelector('.sort__order-toggle');
+
     this.setupFilterEventListeners();
     renderSortingUI();
+    // Set default sort when opening the popup
+    document.querySelector('.app__nav-link--all-tasks').addEventListener('click', () => {
+      this.applyDefaultSort();
+    });
   }
 
   setupFilterEventListeners() {
@@ -139,7 +148,13 @@ export default class FilterController {
   }
 
   //Sort task method
-  sortTasks(field, order = 'asc') {
+  applyDefaultSort() {
+    const { field, order } = this.currentSortSetting;
+    const sortedTasks = this.sortTasks(field, order);
+    this.taskController.renderView.renderTasks(sortedTasks);
+  }
+
+  sortTasks(field, order) {
     //validate input
     const validFields = ['name', 'startDate', 'endDate', 'category', 'priority'];
     if (!validFields.includes(field)) {
