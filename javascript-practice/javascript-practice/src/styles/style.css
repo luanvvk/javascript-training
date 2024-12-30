@@ -477,12 +477,15 @@
     width: calc(100% - 25.5rem);
     left: 25.5rem;
   }
+
   .search-bar__input-bar {
     width: 55%;
   }
+
   .app__sidebar .app__logo-text {
     display: none;
   }
+
   .app__sidebar.active .app__logo-text {
     display: block;
   }
@@ -512,6 +515,7 @@
   .task-column.task-column--completed {
     margin-top: var(--space-32);
   }
+
   .filter-wrapper {
     padding: 0 var(--space-4);
   }
@@ -529,22 +533,27 @@
     grid-template-areas: 'toDo ' 'running ' 'completed ';
     margin-top: var(--space-32);
   }
+
   .task-column.task-column--in-progress,
   .task-column.task-column--completed {
     margin-top: var(--space-32);
   }
+
   .app__sidebar-items:nth-child(5) {
     display: block;
   }
+
   .utility__icon,
   .utility {
     display: none;
   }
+
   .app__sidebar-items:nth-child(6),
   .app__sidebar-items:nth-child(7),
   .app__sidebar-items:nth-child(8) {
     display: block;
   }
+
   .form__grid {
     grid-template-columns: 1fr;
   }
@@ -570,6 +579,7 @@
   .list-view .duration-badge {
     width: 100%;
   }
+
   .list-view .task-item__details {
     justify-content: flex-start;
   }
@@ -607,6 +617,7 @@
     word-wrap: break-word;
     white-space: wrap;
   }
+
   .app-main.active .board .board__add-task {
     display: none;
   }

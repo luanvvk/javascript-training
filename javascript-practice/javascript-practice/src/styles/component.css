@@ -2,15 +2,16 @@
 .task-item {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 1.2rem;
   padding: 1.5rem;
   min-height: 11.7rem;
+
   background-color: var(--cyan-blue);
   border-radius: 1rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
-  margin-bottom: 1.2rem;
 }
 
 .task-item:hover {
@@ -43,12 +44,13 @@
 
 .start-date,
 .end-date {
-  font-size: var(--font-size-12);
-  color: var(--light-pink);
-  opacity: 0.9;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+
+  opacity: 0.9;
+  font-size: var(--font-size-12);
+  color: var(--light-pink);
   white-space: nowrap;
 }
 
@@ -61,6 +63,7 @@
   color: var(--light-pink);
   white-space: nowrap;
 }
+
 .task-edit,
 .task-delete {
   padding: 0.5rem;
@@ -81,10 +84,12 @@
   display: flex;
   align-items: center;
   gap: 0.8rem;
+
   background: none;
+  padding: 0.6rem 1rem;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 0.8rem;
-  padding: 0.6rem 1rem;
+
   cursor: pointer;
   transition:
     background-color 0.2s ease,
@@ -176,98 +181,12 @@
   color: var(--cyan-blue);
 }
 
-/* .list-view .task-item {
-  width: 100%;
-  background-color: var(--light-pink);
-  border-bottom: 0.1rem solid var(--black);
-  border-radius: 0;
-}
-
-.list-view .task-item__heading,
-.list-view .start-date,
-.list-view .end-date,
-.list-view .duration-badge,
-.list-view .confirm-button-desc {
-  color: var(--cyan-blue);
-}
-
-.list-view .button-icon,
-.list-view .task-edit,
-.list-view .task-delete {
-  background-color: var(--cyan-blue);
-  padding: var(--space-4);
-  border-radius: 25%;
-}
-
-.list-view .task-column__header {
-  padding: var(--space-16);
-  border-bottom: 2px solid var(--black);
-}
-
-.task-column__header .task-column__title {
-  font-weight: 600;
-  font-size: var(--font-size-16);
-}
-
-.task-item .task-item__details {
-  width: 100%;
-  text-align: left;
-}
-
-.list-view .task-item .task-item__details {
-  display: grid;
-  grid-template-areas:
-    'heading heading duration'
-    'start start start'
-    'end end button';
-}
-
-.list-view .task-item:first-child {
-  margin-top: 0;
-}
-
-.list-view .task-item .task-item__heading {
-  grid-area: heading;
-}
-
-.list-view .task-item .task-duration {
-  grid-area: duration;
-}
-
-.list-view .task-item .start-date {
-  grid-area: start;
-  margin: auto 0;
-}
-
-.list-view .task-item .end-date {
-  grid-area: end;
-  margin: auto 0;
-}
-
-.list-view .task-item {
-  padding: 0 var(--space-8);
-}
-
-.list-view .task-item .status-button {
-  grid-area: button;
-  flex-direction: row-reverse;
-  align-items: center;
-  margin-right: -3rem;
-  margin-top: 1.4rem;
-  gap: var(--space-8);
-}
-
-.task-list.task-list--in-progress .button-icon {
-  width: 3rem;
-  height: 3rem;
-  background-color: var(--light-pink);
-  border: 0.3rem solid var(--cyan-blue);
-} */
 .list-view .task-item {
   width: 100%;
   margin: 0;
   flex-direction: row;
   align-items: center;
+
   min-height: 9rem;
   background-color: transparent;
   box-shadow: none;
@@ -299,11 +218,13 @@
   width: 20rem;
   margin: 0;
 }
+
 .list-view .task-item-actions {
   flex-direction: row;
   align-items: center;
   margin-left: auto;
 }
+
 .list-view .status-button {
   margin-right: 1.5rem;
   border: 0.1rem solid var(--cyan-blue);
@@ -325,6 +246,7 @@
 .list-view .end-date {
   width: 15rem;
 }
+
 .list-view .button-icon,
 .list-view .task-edit,
 .list-view .task-delete {
@@ -332,6 +254,7 @@
   padding: var(--space-4);
   border-radius: 25%;
 }
+
 .task-list.task-list--in-progress .button-icon {
   width: 2.4rem;
   height: 2.4rem;
@@ -339,6 +262,7 @@
   background-color: var(--light-pink);
   border: 0.2rem solid var(--cyan-blue);
 }
+
 /* broad view */
 .board-view {
   overflow-x: auto;
@@ -364,6 +288,7 @@
 .board-view .task-item__details {
   margin-right: 1rem;
 }
+
 .board-view .task-item__heading {
   margin-bottom: 0.5rem;
 }
@@ -376,12 +301,14 @@
   flex-direction: column;
   width: 3.2rem;
 }
+
 .board-view .status-button {
   width: 26rem;
   justify-content: center;
   gap: var(--space-16);
   margin: 0 auto;
 }
+
 .board-view .task-list.task-list--todo .task-item {
   box-shadow: var(--pink-shadow);
 }
@@ -407,7 +334,6 @@
 }
 
 /* buttons */
-
 .btn {
   padding: 1rem 1.5rem;
   border: none;
@@ -460,6 +386,7 @@
   color: var(--white);
   border: 1px solid var(--gray);
 }
+
 /* popup style */
 .overlay,
 .confirmation-popup {
