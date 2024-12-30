@@ -9,14 +9,26 @@ class ValidationUtils {
     }
 
     // validate date
+
     if (!task.startDate) errors.push(VALIDATION_MESSAGES.START_DATE_MESSAGE);
     if (!task.endDate) errors.push(VALIDATION_MESSAGES.END_DATE_MESSAGE);
 
     if (task.startDate && task.endDate) {
-      const start = new Date(task.startDate);
-      const end = new Date(task.endDate);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const startDateInput = new Date(task.startDate);
+      const endDateInput = new Date(task.endDate);
+      if (startDateInput < today) {
+        errors.push(VALIDATION_MESSAGES.CURRENT_DATE_COMPARISON_START);
+        return false;
+      }
 
-      if (start > end) {
+      if (endDateInput < today) {
+        errors.push(VALIDATION_MESSAGES.CURRENT_DATE_COMPARISON_END);
+        return false;
+      }
+
+      if (startDateInput > endDateInput) {
         errors.push(VALIDATION_MESSAGES.DATE_INPUT_COMPARISON);
       }
     }

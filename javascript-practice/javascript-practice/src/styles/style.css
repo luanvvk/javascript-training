@@ -556,7 +556,7 @@
 }
 
 @media (min-width: 650px) and (max-width: 1000px) {
-  .task-column.task-column--completed {
+  .board-view .task-column.task-column--completed {
     margin-top: var(--space-32);
   }
 
@@ -580,7 +580,7 @@
 
   .task-column.task-column--in-progress,
   .task-column.task-column--completed {
-    margin-top: var(--space-32);
+    margin-top: var(--space-64);
   }
 
   .app__sidebar-items:nth-child(5) {

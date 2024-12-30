@@ -86,6 +86,34 @@ export function createFormElements(formType = 'create') {
   </div>
 `;
 
+  // Get references to the date inputs
+  const startDateInput = overlay.querySelector(isCreate ? '#task-start-input' : '#start-date');
+  const endDateInput = overlay.querySelector(isCreate ? '#task-end-input' : '#end-date');
+
+  // Set up date validation
+  setMinimumDates(startDateInput, endDateInput);
+
+  function setMinimumDates(startDateInput, endDateInput) {
+    // Get today's date in YYYY-MM-DD format
+    const today = new Date().toISOString().split('T')[0];
+
+    // Set minimum date for both inputs to today
+    startDateInput.setAttribute('min', today);
+    endDateInput.setAttribute('min', today);
+
+    // When start date changes, update end date minimum
+    startDateInput.addEventListener('change', (e) => {
+      const selectedStart = e.target.value;
+      if (selectedStart) {
+        endDateInput.setAttribute('min', selectedStart);
+        // If end date is before new start date, update it
+        if (endDateInput.value && endDateInput.value < selectedStart) {
+          endDateInput.value = selectedStart;
+        }
+      }
+    });
+  }
+
   //Task Description
   const taskDescContainer = overlay.querySelector('.form__task-desc');
   taskDescContainer.innerHTML = `
