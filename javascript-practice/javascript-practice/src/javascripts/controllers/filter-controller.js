@@ -6,6 +6,7 @@
  * Available fields to sort: 'name', 'startDate', 'endDate', 'category', 'priority'
  * sort order toggle func is there to ensure sort order images match asc/desc orders
  */
+import { renderSortingUI } from '../templates/templates.js';
 export default class FilterController {
   constructor(taskController) {
     // Store reference to task controller
@@ -20,6 +21,7 @@ export default class FilterController {
     this.sortDropdown = document.querySelector('.sort__dropdown');
     this.sortOrderToggle = document.querySelector('.sort__order-toggle');
     this.setupFilterEventListeners();
+    renderSortingUI();
   }
 
   setupFilterEventListeners() {
@@ -82,14 +84,19 @@ export default class FilterController {
     const searchInput = document.querySelector('.input-bar-mini__main-input');
     const searchText = searchInput ? searchInput.value.toLowerCase().trim() : '';
 
+    let filterKey;
+    if (filterField === 'status') {
+      filterKey = 'status';
+    } else if (filterField === 'priority') {
+      filterKey = 'priority';
+    } else if (filterField === 'category') {
+      filterKey = 'category';
+    } else {
+      filterKey = 'All';
+    }
+
     const filterOptions = {
-      [filterField === 'status'
-        ? 'status'
-        : filterField === 'priority'
-          ? 'priority'
-          : filterField === 'category'
-            ? 'category'
-            : 'All']: filterValue,
+      [filterKey]: filterValue,
       searchText: searchText,
     };
 
@@ -183,10 +190,14 @@ export default class FilterController {
     const sortedTasks = this.sortTasks(sortField, newOrder);
     this.taskController.renderTasks(sortedTasks);
 
-    //update button visual state
-    this.sortOrderToggle.innerHTML =
-      newOrder === 'asc'
-        ? ' <img class="sort__icon" src="./assets/images/icons/sort-icons/sort-icon-asc.png" alt="sort-icon-up" />'
-        : ' <img class="sort__icon" src="./assets/images/icons/sort-icons/sort-icon-desc.png" alt="sort-icon-down" />';
+    // Update the image source based on the sorting order
+    const sortIcon = this.sortOrderToggle.querySelector('.sort__icon');
+    if (sortIcon) {
+      sortIcon.src =
+        newOrder === 'asc'
+          ? './assets/images/icons/sort-icons/sort-icon-asc.png'
+          : './assets/images/icons/sort-icons/sort-icon-desc.png';
+      sortIcon.alt = newOrder === 'asc' ? 'sort-icon-up' : 'sort-icon-down';
+    }
   }
 }

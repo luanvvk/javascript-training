@@ -4,7 +4,7 @@
  * all CRUD operations need to ensure to target the same task element Id before processing
  *
  */
-
+import { setupPopupDropdowns } from '../templates/templates.js';
 import { showNotification } from '../helpers/notifications.js';
 
 export default class PopupController {
@@ -31,6 +31,7 @@ export default class PopupController {
     this.handlePopupEventListener();
     this.setupOutsideClickHandlers();
     // task deletion state
+    setupPopupDropdowns();
     this.pendingTaskToDelete = null;
     this.deleteOrigin = null;
 
@@ -74,7 +75,7 @@ export default class PopupController {
 
     const task = this.taskController.tasks.find((t) => t.id === taskId);
     if (task) {
-      this.taskController.setupPopupDropdowns(task);
+      setupPopupDropdowns(task);
       this.editTaskOverlay.dataset.taskId = taskId;
       this.modalView.openEditTaskOverlay();
       this.modalView.populateEditForm(task);

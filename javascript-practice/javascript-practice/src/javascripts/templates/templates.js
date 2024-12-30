@@ -17,27 +17,40 @@ export function createTaskElement(task) {
   }
   const tempDiv = document.createElement('div');
   tempDiv.innerHTML = `
-    <li class="task-item" data-task-id="${task.id}">
+  <li class="task-item" data-task-id="${task.id}">
     <div class="task-item__details">
       <h3 class="task-item__heading">${task.title}</h3>
       <h4 class="start-date">Start: ${formatDate(task.startDate)}</h4>
       <h4 class="end-date">Due: ${formatDate(task.endDate)}</h4>
       <div class="task-duration">
-        <span class="duration-badge">Duration: ${calculateTaskDuration(task.startDate, task.endDate)}</span>
+        <span 
+          class="duration-badge">Duration: ${calculateTaskDuration(task.startDate, task.endDate)}
+        </span>
       </div>
       <button class="status-button">
-        <img class="button-icon" src="${buttonIconSrc}" alt="button-icon" loading="lazy" />
+        <img 
+          class="button-icon" 
+          src="${buttonIconSrc}" 
+          alt="button-icon" 
+          loading="lazy" />
         <span class="confirm-button-desc">${buttonText}</span>
       </button>
     </div>
     <div class="task-item-actions">
       <a class="task-edit" href="javascript:void(0)">
-        <img class="task-edit-icon" src="./assets/images/icons/task-icons/task-edit-icon.svg" alt="task-edit-icon" />
+        <img 
+          class="task-edit-icon" 
+          src="./assets/images/icons/task-icons/task-edit-icon.svg" 
+          alt="task-edit-icon" />
       </a>
       <a class="task-delete" href="javascript:void(0)">
-        <img class="task-delete-icon" src="./assets/images/icons/task-icons/task-delete-icon.svg" alt="task-delete-icon" />
+        <img 
+          class="task-delete-icon" 
+          src="./assets/images/icons/task-icons/task-delete-icon.svg" 
+          alt="task-delete-icon" />
       </a>
-    </li>`;
+    </div>
+  </li>`;
   return tempDiv.firstElementChild;
 }
 
@@ -51,38 +64,62 @@ export function createFormElements(formType = 'create') {
   //Task name input
   const taskNameContainer = overlay.querySelector('.form__task-name');
   taskNameContainer.innerHTML = `
-<label class="form__label" for="${isCreate ? 'task-name-input' : 'task-title'}">Task Title</label>
-<div class="task-name-container">
- <input type="text" id="${isCreate ? 'task-name-input' : 'task-title'}" class="task-name-input" ${isCreate ? 'placeholder="Enter task title"' : ''} required />
-  <img class="task-name-icon"
-       src="./assets/images/icons/create-task-modal-icon/task-title-icon.svg"
-       alt="Task Title Icon" 
-       />
-</div>
-`;
+  <label
+    class="form__label" 
+    for="${isCreate ? 'task-name-input' : 'task-title'}">Task Title
+  </label>
+  <div class="task-name-container">
+    <input 
+      type="text" 
+      id="${isCreate ? 'task-name-input' : 'task-title'}" 
+      class="task-name-input" 
+      ${isCreate ? 'placeholder="Enter task title"' : ''} required />
+    <img 
+      class="task-name-icon"
+      src="./assets/images/icons/create-task-modal-icon/task-title-icon.svg"
+      alt="Task Title Icon" 
+    />
+  </div>
+  `;
   //Start Date input
   const taskStartContainer = overlay.querySelector('.form__task-start');
   taskStartContainer.innerHTML = `
-   <label class="form__label" for="${isCreate ? 'task-start-input' : 'start-date'} ">Start Date</label>
+  <label 
+    class="form__label" 
+    for="${isCreate ? 'task-start-input' : 'start-date'} ">Start Date
+  </label>
   <div class="task-start-container">
     <span class="text-input"></span>
-    <input type="date"  id="${isCreate ? 'task-start-input' : 'start-date'}" class="task-start-input" />
-     <img class="task-start-icon" src="./assets/images/icons/create-task-modal-icon/end-date-icon.svg"
-          alt="Start Date Icon"
-      />
+    <input 
+      type="date"  
+      id="${isCreate ? 'task-start-input' : 'start-date'}" 
+      class="task-start-input" />
+    <img 
+      class="task-start-icon" 
+      src="./assets/images/icons/create-task-modal-icon/end-date-icon.svg"
+      alt="Start Date Icon"
+    />
   </div>
-`;
+  `;
 
   // End Date Input
   const taskEndContainer = overlay.querySelector('.form__task-end');
   taskEndContainer.innerHTML = `
-   <label class="form__label" for="${isCreate ? 'task-end-input' : 'end-date'} ">End Date</label>
+  <label 
+    class="form__label" 
+    for="${isCreate ? 'task-end-input' : 'end-date'} ">End Date
+  </label>
   <div class="task-end-container">
     <span class="text-input"></span>
-    <input type="date"  id="${isCreate ? 'task-end-input' : 'end-date'}" class="task-end-input" />
-     <img class="task-start-icon" src="./assets/images/icons/create-task-modal-icon/end-date-icon.svg"
-          alt="End Date Icon"
-      />
+    <input 
+      type="date"  
+      id="${isCreate ? 'task-end-input' : 'end-date'}" 
+      class="task-end-input" />
+    <img 
+      class="task-start-icon" 
+      src="./assets/images/icons/create-task-modal-icon/end-date-icon.svg"
+      alt="End Date Icon"
+    />
   </div>
 `;
 
@@ -117,36 +154,59 @@ export function createFormElements(formType = 'create') {
   //Task Description
   const taskDescContainer = overlay.querySelector('.form__task-desc');
   taskDescContainer.innerHTML = `
-  <label class="form__label" for="${isCreate ? 'text-area-input' : 'textarea'}">Task Description</label>
-  <textarea id="${isCreate ? 'text-area-input' : 'textarea'}" class="textarea-input" rows="8" placeholder="Enter task description"></textarea>
+  <label
+    class="form__label" 
+    for="${isCreate ? 'text-area-input' : 'textarea'}">Task Description
+  </label>
+  <textarea 
+    id="${isCreate ? 'text-area-input' : 'textarea'}" 
+    class="textarea-input" rows="8" 
+    placeholder="Enter task description">
+  </textarea>
  `;
 
   //Button controls
   const buttonControls = overlay.querySelector('.form__actions');
   if (isCreate) {
     buttonControls.innerHTML = `
-   <button type="submit" class="btn btn-primary form__button form__button--add">Add to list</button>
-    <button type="button" class="btn btn-cancel form__button form__button--cancel">Cancel</button>
+  <button 
+    type="submit" 
+    class="btn btn-primary form__button form__button--add">Add to list
+  </button>
+  <button 
+    type="button" 
+    class="btn btn-cancel form__button form__button--cancel">Cancel
+  </button>
   `;
   } else {
     buttonControls.innerHTML = `
-  <button type="submit" class="btn btn-primary edit-task-button">Save changes</button>
-  <button type="button" class="btn btn-cancel form__button form__button--cancel">Cancel</button>
-  <button type="button" class="btn btn-success mark-completed" >
-    <img
-    class="move-task-icon"
-    src="./assets/images/icons/task-edit-modal-icons/mark-as-completed-icon.svg"
-    alt=""
-    />
+  <button 
+    type="submit" 
+    class="btn btn-primary edit-task-button">Save changes
+  /button>
+  <button 
+    type="button" 
+    class="btn btn-cancel form__button form__button--cancel">Cancel
+  </button>
+  <button 
+    type="button" 
+    class="btn btn-success mark-completed" >
+      <img
+        class="move-task-icon"
+        src="./assets/images/icons/task-edit-modal-icons/mark-as-completed-icon.svg"
+        alt=""
+      />
     Mark as completed
   </button>
-  <button type="button" class="btn btn-secondary overlay-delete-button">
-    <img
-    class="delete-task-icon"
-    src="./assets/images/icons/task-edit-modal-icons/task-delete-icon.svg"
-    alt=""
-    />
-  Delete the task
+  <button 
+    type="button" 
+    class="btn btn-secondary overlay-delete-button">
+      <img
+        class="delete-task-icon"
+        src="./assets/images/icons/task-edit-modal-icons/task-delete-icon.svg"
+        alt=""
+      />
+    Delete the task
   </button>
 `;
   }
@@ -201,10 +261,11 @@ export function createDropdown(options, containerSelector, dropdownType, overlay
   container.innerHTML = `
     <div class="default-option-container">
       <span class="default-option">${defaultOption.value}</span>
-      <img src="${getIconPath(dropdownType, defaultOption.value)}" 
-           class="${dropdownType}-icon" 
-           alt="${dropdownType.charAt(0).toUpperCase() + dropdownType.slice(1)} Icon">
-
+      <img 
+        src="${getIconPath(dropdownType, defaultOption.value)}" 
+        class="${dropdownType}-icon" 
+        alt="${dropdownType.charAt(0).toUpperCase() + dropdownType.slice(1)} Icon"
+      />
     </div>
   `;
 
@@ -415,13 +476,22 @@ export function renderSortingUI() {
     const sortContainer = document.createElement('div');
     sortContainer.classList.add('sort-container');
     sortContainer.innerHTML = `
-     <label for="sort__dropdown" class="sort__label">Sort by:</label>
-      <div class="sort__dropdown-content">
-        <select class="sort__dropdown">
+    <label 
+      for="sort__dropdown" 
+      class="sort__label">Sort by:
+    </label>
+    <div class="sort__dropdown-content">
+      <select class="sort__dropdown">
          
-        </select>
-        <button class="sort__order-toggle"> <img class="sort__icon" src="./assets/images/icons/sort-icons/sort-icon-asc.png" alt="sort-icon-up" /></button>
-      </div>
+      </select>
+      <button class="sort__order-toggle"> 
+        <img 
+          class="sort__icon" 
+          src="./assets/images/icons/sort-icons/sort-icon-asc.png" 
+          alt="sort-icon-up" 
+        />
+      </button>
+    </div>
     `;
     document.querySelector('#task-controls').appendChild(sortContainer);
   }

@@ -9,11 +9,7 @@ import TaskModalView from '../views/task-modal-view.js';
 import ValidationUtils from '../helpers/validation-utils.js';
 import LocalStorageUtil from '../helpers/local-storage-utils.js';
 import ErrorHandler from '../helpers/error-handler-utils.js';
-import {
-  createFormElements,
-  setupPopupDropdowns,
-  renderSortingUI,
-} from '../templates/templates.js';
+
 import PopupController from './popup-controller.js';
 import SearchController from './search-controller.js';
 import NavigationController from './navigation-controller.js';
@@ -50,7 +46,7 @@ class TaskController {
   initialize() {
     try {
       this.loadTasksFromLocalStorage();
-      this.setupDynamicForm();
+
       this.renderTasks(this.tasks);
     } catch (error) {
       this.errorHandler.log(`Error during initialization: ${error.message}`, 'error');
@@ -88,20 +84,6 @@ class TaskController {
 
   showError(message) {
     this.errorHandler.showError(message);
-  }
-
-  setupDynamicForm() {
-    try {
-      createFormElements();
-      setupPopupDropdowns();
-      renderSortingUI();
-    } catch (error) {
-      this.errorHandler.log(`Error setting up dynamic form: ${error.message}`, 'error');
-    }
-  }
-
-  setupPopupDropdowns(task) {
-    setupPopupDropdowns(task);
   }
 
   renderTasks() {
