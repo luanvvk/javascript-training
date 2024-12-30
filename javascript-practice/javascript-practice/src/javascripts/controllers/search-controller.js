@@ -1,5 +1,10 @@
+/**
+ * This controller handles the search event for input texts at topbar and in all task popup
+ * It will return results which match one of following fields 'title', 'description', 'category', 'priority'
+ */
 export default class SearchController {
   constructor(taskController) {
+    // Store reference to task controller
     this.taskController = taskController;
     this.setupSearchListeners();
   }

@@ -577,7 +577,7 @@
 .priority-dropdown.visible,
 .category-dropdown.visible,
 .status-dropdown.visible {
-  display: flex; /* Shown when the 'visible' class is added */
+  display: flex;
 }
 
 .status-options {

@@ -1,3 +1,7 @@
+/** This file is use to control the navigation of the app
+ * Uses event delegation to handle event listeners
+ */
+
 //Declaration
 const allTaskModal = document.getElementById('all-task-modal');
 const menuToggle = document.querySelector('.topbar__menu-toggle');
@@ -10,15 +14,13 @@ const boardPopupView = document.querySelector('#all-task-modal .board-view.task-
 const listPopupView = document.querySelector('#all-task-modal .list-view.task-columns');
 export default class NavigationController {
   constructor(taskController) {
+    // Store reference to task controller
     this.taskController = taskController;
 
     this.setupNavigationListeners();
     this.setupSidebarToggleListener();
     this.setupResponsiveDesignListener();
-    this.initDOMElements();
   }
-
-  initDOMElements() {}
 
   setupNavigationListeners() {
     document.querySelector('.app__sidebar').addEventListener('click', (e) => {
@@ -59,6 +61,7 @@ export default class NavigationController {
     }
     this.toggleResponsiveView();
   }
+
   showListView() {
     if (allTaskModal.classList.contains('hidden')) {
       // Main view

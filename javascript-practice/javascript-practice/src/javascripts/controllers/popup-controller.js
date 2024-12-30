@@ -1,3 +1,10 @@
+/**
+ * This file is used to handle the task item button actions
+ * and also all the button actions of create task and edit task popups.
+ * all CRUD operations need to ensure to target the same task element Id before processing
+ *
+ */
+
 import { showNotification } from '../helpers/notifications.js';
 
 export default class PopupController {

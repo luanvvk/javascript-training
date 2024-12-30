@@ -1,3 +1,8 @@
+/** Main controller is responsible to connect all smaller controllers and task views.
+ * It also handles the loading and saving task from/to localStorage
+ * And handling error if any DOM element is not initialized properly
+ *
+ */
 import TaskModel from '../models/task-model.js';
 import TaskRenderView from '../views/task-render-view.js';
 import TaskModalView from '../views/task-modal-view.js';
@@ -94,6 +99,7 @@ class TaskController {
       this.errorHandler.log(`Error setting up dynamic form: ${error.message}`, 'error');
     }
   }
+
   setupPopupDropdowns(task) {
     setupPopupDropdowns(task);
   }

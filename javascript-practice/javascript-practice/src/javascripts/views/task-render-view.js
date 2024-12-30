@@ -1,7 +1,6 @@
 /**
  * This file handle the task of rendering task in the main view and all task overlay
  * It also have function to render the created task to target column: to do, in progress and completed tasks
- * This file also need refinement as there are some repeated codes
  * Cloning node is necessary as one exactly same node cannot be existed at the same time in DOM (board-view and list-view)
  * Function to show no task in columns
  **/

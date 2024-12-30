@@ -1,5 +1,14 @@
+/**
+ * This controllers handle the filtering event for the app
+ * User can choose the field and the options will be automatically populate the second select input
+ * Available fields to filter 'category', 'priority', 'status'
+ * User can sort task elements in ascending/descending order
+ * Available fields to sort: 'name', 'startDate', 'endDate', 'category', 'priority'
+ * sort order toggle func is there to ensure sort order images match asc/desc orders
+ */
 export default class FilterController {
   constructor(taskController) {
+    // Store reference to task controller
     this.taskController = taskController;
 
     this.currentSortSetting = {
