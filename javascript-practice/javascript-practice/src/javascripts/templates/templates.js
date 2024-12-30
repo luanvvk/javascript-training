@@ -150,6 +150,14 @@ export function createFormElements(formType = 'create') {
   </button>
 `;
   }
+  const createTaskOverlay = document.getElementById('create-task-modal');
+  const editTaskOverlay = document.getElementById('edit-task-modal');
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      createTaskOverlay.classList.add('hidden');
+      editTaskOverlay.classList.add('hidden');
+    }
+  });
 }
 
 // TEMPLATE FOR DROPDOWN INPUT

@@ -209,6 +209,7 @@
 
 .list-view .task-column.task-column--completed,
 .list-view.task-columns .task-column.completed {
+  margin-bottom: var(--space-32);
   box-shadow: var(--green-shadow);
 }
 
@@ -600,11 +601,6 @@
   color: var(--light-pink);
   font-size: var(--font-size-13);
   font-weight: var(--bold-weight);
-}
-
-/* Remove default arrow in some browsers */
-.sort__dropdown::-ms-expand {
-  display: none;
 }
 
 .sort__order-toggle {

@@ -25,9 +25,11 @@ export default class PopupController {
     }
 
     this.modalView = this.taskController.modalView;
-
+    this.editTaskOverlay = document.getElementById('edit-task-modal');
+    this.createTaskOverlay = document.getElementById('create-task-modal');
     this.handleTaskItemActions();
     this.handlePopupEventListener();
+    this.setupOutsideClickHandlers();
     // task deletion state
     this.pendingTaskToDelete = null;
     this.deleteOrigin = null;
@@ -37,7 +39,6 @@ export default class PopupController {
 
   handleTaskItemActions() {
     this.sideNavbar = document.querySelector('.app__sidebar');
-    this.editTaskOverlay = document.getElementById('edit-task-modal');
     this.mainBody = document.querySelector('.app-main');
     this.taskColumns = document.querySelectorAll('.task-list');
     // Delegate all task-related events to task columns
@@ -94,6 +95,8 @@ export default class PopupController {
   }
 
   handlePopupEventListener() {
+    this.editTaskOverlay = document.getElementById('edit-task-modal');
+    this.createTaskOverlay = document.getElementById('create-task-modal');
     // Delegate all overlay-related events
     this.mainBody.addEventListener('click', (e) => {
       // Create task events
@@ -244,5 +247,21 @@ export default class PopupController {
       const allTaskPopup = document.getElementById('all-task-modal');
       allTaskPopup.classList.remove('hidden');
     }
+  }
+
+  setupOutsideClickHandlers() {
+    this.createTaskOverlay.addEventListener('click', (e) => {
+      // Check if click is outside the modal container
+      if (e.target === this.createTaskOverlay) {
+        this.modalView.closeCreateTaskOverlay();
+      }
+    });
+
+    this.editTaskOverlay.addEventListener('click', (e) => {
+      // Check if click is outside the modal container
+      if (e.target === this.editTaskOverlay) {
+        this.modalView.closeEditTaskOverlay();
+      }
+    });
   }
 }
