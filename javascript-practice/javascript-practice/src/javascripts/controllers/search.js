@@ -12,7 +12,7 @@
  *
  * @module SearchController
  */
-
+import TaskRenderView from '../views/task-render.js';
 import { SEARCH_TASK_FIELD } from '../constants/constants.js';
 export default class SearchController {
   /**
@@ -23,6 +23,7 @@ export default class SearchController {
   constructor(taskController) {
     // Store reference to task controller
     this.taskController = taskController;
+    this.renderView = new TaskRenderView();
     this.setupSearchListeners();
   }
 
@@ -45,7 +46,7 @@ export default class SearchController {
     const searchText = e.target.value.toLowerCase().trim();
     const filteredTasks = this.searchTasks(searchText);
 
-    this.taskController.renderView.renderTasks(filteredTasks);
+    this.renderView.renderTasks(filteredTasks);
   }
 
   /**

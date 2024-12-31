@@ -9,9 +9,10 @@
 
 import { getFormData, getUpdatedTaskData } from '../constants/constants.js';
 import { setupPopupDropdowns } from '../templates/templates.js';
-
 import NotificationUtils from '../helpers/notification-utils.js';
-
+import TaskRenderView from '../views/task-render.js';
+import TaskModalView from '../views/task-modal.js';
+import TaskModel from '../models/task-model.js';
 export default class PopupController {
   /**
    * Creates an instance of PopupController.
@@ -25,16 +26,11 @@ export default class PopupController {
 
     // Store reference to task controller
     this.taskController = taskController;
+    this.model = new TaskModel();
+    this.renderView = new TaskRenderView();
+    this.modalView = new TaskModalView();
     this.notifications = new NotificationUtils();
-    // Verify required dependencies exist
-    if (!taskController.modalView) {
-      throw new Error('TaskController must have modalView initialized');
-    }
-    if (!taskController.renderView) {
-      throw new Error('TaskController must have renderView initialized');
-    }
 
-    this.modalView = this.taskController.modalView;
     this.editTaskOverlay = document.getElementById('edit-task-modal');
     this.createTaskOverlay = document.getElementById('create-task-modal');
     this.handleTaskItemActions();
@@ -84,7 +80,6 @@ export default class PopupController {
   /**
    * Handles the task edit action.
    * Opens the edit task overlay and populates the form with the task data.
-   *
    * @param {HTMLElement} taskElement - The task element that was clicked for editing.
    */
 
@@ -110,7 +105,7 @@ export default class PopupController {
       task.status = 'In Progress';
     }
 
-    this.taskController.renderTasks(this.taskController.tasks);
+    this.renderView.renderTasks(this.taskController.tasks);
     this.taskController.saveTasksToLocalStorage();
   }
 
@@ -150,7 +145,7 @@ export default class PopupController {
         const task = this.taskController.tasks.find((t) => t.id === parseInt(taskId));
         if (task) {
           task.status = task.status === 'Completed' ? 'In Progress' : 'Completed';
-          this.taskController.renderTasks(this.taskController.tasks);
+          this.renderView.renderTasks(this.taskController.tasks);
           this.taskController.saveTasksToLocalStorage();
           this.modalView.closeEditTaskOverlay();
         }
@@ -185,7 +180,7 @@ export default class PopupController {
   addTask() {
     const formData = getFormData();
 
-    const task = new this.taskController.model.constructor(
+    const task = new this.model.constructor(
       formData.title,
       formData.startDate,
       formData.endDate,
@@ -196,7 +191,7 @@ export default class PopupController {
 
     if (this.taskController.validate(task)) {
       this.taskController.tasks.push(task);
-      this.taskController.renderTasks(this.taskController.tasks);
+      this.renderView.renderTasks(this.taskController.tasks);
       this.taskController.saveTasksToLocalStorage();
       this.modalView.resetCreateTaskForm();
       this.modalView.closeCreateTaskOverlay();
@@ -219,7 +214,7 @@ export default class PopupController {
     if (this.taskController.validate(updatedTask)) {
       Object.assign(task, updatedTask);
       this.taskController.saveTasksToLocalStorage();
-      this.taskController.renderTasks(this.taskController.tasks);
+      this.renderView.renderTasks(this.taskController.tasks);
       this.modalView.closeEditTaskOverlay();
       this.notifications.show('Task successfully edited!', { type: 'success' });
     }
@@ -253,7 +248,7 @@ export default class PopupController {
       (t) => t.id !== this.pendingTaskToDelete,
     );
     this.notifications.show('Task successfully deleted!', { type: 'success' });
-    this.taskController.renderTasks(this.taskController.tasks);
+    this.renderView.renderTasks(this.taskController.tasks);
     this.taskController.saveTasksToLocalStorage();
     this.closeDeleteConfirmationPopup();
 

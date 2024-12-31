@@ -7,7 +7,7 @@
  */
 
 import { createFormElements } from '../templates/templates.js';
-import TaskBaseView from './task-base-view.js';
+import TaskBaseView from './task-base.js';
 
 class TaskModalView extends TaskBaseView {
   constructor() {

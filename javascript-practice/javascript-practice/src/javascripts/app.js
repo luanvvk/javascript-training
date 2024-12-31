@@ -1,12 +1,16 @@
-import TaskModel from './models/task-model.js';
-import TaskModalView from './views/task-modal-view.js';
-import TaskRenderView from './views/task-render-view.js';
-import TaskController from './controllers/app-controller-main.js';
+import PopupController from './controllers/popup.js';
+import SearchController from './controllers/search.js';
+import NavigationController from './controllers/navigation.js';
+import FilterController from './controllers/filter.js';
+import TaskController from './controllers/task.js';
 
-document.addEventListener('DOMContentLoaded', () => {
-  new TaskController();
-  // Initialize views
-  new TaskRenderView();
-  new TaskModalView();
-  new TaskModel();
-});
+class App {
+  init() {
+    this.taskController = new TaskController();
+    this.popupController = new PopupController(this.taskController);
+    this.searchController = new SearchController(this.taskController);
+    this.navigationController = new NavigationController();
+    this.filterController = new FilterController(this.taskController);
+  }
+}
+export default App;

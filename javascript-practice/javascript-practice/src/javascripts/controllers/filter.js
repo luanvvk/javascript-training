@@ -9,6 +9,7 @@
  *
  * @module FilterController
  */
+import TaskRenderView from '../views/task-render.js';
 import NotificationUtils from '../helpers/notification-utils.js';
 import { renderSortingUI } from '../templates/templates.js';
 import {
@@ -27,6 +28,7 @@ export default class FilterController {
     // Store reference to task controller
     this.taskController = taskController;
     this.notifications = new NotificationUtils();
+    this.renderView = new TaskRenderView();
     this.currentSortSetting = {
       field: 'name',
       order: 'asc',
@@ -126,7 +128,7 @@ export default class FilterController {
 
     //Filter tasks
     const filteredTasks = this.filterTask(filterOptions);
-    this.taskController.renderView.renderTasks(filteredTasks);
+    this.renderView.renderTasks(filteredTasks);
   }
 
   /**
@@ -168,7 +170,7 @@ export default class FilterController {
   applyDefaultSort() {
     const { field, order } = this.currentSortSetting;
     const sortedTasks = this.sortTasks(field, order);
-    this.taskController.renderView.renderTasks(sortedTasks);
+    this.renderView.renderTasks(sortedTasks);
   }
 
   sortTasks(field, order) {
@@ -217,7 +219,7 @@ export default class FilterController {
     this.currentSortSetting.order = newOrder;
     const sortField = this.sortDropdown.value;
     const sortedTasks = this.sortTasks(sortField, newOrder);
-    this.taskController.renderTasks(sortedTasks);
+    this.renderView.renderTasks(sortedTasks);
 
     // Update the image source based on the sorting order
     const sortIcon = this.sortOrderToggle.querySelector('.sort__icon');

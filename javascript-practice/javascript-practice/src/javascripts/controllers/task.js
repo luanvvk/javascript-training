@@ -7,25 +7,22 @@
  *
  * @module TaskController
  */
-import TaskModel from '../models/task-model.js';
-import TaskRenderView from '../views/task-render-view.js';
-import TaskModalView from '../views/task-modal-view.js';
+
 import ValidationUtils from '../helpers/validation-utils.js';
 import LocalStorageUtil from '../helpers/local-storage-utils.js';
-
-import PopupController from './popup-controller.js';
-import SearchController from './search-controller.js';
-import NavigationController from './navigation-controller.js';
-import FilterController from './filter-controller.js';
-import TaskBaseView from '../views/task-base-view.js';
 import { STORAGE_KEY } from '../constants/constants.js';
 import NotificationUtils from '../helpers/notification-utils.js';
+import TaskRenderView from '../views/task-render.js';
 
 class TaskController {
   //create an instance for taskController
   constructor() {
-    this.initializeCoreComponents();
-    this.initializeControllers();
+    this.renderView = new TaskRenderView();
+    this.localStorageUtil = new LocalStorageUtil(STORAGE_KEY);
+    this.validationUtils = new ValidationUtils();
+    this.notifications = new NotificationUtils();
+    this.tasks = [];
+
     this.initialize();
   }
 
@@ -33,25 +30,6 @@ class TaskController {
    * Initializes core components required for the task controller.
    * Sets up the model, views, utilities, and error handler.
    */
-  initializeCoreComponents() {
-    //Core components
-    this.model = new TaskModel();
-    this.baseView = new TaskBaseView();
-    this.modalView = new TaskModalView();
-    this.renderView = new TaskRenderView();
-    this.tasks = [];
-    // Utilities
-    this.localStorageUtil = new LocalStorageUtil(STORAGE_KEY);
-    this.validationUtils = new ValidationUtils();
-    this.notifications = new NotificationUtils();
-  }
-  // Initializes smaller controllers used by the task controller.
-  initializeControllers() {
-    this.popupController = new PopupController(this);
-    this.searchController = new SearchController(this);
-    this.navigationController = new NavigationController(this);
-    this.filterController = new FilterController(this);
-  }
 
   //Performs additional initialization tasks.
   initialize() {

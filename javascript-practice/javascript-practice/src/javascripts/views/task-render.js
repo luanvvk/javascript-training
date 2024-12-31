@@ -10,7 +10,7 @@
 
 import { createTaskElement } from '../templates/templates.js';
 
-import TaskBaseView from './task-base-view.js';
+import TaskBaseView from './task-base.js';
 
 class TaskRenderView extends TaskBaseView {
   constructor() {

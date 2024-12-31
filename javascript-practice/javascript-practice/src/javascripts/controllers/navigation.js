@@ -12,9 +12,7 @@ export default class NavigationController {
    * Create an instance of Navigation Controller
    * @param {object} taskController - task controller instance
    */
-  constructor(taskController) {
-    // Store reference to task controller
-    this.taskController = taskController;
+  constructor() {
     this.initDOMElements();
     this.setupNavigationListeners();
     this.setupSidebarToggleListener();
