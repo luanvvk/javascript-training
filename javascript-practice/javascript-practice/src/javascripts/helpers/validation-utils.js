@@ -1,4 +1,4 @@
-import VALIDATION_MESSAGES from '../constants/validation-messages.js';
+import { VALIDATION_MESSAGES } from '../constants/constants.js';
 class ValidationUtils {
   validateTask(task) {
     const errors = [];

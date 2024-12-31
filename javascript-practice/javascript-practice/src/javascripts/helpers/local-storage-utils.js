@@ -1,7 +1,9 @@
+import { STORAGE_KEY } from '../constants/constants.js';
 class LocalStorageUtil {
-  constructor(storageKey) {
+  constructor(storageKey = STORAGE_KEY) {
     this.storageKey = storageKey;
   }
+
   save(data) {
     try {
       // Convert tasks to JSON for storage
@@ -11,6 +13,7 @@ class LocalStorageUtil {
       console.error('Error saving tasks to localStorage:', error.message);
     }
   }
+
   // Load tasks from localStorage
   load() {
     try {
@@ -22,6 +25,7 @@ class LocalStorageUtil {
       return null;
     }
   }
+
   clear() {
     try {
       localStorage.removeItem(this.storageKey);

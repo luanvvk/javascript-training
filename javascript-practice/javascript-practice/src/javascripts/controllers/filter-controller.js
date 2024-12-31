@@ -7,6 +7,12 @@
  * sort order toggle func is there to ensure sort order images match asc/desc orders
  */
 import { renderSortingUI } from '../templates/templates.js';
+import {
+  FILTER_OPTIONS,
+  VALID_SORT_FIELD,
+  PRIORITY_SORT_VALUE,
+  SEARCH_TASK_FIELD,
+} from '../constants/constants.js';
 export default class FilterController {
   constructor(taskController) {
     // Store reference to task controller
@@ -71,12 +77,7 @@ export default class FilterController {
   populateFilterOptions(field) {
     this.filterOptionsDropdown.innerHTML = '';
 
-    const options =
-      {
-        category: ['All', 'Daily Task', 'Weekly Task', 'Monthly Task'],
-        priority: ['All', 'Not Urgent', 'Urgent Task', 'Important'],
-        status: ['All', 'To Do', 'In Progress', 'Completed'],
-      }[field] || [];
+    const options = FILTER_OPTIONS[field] || [];
 
     // Populate filter options
     this.filterOptionsDropdown.innerHTML = options
@@ -122,9 +123,7 @@ export default class FilterController {
     let filteredTasks = [...this.taskController.tasks];
     if (searchText) {
       filteredTasks = filteredTasks.filter((task) =>
-        ['title', 'description', 'category', 'priority'].some((field) =>
-          task[field]?.toLowerCase().includes(searchText),
-        ),
+        SEARCH_TASK_FIELD.some((field) => task[field]?.toLowerCase().includes(searchText)),
       );
     }
     // Filter by category
@@ -156,7 +155,7 @@ export default class FilterController {
 
   sortTasks(field, order) {
     //validate input
-    const validFields = ['name', 'startDate', 'endDate', 'category', 'priority'];
+    const validFields = VALID_SORT_FIELD;
     if (!validFields.includes(field)) {
       this.showError(`Invalid sort criteria. Please choose one of: ${validFields.join(', ')}`);
 
@@ -169,12 +168,7 @@ export default class FilterController {
         startDate: new Date(task.startDate || '9999-12-31'),
         endDate: new Date(task.endDate || '9999-12-31'),
         category: task.category?.toLowerCase() || '',
-        priority:
-          {
-            'Not urgent': 1,
-            'Urgent Task': 2,
-            Important: 3,
-          }[task.priority] || 0,
+        priority: PRIORITY_SORT_VALUE[task.priority] || 0,
       };
       return sortMap[field];
     };

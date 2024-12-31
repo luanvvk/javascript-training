@@ -15,6 +15,7 @@ import SearchController from './search-controller.js';
 import NavigationController from './navigation-controller.js';
 import FilterController from './filter-controller.js';
 import TaskBaseView from '../views/task-base-view.js';
+import { STORAGE_KEY } from '../constants/constants.js';
 
 class TaskController {
   constructor() {
@@ -31,7 +32,7 @@ class TaskController {
     this.renderView = new TaskRenderView();
     this.tasks = [];
     // Utilities
-    this.localStorageUtil = new LocalStorageUtil('tasks');
+    this.localStorageUtil = new LocalStorageUtil(STORAGE_KEY);
     this.validationUtils = new ValidationUtils();
     this.errorHandler = new ErrorHandler();
   }

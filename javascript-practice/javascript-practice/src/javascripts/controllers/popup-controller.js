@@ -4,6 +4,7 @@
  * all CRUD operations need to ensure to target the same task element Id before processing
  *
  */
+import { getFormData, getUpdatedTaskData } from '../constants/constants.js';
 import { setupPopupDropdowns } from '../templates/templates.js';
 import { showNotification } from '../helpers/notifications.js';
 
@@ -160,15 +161,9 @@ export default class PopupController {
     this.mainBody.classList.remove('active');
     this.sideNavbar.classList.remove('active');
   }
+
   addTask() {
-    const formData = {
-      title: document.querySelector('.task-name-input').value.trim(),
-      startDate: document.querySelector('#task-start-input').value,
-      endDate: document.querySelector('#task-end-input').value,
-      priority: document.querySelector('.form__priority-select .default-option').textContent.trim(),
-      category: document.querySelector('.form__category-select .default-option').textContent.trim(),
-      description: document.querySelector('.textarea-input').value.trim(),
-    };
+    const formData = getFormData();
 
     const task = new this.taskController.model.constructor(
       formData.title,
@@ -194,22 +189,8 @@ export default class PopupController {
     const task = this.taskController.tasks.find((t) => t.id === taskId);
     if (!task) return;
 
-    const updatedTask = {
-      ...task,
-      title: document.querySelector('#task-title').value.trim(),
-      startDate: document.querySelector('#start-date').value,
-      endDate: document.querySelector('#end-date').value,
-      description: document.querySelector('#textarea').value.trim(),
-      priority: document
-        .querySelector('#edit-task-modal .form__priority-select .default-option')
-        .textContent.trim(),
-      category: document
-        .querySelector('#edit-task-modal .form__category-select .default-option')
-        .textContent.trim(),
-      status: document
-        .querySelector('#edit-task-modal .form__status-select .default-option')
-        .textContent.trim(),
-    };
+    const updatedTask = getUpdatedTaskData(task);
+
     if (this.taskController.validate(updatedTask)) {
       Object.assign(task, updatedTask);
       this.taskController.saveTasksToLocalStorage();

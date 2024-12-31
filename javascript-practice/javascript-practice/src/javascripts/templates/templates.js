@@ -1,3 +1,10 @@
+import {
+  PRIORITY_DROPDOWN_OPTIONS,
+  CATEGORY_DROPDOWN_OPTIONS,
+  SORT_DROPDOWN_OPTIONS,
+  FILTER_FIELD_DROPDOWN_OPTIONS,
+} from '../constants/constants.js';
+
 //TASK BODY TEMPLATE
 import { formatDate } from '../helpers/format-date-utils.js';
 import { calculateTaskDuration } from '../helpers/format-date-utils.js';
@@ -81,6 +88,7 @@ export function createFormElements(formType = 'create') {
     />
   </div>
   `;
+
   //Start Date input
   const taskStartContainer = overlay.querySelector('.form__task-start');
   taskStartContainer.innerHTML = `
@@ -210,6 +218,7 @@ export function createFormElements(formType = 'create') {
   </button>
 `;
   }
+
   const createTaskOverlay = document.getElementById('create-task-modal');
   const editTaskOverlay = document.getElementById('edit-task-modal');
   document.addEventListener('keydown', (e) => {
@@ -368,18 +377,10 @@ export function createDropdown(options, containerSelector, dropdownType, overlay
 
 export function setupPopupDropdowns(task) {
   // Priority options
-  const priorityOptions = [
-    { value: 'Not Urgent', default: true },
-    { value: 'Urgent Task', default: false },
-    { value: 'Important', default: false },
-  ];
+  const priorityOptions = PRIORITY_DROPDOWN_OPTIONS;
 
   // Category options
-  const categoryOptions = [
-    { value: 'Daily Task', default: true },
-    { value: 'Weekly Task', default: false },
-    { value: 'Monthly Task', default: false },
-  ];
+  const categoryOptions = CATEGORY_DROPDOWN_OPTIONS;
 
   //Status options
   const statusOptions = [
@@ -439,16 +440,12 @@ export function setupPopupDropdowns(task) {
 const sortDropdown = document.querySelector('.sort__dropdown');
 const filterFieldDropdown = document.querySelector('.filter__field-dropdown');
 const sortOrderToggle = document.querySelector('.sort__order-toggle');
+
 export function renderSortingUI() {
   if (sortDropdown) {
     sortDropdown.innerHTML = '';
-    const sortOptions = [
-      { value: 'name', label: 'By name' },
-      { value: 'startDate', label: 'By start date' },
-      { value: 'endDate', label: 'By end date' },
-      { value: 'priority', label: 'By priority' },
-      { value: 'category', label: 'By category' },
-    ];
+    const sortOptions = SORT_DROPDOWN_OPTIONS;
+
     sortOptions.forEach((option) => {
       const optionElement = document.createElement('option');
       optionElement.value = option.value;
@@ -456,14 +453,12 @@ export function renderSortingUI() {
       sortDropdown.appendChild(optionElement);
     });
   }
+
   //Render filter field dropdown
   if (filterFieldDropdown) {
     filterFieldDropdown.innerHTML = '';
-    const filterFieldOptions = [
-      { value: 'category', label: 'Category' },
-      { value: 'priority', label: 'Priority' },
-      { value: 'status', label: 'Status' },
-    ];
+    const filterFieldOptions = FILTER_FIELD_DROPDOWN_OPTIONS;
+
     filterFieldOptions.forEach((option) => {
       const optionElement = document.createElement('option');
       optionElement.value = option.value;
@@ -471,6 +466,7 @@ export function renderSortingUI() {
       filterFieldDropdown.appendChild(optionElement);
     });
   }
+
   //Add sort order toggle
   if (!sortOrderToggle) {
     const sortContainer = document.createElement('div');

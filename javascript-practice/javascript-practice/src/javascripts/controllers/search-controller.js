@@ -2,6 +2,7 @@
  * This controller handles the search event for input texts at topbar and in all task popup
  * It will return results which match one of following fields 'title', 'description', 'category', 'priority'
  */
+import { SEARCH_TASK_FIELD } from '../constants/constants.js';
 export default class SearchController {
   constructor(taskController) {
     // Store reference to task controller
@@ -20,12 +21,9 @@ export default class SearchController {
 
   handleSearch(e) {
     const searchText = e.target.value.toLowerCase().trim();
-    const isPopupSearch = e.target.closest('#all-task-modal') !== null;
     const filteredTasks = this.searchTasks(searchText);
 
-    isPopupSearch
-      ? this.taskController.renderView.renderTasks(filteredTasks)
-      : this.taskController.renderView.renderTasks(filteredTasks);
+    this.taskController.renderView.renderTasks(filteredTasks);
   }
 
   searchTasks(searchText) {
@@ -34,7 +32,7 @@ export default class SearchController {
     return this.taskController.tasks.filter((task) => {
       if (!task) return false;
 
-      return ['title', 'description', 'category', 'priority'].some((field) => {
+      return SEARCH_TASK_FIELD.some((field) => {
         const value = task[field];
         return value ? value.toString().toLowerCase().includes(searchText) : false;
       });
