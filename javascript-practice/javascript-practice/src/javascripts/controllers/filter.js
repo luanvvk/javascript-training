@@ -9,6 +9,7 @@
  *
  * @module FilterController
  */
+import EventSystem from '../event-system.js';
 import TaskRenderView from '../views/task-render.js';
 import NotificationUtils from '../helpers/notification-utils.js';
 import { renderSortingUI } from '../templates/templates.js';
@@ -25,8 +26,9 @@ export default class FilterController {
    */
 
   constructor(taskController) {
-    // Store reference to task controller
     this.taskController = taskController;
+    // Store reference to task controller
+    this.eventSystem = new EventSystem();
     this.notifications = new NotificationUtils();
     this.renderView = new TaskRenderView();
     this.currentSortSetting = {

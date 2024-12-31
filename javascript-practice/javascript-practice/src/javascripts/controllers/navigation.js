@@ -7,16 +7,20 @@
  * @module NavigationController
  */
 
+import { VIEW_TYPE, VIEW_TYPE_KEY } from '../constants/constants.js';
 export default class NavigationController {
   /**
    * Create an instance of Navigation Controller
    * @param {object} taskController - task controller instance
    */
   constructor() {
+    this.VIEW_TYPE_KEY = VIEW_TYPE_KEY;
+    this.VIEW_TYPE = VIEW_TYPE;
     this.initDOMElements();
     this.setupNavigationListeners();
     this.setupSidebarToggleListener();
     this.setupResponsiveDesignListener();
+    this.loadSavedViewType();
   }
 
   // Init DOM elements used by the navigation controller
@@ -31,6 +35,33 @@ export default class NavigationController {
     this.listMainView = document.querySelector('.board > .list-view');
     this.boardPopupView = document.querySelector('#all-task-modal .board-view.task-columns');
     this.listPopupView = document.querySelector('#all-task-modal .list-view.task-columns');
+  }
+
+  loadSavedViewType() {
+    try {
+      const savedViewType = localStorage.getItem(this.VIEW_TYPE_KEY);
+      if (savedViewType) {
+        if (savedViewType === this.VIEW_TYPE.LIST) {
+          this.showListView(false);
+        } else if (savedViewType === this.VIEW_TYPE.BOARD) {
+          this.showBoardView(false);
+        } else if (savedViewType === this.VIEW_TYPE.DASHBOARD) {
+          this.showDashboard(false);
+        } else if (savedViewType === this.VIEW_TYPE.ALL_TASKS) {
+          this.showAllTasks(false);
+        }
+      }
+    } catch (error) {
+      console.error('Error loading saved view type:', error);
+    }
+  }
+
+  savedViewType(viewType) {
+    try {
+      localStorage.setItem(this.VIEW_TYPE_KEY, viewType);
+    } catch (error) {
+      console.error('Error saving view type:', error);
+    }
   }
 
   // Setup event listeners for navigation links
@@ -65,20 +96,32 @@ export default class NavigationController {
     }
   }
 
-  showAllTasks() {
+  showAllTasks(state = true) {
     this.toggleModalVisibility(false);
+    if (state) {
+      this.savedViewType(this.VIEW_TYPE.ALL_TASKS);
+    }
   }
 
-  showDashboard() {
+  showDashboard(state = true) {
     this.toggleModalVisibility(true);
+    if (state) {
+      this.savedViewType(this.VIEW_TYPE.DASHBOARD);
+    }
   }
 
-  showBoardView() {
+  showBoardView(state = true) {
     this.toggleView(this.boardMainView, this.listMainView, this.boardPopupView, this.listPopupView);
+    if (state) {
+      this.savedViewType(this.VIEW_TYPE.BOARD);
+    }
   }
 
-  showListView() {
+  showListView(state = true) {
     this.toggleView(this.listMainView, this.boardMainView, this.listPopupView, this.boardPopupView);
+    if (state) {
+      this.savedViewType(this.VIEW_TYPE.LIST);
+    }
   }
 
   toggleModalVisibility(isDashboard) {

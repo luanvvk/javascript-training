@@ -56,6 +56,15 @@ export const FILTER_FIELD_DROPDOWN_OPTIONS = [
 
 export const STORAGE_KEY = 'tasks';
 
+export const VIEW_TYPE_KEY = 'app_view_type';
+
+export const VIEW_TYPE = {
+  BOARD: 'board',
+  LIST: 'list',
+  DASHBOARD: 'dashboard',
+  ALL_TASKS: 'all-tasks',
+};
+
 export const getFormData = () => ({
   title: document.querySelector('.task-name-input')?.value.trim() || '',
   startDate: document.querySelector('#task-start-input')?.value || '',

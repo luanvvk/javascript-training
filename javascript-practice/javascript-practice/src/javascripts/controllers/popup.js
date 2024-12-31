@@ -31,8 +31,6 @@ export default class PopupController {
     this.modalView = new TaskModalView();
     this.notifications = new NotificationUtils();
 
-    this.editTaskOverlay = document.getElementById('edit-task-modal');
-    this.createTaskOverlay = document.getElementById('create-task-modal');
     this.handleTaskItemActions();
     this.handlePopupEventListener();
     this.setupOutsideClickHandlers();
@@ -40,7 +38,6 @@ export default class PopupController {
     setupPopupDropdowns();
     this.pendingTaskToDelete = null;
     this.deleteOrigin = null;
-
     this.deleteConfirmationPopup = document.getElementById('confirmation-popup--delete');
   }
 
