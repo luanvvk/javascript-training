@@ -1,9 +1,12 @@
 /**
- * This file handle the task of rendering task in the main view and all task overlay
- * It also have function to render the created task to target column: to do, in progress and completed tasks
- * Cloning node is necessary as one exactly same node cannot be existed at the same time in DOM (board-view and list-view)
- * Function to show no task in columns
- **/
+ * @file task-render-view.js
+ * @description This file handles the task of rendering tasks in the main view and all task overlay.
+ * It also has functions to render the created task to the target column: to do, in progress, and completed tasks.
+ * Cloning nodes is necessary as one exactly same node cannot exist at the same time in the DOM (board-view and list-view).
+ * It also includes a function to show a message when there are no tasks in the columns.
+ *
+ * @module TaskRenderView
+ */
 
 import { createTaskElement } from '../templates/templates.js';
 
@@ -14,13 +17,22 @@ class TaskRenderView extends TaskBaseView {
     super();
   }
 
-  // Render tasks in specified views
+  /**
+   * Renders tasks in specified views.
+   * @param {Array} tasks - The tasks to render.
+   * @param {Array} [viewTypes=['mainList', 'mainBoard', 'popupList', 'popupBoard']] - The views to render tasks in.
+   */
   renderTasks(tasks, viewTypes = ['mainList', 'mainBoard', 'popupList', 'popupBoard']) {
     viewTypes.forEach((viewType) => {
       this.renderTasksInView(tasks, viewType);
     });
   }
 
+  /**
+   * Renders tasks in a specific view.
+   * @param {Array} tasks - The tasks to render.
+   * @param {string} viewType - The type of view to render tasks in.
+   */
   renderTasksInView(tasks, viewType) {
     const columns = this.columnConfigs[viewType];
     if (!columns) return;
@@ -35,6 +47,7 @@ class TaskRenderView extends TaskBaseView {
       this.showNoTasksMessages(columns);
       return;
     }
+
     // Distribute tasks to appropriate columns
     tasks.forEach((task) => {
       const taskElement = this.createTaskElement(task);
@@ -49,6 +62,12 @@ class TaskRenderView extends TaskBaseView {
     this.showNoTasksMessages(columns);
   }
 
+  /**
+   * Gets the appropriate column for a task based on its status.
+   * @param {string} status - The status of the task.
+   * @param {Object} columns - The columns configuration.
+   * @returns {HTMLElement} The column element.
+   */
   getColumnForTask(status, columns) {
     const columnMap = {
       'To Do': columns.toDo,
@@ -63,6 +82,10 @@ class TaskRenderView extends TaskBaseView {
     return createTaskElement(task);
   }
 
+  /**
+   * Shows a message when there are no tasks in the columns.
+   * @param {Object} columns - The columns configuration.
+   */
   showNoTasksMessages(columns) {
     const messages = {
       toDo: 'No tasks in To Do',

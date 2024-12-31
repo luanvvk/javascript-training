@@ -1,8 +1,10 @@
 /**
- * This file handles the state of openness and closeness of the all popup.
- * In case of Edit task popup, it will also populate the data back to its original input
+ * @file task-modal-view.js
+ * @description This file handles the state of openness and closeness of all popups.
+ * In case of the Edit task popup, it will also populate the data back to its original input fields.
  *
- * */
+ * @module TaskModalView
+ */
 
 import { createFormElements } from '../templates/templates.js';
 import TaskBaseView from './task-base-view.js';
@@ -44,7 +46,10 @@ class TaskModalView extends TaskBaseView {
     }
   }
 
-  // Populate edit form
+  /**
+   * Populates the edit form with the task data.
+   * @param {Object} task - The task data to populate the form with.
+   */
   populateEditForm(task) {
     document.querySelector('#task-title').value = task.title;
     document.querySelector('#start-date').value = task.startDate;
