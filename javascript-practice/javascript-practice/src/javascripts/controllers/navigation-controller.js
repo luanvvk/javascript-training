@@ -51,10 +51,10 @@ export default class NavigationController {
    * @param {HTMLElement} target - The clicked navigation link element.
    */
 
-  handleNavigationLinkClick() {
+  handleNavigationLinkClick(target) {
     if (target.classList.contains('app__nav-link--all-tasks')) {
       this.showAllTasks();
-    } else if (e.target.closest('.app__nav-link--dashboard')) {
+    } else if (target.closest('.app__nav-link--dashboard')) {
       this.showDashboard();
     } else if (target.classList.contains('app__nav-link--board-screen')) {
       this.showBoardView();

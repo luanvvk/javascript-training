@@ -9,7 +9,7 @@
  *
  * @module FilterController
  */
-
+import NotificationUtils from '../helpers/notification-utils.js';
 import { renderSortingUI } from '../templates/templates.js';
 import {
   FILTER_OPTIONS,
@@ -26,7 +26,7 @@ export default class FilterController {
   constructor(taskController) {
     // Store reference to task controller
     this.taskController = taskController;
-
+    this.notifications = new NotificationUtils();
     this.currentSortSetting = {
       field: 'name',
       order: 'asc',
@@ -54,7 +54,7 @@ export default class FilterController {
     // Apply event listeners to filters
     this.populateFilterOptions('category');
     if (!this.filterFieldDropdown || !this.filterOptionsDropdown) {
-      console.error('Filter dropdown elements not found!');
+      console.log('Filter dropdown elements not found!');
       return;
     }
     this.filterFieldDropdown.addEventListener('change', (e) => {
@@ -66,7 +66,7 @@ export default class FilterController {
         this.applyFilters.bind(this);
       });
     } else {
-      console.error('filterOptionsDropdown not found');
+      this.notifications.log('filterOptionsDropdown not found', (type = 'error'));
     }
 
     const searchInputs = document.querySelectorAll('.input-bar-mini__main-input');
@@ -175,7 +175,9 @@ export default class FilterController {
     //validate input
     const validFields = VALID_SORT_FIELD;
     if (!validFields.includes(field)) {
-      this.showError(`Invalid sort criteria. Please choose one of: ${validFields.join(', ')}`);
+      this.notifications.show(
+        `Invalid sort criteria. Please choose one of: ${validFields.join(', ')}, {type: 'error'}`,
+      );
 
       return this.taskController.tasks;
     }

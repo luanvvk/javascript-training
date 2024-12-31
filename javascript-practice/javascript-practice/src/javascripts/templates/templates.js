@@ -192,7 +192,7 @@ export function createFormElements(formType = 'create') {
   <button 
     type="submit" 
     class="btn btn-primary edit-task-button">Save changes
-  /button>
+  </button>
   <button 
     type="button" 
     class="btn btn-cancel form__button form__button--cancel">Cancel

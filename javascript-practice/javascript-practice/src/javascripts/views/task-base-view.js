@@ -6,7 +6,7 @@
  * @module TaskBaseView
  */
 
-import ErrorHandler from '../helpers/error-handler-utils.js';
+import NotificationUtils from '../helpers/notification-utils.js';
 
 class TaskBaseView {
   constructor() {
@@ -49,7 +49,7 @@ class TaskBaseView {
    * Sets up the error handler for displaying error messages.
    */
   initializeDOMElements() {
-    this.errorHandler = new ErrorHandler();
+    this.notifications = new NotificationUtils();
   }
 
   /**
@@ -57,7 +57,7 @@ class TaskBaseView {
    * @param {string} message - The error message to display.
    */
   showError(message) {
-    this.errorHandler.showError(message);
+    this.notifications.show(message, { type: 'error' });
   }
 }
 export default TaskBaseView;

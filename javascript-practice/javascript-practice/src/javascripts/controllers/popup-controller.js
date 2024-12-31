@@ -9,7 +9,8 @@
 
 import { getFormData, getUpdatedTaskData } from '../constants/constants.js';
 import { setupPopupDropdowns } from '../templates/templates.js';
-import { showNotification } from '../helpers/notifications.js';
+
+import NotificationUtils from '../helpers/notification-utils.js';
 
 export default class PopupController {
   /**
@@ -24,7 +25,7 @@ export default class PopupController {
 
     // Store reference to task controller
     this.taskController = taskController;
-
+    this.notifications = new NotificationUtils();
     // Verify required dependencies exist
     if (!taskController.modalView) {
       throw new Error('TaskController must have modalView initialized');
@@ -220,7 +221,7 @@ export default class PopupController {
       this.taskController.saveTasksToLocalStorage();
       this.taskController.renderTasks(this.taskController.tasks);
       this.modalView.closeEditTaskOverlay();
-      showNotification('Task successfully edited!', 'success');
+      this.notifications.show('Task successfully edited!', { type: 'success' });
     }
   }
 
@@ -251,7 +252,7 @@ export default class PopupController {
     this.taskController.tasks = this.taskController.tasks.filter(
       (t) => t.id !== this.pendingTaskToDelete,
     );
-    showNotification('Task successfully deleted!', 'success');
+    this.notifications.show('Task successfully deleted!', { type: 'success' });
     this.taskController.renderTasks(this.taskController.tasks);
     this.taskController.saveTasksToLocalStorage();
     this.closeDeleteConfirmationPopup();

@@ -44,7 +44,7 @@ class TaskRenderView extends TaskBaseView {
 
     // If no tasks, show empty state
     if (!tasks || tasks.length === 0) {
-      this.showNoTasksMessages(columns);
+      this.showNoTasksMessage(columns);
       return;
     }
 
@@ -59,7 +59,7 @@ class TaskRenderView extends TaskBaseView {
     });
 
     // Show "no tasks" message if columns are empty
-    this.showNoTasksMessages(columns);
+    this.showNoTasksMessage(columns);
   }
 
   /**
@@ -86,7 +86,7 @@ class TaskRenderView extends TaskBaseView {
    * Shows a message when there are no tasks in the columns.
    * @param {Object} columns - The columns configuration.
    */
-  showNoTasksMessages(columns) {
+  showNoTasksMessage(columns) {
     const messages = {
       toDo: 'No tasks in To Do',
       inProgress: 'No tasks In Progress',

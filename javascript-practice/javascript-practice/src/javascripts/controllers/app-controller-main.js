@@ -12,7 +12,6 @@ import TaskRenderView from '../views/task-render-view.js';
 import TaskModalView from '../views/task-modal-view.js';
 import ValidationUtils from '../helpers/validation-utils.js';
 import LocalStorageUtil from '../helpers/local-storage-utils.js';
-import ErrorHandler from '../helpers/error-handler-utils.js';
 
 import PopupController from './popup-controller.js';
 import SearchController from './search-controller.js';
@@ -20,6 +19,7 @@ import NavigationController from './navigation-controller.js';
 import FilterController from './filter-controller.js';
 import TaskBaseView from '../views/task-base-view.js';
 import { STORAGE_KEY } from '../constants/constants.js';
+import NotificationUtils from '../helpers/notification-utils.js';
 
 class TaskController {
   //create an instance for taskController
@@ -43,7 +43,7 @@ class TaskController {
     // Utilities
     this.localStorageUtil = new LocalStorageUtil(STORAGE_KEY);
     this.validationUtils = new ValidationUtils();
-    this.errorHandler = new ErrorHandler();
+    this.notifications = new NotificationUtils();
   }
   // Initializes smaller controllers used by the task controller.
   initializeControllers() {
@@ -59,7 +59,7 @@ class TaskController {
       this.loadTasksFromLocalStorage();
       this.renderTasks(this.tasks);
     } catch (error) {
-      this.errorHandler.log(`Error during initialization: ${error.message}`, 'error');
+      this.notifications.log(`Error during initialization: ${error.message}`, 'error');
     }
   }
 
@@ -68,7 +68,7 @@ class TaskController {
     try {
       this.tasks = this.localStorageUtil.load() || [];
     } catch (error) {
-      this.errorHandler.log(`Error loading tasks from local storage: ${error.message}`, 'error');
+      this.notifications.log(`Error loading tasks from local storage: ${error.message}`, 'error');
     }
   }
 
@@ -77,7 +77,7 @@ class TaskController {
     try {
       this.localStorageUtil.save(this.tasks);
     } catch (error) {
-      this.errorHandler.log(`Error saving tasks to local storage: ${error.message}`, 'error');
+      this.notifications.log(`Error saving tasks to local storage: ${error.message}`, 'error');
     }
   }
 
@@ -91,7 +91,7 @@ class TaskController {
       }
       return true;
     } catch (error) {
-      this.errorHandler.log(`Error validating task: ${error.message}`, 'error');
+      this.notifications.log(`Error validating task: ${error.message}`, 'error');
     }
   }
 
@@ -100,7 +100,7 @@ class TaskController {
    * @param {string} message - The error message to display.
    */
   showError(message) {
-    this.errorHandler.showError(message);
+    this.notifications.show(message, { type: 'error' });
   }
 
   //render tasks to views
