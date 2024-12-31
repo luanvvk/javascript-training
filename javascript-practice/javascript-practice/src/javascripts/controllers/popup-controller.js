@@ -1,14 +1,22 @@
 /**
- * This file is used to handle the task item button actions
+ * @file popup-controller.js
+ * @description This file is used to handle the task item button actions
  * and also all the button actions of create task and edit task popups.
- * all CRUD operations need to ensure to target the same task element Id before processing
+ * All CRUD operations need to ensure to target the same task element Id before processing.
  *
+ * @module PopupController
  */
+
 import { getFormData, getUpdatedTaskData } from '../constants/constants.js';
 import { setupPopupDropdowns } from '../templates/templates.js';
 import { showNotification } from '../helpers/notifications.js';
 
 export default class PopupController {
+  /**
+   * Creates an instance of PopupController.
+   * @param {Object} taskController - The task controller instance.
+   */
+
   constructor(taskController) {
     if (!taskController) {
       throw new Error('TaskController must be provided to PopupController');
@@ -39,6 +47,7 @@ export default class PopupController {
     this.deleteConfirmationPopup = document.getElementById('confirmation-popup--delete');
   }
 
+  // Handles task item button actions.
   handleTaskItemActions() {
     this.sideNavbar = document.querySelector('.app__sidebar');
     this.mainBody = document.querySelector('.app-main');
@@ -71,6 +80,13 @@ export default class PopupController {
     });
   }
 
+  /**
+   * Handles the task edit action.
+   * Opens the edit task overlay and populates the form with the task data.
+   *
+   * @param {HTMLElement} taskElement - The task element that was clicked for editing.
+   */
+
   handleTaskEdit(taskElement) {
     const taskId = parseInt(taskElement.dataset.taskId);
 
@@ -83,6 +99,7 @@ export default class PopupController {
     }
   }
 
+  //Change task's status after user clicked the button
   handleStatusChange(task) {
     if (task.status === 'To Do') {
       task.status = 'In Progress';
@@ -96,6 +113,7 @@ export default class PopupController {
     this.taskController.saveTasksToLocalStorage();
   }
 
+  //Sets up event listeners for popup actions.
   handlePopupEventListener() {
     this.editTaskOverlay = document.getElementById('edit-task-modal');
     this.createTaskOverlay = document.getElementById('create-task-modal');
@@ -155,13 +173,14 @@ export default class PopupController {
       }
     });
   }
-  // Handler methods
+  // Handles the add task button click event.
   handleAddTaskButtonClick() {
     this.modalView.openCreateTaskOverlay();
     this.mainBody.classList.remove('active');
     this.sideNavbar.classList.remove('active');
   }
 
+  //Adds a new task.
   addTask() {
     const formData = getFormData();
 
@@ -183,6 +202,11 @@ export default class PopupController {
     }
   }
 
+  /**
+   * Handles the edit form submission event.
+   * @param {Event} e - The form submission event.
+   */
+
   handleEditFormSubmission(e) {
     e.preventDefault();
     const taskId = parseInt(this.editTaskOverlay.dataset.taskId);
@@ -200,6 +224,11 @@ export default class PopupController {
     }
   }
 
+  /**
+   * Opens the delete confirmation popup.
+   * @param {number} taskId - The ID of the task to delete.
+   * @param {string} origin - The origin of the delete request.
+   */
   openDeleteConfirmationPopup(taskId, origin) {
     this.pendingTaskToDelete = taskId;
     this.deleteOrigin = origin;
@@ -208,6 +237,7 @@ export default class PopupController {
     document.body.classList.add('overflow-hidden');
   }
 
+  //Closes the delete confirmation popup.
   closeDeleteConfirmationPopup() {
     this.deleteConfirmationPopup.classList.add('hidden');
     document.body.classList.add('overflow-hidden');
@@ -216,6 +246,7 @@ export default class PopupController {
     this.deleteOrigin = null;
   }
 
+  //Confirms the task deletion.
   confirmTaskDeletion() {
     this.taskController.tasks = this.taskController.tasks.filter(
       (t) => t.id !== this.pendingTaskToDelete,
@@ -231,6 +262,7 @@ export default class PopupController {
     }
   }
 
+  // close popup when clicking outside of modal
   setupOutsideClickHandlers() {
     this.createTaskOverlay.addEventListener('click', (e) => {
       // Check if click is outside the modal container

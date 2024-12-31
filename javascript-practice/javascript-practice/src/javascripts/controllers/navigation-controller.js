@@ -1,10 +1,17 @@
-/** This file is use to control the navigation of the app
- * Uses event delegation to handle event listeners
+/**
+ * @file navigation-controller.js
+ * @description This file is used to control the navigation of the app.
+ * It uses event delegation to handle event listeners for navigation links,
+ * sidebar toggles, and responsive design.
+ *
+ * @module NavigationController
  */
 
-//Declaration
-
 export default class NavigationController {
+  /**
+   * Create an instance of Navigation Controller
+   * @param {object} taskController - task controller instance
+   */
   constructor(taskController) {
     // Store reference to task controller
     this.taskController = taskController;
@@ -13,6 +20,8 @@ export default class NavigationController {
     this.setupSidebarToggleListener();
     this.setupResponsiveDesignListener();
   }
+
+  // Init DOM elements used by the navigation controller
   initDOMElements() {
     this.allTaskModal = document.getElementById('all-task-modal');
     this.menuToggle = document.querySelector('.topbar__menu-toggle');
@@ -26,25 +35,36 @@ export default class NavigationController {
     this.listPopupView = document.querySelector('#all-task-modal .list-view.task-columns');
   }
 
+  // Setup event listeners for navigation links
   setupNavigationListeners() {
     document.querySelector('.app__sidebar').addEventListener('click', (e) => {
       const target = e.target.closest('.app__nav-link');
       if (!target) return;
 
-      if (target.classList.contains('app__nav-link--all-tasks')) {
-        this.showAllTasks();
-      } else if (e.target.closest('.app__nav-link--dashboard')) {
-        this.showDashboard();
-      } else if (target.classList.contains('app__nav-link--board-screen')) {
-        this.showBoardView();
-      } else if (target.classList.contains('app__nav-link--list-screen')) {
-        this.showListView();
-      } else if (
-        target.matches('.app__nav-link--notification, .app__nav-link--theme, .app__nav-link--login')
-      ) {
-        this.closeSideBar();
-      }
+      // Handle navigation link click
+      this.handleNavigationLinkClick(target);
     });
+  }
+
+  /**
+   * Handles navigation link clicks.
+   * @param {HTMLElement} target - The clicked navigation link element.
+   */
+
+  handleNavigationLinkClick() {
+    if (target.classList.contains('app__nav-link--all-tasks')) {
+      this.showAllTasks();
+    } else if (e.target.closest('.app__nav-link--dashboard')) {
+      this.showDashboard();
+    } else if (target.classList.contains('app__nav-link--board-screen')) {
+      this.showBoardView();
+    } else if (target.classList.contains('app__nav-link--list-screen')) {
+      this.showListView();
+    } else if (
+      target.matches('.app__nav-link--notification, .app__nav-link--theme, .app__nav-link--login')
+    ) {
+      this.closeSideBar();
+    }
   }
 
   showAllTasks() {
@@ -88,7 +108,7 @@ export default class NavigationController {
     });
   }
 
-  // Side bar event
+  // setup event listener for the sidebar toggle button
   setupSidebarToggleListener() {
     if (this.menuToggle) {
       this.menuToggle.addEventListener('click', () => {
@@ -113,6 +133,7 @@ export default class NavigationController {
     }
   }
 
+  // setup event listener for responsive design adjustment
   setupResponsiveDesignListener() {
     const initCheck = (event) => {
       const isActive = !event.matches;

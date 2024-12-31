@@ -1,11 +1,15 @@
 /**
- * This controllers handle the filtering event for the app
- * User can choose the field and the options will be automatically populate the second select input
- * Available fields to filter 'category', 'priority', 'status'
- * User can sort task elements in ascending/descending order
- * Available fields to sort: 'name', 'startDate', 'endDate', 'category', 'priority'
- * sort order toggle func is there to ensure sort order images match asc/desc orders
+ * @file filter-controller.js
+ * @description This controller handles the filtering functionality
+ * for the app.
+ * It allows users to filter tasks based on various fields
+ * such as category, priority, and status.
+ * It also handles sorting tasks and updating the view
+ * with the filtered and sorted results.
+ *
+ * @module FilterController
  */
+
 import { renderSortingUI } from '../templates/templates.js';
 import {
   FILTER_OPTIONS,
@@ -14,6 +18,11 @@ import {
   SEARCH_TASK_FIELD,
 } from '../constants/constants.js';
 export default class FilterController {
+  /**
+   * Creates an instance of FilterController.
+   * @param {Object} taskController - The task controller instance.
+   */
+
   constructor(taskController) {
     // Store reference to task controller
     this.taskController = taskController;
@@ -25,6 +34,7 @@ export default class FilterController {
     // Initialize DOM elements
     this.initializeDOMElements();
   }
+
   initializeDOMElements() {
     this.filterFieldDropdown = document.querySelector('.filter__field-dropdown');
     this.filterOptionsDropdown = document.querySelector('.filter__options-dropdown');
@@ -39,6 +49,7 @@ export default class FilterController {
     });
   }
 
+  // Sets up event listeners for filter and sort inputs.
   setupFilterEventListeners() {
     // Apply event listeners to filters
     this.populateFilterOptions('category');
@@ -73,7 +84,10 @@ export default class FilterController {
     }
   }
 
-  // Populate the second dropdown based on the first chosen dropdown
+  /**
+   * Populates the second dropdown based on the first chosen dropdown.
+   * @param {string} field - The field to populate options for.
+   */
   populateFilterOptions(field) {
     this.filterOptionsDropdown.innerHTML = '';
 
@@ -87,7 +101,7 @@ export default class FilterController {
     this.filterOptionsDropdown.addEventListener('change', this.applyFilters.bind(this));
   }
 
-  //Apply filters
+  //Applies filters to the tasks based on the selected options and search text.
   applyFilters() {
     const filterField = this.filterFieldDropdown ? this.filterFieldDropdown.value : 'category';
     const filterValue = this.filterOptionsDropdown ? this.filterOptionsDropdown.value : 'All';
@@ -115,7 +129,11 @@ export default class FilterController {
     this.taskController.renderView.renderTasks(filteredTasks);
   }
 
-  //filter task method
+  /**
+   * Filters tasks based on the provided options.
+   * @param {Object} options - The filter options.
+   * @returns {Array} The filtered tasks.
+   */
   filterTask(options = {}) {
     const { category = 'All', priority = 'All', status = 'All', searchText = '' } = options;
 
@@ -187,7 +205,7 @@ export default class FilterController {
     return sortedTasks;
   }
 
-  //change sort order state
+  //Toggles the sort order and applies the filters.
   toggleSortOrder(e) {
     e.stopPropagation();
 

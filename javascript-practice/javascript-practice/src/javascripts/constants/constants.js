@@ -38,6 +38,8 @@ export const CATEGORY_DROPDOWN_OPTIONS = [
   { value: 'Monthly Task', default: false },
 ];
 
+export const STATUS_VALUES = [{ value: 'To Do' }, { value: 'In Progress' }, { value: 'Completed' }];
+
 export const SORT_DROPDOWN_OPTIONS = [
   { value: 'name', label: 'By name' },
   { value: 'startDate', label: 'By start date' },

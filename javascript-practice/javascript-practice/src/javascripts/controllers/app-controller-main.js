@@ -1,7 +1,11 @@
-/** Main controller is responsible to connect all smaller controllers and task views.
- * It also handles the loading and saving task from/to localStorage
- * And handling error if any DOM element is not initialized properly
+/**
+ * @file app-controller-main.js
+ * @description Main controller responsible for connecting
+ * all smaller controllers and task views.
+ * It handles the loading and saving of tasks from/to localStorage
+ * and manages errors if any DOM element is not initialized properly.
  *
+ * @module TaskController
  */
 import TaskModel from '../models/task-model.js';
 import TaskRenderView from '../views/task-render-view.js';
@@ -18,12 +22,17 @@ import TaskBaseView from '../views/task-base-view.js';
 import { STORAGE_KEY } from '../constants/constants.js';
 
 class TaskController {
+  //create an instance for taskController
   constructor() {
     this.initializeCoreComponents();
     this.initializeControllers();
     this.initialize();
   }
 
+  /**
+   * Initializes core components required for the task controller.
+   * Sets up the model, views, utilities, and error handler.
+   */
   initializeCoreComponents() {
     //Core components
     this.model = new TaskModel();
@@ -36,7 +45,7 @@ class TaskController {
     this.validationUtils = new ValidationUtils();
     this.errorHandler = new ErrorHandler();
   }
-
+  // Initializes smaller controllers used by the task controller.
   initializeControllers() {
     this.popupController = new PopupController(this);
     this.searchController = new SearchController(this);
@@ -44,16 +53,17 @@ class TaskController {
     this.filterController = new FilterController(this);
   }
 
+  //Performs additional initialization tasks.
   initialize() {
     try {
       this.loadTasksFromLocalStorage();
-
       this.renderTasks(this.tasks);
     } catch (error) {
       this.errorHandler.log(`Error during initialization: ${error.message}`, 'error');
     }
   }
 
+  //Load tasks from localStorage
   loadTasksFromLocalStorage() {
     try {
       this.tasks = this.localStorageUtil.load() || [];
@@ -62,6 +72,7 @@ class TaskController {
     }
   }
 
+  //Save tasks from localStorage
   saveTasksToLocalStorage() {
     try {
       this.localStorageUtil.save(this.tasks);
@@ -70,6 +81,7 @@ class TaskController {
     }
   }
 
+  //check if any validation errors
   validate(task) {
     try {
       const validationErrors = this.validationUtils.validateTask(task);
@@ -83,10 +95,15 @@ class TaskController {
     }
   }
 
+  /**
+   * Handles errors by displaying an error message.
+   * @param {string} message - The error message to display.
+   */
   showError(message) {
     this.errorHandler.showError(message);
   }
 
+  //render tasks to views
   renderTasks() {
     this.renderView.renderTasks(this.tasks);
   }

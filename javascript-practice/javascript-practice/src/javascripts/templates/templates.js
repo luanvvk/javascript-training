@@ -3,6 +3,7 @@ import {
   CATEGORY_DROPDOWN_OPTIONS,
   SORT_DROPDOWN_OPTIONS,
   FILTER_FIELD_DROPDOWN_OPTIONS,
+  STATUS_VALUES,
 } from '../constants/constants.js';
 
 //TASK BODY TEMPLATE
@@ -477,9 +478,7 @@ export function renderSortingUI() {
       class="sort__label">Sort by:
     </label>
     <div class="sort__dropdown-content">
-      <select class="sort__dropdown">
-         
-      </select>
+      <select class="sort__dropdown"></select>
       <button class="sort__order-toggle"> 
         <img 
           class="sort__icon" 
